@@ -1,0 +1,7 @@
+{
+  "name": "meditations-ionic-vue",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
