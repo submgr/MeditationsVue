@@ -1,29 +1,158 @@
 <template>
-  <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Tab 2</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Tab 2</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      
-      <ExploreContainer name="Tab 2 page" />
+<ion-page>
+    <ion-content :fullscreen="true" class="background">
+
+        <img style="padding-top: 15%; height: auto; width: 70%; margin-left: auto; margin-right: auto; display: block;" :src="natureEllipse">
+
+        <p style="text-align: center;padding: 0px 18px 0px; margin-top: 7%; margin-bottom: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 21px; font-weight: 400;">{{ natureText }}</p>
+        <p style="text-align: center;padding: 0px 22px 0px; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 24px; font-weight: 700;">АЛЕКСАНДР!</p>
+
+        <ion-card style="margin-top: 9000px;">
+            <ion-card-header>
+                <ion-card-subtitle>Подзаголовок</ion-card-subtitle>
+                <ion-card-title>Заголовок</ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+                Держись ближе к сердцу Природы... и время от времени отрывайся,
+                и подняться на гору или провести неделю в лесу. Очисти свой дух.
+            </ion-card-content>
+        </ion-card>
+
+        <ion-card >
+            <ion-item>
+                <ion-icon :icon="pin" slot="start"></ion-icon>
+                <ion-label>ion-item in a card, icon left, button right</ion-label>
+                <ion-button fill="outline" slot="end">View</ion-button>
+            </ion-item>
+
+            <ion-card-content>
+                This is content, without any paragraph or header tags,
+                within an ion-card-content element.
+            </ion-card-content>
+        </ion-card>
+
+        <ion-card>
+            <ion-item href="#" class="ion-activated">
+                <ion-icon :icon="wifi" slot="start"></ion-icon>
+                <ion-label>Card Link Item 1 activated</ion-label>
+            </ion-item>
+
+            <ion-item href="#">
+                <ion-icon :icon="wine" slot="start"></ion-icon>
+                <ion-label>Card Link Item 2</ion-label>
+            </ion-item>
+
+            <ion-item class="ion-activated">
+                <ion-icon :icon="warning" slot="start"></ion-icon>
+                <ion-label>Card Button Item 1 activated</ion-label>
+            </ion-item>
+
+            <ion-item>
+                <ion-icon :icon="walk" slot="start"></ion-icon>
+                <ion-label>Card Button Item 2</ion-label>
+            </ion-item>
+        </ion-card>
     </ion-content>
-  </ion-page>
+</ion-page>
 </template>
 
+<style scoped>
+  *{
+    font-family: Montserrat !important;
+  }
+</style>
+
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
-import ExploreContainer from '@/components/ExploreContainer.vue';
+import {
+    defineComponent
+} from 'vue';
+import {
+    IonPage,
+    IonContent,
+    IonCard,
+    IonCardContent,
+    IonCardHeader,
+    IonCardSubtitle,
+    IonCardTitle,
+    IonIcon,
+    IonItem,
+    IonLabel
+} from '@ionic/vue';
 
 export default defineComponent({
-  name: 'Tab2Page',
-  components: { ExploreContainer, IonHeader, IonToolbar, IonTitle, IonContent, IonPage }
+    name: 'Tab2Page',
+    components: {
+        IonContent,
+        IonPage,
+        IonCard,
+        IonCardContent,
+        IonCardHeader,
+        IonCardSubtitle,
+        IonCardTitle,
+        IonIcon,
+        IonItem,
+        IonLabel
+    },
+    setup () {
+
+      function get_random (list) {
+        return list[Math.floor((Math.random()*list.length))];
+      }
+
+      const d = new Date();
+
+      const dayMinutes = d.getHours() * 60 +d.getMinutes();
+
+      var natureEllipse_Image;
+
+      function imageLookup(dayPeriod = "morning"){
+        var image_local;
+        if(!["morning", "afternoon", "evening", "night"].includes(dayPeriod)){
+          image_local = "page-dead.png"
+        }else{
+          const dayPeriod_list = {
+            morning: ["morning-ellipse.png"],
+            afternoon: ["afternoon-sky-ellipse.png", "day-city-ellipse.png"],
+            evening: [],
+            night: ["night-sky-1-ellipse.png", "night-view-ellipse.png", "night-houselife-ellipse.png"]
+          }
+          image_local = dayPeriod_list[dayPeriod][Math.floor(Math.random() * dayPeriod_list[dayPeriod].length)]
+        }
+        return require("./../assets/graphics/" + image_local);
+      }
+
+      var natureEllipse_Text = "?ERR-0"
+
+      switch (true) {
+        case (300 <= dayMinutes &&  dayMinutes < 660):
+          natureEllipse_Image = imageLookup("morning");
+          natureEllipse_Text = get_random(["Доброе утро,"])
+          break;
+        case (660 <= dayMinutes &&  dayMinutes < 1080):
+          natureEllipse_Image = imageLookup("afternoon");
+          natureEllipse_Text = get_random(["Это прекрасный день,"])
+          break;
+        case (1080 <= dayMinutes && dayMinutes < 1260):
+          natureEllipse_Image = imageLookup("evening");
+          natureEllipse_Text = get_random(["Хорошего вечера,"])
+          break;
+        case ((0 <= dayMinutes && dayMinutes < 300) || (1260 <= dayMinutes && dayMinutes < 9999)):
+          natureEllipse_Image = imageLookup("night");
+          natureEllipse_Text = get_random(["Приятных снов,", "Спокойное ночи,"])
+          break;
+      }
+
+      return {
+        natureText: natureEllipse_Text,
+        natureEllipse: natureEllipse_Image,
+        pageStyle: {
+          "--ion-background-color": "#F9F9F9",
+          "--ion-font-family": "Roboto"
+        },
+        footer: "hide"
+      }
+      //
+    }
 });
 </script>
