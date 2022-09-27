@@ -1,10 +1,10 @@
 <template>
 <ion-page>
-    <ion-content :fullscreen="true" class="background">
+    <ion-content :fullscreen="true" >
 
-        <img style="padding-top: 15%; height: auto; width: 70%; margin-left: auto; margin-right: auto; display: block;" :src="natureEllipse">
+        <img style="padding-top: 4rem; height: auto; width: 70%; max-width: 400px; margin-left: auto; margin-right: auto; display: block;" :src="natureEllipse">
 
-        <p style="text-align: center;padding: 0px 18px 0px; margin-top: 7%; margin-bottom: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 21px; font-weight: 400;">{{ natureText }}</p>
+        <p style="text-align: center;padding: 0px 18px 0px; margin-top: 2rem; margin-bottom: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 21px; font-weight: 400;">{{ natureText }}</p>
         <p style="text-align: center;padding: 0px 22px 0px; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 24px; font-weight: 700;">АЛЕКСАНДР!</p>
 
         <ion-card style="margin-top: 9000px;">
@@ -61,6 +61,18 @@
   *{
     font-family: Montserrat !important;
   }
+  @media (prefers-color-scheme: light) {
+    ion-content {
+      --background: #fff url('../assets/abstract/relaxing-pinkbackground.jpg') no-repeat center center / cover;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    ion-content {
+      --background: #000 url('../assets/abstract/black-and-noise-background.png') no-repeat center center / cover;
+    }
+  }
+  
 </style>
 
 <script lang="ts">
@@ -112,10 +124,10 @@ export default defineComponent({
           image_local = "page-dead.png"
         }else{
           const dayPeriod_list = {
-            morning: ["morning-ellipse.png"],
-            afternoon: ["afternoon-sky-ellipse.png", "day-city-ellipse.png"],
-            evening: [],
-            night: ["night-sky-1-ellipse.png", "night-view-ellipse.png", "night-houselife-ellipse.png"]
+            morning: ["morning-ellipse.png", "morning-mountains-ellipse.png", "morning-highview-ellipse.png", "morning-work-onbeach-ellipse.png", "swimming-morning-ellipse.png", "morning-forest-ellipse.png", "morning-bedsheet-ellipse.png", "morning-vibes-ellipse.png"],
+            afternoon: ["afternoon-sky-ellipse.png", "day-city-ellipse.png", "man-onrocks-waterfall-ellipse.png", "forest-afternoon-ellipse.png", "creative-office-afternoon-ellipse.png", "afternoon-citybridge-ellipse.png", "afternoon-beach-ellipse.png", "daytime-beach-ellipse.png"],
+            evening: ["evening-desert-mountains-ellipse.png", "evening-construction-ellipse.png", "evening-nature.png", "evening-newyork-ellipse.png", "evening-subway-ellipse.png", "evening-hotel-veranda-ellipse.png"],
+            night: ["night-sky-1-ellipse.png", "night-view-ellipse.png", "night-houselife-ellipse.png", "mountains-at-night-ellipse.png", "night-city-ellipse.png", "man-understone-atnight-ellipse.png", "aurora-night-ellipse.png", "night-greennature-ellipse.png", "night-hotelroom-ellipse.png"]
           }
           image_local = dayPeriod_list[dayPeriod][Math.floor(Math.random() * dayPeriod_list[dayPeriod].length)]
         }
