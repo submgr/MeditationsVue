@@ -9,14 +9,14 @@
 
         <ion-input class="input-style" placeholder="Электронный адрес"></ion-input>
 
-        <ion-button @click="GoogleAuth" color="danger" style="margin-right: 5%; margin-left: 35%; margin-top: 6%; --opacity: 0.7;" expand="block">
+        <ion-button @click="authenticateWithGoogle" color="danger" style="margin-right: 5%; margin-left: 35%; margin-top: 6%; --opacity: 0.7;" expand="block">
             <ion-icon class="send-button" slot="end" :icon="arrowForwardOutline"></ion-icon>
             Продолжить
         </ion-button>
 
         <hr class="hr-line">
 
-        <ion-button @click="GoogleAuth"  style="margin-right: 5%; margin-left: 5%; margin-top: 6%; --opacity: 0.7;" expand="block">
+        <ion-button @click="authenticateWithGoogle"  style="margin-right: 5%; margin-left: 5%; margin-top: 6%; --opacity: 0.7;" expand="block">
             <ion-icon class="send-button" slot="end" :icon="logoGoogle"></ion-icon>
             Войти с Google
         </ion-button>
@@ -116,14 +116,19 @@ export default defineComponent({
         }
     },
     setup() {
+        const authenticateWithGoogle = async () => {
+        try {
+            const userResponse = await GoogleAuth.signIn()
+            console.log(userResponse)
+            // add the code for the functionality your need
+            } catch (error) {
+                console.error(error)
+            }
+        }
         return {
+            authenticateWithGoogle,
             arrowForwardOutline,
             logoGoogle
-        }
-    },
-    methods: {
-        GoogleAuth() {
-            GoogleAuth.signIn();
         }
     }
 });
