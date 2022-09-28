@@ -32,6 +32,10 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/AppOnboarding.vue')
       },
       {
+        path: 'auth',
+        component: () => import('@/views/AppAuth.vue')
+      },
+      {
         path: 'sorry',
         component: () => import('@/views/SplashSorry.vue')
       }
