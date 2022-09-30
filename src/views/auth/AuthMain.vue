@@ -2,16 +2,32 @@
 <ion-page>
     <ion-content :fullscreen="true">
 
-        <img style="margin-left: 6.5%; margin-top: 4rem; height: 230px; opacity: 0.99;" src="../assets/graphics/creative-hello-text.png">
+        <img style="margin-left: 6.5%; margin-top: 4rem; height: 230px; opacity: 0.99;" src="../../assets/graphics/creative-hello-text.png">
 
         <p style="text-align: left; padding: 0px 22px 0px; margin-top: 1rem; margin-bottom: 0;  align-items: flex-start; min-width: 100%; font-size: 34px; font-weight: 600;">Почти готово!</p>
         <p style="text-align: left; padding: 0px 22px 0px; padding-top: 2%; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 18px; font-weight: 200;">Войдите в систему, чтобы мы могли предоставить вам уникальный опыт медитации.</p>
 
-        <ion-input class="input-style" placeholder="Электронный адрес"></ion-input>
+        <!-----<ion-input class="input-style" placeholder="Электронный адрес"></ion-input> 
 
         <ion-button @click="authenticateWithGoogle" color="danger" style="margin-right: 5%; margin-left: 35%; margin-top: 6%; --opacity: 0.7;" expand="block">
             <ion-icon class="send-button" slot="end" :icon="arrowForwardOutline"></ion-icon>
             Продолжить
+        </ion-button>--->
+
+        <ion-button href="/tabs/auth/email" color="danger" style="left: 0px; margin-right: 5%; margin-left: 5%; margin-top: 7.5%; --opacity: 0.7; --padding-start: 0; --padding-end: 0;" expand="block">
+            <ion-icon class="send-button" slot="start" :icon="mailOutline" style="text-align: left;"></ion-icon>
+            <span style="text-align:left; width: 72%;">
+                Продолжить с эл. почтой
+            </span>
+            <ion-icon class="send-button" slot="end" :icon="arrowForwardOutline" style="text-align: end;"></ion-icon>
+            
+        </ion-button>
+        <ion-button @click="authenticateWithGoogle" color="danger" style="left: 0px; margin-right: 5%; margin-left: 5%; margin-top: 2.5%; --opacity: 0.7; --padding-start: 0; --padding-end: 0;" expand="block">
+            <ion-icon class="send-button" slot="start" :icon="chatbubbleOutline" style="text-align: left;"></ion-icon>
+            <span style="text-align:left; width: 72%;">
+                Продолжить с Telegram
+            </span>
+            <ion-icon class="send-button" slot="end" :icon="arrowForwardOutline" style="text-align: end;"></ion-icon>
         </ion-button>
 
         <hr class="hr-line">
@@ -27,12 +43,12 @@
 
 <style scoped>
 .hr-line{
-    margin-right: 7%; margin-left: 7%; background-color: white; margin-top: 14%; opacity: 0.3;
+    margin-right: 7%; margin-left: 7%; background-color: white; margin-top: 7%; opacity: 0.3;
 }
 
 @media (prefers-color-scheme: light) {
     ion-content {
-        --background: #fff url('../assets/abstract/noised-white-background.png') no-repeat center center / cover;
+        --background: #fff url('../../assets/abstract/noised-white-background.png') no-repeat center center / cover;
     }
 
     .hr-line{
@@ -43,7 +59,7 @@
 
 @media (prefers-color-scheme: dark) {
     ion-content {
-        --background: #000 url('../assets/abstract/black-and-noise-background.png') no-repeat center center / cover;
+        --background: #000 url('../../assets/abstract/black-and-noise-background.png') no-repeat center center / cover;
     }
     .hr-line{
         background-color: white;
@@ -85,7 +101,9 @@ import {
 
 import {
     arrowForwardOutline,
-    logoGoogle
+    mailOutline,
+    logoGoogle,
+    chatbubbleOutline
 } from 'ionicons/icons';
 
 import {
@@ -104,6 +122,7 @@ export default defineComponent({
     components: {
         IonContent,
         IonPage,
+        // eslint-disable-next-line
         IonInput,
         IonButton,
         IonIcon
@@ -128,7 +147,9 @@ export default defineComponent({
         return {
             authenticateWithGoogle,
             arrowForwardOutline,
-            logoGoogle
+            logoGoogle,
+            mailOutline,
+            chatbubbleOutline
         }
     }
 });

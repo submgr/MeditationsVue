@@ -33,7 +33,11 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'auth',
-        component: () => import('@/views/AppAuth.vue')
+        component: () => import('@/views/auth/AuthMain.vue')
+      },
+      {
+        path: 'auth/email',
+        component: () => import('@/views/auth/AuthEmail.vue')
       },
       {
         path: 'sorry',

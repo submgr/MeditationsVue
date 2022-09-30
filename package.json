@@ -21,6 +21,7 @@
     "@ionic/vue-router": "^6.0.0",
     "@skjnldsv/vue-plyr": "^7.3.0",
     "@videojs-player/vue": "^1.0.0",
+    "axios": "^0.27.2",
     "cordova-plugin-nativeaudio": "^3.0.9",
     "core-js": "^3.6.5",
     "imagemin": "^8.0.1",
@@ -29,6 +30,7 @@
     "tone": "^14.7.77",
     "video.js": "^7.20.3",
     "vue": "^3.2.21",
+    "vue-axios": "^3.4.1",
     "vue-plyr": "^7.0.0",
     "vue-router": "^4.0.12"
   },
