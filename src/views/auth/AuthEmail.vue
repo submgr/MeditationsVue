@@ -103,9 +103,6 @@
         logoGoogle,
         chatbubbleOutline
     } from 'ionicons/icons';
-
-    import axios from 'axios'
-    import VueAxios from 'vue-axios'
     
     export default defineComponent({
         name: 'Tab1Page',
@@ -134,7 +131,7 @@
                 }else{
                     // eslint-disable-next-line
                     const parent_this = this;
-                    this.axios.get("google.com").then((response) => {
+                    this.$http.get("google.com").then((response) => {
                         alert(response.data)
                         console.log(response.data)
                     }).catch(function(error){
