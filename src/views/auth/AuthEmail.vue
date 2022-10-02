@@ -231,6 +231,9 @@
                         console.log("Received data from server for auth request.", response.data)
                         if(response.data.status == "okay"){
                             localStorage.auth_token = response.data.auth_token;
+                            //this.$router.push('/tabs/');
+                            parent_this.message_modal_text = `Выполнен вход.`
+                            parent_this.message_modal_isOpen = true;
                         }else{
                             this.message_modal_text = `Код подтверждения не подошел. Попробуйте еще раз.\n\nСведения: ${response.data.status}—${response.data.message}`
                             this.message_modal_isOpen = true;
