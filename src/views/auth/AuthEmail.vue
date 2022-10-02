@@ -1,19 +1,20 @@
 <template>
     <ion-page>
-        <ion-content :fullscreen="true" v-if="state == 'main'">
+        <ion-content :fullscreen="true" v-if="state == 'main' || state == 'main_processing'">
     
             <h1 style="margin-left: 15px; margin-top: 11%; font-size: 120px;">
                 <ion-icon slot="start" :icon="mailOutline" style="text-align: left;"></ion-icon>
             </h1>
     
             <p style="text-align: left; padding: 0px 22px 0px; margin-top: -1.5rem; margin-bottom: 0;  align-items: flex-start; min-width: 100%; font-size: 34px; font-weight: 600;">Эл. адрес</p>
-            <p style="text-align: left; padding: 0px 22px 0px; padding-top: 2%; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 18px; font-weight: 200;">На указанный эл. адрес мы отправим сообщение с кодом.</p>
+            <p style="text-align: left; padding: 0px 22px 0px; padding-top: 2%; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 18px; font-weight: 400;">На указанный эл. адрес мы отправим сообщение с кодом.</p>
     
             <ion-input class="input-style" autofocus="true" type="email" placeholder="Электронный адрес" v-model="email" pattern="email"></ion-input>
     
-            <ion-button @click="signin" color="danger" style="margin-right: 5%; margin-left: 35%; margin-top: 6%; --opacity: 0.7;" expand="block">
-                <ion-icon class="send-button" slot="end" :icon="arrowForwardOutline"></ion-icon>
+            <ion-button @click="signin" :disabled="state == 'main_processing'" color="danger" style="margin-right: 5%; margin-left: 35%; margin-top: 6%; --opacity: 0.7;" expand="block">
+                <ion-icon v-if="state == 'main'" class="send-button" slot="end" :icon="arrowForwardOutline"></ion-icon>
                 Продолжить
+                <ion-spinner v-if="state == 'main_processing'" name="crescent" style="margin-left: 6%; margin-right: -6%;"></ion-spinner>
             </ion-button>
 
             <ion-modal
@@ -24,29 +25,30 @@
                 :breakpoints="[0, 0.25, 0.5, 0.75]"
                 handle-behavior="cycle"
             >
-            <ion-content class="ion-padding">
-                <div class="ion-margin-top">
-                <ion-label style="white-space: pre-wrap;">{{message_modal_text}}</ion-label>
-                </div>
-            </ion-content>
+                <ion-content class="ion-padding">
+                    <div class="ion-margin-top">
+                    <ion-label style="white-space: pre-wrap;">{{message_modal_text}}</ion-label>
+                    </div>
+                </ion-content>
             </ion-modal>
 
 
     
         </ion-content>
-        <ion-content :fullscreen="true" v-if="state == 'awaiting_code'">
+        <ion-content :fullscreen="true" v-if="state == 'awaiting_code' || state == 'awaiting_code_processing'">
             
             <h1 style="margin-left: 15px; margin-top: 11%; font-size: 120px;">
                 <ion-icon slot="start" :icon="mailOutline" style="text-align: left;"></ion-icon>
             </h1>
 
             <p style="text-align: left; padding: 0px 22px 0px; margin-top: -1.5rem; margin-bottom: 0;  align-items: flex-start; min-width: 100%; font-size: 34px; font-weight: 600;">Это вы?</p>
-            <p style="text-align: left; padding: 0px 22px 0px; padding-top: 2%; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 18px; font-weight: 200;">Сообщение с кодом отправлено на указанный электронный адрес. Введите полученный код ниже, чтобы продолжить.</p>
-            <ion-input class="input-style" autofocus="true" style="font-size:34px; line-height: 1.2;" type="number" minlenght="6" maxlenght="6" placeholder="Код подтверждения" v-model="code" pattern="number"></ion-input>
+            <p style="text-align: left; padding: 0px 22px 0px; padding-top: 2%; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 18px; font-weight: 200; line-height: 1.3;">Сообщение с кодом отправлено на указанный электронный адрес. Введите полученный код ниже, чтобы продолжить.</p>
+            <ion-input class="input-style input-code" autofocus="true" style="line-height: 1.2;" type="number" minlenght="6" maxlenght="6" placeholder="Код подтверждения" v-model="code" pattern="number"></ion-input>
 
-            <ion-button @click="sendcode" color="danger" style="margin-right: 5%; margin-left: 35%; margin-top: 6%; --opacity: 0.7;" expand="block">
-                <ion-icon class="send-button" slot="end" :icon="arrowForwardOutline"></ion-icon>
+            <ion-button @click="sendcode" :disabled="state == 'awaiting_code_processing'" color="danger" style="margin-right: 5%; margin-left: 35%; margin-top: 6%; --opacity: 0.7;" expand="block">
+                <ion-icon v-if="state == 'awaiting_code'" class="send-button" slot="end" :icon="arrowForwardOutline"></ion-icon>
                 Продолжить
+                <ion-spinner v-if="state == 'awaiting_code_processing'" name="crescent" style="margin-left: 6%; margin-right: -6%;"></ion-spinner>
             </ion-button>
 
             <ion-modal
@@ -119,6 +121,10 @@
         --padding-start: 13px;
         border-radius: 8px;
     }
+
+    .input-code[value]:not([value=""]){
+        font-size: 34px;
+    }
     
     .send-button {
         --opacity: 0.7;
@@ -142,6 +148,7 @@
         IonButton,
         IonIcon,
         IonModal,
+        IonSpinner,
         modalController
     } from '@ionic/vue';
     
@@ -158,6 +165,7 @@
             IonContent,
             IonPage,
             IonModal,
+            IonSpinner,
             // eslint-disable-next-line
             IonInput,
             IonButton,
@@ -166,44 +174,73 @@
         data() {
             return {
                 message_modal_isOpen: false,
+                userid: "",
                 code: "",
                 state: "main",
                 message_modal_text: "Something went wrong. Code: the text is not defined, but modal is called. Weird.",
-                email: "" }
+                email: "",
+                verificationCode: ""
+            }
         },
         methods: {
             async signin() {
+                this.state = "main_processing"
                 var re = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 var test_result = re.test(this.email);
                 if(!test_result){
                     this.message_modal_text = "Не удалось отправить код подтверждения на электронный адрес, указанный тобой. Убедись, что в нем нет ошибок."
                     this.message_modal_isOpen = true;
+                    this.state = "main"
                 }else{
                     // eslint-disable-next-line
                     var parent_this = this;
-                    this.$http.get("http://192.168.1.38:8080").then((response) => {
+                    this.$http.get("https://meditations-app.azurewebsites.net/service/auth", { params:
+                        {method: "email", login_thing: this.email }
+                    }).then((response) => {
                         console.log("Received data from server for auth request.", response.data)
-                        parent_this.state = "awaiting_code"
+                        if(response.data.status == "okay"){
+                            parent_this.state = "awaiting_code"
+                            this.userid = response.data.userid;
+                            console.log("Obtained userId (" + this.userid + ") and following next verification step.")
+                        }else{
+                            this.message_modal_text = `Мы не смогли отправить код подтверждения на указанный электронный адрес (${parent_this.email}). Проверьте правильность указанного адреса.\n\nСведения: ${response.data.message}; $${response.data.details}`
+                            this.message_modal_isOpen = true;
+                            parent_this.email = "";
+                            parent_this.state = "main"
+                        }
                     }).catch(function(error){
                         parent_this.message_modal_text = `Сервер временно недоступен.\n\nСведения: ` + error
                         parent_this.message_modal_isOpen = true;
+                        parent_this.state = "main"
                     });
 
                 }
             },
             async sendcode(){
+                this.state = "awaiting_code_processing"
                 if(this.code.length != 6){
                     this.message_modal_text = "Некорректный код подтверждения, он должен состоять из 6 цифр. Попробуйте еще раз."
                     this.message_modal_isOpen = true;
+                    this.state = "awaiting_code"
                 }else{
                     // eslint-disable-next-line
                     var parent_this = this;
-                    this.$http.get("http://192.168.1.38:8080").then((response) => {
+                    this.$http.get("https://meditations-app.azurewebsites.net/service/auth_getToken", { params:
+                        {userid: this.userid, verificationCode: this.code }
+                    }).then((response) => {
                         console.log("Received data from server for auth request.", response.data)
-                        parent_this.state = "awaiting_code"
+                        if(response.data.status == "okay"){
+                            localStorage.auth_token = response.data.auth_token;
+                        }else{
+                            this.message_modal_text = `Код подтверждения не подошел. Попробуйте еще раз.\n\nСведения: ${response.data.status}—${response.data.message}`
+                            this.message_modal_isOpen = true;
+                            parent_this.code = "";
+                            parent_this.state = "awaiting_code"
+                        }
                     }).catch(function(error){
                         parent_this.message_modal_text = `Сервер временно недоступен.\n\nСведения: ` + error
                         parent_this.message_modal_isOpen = true;
+                        parent_this.state = "awaiting_code"
                     });
                 }
             },
