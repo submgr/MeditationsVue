@@ -20,7 +20,7 @@
                 Продолжить с эл. почтой
             </span>
             <ion-icon class="send-button" slot="end" :icon="arrowForwardOutline" style="text-align: end;"></ion-icon>
-
+            
         </ion-button>
         <ion-button @click="authenticateWithGoogle" color="danger" style="left: 0px; margin-right: 5%; margin-left: 5%; margin-top: 2.5%; --opacity: 0.7; --padding-start: 0; --padding-end: 0;" expand="block">
             <ion-icon class="send-button" slot="start" :icon="chatbubbleOutline" style="text-align: left;"></ion-icon>
@@ -32,7 +32,7 @@
 
         <hr class="hr-line">
 
-        <ion-button @click="authenticateWithGoogle" style="margin-right: 5%; margin-left: 5%; margin-top: 6%; --opacity: 0.7;" expand="block">
+        <ion-button @click="authenticateWithGoogle"  style="margin-right: 5%; margin-left: 5%; margin-top: 6%; --opacity: 0.7;" expand="block">
             <ion-icon class="send-button" slot="end" :icon="logoGoogle"></ion-icon>
             Войти с Google
         </ion-button>
@@ -44,7 +44,7 @@
                 :initial-breakpoint="0.25"
                 :breakpoints="[0, 0.25, 0.5, 0.75]"
                 handle-behavior="cycle"
-            >
+        >
             <ion-content class="ion-padding">
                 <div class="ion-margin-top">
                     <ion-label style="white-space: pre-wrap;">{{message_modal_text}}</ion-label>
@@ -57,12 +57,8 @@
 </template>
 
 <style scoped>
-.hr-line {
-    margin-right: 7%;
-    margin-left: 7%;
-    background-color: white;
-    margin-top: 7%;
-    opacity: 0.3;
+.hr-line{
+    margin-right: 7%; margin-left: 7%; background-color: white; margin-top: 7%; opacity: 0.3;
 }
 
 @media (prefers-color-scheme: light) {
@@ -70,7 +66,7 @@
         --background: #fff url('../../assets/abstract/noised-white-background.png') no-repeat center center / cover;
     }
 
-    .hr-line {
+    .hr-line{
         opacity: 0.12;
         background-color: rgb(0, 0, 0);
     }
@@ -80,8 +76,7 @@
     ion-content {
         --background: #000 url('../../assets/abstract/black-and-noise-background.png') no-repeat center center / cover;
     }
-
-    .hr-line {
+    .hr-line{
         background-color: white;
     }
 }
@@ -109,7 +104,7 @@
 
 <script lang="ts">
 import {
-    defineComponent
+    defineComponent, onMounted, getCurrentInstance, ref
 } from 'vue';
 import {
     IonPage,
@@ -138,6 +133,8 @@ GoogleAuth.initialize({
     grantOfflineAccess: true,
 });
 
+import axios from 'axios'
+
 export default defineComponent({
     name: 'Tab1Page',
     components: {
@@ -146,55 +143,20 @@ export default defineComponent({
         // eslint-disable-next-line
         IonInput,
         IonButton,
-        IonModal,
-        IonIcon
+        IonIcon,
+        IonModal
     },
-    data() {
+    data () {
         return {
-            message_modal_text: "ModalText",
             message_modal_isOpen: false,
+            message_modal_text: "ModalText"
         }
     },
-    mounted() {
+    mounted () {
         const tabsEl = document.querySelector('ion-tab-bar');
         if (tabsEl) {
-            tabsEl.hidden = true;
-            tabsEl.style.height = "1";
-        }
-        const authenticateWithGoogle = async () => {
-            try {
-                const userResponse = await GoogleAuth.signIn()
-                var accessToken = userResponse.authentication.accessToken;
-                var idToken = userResponse.authentication.idToken;
-                // eslint-disable-next-line
-                const parent_this = this;
-                this.$http.get("https://meditations-app.azurewebsites.net/service/auth_withGoogle", { params:
-                        {accessToken: accessToken, idToken: idToken }
-                    }).then((response) => {
-                        if(response.data.status == "okay"){
-                            parent_this.message_modal_text = `Выполнен вход.`
-                            parent_this.message_modal_isOpen = true;
-                        }else {
-                            parent_this.message_modal_text = `Произошла ошибка при входе с помощью учетной записи Google. Попробуйте еще раз или воспользуйтесь другим способом входа.\n\nСведения: ` + JSON.stringify(response)
-                            parent_this.message_modal_isOpen = true;
-                        }
-                    }).catch(function(error){
-                        parent_this.message_modal_text = `Сервер временно недоступен.\n\nСведения: ` + error
-                        parent_this.message_modal_isOpen = true;
-                    });
-                // add the code for the functionality your need
-            } catch (error) {
-                console.error(error)
-            }
-        }
-
-        return {
-            authenticateWithGoogle
-        }
-    },
-    methods: {
-        async Modal_onWillDismiss(){
-            this.message_modal_isOpen = false;
+        tabsEl.hidden = true;
+        tabsEl.style.height = "1";
         }
     },
     setup() {
@@ -204,6 +166,34 @@ export default defineComponent({
             mailOutline,
             chatbubbleOutline
         }
+    },
+    methods: {
+        async Modal_onWillDismiss(){
+            this.message_modal_isOpen = false;
+        },
+        async authenticateWithGoogle(){
+            const userResponse = await GoogleAuth.signIn()
+                    var accessToken = userResponse.authentication.accessToken;
+                    var idToken = userResponse.authentication.idToken;
+                    // eslint-disable-next-line
+                    const parent_this = this;
+                    axios.get("https://meditations-app.azurewebsites.net/service/auth_withGoogle", { params:
+                            {accessToken: accessToken, idToken: idToken }
+                        }).then((response) => {
+                            if(response.data.status == "okay"){
+                                this.message_modal_text = `Выполнен вход.`
+                                this.message_modal_isOpen = true;
+                            }else {
+                                this.message_modal_text = `Произошла ошибка при входе с помощью учетной записи Google. Попробуйте еще раз или воспользуйтесь другим способом входа.\n\nСведения: ` + JSON.stringify(response)
+                                this.message_modal_isOpen = true;
+                            }
+                        }).catch(function(error){
+                            parent_this.message_modal_text = `Сервер временно недоступен.\n\nСведения: ` + error
+                            parent_this.message_modal_isOpen = true;
+                        });
+                    // add the code for the functionality your need
+        }
+            
     }
-});
+})
 </script>
