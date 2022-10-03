@@ -55,11 +55,25 @@ export default defineComponent({
         IonSpinner
     },
     mounted () {
+      // eslint-disable-next-line
+      const parent_this = this;
+
+      setTimeout(function () {
+        parent_this.$router.replace('/tabs/auth');
+        if(localStorage.auth_token){
+          parent_this.$router.replace('/tabs/home')
+        }else{
+          parent_this.$router.replace('/tabs/hello')
+        }
+      }, 5000);
+
       const tabsEl = document.querySelector('ion-tab-bar');
       if (tabsEl) {
         tabsEl.hidden = true;
         tabsEl.style.height = "1";
       }
+
+      
     },
     setup () {
 
