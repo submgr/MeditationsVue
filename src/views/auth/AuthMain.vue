@@ -126,13 +126,6 @@ import {
     GoogleAuth
 } from '@codetrix-studio/capacitor-google-auth';
 
-// use hook after platform dom ready
-GoogleAuth.initialize({
-    clientId: '33960040607-coalo6hl8cscmu8mngtb3rf6jgnibr5q.apps.googleusercontent.com',
-    scopes: ['profile', 'email'],
-    grantOfflineAccess: true,
-});
-
 import axios from 'axios'
 
 export default defineComponent({
@@ -172,6 +165,12 @@ export default defineComponent({
             this.message_modal_isOpen = false;
         },
         async authenticateWithGoogle(){
+// use hook after platform dom ready
+GoogleAuth.initialize({
+    clientId: '33960040607-coalo6hl8cscmu8mngtb3rf6jgnibr5q.apps.googleusercontent.com',
+    scopes: ['profile', 'email'],
+    grantOfflineAccess: true,
+});
             const userResponse = await GoogleAuth.signIn()
                     var accessToken = userResponse.authentication.accessToken;
                     var idToken = userResponse.authentication.idToken;
