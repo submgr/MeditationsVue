@@ -2,62 +2,24 @@
 <ion-page>
     <ion-content :fullscreen="true" >
 
-        <img style="padding-top: 4rem; height: auto; width: 70%; max-width: 400px; margin-left: auto; margin-right: auto; display: block;" :src="natureEllipse">
+        <img style="padding-top: 10rem; height: auto; width: 70%; max-width: 400px; margin-left: auto; margin-right: auto; display: block;" :src="natureEllipse">
 
         <p style="text-align: center;padding: 0px 18px 0px; margin-top: 2rem; margin-bottom: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 21px; font-weight: 400;">{{ natureText }}</p>
         <p style="text-align: center;padding: 0px 22px 0px; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 24px; font-weight: 700;">АЛЕКСАНДР!</p>
-
-        <ion-card style="margin-top: 9000px;">
-            <ion-card-header>
-                <ion-card-subtitle>Подзаголовок</ion-card-subtitle>
-                <ion-card-title>Заголовок</ion-card-title>
-            </ion-card-header>
-
-            <ion-card-content>
-                Держись ближе к сердцу Природы... и время от времени отрывайся,
-                и подняться на гору или провести неделю в лесу. Очисти свой дух.
-            </ion-card-content>
-        </ion-card>
-
-        <ion-card >
-            <ion-item>
-                <ion-icon :icon="pin" slot="start"></ion-icon>
-                <ion-label>ion-item in a card, icon left, button right</ion-label>
-                <ion-button fill="outline" slot="end">View</ion-button>
-            </ion-item>
-
-            <ion-card-content>
-                This is content, without any paragraph or header tags,
-                within an ion-card-content element.
-            </ion-card-content>
-        </ion-card>
-
-        <ion-card>
-            <ion-item href="#" class="ion-activated">
-                <ion-icon :icon="wifi" slot="start"></ion-icon>
-                <ion-label>Card Link Item 1 activated</ion-label>
-            </ion-item>
-
-            <ion-item href="#">
-                <ion-icon :icon="wine" slot="start"></ion-icon>
-                <ion-label>Card Link Item 2</ion-label>
-            </ion-item>
-
-            <ion-item class="ion-activated">
-                <ion-icon :icon="warning" slot="start"></ion-icon>
-                <ion-label>Card Button Item 1 activated</ion-label>
-            </ion-item>
-
-            <ion-item>
-                <ion-icon :icon="walk" slot="start"></ion-icon>
-                <ion-label>Card Button Item 2</ion-label>
-            </ion-item>
-        </ion-card>
-    </ion-content>
+        
+        <div id="outer" style="margin-top: 4rem; display: flex; justify-content: center;">
+          <ion-spinner name="crescent"></ion-spinner>
+        </div>
+      </ion-content>
 </ion-page>
 </template>
 
 <style scoped>
+
+ion-spinner {
+    width: 60px !important;
+    height: 60px !important;
+}
   *{
     font-family: Montserrat !important;
   }
@@ -82,14 +44,7 @@ import {
 import {
     IonPage,
     IonContent,
-    IonCard,
-    IonCardContent,
-    IonCardHeader,
-    IonCardSubtitle,
-    IonCardTitle,
-    IonIcon,
-    IonItem,
-    IonLabel
+    IonSpinner
 } from '@ionic/vue';
 
 export default defineComponent({
@@ -97,14 +52,14 @@ export default defineComponent({
     components: {
         IonContent,
         IonPage,
-        IonCard,
-        IonCardContent,
-        IonCardHeader,
-        IonCardSubtitle,
-        IonCardTitle,
-        IonIcon,
-        IonItem,
-        IonLabel
+        IonSpinner
+    },
+    mounted () {
+      const tabsEl = document.querySelector('ion-tab-bar');
+      if (tabsEl) {
+        tabsEl.hidden = true;
+        tabsEl.style.height = "1";
+      }
     },
     setup () {
 

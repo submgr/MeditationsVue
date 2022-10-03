@@ -13,8 +13,8 @@
             <ion-icon class="send-button" slot="end" :icon="arrowForwardOutline"></ion-icon>
             Продолжить
         </ion-button>--->
-
-        <ion-button href="/tabs/auth/email" color="danger" style="left: 0px; margin-right: 5%; margin-left: 5%; margin-top: 7.5%; --opacity: 0.7; --padding-start: 0; --padding-end: 0;" expand="block">
+        
+        <ion-button router-link="/tabs/auth/email" color="danger" style="left: 0px; margin-right: 5%; margin-left: 5%; margin-top: 7.5%; --opacity: 0.7; --padding-start: 0; --padding-end: 0;" expand="block">
             <ion-icon class="send-button" slot="start" :icon="mailOutline" style="text-align: left;"></ion-icon>
             <span style="text-align:left; width: 72%;">
                 Продолжить с эл. почтой
@@ -104,7 +104,7 @@
 
 <script lang="ts">
 import {
-    defineComponent, onMounted, getCurrentInstance, ref
+    defineComponent
 } from 'vue';
 import {
     IonPage,
@@ -112,7 +112,8 @@ import {
     IonInput,
     IonButton,
     IonIcon,
-    IonModal
+    IonModal,
+    IonLabel
 } from '@ionic/vue';
 
 import {
@@ -137,7 +138,8 @@ export default defineComponent({
         IonInput,
         IonButton,
         IonIcon,
-        IonModal
+        IonModal,
+        IonLabel
     },
     data () {
         return {
@@ -180,8 +182,9 @@ export default defineComponent({
                             {accessToken: accessToken, idToken: idToken }
                         }).then((response) => {
                             if(response.data.status == "okay"){
-                                this.message_modal_text = `Выполнен вход.`
-                                this.message_modal_isOpen = true;
+                                localStorage.auth_token = response.data.auth_token;
+                                //this.message_modal_text = `Выполнен вход.`
+                                //this.message_modal_isOpen = true;
                             }else {
                                 this.message_modal_text = `Произошла ошибка при входе с помощью учетной записи Google. Попробуйте еще раз или воспользуйтесь другим способом входа.\n\nСведения: ` + JSON.stringify(response)
                                 this.message_modal_isOpen = true;

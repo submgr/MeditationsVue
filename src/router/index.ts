@@ -13,7 +13,7 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: '',
-        redirect: '/tabs/tab1'
+        redirect: '/tabs/HelloScreen.vue'
       },
       {
         path: 'tab1',
@@ -33,11 +33,13 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'auth',
-        component: () => import('@/views/auth/AuthMain.vue')
+        component: () => import('@/views/auth/AuthMain.vue'),
+        meta: { transition: 'slide-left' },
       },
       {
         path: 'auth/email',
-        component: () => import('@/views/auth/AuthEmail.vue')
+        component: () => import('@/views/auth/AuthEmail.vue'),
+        meta: { transition: 'slide-left' },
       },
       {
         path: 'sorry',
@@ -50,6 +52,20 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeResolve((to, from, next) => {
+  // If this isn't an initial page load.
+  if (to.name) {
+      // Start the route progress bar.
+      console.log("Loading the next page...");
+  }
+  next()
+})
+
+router.afterEach((to, from) => {
+  // Complete the animation of the route progress bar.
+  console.log("Loaded the next (current) page.");
 })
 
 export default router

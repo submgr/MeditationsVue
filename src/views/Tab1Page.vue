@@ -11,8 +11,7 @@
           <ion-title size="large">Tab 1</ion-title>
         </ion-toolbar>
       </ion-header>
-    
-      <a href="/tabs/auth">Auth Page</a>
+      <router-link to="/tabs/auth">Auth Page</router-link>
     </ion-content>
   </ion-page>
 </template>
