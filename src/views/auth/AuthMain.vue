@@ -148,9 +148,15 @@ export default defineComponent({
     mounted () {
         const tabsEl = document.querySelector('ion-tab-bar');
         if (tabsEl) {
-        tabsEl.hidden = true;
-        tabsEl.style.height = "1";
+            tabsEl.hidden = true;
+            tabsEl.style.height = "1";
         }
+
+        GoogleAuth.initialize({
+            clientId: '33960040607-coalo6hl8cscmu8mngtb3rf6jgnibr5q.apps.googleusercontent.com',
+            scopes: ['profile', 'email'],
+            grantOfflineAccess: true,
+        });
     },
     setup() {
         return {
@@ -165,12 +171,6 @@ export default defineComponent({
             this.message_modal_isOpen = false;
         },
         async authenticateWithGoogle(){
-// use hook after platform dom ready
-GoogleAuth.initialize({
-    clientId: '33960040607-coalo6hl8cscmu8mngtb3rf6jgnibr5q.apps.googleusercontent.com',
-    scopes: ['profile', 'email'],
-    grantOfflineAccess: true,
-});
             const userResponse = await GoogleAuth.signIn()
                     var accessToken = userResponse.authentication.accessToken;
                     var idToken = userResponse.authentication.idToken;
