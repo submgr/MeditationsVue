@@ -47,6 +47,13 @@ const routes: Array<RouteRecordRaw> = [
         meta: { transition: 'slide-left' },
       },
       {
+        path: 'auth/almostdone',
+        component: () => import('@/views/auth/AlmostDone.vue'),
+        props: true,
+        name: "auth/almostdone",
+        meta: { transition: 'slide-left' },
+      },
+      {
         path: 'sorry',
         component: () => import('@/views/SplashSorry.vue')
       },

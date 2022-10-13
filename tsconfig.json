@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "noImplicitAny": false,
+    "useUnknownInCatchVariables": false,
     "allowJs": true,
     "target": "esnext",
     "module": "esnext",

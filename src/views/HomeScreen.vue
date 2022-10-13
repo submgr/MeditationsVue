@@ -1,21 +1,20 @@
 <template>
-    <div
-            v-if="showStory"
-            style="position: absolute; height: 100vh; width: 100vw; background: black; top: 0rem !important;"
-            >
-            <div style="position: fixed; z-index: 2; padding-top: 1.5rem; right: 0; padding-right: 1rem;">
-                <ion-icon :icon="closeOutline" style="color: white; font-size: 2rem;" @click="toggleStory"></ion-icon>
-            </div>
-            <section class="justify-center" style="position: flex; align-items: center; justify-content: center;">
-                <Stories
-                v-if="showStory"
-                :stories="items" :interval="8000"
-                style="position: absolute; top: 0rem !important; height: 100%; width: 100%;"
-                />
-            </section>
-        </div>
 <ion-page >
-    
+    <div
+        v-if="showStory"
+        style="position: absolute; height: 100vh; width: 100vw; background: black; top: 0rem !important;"
+        >
+        <div style="position: fixed; z-index: 2; padding-top: 1.5rem; right: 0; padding-right: 1rem;">
+            <ion-icon :icon="closeOutline" style="color: white; font-size: 2rem;" @click="toggleStory"></ion-icon>
+        </div>
+        <section class="justify-center" style="position: flex; align-items: center; justify-content: center;">
+            <Stories
+            v-if="showStory"
+            :stories="items" :interval="8000"
+            style="position: absolute; top: 0rem !important; height: 100%; width: 100%;"
+            />
+        </section>
+    </div>
     <ion-content :fullscreen="true" >
         <div style="padding: 20px; padding-top: 42px; overflow:scroll; white-space: nowrap;" @click="toggleStory">
             <div style="height: 70px; width: 70px; background-color: red; border-radius: 50%; display: inline-block; margin-right: 3%;"></div>
@@ -66,7 +65,7 @@ export default defineComponent({
     },
     methods: {
         toggleStory() {
-        this.showStory = !this.showStory
+            this.showStory = !this.showStory
         },
     },
     data: () => ({

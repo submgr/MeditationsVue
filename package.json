@@ -26,6 +26,9 @@
     "core-js": "^3.6.5",
     "imagemin": "^8.0.1",
     "ionicons": "^6.0.3",
+    "lottie-vuejs": "^0.4.0",
+    "lottie-web-vue": "^2.0.6",
+    "pinia": "^2.0.23",
     "swiper": "^8.4.2",
     "tone": "^14.7.77",
     "video.js": "^7.20.3",
@@ -34,7 +37,9 @@
     "vue-insta-stories": "^0.9.3",
     "vue-pincode-input": "^0.4.0",
     "vue-plyr": "^7.0.0",
-    "vue-router": "^4.0.12"
+    "vue-router": "^4.0.12",
+    "vue3-lottie": "^2.3.0",
+    "xregexp": "^5.1.1"
   },
   "devDependencies": {
     "@capacitor/cli": "4.3.0",

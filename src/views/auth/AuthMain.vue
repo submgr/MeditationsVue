@@ -129,6 +129,8 @@ import {
 
 import axios from 'axios'
 
+import globaldata from '../../modules/global';
+
 export default defineComponent({
     name: 'Tab1Page',
     components: {
@@ -178,11 +180,11 @@ export default defineComponent({
                     var idToken = userResponse.authentication.idToken;
                     // eslint-disable-next-line
                     const parent_this = this;
-                    axios.get("https://meditations-app.azurewebsites.net/service/auth_withGoogle", { params:
+                    axios.get(globaldata.api.hostname + "service/auth_withGoogle", { params:
                             {accessToken: accessToken, idToken: idToken }
                         }).then((response) => {
                             if(response.data.status == "okay"){
-                                localStorage.auth_token = response.data.auth_token;
+                                this.$router.push({path:'/tabs/auth/almostdone', replace: true, query: { auth_token: response.data.auth_token, auth_userid:response.data.userid }});
                                 //this.message_modal_text = `Выполнен вход.`
                                 //this.message_modal_isOpen = true;
                             }else {

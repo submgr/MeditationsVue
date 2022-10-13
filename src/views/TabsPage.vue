@@ -17,6 +17,10 @@
           <ion-icon :icon="gameController" />
           <ion-label>Tab 3</ion-label>
         </ion-tab-button>
+        <ion-tab-button tab="tab5" href="/tabs/home">
+          <ion-icon :icon="gameController" />
+          <ion-label>Tab 3</ion-label>
+        </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>
   </ion-page>

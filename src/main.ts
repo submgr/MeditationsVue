@@ -31,6 +31,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 app.config.globalProperties.$http = axios; // Allow axios in all componenets this.$http.get
+
   
 router.isReady().then(() => {
   app.mount('#app');

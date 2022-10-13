@@ -170,6 +170,8 @@
         logoGoogle,
         chatbubbleOutline
     } from 'ionicons/icons';
+
+    import globaldata from '../../modules/global';
     
     export default defineComponent({
         name: 'Tab1Page',
@@ -206,7 +208,7 @@
                 }else{
                     // eslint-disable-next-line
                     var parent_this = this;
-                    this.$http.get("https://meditations-app.azurewebsites.net/service/auth", { params:
+                    this.$http.get(globaldata.api.hostname + "service/auth", { params:
                         {method: "email", login_thing: this.email }
                     }).then((response) => {
                         console.log("Received data from server for auth request.", response.data)
@@ -237,15 +239,18 @@
                 }else{
                     // eslint-disable-next-line
                     var parent_this = this;
-                    this.$http.get("https://meditations-app.azurewebsites.net/service/auth_getToken", { params:
+                    var auth_userid = this.userid;
+                    this.$http.get(globaldata.api.hostname + "service/auth_getToken", { params:
                         {userid: this.userid, verificationCode: this.code }
                     }).then((response) => {
                         console.log("Received data from server for auth request.", response.data)
                         if(response.data.status == "okay"){
-                            localStorage.auth_token = response.data.auth_token;
-                            //this.$router.push('/tabs/');
-                            parent_this.message_modal_text = `Выполнен вход.`
-                            parent_this.message_modal_isOpen = true;
+                            this.$router.push({path:'/tabs/auth/almostdone', replace: true, query: {
+                                auth_token: response.data.auth_token,
+                                auth_userid: auth_userid
+                            }});
+                            //parent_this.message_modal_text = `Выполнен вход.`
+                            //parent_this.message_modal_isOpen = true;
                         }else{
                             this.message_modal_text = `Код подтверждения не подошел. Попробуйте еще раз.\n\nСведения: ${response.data.status}—${response.data.message}`
                             this.message_modal_isOpen = true;

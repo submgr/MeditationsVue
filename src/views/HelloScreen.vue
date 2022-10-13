@@ -1,17 +1,17 @@
 <template>
-<ion-page>
-    <ion-content :fullscreen="true" >
+  <ion-page>
+      <ion-content :fullscreen="true" >
 
-        <img style="padding-top: 10rem; height: auto; width: 70%; max-width: 400px; margin-left: auto; margin-right: auto; display: block;" :src="natureEllipse">
+          <img style="padding-top: 10rem; height: auto; width: 70%; max-width: 400px; margin-left: auto; margin-right: auto; display: block;" :src="natureEllipse">
 
-        <p style="text-align: center;padding: 0px 18px 0px; margin-top: 2rem; margin-bottom: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 21px; font-weight: 400;">{{ natureText }}</p>
-        <p style="text-align: center;padding: 0px 22px 0px; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 24px; font-weight: 700;">АЛЕКСАНДР!</p>
-        
-        <div id="outer" style="margin-top: 4rem; display: flex; justify-content: center;">
-          <ion-spinner name="crescent"></ion-spinner>
-        </div>
-      </ion-content>
-</ion-page>
+          <p style="text-align: center;padding: 0px 18px 0px; margin-top: 2rem; margin-bottom: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 21px; font-weight: 400;">{{ natureText }}</p>
+          <p style="text-align: center;padding: 0px 22px 0px; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 24px; font-weight: 700;">{{ user_firstname }}!</p>
+          
+          <div id="outer" style="margin-top: 4rem; display: flex; justify-content: center;">
+            <ion-spinner name="crescent"></ion-spinner>
+          </div>
+        </ion-content>
+  </ion-page>
 </template>
 
 <style scoped>
@@ -39,13 +39,16 @@ ion-spinner {
 
 <script lang="ts">
 import {
-    defineComponent
+    defineComponent,
+    inject
 } from 'vue';
 import {
     IonPage,
     IonContent,
     IonSpinner
 } from '@ionic/vue';
+
+import globaldata from '../modules/global';
 
 export default defineComponent({
     name: 'Tab2Page',
@@ -54,18 +57,32 @@ export default defineComponent({
         IonPage,
         IonSpinner
     },
+    data(){
+      return{
+        user_firstname: "%USER_FIRSTNAME"
+      }
+    },
     mounted () {
       // eslint-disable-next-line
       const parent_this = this;
 
-      setTimeout(function () {
-        parent_this.$router.replace('/tabs/auth');
-        if(localStorage.auth_token){
+      if(localStorage.getItem("auth_token")){
+        setTimeout(function (this) {
           parent_this.$router.replace('/tabs/home')
-        }else{
-          parent_this.$router.replace('/tabs/hello')
+          const tabsEl = document.querySelector('ion-tab-bar');
+          if (tabsEl) {
+            tabsEl.hidden = false;
+            tabsEl.style.height = "1";
+          }
+        }, 5000);
+
+        if(localStorage.getItem("user_firstname") != null){
+          parent_this.user_firstname = localStorage.getItem("user_firstname") + "";
         }
-      }, 5000);
+        
+      } else{
+        parent_this.$router.replace('/tabs/auth');
+      }
 
       const tabsEl = document.querySelector('ion-tab-bar');
       if (tabsEl) {
@@ -76,6 +93,8 @@ export default defineComponent({
       
     },
     setup () {
+
+      
 
       function get_random (list) {
         return list[Math.floor((Math.random()*list.length))];
