@@ -501,6 +501,6 @@
 /* Import one of the Vue Flow Form CSS themes (optional) */
 /* @import '~@ditdot-dev/vue-flow-form/dist/vue-flow-form.theme-minimal.css'; */
 /* @import '~@ditdot-dev/vue-flow-form/dist/vue-flow-form.theme-green.css'; */
-@import '../../assets/css/quiz-flow.css';
+@import '../assets/css/quiz-flow.css';
 </style>
   
