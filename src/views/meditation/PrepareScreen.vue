@@ -65,7 +65,7 @@
                       Не пугайтесь: в этом нет ничего страшного, часто бывают моменты, когда уровень эмоционального благополучия резко падает. Например, это может произойти осенью или весной, или из-за определенных жизненных обстоятельств.<br><br>Уровень эмоционального состояния можно вернуть довольно быстро, для этого рекомендуется больше времени проводить на свежем воздухе. Если вы смотрите фильмы или сериалы, это отличный момент, чтобы обратить момент на комедии (пример такого сериала: "Теория большого взрыва"). Медитация поможет вам лучше погрузиться в себя, и именно это может помочь вам: мы часто излишне беспокоимся там, где можно обойтись без этого.</span></p>
                   </div>
                   <div style="border: 1px solid #ccc!important; background-color: var(--vff-button-color); margin-right: 60%;">
-                    <span style="font-size: 18px; display: block; font-weight: 500; color: var(--vff-button-text-color); padding: .6em 1.4em;">Продолжить</span>
+                    <span style="font-size: 20vw; display: block; font-weight: 500; color: var(--vff-button-text-color); padding: .6em 1.4em;">Продолжить</span>
                   </div>
                 </div>
               </div>
@@ -466,6 +466,6 @@
 /* Import one of the Vue Flow Form CSS themes (optional) */
 /* @import '~@ditdot-dev/vue-flow-form/dist/vue-flow-form.theme-minimal.css'; */
 /* @import '~@ditdot-dev/vue-flow-form/dist/vue-flow-form.theme-green.css'; */
-@import '../../assets/css/quiz-flow.css';
+@import '../assets/css/quiz-flow.css';
 </style>
   
