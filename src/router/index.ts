@@ -60,6 +60,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'home',
         component: () => import('@/views/HomeScreen.vue')
+      },
+      {
+        path: 'meditation/prepare',
+        component: () => import('@/views/PrepareScreen.vue')
       }
     ]
   }
