@@ -10,6 +10,19 @@
   *{
     font-family: Montserrat;
   }
+  @media (prefers-color-scheme: light) {
+    ion-content {
+      --background: linear-gradient(to right, rgba(191, 209, 212, 0.07), rgba(250, 255, 241, 0.07)),
+    url(https://grainy-gradients.vercel.app/noise.svg);;
+    filter: contrast(100%) brightness(100%);
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    ion-content {
+      --background: #000 url('./assets/abstract/black-and-noise-background.png') no-repeat center center / cover !important;
+    }
+  }
 </style>
 
 <script lang="ts">

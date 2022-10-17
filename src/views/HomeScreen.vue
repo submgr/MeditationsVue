@@ -23,16 +23,125 @@
             <div style="height: 70px; width: 70px; background-color: red; border-radius: 50%; display: inline-block; margin-right: 3%;"></div>
             <div style="height: 70px; width: 70px; background-color: red; border-radius: 50%; display: inline-block; margin-right: 3%;"></div>
         </div>
-        <div style="padding-left: 2rem; padding-top: 2rem;">
-            <h1 style="font-size: 34px;" >Test</h1>
+        <div style="padding-top: 2rem;">
+            <router-link to="/tabs/meditation/prepare">
+                <div class="card-alfa custom-swiper suggestion-block bg-1 card-meditate">
+                    <div>
+                        <ion-icon :icon="playOutline" style="margin-left: 0.7rem; margin-top: 1.8rem; color: white; font-size: 3rem;" @click="toggleStory"></ion-icon>
+                        <div class="text-a1 suggestion-text text-meditate">Медитация</div>
+                    </div>
+                </div>
+            </router-link>
+            <div class="card-alfa custom-swiper suggestion-block bg-2">
+                <div>
+                    <div class="text-a1 suggestion-text">Пора улыбнуться, давайте посмотрим на ваш настрой сегодня?</div>
+                </div>
+            </div>
         </div>
+
     </ion-content>
 </ion-page>
 </template>
 
 <style scoped>
-    ion-content {
-        --background: #030303;
+    .standart_padding{
+        margin: 0px 15px 30px 15px;
+    }
+    .card{
+        border-radius: 20px;
+        background-color: blue;
+        box-shadow: 0 4px 24px 0 rgb(0 0 0 / 10%);
+    }
+    .card-meditate{
+        height: 35vh !important;
+    }
+
+    .suggestion-block{
+        margin-top: 0 !important;
+        margin-bottom: 5%;
+        height: 34vh;
+        background-color: rgba(255, 255, 255, 0.104) !important;
+    }
+
+    .bg-1{
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(1, 116, 9, 0.714)), url('https://images.unsplash.com/photo-1586078074298-05dca4848695?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1935&q=80') !important;
+        background-position: 100%;
+        background-size: cover !important;
+    }
+
+    .text-meditate{
+        background-image: linear-gradient(45deg, #ffffff 0%, #e5f1e1 50%, #82d187 100%) !important;
+    }
+
+    .bg-2{
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(118, 0, 196, 0.714)), url('https://images.unsplash.com/photo-1554224311-beee415c201f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80') !important;
+        background-position: 100%;
+        background-size: cover !important;
+    }
+
+
+    .bg-3{
+        background: linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgb(11, 11, 11)), url('https://images.unsplash.com/photo-1511376979163-f804dff7ad7b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80') !important;
+    }
+
+    .suggestion-block .text-a1{
+        margin-left: 4%;
+        margin-right: 4%;
+        text-align: left;
+        position: absolute;
+        white-space: normal; 
+        word-wrap: break-word !important;
+        background-image: linear-gradient(45deg, #989891 0%, #ffffff 50%, #d182cb 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        bottom: 9%;
+        left: 0% !important;
+        font-size: 29px;
+        font-weight: 500;
+    }
+    
+    ion-page {
+        --background: #111111;
+    }
+
+    .card-alfa {
+        position: relative;
+        border-radius: 25px;
+        width: auto;
+        background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);
+        margin-top: 7%;
+        margin-left: 4%;
+        margin-right: 4%;
+    }
+
+    .small-card{
+        height: 12vh;
+    }
+
+    .small-card-left{
+        margin-right: 1%;
+        background-color: rgba(255, 255, 255, 0.104) !important;
+        background-image: none;
+    }
+
+    .small-card-right{
+        background-color: rgba(255, 255, 255, 0.104) !important;
+        background-image: none;
+    }
+
+    .text-a1{
+        text-align: left;
+        position: absolute;
+        white-space: normal; 
+        word-wrap: break-word !important;
+        background-image: linear-gradient(45deg, #797973 0%, #020202 50%, #fbfcdb 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        bottom: 10%;
+        
+        right: 5%;
+        font-size: 35px;
+        font-weight: 500;
     }
 </style>
 
@@ -47,7 +156,7 @@ import {
     IonContent,
 } from '@ionic/vue';
 
-import { closeOutline } from 'ionicons/icons';
+import { closeOutline, playOutline } from 'ionicons/icons';
 
 export default defineComponent({
     name: 'Tab1Page',
@@ -99,7 +208,8 @@ export default defineComponent({
     },
     setup() {
         return {
-            closeOutline
+            closeOutline,
+            playOutline
         }
     }
 });
