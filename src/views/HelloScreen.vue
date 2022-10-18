@@ -59,7 +59,7 @@ export default defineComponent({
     },
     data(){
       return{
-        user_firstname: "%USER_FIRSTNAME"
+        user_firstname: "Человек"
       }
     },
     mounted () {
@@ -68,12 +68,17 @@ export default defineComponent({
 
       if(localStorage.getItem("auth_token")){
         setTimeout(function (this) {
-          parent_this.$router.replace('/tabs/home')
-          const tabsEl = document.querySelector('ion-tab-bar');
-          if (tabsEl) {
-            tabsEl.hidden = false;
-            tabsEl.style.height = "1";
+          if(localStorage.getItem("stats_emotionalstate_atleast_once")){
+            parent_this.$router.replace('/tabs/home')
+            const tabsEl = document.querySelector('ion-tab-bar');
+            if (tabsEl) {
+              tabsEl.hidden = false;
+              tabsEl.style.height = "1";
+            }
+          }else{
+            parent_this.$router.replace('/tabs/diagnostics/emotionalstate')
           }
+          
         }, 5000);
 
         if(localStorage.getItem("user_firstname") != null){

@@ -20,7 +20,6 @@
           <template v-slot:complete>
             <div class="f-section-wrap">
               <div v-if="1<2">
-                <span class="f-tagline">Связь с сервером</span>
                 <div v-if="loading">
                   <span class="fh2">Пожалуйста, подождите: сервер анализирует ваши ответ...</span>
                 </div>
@@ -64,8 +63,8 @@
                       <br><br>Сейчас медитации будут полезны вам тем, что они помогут вам повысить уровень эмоционального состояния.
                       Не пугайтесь: в этом нет ничего страшного, часто бывают моменты, когда уровень эмоционального благополучия резко падает. Например, это может произойти осенью или весной, или из-за определенных жизненных обстоятельств.<br><br>Уровень эмоционального состояния можно вернуть довольно быстро, для этого рекомендуется больше времени проводить на свежем воздухе. Если вы смотрите фильмы или сериалы, это отличный момент, чтобы обратить момент на комедии (пример такого сериала: "Теория большого взрыва"). Медитация поможет вам лучше погрузиться в себя, и именно это может помочь вам: мы часто излишне беспокоимся там, где можно обойтись без этого.</span></p>
                   </div>
-                  <div style="border: 1px solid #ccc!important; background-color: var(--vff-button-color); margin-right: 60%;">
-                    <span style="font-size: 20vw; display: block; font-weight: 500; color: var(--vff-button-text-color); padding: .6em 1.4em;">Продолжить</span>
+                  <div style="border: 1px solid #ccc!important; background-color: var(--vff-button-color); margin-right: 30%;" @click="goNext">
+                    <span style="font-size: 18px; display: block; font-weight: 500; color: var(--vff-button-text-color); padding: .6em 1.4em;">Продолжить</span>
                   </div>
                 </div>
               </div>
@@ -453,8 +452,14 @@
             data.answers.push(answer)
           }
         })
+
+        localStorage.setItem("stats_emotionalstate_atleast_once", "true")
     
         return data
+      },
+      goNext(event) {
+        console.log("Going home!", event)
+        this.$router.push({path:'/tabs/hello', replace: true});
       }
     }
   });

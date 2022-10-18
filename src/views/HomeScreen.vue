@@ -1,169 +1,149 @@
 <template>
-<ion-page >
-    <div
-        v-if="showStory"
-        style="position: absolute; height: 100vh; width: 100vw; background: black; top: 0rem !important;"
-        >
-        <div style="position: fixed; z-index: 2; padding-top: 1.5rem; right: 0; padding-right: 1rem;">
-            <ion-icon :icon="closeOutline" style="color: white; font-size: 2rem;" @click="toggleStory"></ion-icon>
-        </div>
-        <section class="justify-center" style="position: flex; align-items: center; justify-content: center;">
-            <Stories
-            v-if="showStory"
-            :stories="items" :interval="8000"
-            style="position: absolute; top: 0rem !important; height: 100%; width: 100%;"
-            />
-        </section>
-    </div>
-    <ion-content :fullscreen="true" >
-        <div style="padding: 20px; padding-top: 42px; overflow:scroll; white-space: nowrap;" @click="toggleStory">
-            <div style="height: 70px; width: 70px; background-color: red; border-radius: 50%; display: inline-block; margin-right: 3%;"></div>
-            <div style="height: 70px; width: 70px; background-color: red; border-radius: 50%; display: inline-block; margin-right: 3%;"></div>
-            <div style="height: 70px; width: 70px; background-color: red; border-radius: 50%; display: inline-block; margin-right: 3%;"></div>
-            <div style="height: 70px; width: 70px; background-color: red; border-radius: 50%; display: inline-block; margin-right: 3%;"></div>
-            <div style="height: 70px; width: 70px; background-color: red; border-radius: 50%; display: inline-block; margin-right: 3%;"></div>
-        </div>
-        <div style="padding-top: 2rem;">
-            <router-link to="/tabs/meditation/prepare">
-                <div class="card-alfa custom-swiper suggestion-block bg-1 card-meditate">
+    <ion-page>
+        <ion-content :fullscreen="true">
+            <h1 style="margin-left: 1.1rem; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Главная</h1>
+            <div style="padding-top: 1.1rem;">
+                <router-link to="/tabs/meditation/play">
+                    <div class="card-alfa custom-swiper suggestion-block bg-1 card-meditate">
+                        <div>
+                            <ion-icon :icon="playOutline" style="margin-left: 0.7rem; margin-top: 1.8rem; color: white; font-size: 3rem;" @click="toggleStory"></ion-icon>
+                            <div class="text-a1 suggestion-text text-meditate">Медитация</div>
+                        </div>
+                    </div>
+                </router-link>
+                <div class="card-alfa custom-swiper suggestion-block bg-2">
                     <div>
-                        <ion-icon :icon="playOutline" style="margin-left: 0.7rem; margin-top: 1.8rem; color: white; font-size: 3rem;" @click="toggleStory"></ion-icon>
-                        <div class="text-a1 suggestion-text text-meditate">Медитация</div>
+                        <div class="text-a1 suggestion-text">Пора улыбнуться, давайте поднимем вам настроение?</div>
                     </div>
                 </div>
-            </router-link>
-            <div class="card-alfa custom-swiper suggestion-block bg-2">
-                <div>
-                    <div class="text-a1 suggestion-text">Пора улыбнуться, давайте посмотрим на ваш настрой сегодня?</div>
-                </div>
             </div>
-        </div>
 
-    </ion-content>
-</ion-page>
+        </ion-content>
+    </ion-page>
 </template>
 
 <style scoped>
-    .standart_padding{
-        margin: 0px 15px 30px 15px;
-    }
-    .card{
-        border-radius: 20px;
-        background-color: blue;
-        box-shadow: 0 4px 24px 0 rgb(0 0 0 / 10%);
-    }
-    .card-meditate{
-        height: 35vh !important;
-    }
+.standart_padding {
+    margin: 0px 15px 30px 15px;
+}
 
-    .suggestion-block{
-        margin-top: 0 !important;
-        margin-bottom: 5%;
-        height: 34vh;
-        background-color: rgba(255, 255, 255, 0.104) !important;
-    }
+.card {
+    border-radius: 20px;
+    background-color: blue;
+    box-shadow: 0 4px 24px 0 rgb(0 0 0 / 10%);
+}
 
-    .bg-1{
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(1, 116, 9, 0.714)), url('https://images.unsplash.com/photo-1586078074298-05dca4848695?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1935&q=80') !important;
-        background-position: 100%;
-        background-size: cover !important;
-    }
+.card-meditate {
+    height: 33.5vh !important;
+}
 
-    .text-meditate{
-        background-image: linear-gradient(45deg, #ffffff 0%, #e5f1e1 50%, #82d187 100%) !important;
-    }
+.suggestion-block {
+    margin-top: 0 !important;
+    margin-bottom: 5%;
+    height: 34vh;
+    background-color: rgba(255, 255, 255, 0.104) !important;
+}
 
-    .bg-2{
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(118, 0, 196, 0.714)), url('https://images.unsplash.com/photo-1554224311-beee415c201f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80') !important;
-        background-position: 100%;
-        background-size: cover !important;
-    }
+.bg-1 {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(1, 116, 9, 0.714)), url('https://images.unsplash.com/photo-1586078074298-05dca4848695?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1935&q=80') !important;
+    background-position: 100%;
+    background-size: cover !important;
+}
 
+.text-meditate {
+    background-image: linear-gradient(45deg, #ffffff 0%, #e5f1e1 50%, #82d187 100%) !important;
+}
 
-    .bg-3{
-        background: linear-gradient(to bottom, rgba(0,0,0,0) 10%, rgb(11, 11, 11)), url('https://images.unsplash.com/photo-1511376979163-f804dff7ad7b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80') !important;
-    }
+.bg-2 {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(118, 0, 196, 0.714)), url('https://images.unsplash.com/photo-1554224311-beee415c201f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80') !important;
+    background-position: 100%;
+    background-size: cover !important;
+}
 
-    .suggestion-block .text-a1{
-        margin-left: 4%;
-        margin-right: 4%;
-        text-align: left;
-        position: absolute;
-        white-space: normal; 
-        word-wrap: break-word !important;
-        background-image: linear-gradient(45deg, #989891 0%, #ffffff 50%, #d182cb 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        bottom: 9%;
-        left: 0% !important;
-        font-size: 29px;
-        font-weight: 500;
-    }
-    
-    ion-page {
-        --background: #111111;
-    }
+.bg-3 {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgb(11, 11, 11)), url('https://images.unsplash.com/photo-1511376979163-f804dff7ad7b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80') !important;
+}
 
-    .card-alfa {
-        position: relative;
-        border-radius: 25px;
-        width: auto;
-        background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);
-        margin-top: 7%;
-        margin-left: 4%;
-        margin-right: 4%;
-    }
+.suggestion-block .text-a1 {
+    margin-left: 4%;
+    margin-right: 4%;
+    text-align: left;
+    position: absolute;
+    white-space: normal;
+    word-wrap: break-word !important;
+    background-image: linear-gradient(45deg, #989891 0%, #ffffff 50%, #d182cb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    bottom: 9%;
+    left: 0% !important;
+    font-size: 29px;
+    font-weight: 500;
+}
 
-    .small-card{
-        height: 12vh;
-    }
+ion-page {
+    --background: #111111;
+}
 
-    .small-card-left{
-        margin-right: 1%;
-        background-color: rgba(255, 255, 255, 0.104) !important;
-        background-image: none;
-    }
+.card-alfa {
+    position: relative;
+    border-radius: 25px;
+    width: auto;
+    background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);
+    margin-top: 7%;
+    margin-left: 4%;
+    margin-right: 4%;
+}
 
-    .small-card-right{
-        background-color: rgba(255, 255, 255, 0.104) !important;
-        background-image: none;
-    }
+.small-card {
+    height: 12vh;
+}
 
-    .text-a1{
-        text-align: left;
-        position: absolute;
-        white-space: normal; 
-        word-wrap: break-word !important;
-        background-image: linear-gradient(45deg, #797973 0%, #020202 50%, #fbfcdb 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        bottom: 10%;
-        
-        right: 5%;
-        font-size: 35px;
-        font-weight: 500;
-    }
+.small-card-left {
+    margin-right: 1%;
+    background-color: rgba(255, 255, 255, 0.104) !important;
+    background-image: none;
+}
+
+.small-card-right {
+    background-color: rgba(255, 255, 255, 0.104) !important;
+    background-image: none;
+}
+
+.text-a1 {
+    text-align: left;
+    position: absolute;
+    white-space: normal;
+    word-wrap: break-word !important;
+    background-image: linear-gradient(45deg, #797973 0%, #020202 50%, #fbfcdb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    bottom: 10%;
+
+    right: 5%;
+    font-size: 35px;
+    font-weight: 500;
+}
 </style>
 
-  
 <script lang="ts">
 import {
     defineComponent
 } from 'vue';
-import { Stories } from "vue-insta-stories";
 import {
     IonPage,
     IonContent,
 } from '@ionic/vue';
 
-import { closeOutline, playOutline } from 'ionicons/icons';
+import {
+    closeOutline,
+    playOutline
+} from 'ionicons/icons';
 
 export default defineComponent({
     name: 'Tab1Page',
     components: {
         IonContent,
-        IonPage,
-        Stories
+        IonPage
     },
     mounted() {
         const tabsEl = document.querySelector('ion-tab-bar');
@@ -180,30 +160,30 @@ export default defineComponent({
     data: () => ({
         showStory: false,
         items: [
-        "https://images.unsplash.com/photo-1531804159968-24716780d214?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=388&q=80",
-        "https://images.unsplash.com/photo-1529974019031-b0cd38fd54fc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-        {
-            url: "https://test.deqstudio.com/Vertical 4K Nature Film with Music - The Beauty of Big Island's Nature, Hawaii.mp4",
-            type: "video",
-        },
+            "https://images.unsplash.com/photo-1531804159968-24716780d214?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=388&q=80",
+            "https://images.unsplash.com/photo-1529974019031-b0cd38fd54fc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+            {
+                url: "https://test.deqstudio.com/Vertical 4K Nature Film with Music - The Beauty of Big Island's Nature, Hawaii.mp4",
+                type: "video",
+            },
         ]
     }),
     watch: {
         showStory: function (val) {
-            if(this.showStory){
+            if (this.showStory) {
                 const tabsEl = document.querySelector('ion-tab-bar');
                 if (tabsEl) {
                     tabsEl.hidden = true;
                     tabsEl.style.height = "1";
                 }
-            }else{
+            } else {
                 const tabsEl = document.querySelector('ion-tab-bar');
                 if (tabsEl) {
                     tabsEl.hidden = false;
                     tabsEl.style.height = "1";
                 }
             }
-            
+
         }
     },
     setup() {

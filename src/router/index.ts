@@ -62,8 +62,16 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/HomeScreen.vue')
       },
       {
+        path: 'diagnostics/emotionalstate',
+        component: () => import('@/views/diagnostics/EmotionalState.vue')
+      },
+      {
         path: 'meditation/prepare',
-        component: () => import('@/views/PrepareScreen.vue')
+        component: () => import('@/views/meditation/PrepareScreen.vue')
+      },
+      {
+        path: 'meditation/play',
+        component: () => import('@/views/meditation/PlayerScreen.vue')
       }
     ]
   }
