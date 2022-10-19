@@ -70,8 +70,12 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/meditation/PrepareScreen.vue')
       },
       {
+        name: 'meditation/play',
         path: 'meditation/play',
-        component: () => import('@/views/meditation/PlayerScreen.vue')
+        component: () => import('@/views/meditation/PlayerScreen.vue'),
+        props: {
+          default: true,
+        },
       }
     ]
   }

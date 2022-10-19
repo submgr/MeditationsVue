@@ -3,14 +3,14 @@
         <ion-content :fullscreen="true">
             <h1 style="margin-left: 1.1rem; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Главная</h1>
             <div style="padding-top: 1.1rem;">
-                <router-link to="/tabs/meditation/play">
+                <div @click="onClickButton" >
                     <div class="card-alfa custom-swiper suggestion-block bg-1 card-meditate">
                         <div>
                             <ion-icon :icon="playOutline" style="margin-left: 0.7rem; margin-top: 1.8rem; color: white; font-size: 3rem;" @click="toggleStory"></ion-icon>
                             <div class="text-a1 suggestion-text text-meditate">Медитация</div>
                         </div>
                     </div>
-                </router-link>
+                </div>
                 <div class="card-alfa custom-swiper suggestion-block bg-2">
                     <div>
                         <div class="text-a1 suggestion-text">Пора улыбнуться, давайте поднимем вам настроение?</div>
@@ -139,6 +139,8 @@ import {
     playOutline
 } from 'ionicons/icons';
 
+import globaldata from '../modules/global';
+
 export default defineComponent({
     name: 'Tab1Page',
     components: {
@@ -155,6 +157,20 @@ export default defineComponent({
     methods: {
         toggleStory() {
             this.showStory = !this.showStory
+        },
+        onClickButton() {
+            this.$http.get(globaldata.api.hostname + "access/meditations/demo_data", {
+                params: {
+                    method: "email"
+                }
+            }).then((response) => {
+                localStorage.setItem("temp/alfa_meditationdata", JSON.stringify(response.data))
+                this.$router.push({
+                    name: "meditation/play",
+                });
+            }).catch(function (error) {
+                console.log("CATCHED AN ERROR.", error)
+            });
         },
     },
     data: () => ({
