@@ -16,7 +16,7 @@
     "@capacitor/core": "4.3.0",
     "@capacitor/haptics": "4.0.1",
     "@capacitor/keyboard": "4.0.1",
-    "@capacitor/status-bar": "4.0.1",
+    "@capacitor/status-bar": "4.0.1", 
     "@codetrix-studio/capacitor-google-auth": "^3.2.0",
     "@ditdot-dev/vue-flow-form": "^2.3.1",
     "@ionic/vue": "^6.0.0",
