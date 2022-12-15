@@ -42,8 +42,8 @@ const routes: Array<RouteRecordRaw> = [
         meta: { transition: 'slide-left' },
       },
       {
-        path: 'auth/email',
-        component: () => import('@/views/auth/AuthEmail.vue'),
+        path: 'auth/anonymous',
+        component: () => import('@/views/auth/Anonymous.vue'),
         meta: { transition: 'slide-left' },
       },
       {

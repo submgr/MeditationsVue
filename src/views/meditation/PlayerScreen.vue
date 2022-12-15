@@ -1,13 +1,22 @@
 <template lang="en">
 <ion-page>
     <ion-content :fullscreen="true">
-        <vue-plyr :options="options" @click="" ref="videoplayer" style="object-fit: cover;">
-            <video controls playsinline>
-                <source size="720" src="https://test.deqstudio.com/pexels-tima-miroshnichenko-5716900.mp4" type="video/mp4" />
-                <source size="1080" src="https://test.deqstudio.com/pexels-tima-miroshnichenko-5716900.mp4" type="video/mp4" />
-            </video>
-        </vue-plyr>
-        <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="meditationState == 'prestart_info'" trigger="open-modal" :initial-breakpoint="0.40" :breakpoints="[0,  0.40, 0.75]" handle-behavior="cycle">
+        <SimpleMeditationBackground/>
+        <div class="controllers_wrapper">
+            <div class="controllers">
+                <ion-grid class="controllers_grid">
+                    <ion-row>
+                        <ion-col @click="playerRewind('past', 10)"><ion-icon :icon="playBackOutline" /></ion-col>
+                        <ion-col></ion-col>
+                        <ion-col v-if="playerState == 'stopped'" @click="changePlayerState"><ion-icon :icon="play" /></ion-col>
+                        <ion-col v-if="playerState == 'playing'" @click="changePlayerState"><ion-icon :icon="pause" /></ion-col>
+                        <ion-col></ion-col>
+                        <ion-col @click="playerRewind('future', 10)"><ion-icon :icon="playForwardOutline" /></ion-col>
+                    </ion-row>
+                </ion-grid> 
+            </div>
+        </div>
+        <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="meditationState == 'prestart_info' && playerState == 'stopped'" trigger="open-modal" :initial-breakpoint="0.40" :breakpoints="[0,  0.40, 0.75]" handle-behavior="cycle">
             <ion-content class="ion-padding">
                 <div class="ion-margin-top">
                     <ion-label style="white-space: pre-wrap;"><br><b style="font-size: 28px;">Вы готовы?</b><br><br>Ваша медитация готова. Перед началом мы обычно рекомендуем убедиться, что вам удобно и вы можете слышать звук. Если вокруг шумно, воспользуйтесь наушниками.</ion-label>
@@ -21,7 +30,33 @@
 </template>
 
 <style scoped>
-
+.controllers_wrapper{
+    margin: 0 auto;
+    position: fixed;
+    z-index: 5;
+    bottom: 3vh;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+.controllers{
+    width: 84vw;
+    height: 9vh;
+    border-radius: 36px;
+    border-color: rgba(255, 255, 255, 0.604);
+    box-shadow: 0 0 19px #ffffff6e;
+    border-style:dotted;
+    border-width: 1px;
+}
+.controllers_grid{
+    color: rgba(255, 255, 255, 0.499);
+    font-size: 26px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 10vw;
+    margin-right: 10vw;
+    text-align: center;
+}
 </style>
 
 <script lang="ts">
@@ -50,6 +85,10 @@ import 'vue-plyr/dist/vue-plyr.css'
 
 import globaldata from '../../modules/global';
 
+import SimpleMeditationBackground from '@/components/SimpleMeditationBackground.vue';
+
+import { gameController, playBackOutline, play, pause, playForwardOutline } from 'ionicons/icons';
+
 export default defineComponent({
     name: 'Tab1Page',
     props: {
@@ -60,7 +99,8 @@ export default defineComponent({
         IonPage,
         IonModal,
         IonLabel,
-        VuePlyr
+        VuePlyr,
+        SimpleMeditationBackground
     },
     mounted() {
         const tabsEl = document.querySelector('ion-tab-bar');
@@ -71,55 +111,116 @@ export default defineComponent({
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        this.videoplayer = this.$refs.videoplayer.player;
+        //sthis.videoplayer = this.$refs.videoplayer.player;
     },
     methods: {
+        playerRewind(direction, time){
+            var audiotrack_playposition_now = this.audiotrack.seek(this.audiotrack_musicid)
+            switch (direction) {
+                case "past":
+                    if(time > audiotrack_playposition_now){
+                        this.audiotrack.seek(0, this.audiotrack_musicid)
+                    }else{
+                        this.audiotrack.seek(audiotrack_playposition_now - time, this.audiotrack_musicid)
+                    }
+                    
+                    break;
+
+                case "future":
+                    if( this.audiotrack.duration(this.audiotrack_musicid) < this.audiotrack.seek(this.audiotrack_musicid) + time){
+                        this.audiotrack.seek(audiotrack_playposition_now, this.audiotrack_musicid)
+                    }else{
+                        this.audiotrack.seek(audiotrack_playposition_now + time, this.audiotrack_musicid)
+                    }
+                    break;
+            
+                default:
+                    break;
+            }
+        },
+        changePlayerState(){
+            if(this.meditationState == "ready"){
+                switch (this.playerState) {
+                    case "stopped":
+                        this.playerState = "playing"
+                        this.audiotrack_musicid = this.audiotrack.play();
+                        this.backgroundtrack_musicid = this.backgroundtrack.play();
+                        break;
+                    case "playing":
+                        console.log(this.audiotrack_musicid)
+                        this.audiotrack.pause(this.audiotrack_musicid);
+                        this.audiotrack.pause(this.backgroundtrack_musicid);
+                        this.playerState = "stopped";
+                        break;
+                    default:
+                        break;
+                }
+            }else{
+                this.startMeditation()
+            }
+        },
         startMeditation() {
-            this.meditationState = "playing"
+            this.meditationState = "ready"
             var data = JSON.parse(localStorage.getItem("temp/alfa_meditationdata"))
             console.log("Received LOCAL persist data from localstorage.", data)
 
             var a = 1;
 
-            if (1 < a + 1) {
-                this.videoplayer.source = {
-                    type: 'video',
-                    title: 'Meditation',
-                    sources: [{
-                            src: 'https://test.deqstudio.com/pexels-tima-miroshnichenko-5716900.mp4',
-                            type: 'video/mp4',
-                            size: 720,
-                        },
-                        {
-                            src: 'https://test.deqstudio.com/pexels-tima-miroshnichenko-5716900.mp4',
-                            type: 'video/webm',
-                            size: 1080,
-                        },
-                    ]
-                };
-                this.videoplayer.play();
+            if (1 > a + 1) {
+                //this.videoplayer.source = {
+                //    type: 'video',
+                //    title: 'Meditation',
+                //    sources: [{
+                //            src: 'https://test.deqstudio.com/pexels-tima-miroshnichenko-5716900.mp4',
+                //            type: 'video/mp4',
+                //            size: 720,
+                //        },
+                //        {
+                //            src: 'https://test.deqstudio.com/pexels-tima-miroshnichenko-5716900.mp4',
+                //            type: 'video/webm',
+                //            size: 1080,
+                //        },
+                //    ]
+                //};
+                //this.videoplayer.play();
             }
 
             if (!data.content) {
                 console.log("[SCREEN] CAN'T ACCESS $content AT $response!\nIt's critical!")
             }
 
+            // eslint-disable-next-line
+            const parent_this = this;
+
             if (data.content.audio.audiotrack) {
-                var audiotrack = new Howl({
+                this.audiotrack = new Howl({
                     src: [data.content.audio.audiotrack.url],
-                    html5: true
+                    html5: true,
+                    onpause(){
+                        parent_this.playerState = "stopped"
+                    },
+                    onstop(){
+                        parent_this.playerState = "stopped"
+                    },
+                    onend(){
+                        parent_this.playerState = "stopped"
+                    }
                 });
-                audiotrack.play();
+                setTimeout(() => {
+                    this.audiotrack_musicid = this.audiotrack.play();
+                }, 9000);
+                this.playerState = "playing"
             } else {
                 console.log("[SCREEN] THERE IS NO audio/audiotrack!")
             }
 
             if (data.content.audio.backgroundtrack) {
-                var backgroundtrack = new Howl({
+                this.backgroundtrack = new Howl({
                     src: [data.content.audio.backgroundtrack.url],
+                    volume: 0.05,
                     html5: true
                 });
-                backgroundtrack.play();
+                this.backgroundtrack_musicid = this.backgroundtrack.play();
             } else {
                 console.log("[SCREEN] Can't find audio/backgroundtrack!")
             }
@@ -128,8 +229,14 @@ export default defineComponent({
     data() {
         return {
             test: this.$route.params.test,
+            playerState: "stopped",
+
             videoplayer: null,
             meditationState: "prestart_info",
+            audiotrack: null,
+            audiotrack_musicid: null,
+            backgroundtrack: null,
+            backgroundtrack_musicid: null,
             options: {
                 autoplay: false,
                 loop: {
@@ -148,9 +255,14 @@ export default defineComponent({
     },
     setup() {
         return {
+            gameController,
             closeOutline,
             playOutline,
-            arrowForward
+            arrowForward,
+            playBackOutline,
+            play,
+            pause,
+            playForwardOutline
         }
     }
 });
