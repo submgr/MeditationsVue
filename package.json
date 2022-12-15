@@ -28,8 +28,6 @@
     "core-js": "^3.6.5",
     "css-loader": "^6.7.1",
     "howler": "^2.2.3",
-    "imagemin": "^8.0.1",
-    "imagemin-mozjpeg": "^10.0.0",
     "ionicons": "^6.0.3",
     "lottie-vuejs": "^0.4.0",
     "lottie-web-vue": "^2.0.6",
