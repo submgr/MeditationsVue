@@ -86,7 +86,12 @@ export default defineComponent({
         }
         
       } else{
-        parent_this.$router.replace('/tabs/auth');
+        if(this.$route.query.isYandexGames && this.$route.query.isYandexGames == "true"){
+            console.log("isYandexGames -> true.")
+            this.$router.push( { path:'/tabs/auth/anonymous', replace: true } );
+        }else{
+          parent_this.$router.replace('/tabs/auth');
+        }
       }
 
       const tabsEl = document.querySelector('ion-tab-bar');

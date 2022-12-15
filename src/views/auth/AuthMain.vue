@@ -155,17 +155,12 @@ export default defineComponent({
             tabsEl.hidden = true;
             tabsEl.style.height = "1";
         }
-
-        if(this.$route.query.isYandexGames && this.$route.query.isYandexGames == "true"){
-            console.log("isYandexGames -> true.")
-            this.$router.push( { path:'/tabs/auth/anonymous', replace: true } );
-        }else{
-            GoogleAuth.initialize({
-                clientId: '33960040607-coalo6hl8cscmu8mngtb3rf6jgnibr5q.apps.googleusercontent.com',
-                scopes: ['profile', 'email'],
-                grantOfflineAccess: true,
-            });
-        }
+        
+        GoogleAuth.initialize({
+            clientId: '33960040607-coalo6hl8cscmu8mngtb3rf6jgnibr5q.apps.googleusercontent.com',
+            scopes: ['profile', 'email'],
+            grantOfflineAccess: true,
+        });
     },
     setup() {
         return {
