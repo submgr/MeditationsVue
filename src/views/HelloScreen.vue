@@ -48,7 +48,10 @@ import {
     IonSpinner
 } from '@ionic/vue';
 
+declare const YaGames;
+
 import globaldata from '../modules/global';
+import { loadScript } from "vue-plugin-load-script";
 
 export default defineComponent({
     name: 'Tab2Page',
@@ -65,6 +68,8 @@ export default defineComponent({
     mounted () {
       // eslint-disable-next-line
       const parent_this = this;
+
+      
 
       if(localStorage.getItem("auth_token")){
         setTimeout(function (this) {
@@ -87,7 +92,21 @@ export default defineComponent({
         
       } else{
         if(this.$route.query.isYandexGames && this.$route.query.isYandexGames == "true"){
-            console.log("isYandexGames -> true.")
+            console.log("isYandexGames -> true.");
+            loadScript("https://yandex.ru/games/sdk/v2")
+              .then(() => {
+                console.log("loadScript>then:: Success->then;")
+                // eslint-disable-next-line
+                YaGames
+                .init()
+                .then(ysdk => {
+                    console.log('Yandex SDK initialized');
+                    (window as any).ysdk = ysdk;
+                });
+              })
+              .catch(() => {
+                console.log("loadScript>then:: Failed to fetch script;")
+              });
             this.$router.push( { path:'/tabs/auth/anonymous', replace: true } );
         }else{
           parent_this.$router.replace('/tabs/auth');

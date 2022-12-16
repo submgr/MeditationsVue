@@ -76,7 +76,11 @@ const routes: Array<RouteRecordRaw> = [
         props: {
           default: true,
         },
-      }
+      },
+      {
+        path: 'meditation/finished',
+        component: () => import('@/views/meditation/OnFinishScreen.vue')
+      },
     ]
   }
 ]

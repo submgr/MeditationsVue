@@ -204,6 +204,9 @@ export default defineComponent({
                     },
                     onend(){
                         parent_this.playerState = "stopped"
+                        setTimeout(() => {
+                            parent_this.$router.push( { path:'/tabs/meditation/finished', replace: true } );
+                        }, 4000);
                     }
                 });
                 setTimeout(() => {

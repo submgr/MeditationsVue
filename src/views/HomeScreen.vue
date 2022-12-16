@@ -11,11 +11,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-alfa custom-swiper suggestion-block bg-2">
+                <!---<div class="card-alfa custom-swiper suggestion-block bg-2">
                     <div>
                         <div class="text-a1 suggestion-text">Пора улыбнуться, давайте поднимем вам настроение?</div>
                     </div>
-                </div>
+                </div>--->
             </div>
 
         </ion-content>
