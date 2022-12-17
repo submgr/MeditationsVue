@@ -16,9 +16,6 @@
                 </ion-grid> 
             </div>
         </div>
-        <ion-popover :is-open="popoverOpen" :event="event" @didDismiss="popoverOpen = false" style="margin-bottom: 5vh;">
-            <ion-content>Hello World!</ion-content>
-          </ion-popover>
         <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="meditationState == 'prestart_info' && playerState == 'stopped'" trigger="open-modal" :initial-breakpoint="0.40" :breakpoints="[0,  0.40, 0.75]" handle-behavior="cycle">
             <ion-content class="ion-padding">
                 <div class="ion-margin-top">
