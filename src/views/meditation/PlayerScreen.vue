@@ -71,7 +71,11 @@ import {
     IonPage,
     IonContent,
     IonModal,
-    IonLabel
+    IonLabel,
+    IonIcon,
+    IonGrid,
+    IonRow,
+    IonCol
 } from '@ionic/vue';
 
 import {
@@ -100,7 +104,11 @@ export default defineComponent({
         IonModal,
         IonLabel,
         VuePlyr,
-        SimpleMeditationBackground
+        SimpleMeditationBackground,
+        IonIcon,
+        IonGrid,
+        IonRow,
+        IonCol
     },
     mounted() {
         const tabsEl = document.querySelector('ion-tab-bar');
