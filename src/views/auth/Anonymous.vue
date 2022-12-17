@@ -173,6 +173,11 @@ ion-spinner {
             },
         },
         mounted(){
+            const tabsEl = document.querySelector('ion-tab-bar');
+            if (tabsEl) {
+                tabsEl.hidden = true;
+                tabsEl.style.height = "1";
+            }
             setTimeout(() => {
                 // eslint-disable-next-line
                 const parent_this = this;

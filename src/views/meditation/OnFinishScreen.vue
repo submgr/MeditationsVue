@@ -6,14 +6,20 @@
         </ion-toolbar>
       </ion-header>
       <ion-content :fullscreen="true">
-        <ion-header collapse="condense">
+        <img style="height: 30vh; margin-top: 7vh; margin-left: 3vw;" src="../../assets/graphics/juicy-sitting-girl.png"/>
+        <ion-header collapse="condense" style="margin-top: 5vh;">
           <ion-toolbar>
             <ion-title size="large">Вы молодец!</ion-title>
           </ion-toolbar>
         </ion-header>
-        <div id="container" style="margin-left: 1rem; margin-top: 0%;">
-            <strong style="display: block;">Медитация закончилась, а ваш день только начинается</strong>
-            <p style="display: block; margin-top: 10vh;">Теперь вы чувствуете себя куда лучше: вас захватыет спокойствие и хорошее настроение, вы понимаете сейчас себя лучше и абсолютно рациональны.<br/><br/>Спасибо за отлично проведенное время!</p>
+        <div style="margin-left: 1rem;">
+          <div style="margin-top: 0vh;">
+            <ion-label>Медитация закончилась, а ваш день только начинается</ion-label>
+          </div>
+          <div style="margin-top: 4vh;">
+            <ion-label>Теперь вы чувствуете себя куда лучше: вас захватыет спокойствие и хорошее настроение, вы понимаете сейчас себя лучше и абсолютно рациональны.<br/><br/>Спасибо за отлично проведенное время!</ion-label>
+          </div>
+          
         </div>
       </ion-content>
     </ion-page>
@@ -21,14 +27,19 @@
   
   <script lang="ts">
   import { defineComponent } from 'vue';
-  import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
+  import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel } from '@ionic/vue';
 
   import confetti from 'canvas-confetti';
   
   export default  defineComponent({
     name: 'Tab1Page',
-    components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage },
+    components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonLabel },
     mounted(){
+        const tabsEl = document.querySelector('ion-tab-bar');
+        if (tabsEl) {
+            tabsEl.hidden = false;
+            tabsEl.style.height = "1";
+        }
         var duration = 4 * 1000;
         var animationEnd = Date.now() + duration;
         var defaults = { startVelocity: 20, spread: 260, ticks: 90, zIndex: 0 };
