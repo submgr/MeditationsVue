@@ -11,9 +11,9 @@
             <ion-title size="large">Вы молодец!</ion-title>
           </ion-toolbar>
         </ion-header>
-        <div id="container" style="margin-left: 1rem; margin-top: 0%;">
-            <strong>Медитация закончилась, а ваш день только начинается</strong>
-            <p style="margin-top: 10vh;">Теперь вы чувствуете себя куда лучше: вас захватыет спокойствие и хорошее настроение, вы понимаете сейчас себя лучше и абсолютно рациональны.<br/><br/>Спасибо за отлично проведенное время!</p>
+        <div id="container" style="margin-left: 1rem; margin-top: 0%; display: block;">
+            <strong style="display: block;">Медитация закончилась, а ваш день только начинается</strong>
+            <p style="display: block; margin-top: 10vh;">Теперь вы чувствуете себя куда лучше: вас захватыет спокойствие и хорошее настроение, вы понимаете сейчас себя лучше и абсолютно рациональны.<br/><br/>Спасибо за отлично проведенное время!</p>
         </div>
       </ion-content>
     </ion-page>
