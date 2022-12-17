@@ -16,6 +16,9 @@
                 </ion-grid> 
             </div>
         </div>
+        <ion-popover :is-open="popoverOpen" :event="event" @didDismiss="popoverOpen = false" style="margin-bottom: 5vh;">
+            <ion-content>Hello World!</ion-content>
+          </ion-popover>
         <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="meditationState == 'prestart_info' && playerState == 'stopped'" trigger="open-modal" :initial-breakpoint="0.40" :breakpoints="[0,  0.40, 0.75]" handle-behavior="cycle">
             <ion-content class="ion-padding">
                 <div class="ion-margin-top">
@@ -39,11 +42,12 @@
     transform: translate(-50%, 0);
 }
 .controllers{
-    width: 84vw;
+    width: 86vw;
     height: 9vh;
-    border-radius: 36px;
-    border-color: rgba(255, 255, 255, 0.604);
-    box-shadow: 0 0 19px #ffffff6e;
+    border-radius: 23px;
+    opacity: 0.46;
+    border-color: rgba(255, 255, 255, 0.144);
+    box-shadow: 0 0 19px #ffffff5a;
     border-style:dotted;
     border-width: 1px;
 }
@@ -57,6 +61,11 @@
     margin-right: 10vw;
     text-align: center;
 }
+
+.toast_center{
+    --text-align: center;
+}
+
 </style>
 
 <script lang="ts">
@@ -75,7 +84,10 @@ import {
     IonIcon,
     IonGrid,
     IonRow,
-    IonCol
+    IonCol,
+    IonButton,
+    toastController,
+
 } from '@ionic/vue';
 
 import {
@@ -108,7 +120,8 @@ export default defineComponent({
         IonIcon,
         IonGrid,
         IonRow,
-        IonCol
+        IonCol,
+        IonButton
     },
     mounted() {
         const tabsEl = document.querySelector('ion-tab-bar');
@@ -122,7 +135,43 @@ export default defineComponent({
         //sthis.videoplayer = this.$refs.videoplayer.player;
     },
     methods: {
-        playerRewind(direction, time){
+        async toastAction(type_of_action, direction = null, change_amount = null){
+                var msg = ""
+                if(type_of_action == "time_rewind"){
+                    switch (direction) {
+                        case "past":
+                            msg = `<< вернуться назад на ${change_amount} секунд`
+                            break;
+                        case "future":
+                            msg = `перейти вперед на ${change_amount}секунд >>`
+                            break;
+                        default:
+                            break;
+                    }
+                }else if(type_of_action == "player_state_change"){
+                    switch (direction) {
+                        case "resume":
+                            msg = `проигрывается`
+                            break;
+                        case "pause":
+                            msg = `на паузе`
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                const toast = await toastController.create({
+                    message: msg,
+                    color: "tertiary",
+                    cssClass: "toast_center",
+                    duration: 100,
+                    animated: true,
+                    position: 'middle'
+                });
+                await toast.present();
+        },
+        async playerRewind(direction, time){
             var audiotrack_playposition_now = this.audiotrack.seek(this.audiotrack_musicid)
             switch (direction) {
                 case "past":
@@ -145,6 +194,8 @@ export default defineComponent({
                 default:
                     break;
             }
+
+            this.toastAction("time_rewind", direction, time)
         },
         changePlayerState(){
             if(this.meditationState == "ready"){
@@ -153,12 +204,14 @@ export default defineComponent({
                         this.playerState = "playing"
                         this.audiotrack_musicid = this.audiotrack.play();
                         this.backgroundtrack_musicid = this.backgroundtrack.play();
+                        this.toastAction("player_state_change", "resume");
                         break;
                     case "playing":
-                        console.log(this.audiotrack_musicid)
+                        console.log(this.audiotrack.pause(this.audiotrack_musicid))
                         this.audiotrack.pause(this.audiotrack_musicid);
-                        this.audiotrack.pause(this.backgroundtrack_musicid);
+                        this.backgroundtrack.pause(this.backgroundtrack_musicid);
                         this.playerState = "stopped";
+                        this.toastAction("player_state_change", "pause");
                         break;
                     default:
                         break;
@@ -210,8 +263,14 @@ export default defineComponent({
                     onstop(){
                         parent_this.playerState = "stopped"
                     },
-                    onend(){
+                    async onend(){
                         parent_this.playerState = "stopped"
+                        const toast = await toastController.create({
+                            message: 'Медитация подошла к концу. Через несколько секунд мы завершаем нашу сессию. Спасибо!',
+                            duration: 4000,
+                            position: 'top'
+                        });
+                        await toast.present();
                         setTimeout(() => {
                             parent_this.$router.push( { path:'/tabs/meditation/finished', replace: true } );
                         }, 4000);
@@ -219,7 +278,7 @@ export default defineComponent({
                 });
                 setTimeout(() => {
                     this.audiotrack_musicid = this.audiotrack.play();
-                }, 9000);
+                }, 0); //some time before we had here 9000 instead of 0.
                 this.playerState = "playing"
             } else {
                 console.log("[SCREEN] THERE IS NO audio/audiotrack!")
@@ -248,6 +307,8 @@ export default defineComponent({
             audiotrack_musicid: null,
             backgroundtrack: null,
             backgroundtrack_musicid: null,
+            popoverOpen: false,
+            event: null,
             options: {
                 autoplay: false,
                 loop: {
