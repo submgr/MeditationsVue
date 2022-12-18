@@ -16,7 +16,7 @@
                 </ion-grid> 
             </div>
         </div>
-        <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="meditationState == 'prestart_info' && playerState == 'stopped'" trigger="open-modal" :initial-breakpoint="0.40" :breakpoints="[0,  0.40, 0.75]" handle-behavior="cycle">
+        <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="meditationState == 'prestart_info' && playerState == 'stopped'" trigger="open-modal" :initial-breakpoint="0.40" :breakpoints="[0.40, 0.75]" handle-behavior="cycle">
             <ion-content class="ion-padding">
                 <div class="ion-margin-top">
                     <ion-label style="white-space: pre-wrap;"><br><b style="font-size: 28px;">Вы готовы?</b><br><br>Ваша медитация готова. Перед началом мы обычно рекомендуем убедиться, что вам удобно и вы можете слышать звук. Если вокруг шумно, воспользуйтесь наушниками.</ion-label>
@@ -132,6 +132,9 @@ export default defineComponent({
         //sthis.videoplayer = this.$refs.videoplayer.player;
     },
     methods: {
+        modalDisallowHiding(){
+            this.meditationState = "prestart_info"
+        },
         async toastAction(type_of_action, direction = null, change_amount = null){
                 var msg = ""
                 if(type_of_action == "time_rewind"){
@@ -140,7 +143,7 @@ export default defineComponent({
                             msg = `<< вернуться назад на ${change_amount} секунд`
                             break;
                         case "future":
-                            msg = `перейти вперед на ${change_amount}секунд >>`
+                            msg = `перейти вперед на ${change_amount} секунд >>`
                             break;
                         default:
                             break;
@@ -269,6 +272,8 @@ export default defineComponent({
                         });
                         await toast.present();
                         setTimeout(() => {
+                            parent_this.audiotrack.fade(parent_this.audiotrack.volume(parent_this.audiotrack_musicid), 0, 2000, parent_this.audiotrack_musicid);
+                            parent_this.backgroundtrack.fade(parent_this.backgroundtrack.volume(parent_this.backgroundtrack_musicid), 0, 2000, parent_this.backgroundtrack_musicid);
                             parent_this.$router.push( { path:'/tabs/meditation/finished', replace: true } );
                         }, 4000);
                     }
