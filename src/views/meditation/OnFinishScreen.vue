@@ -35,11 +35,7 @@
     name: 'Tab1Page',
     components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonLabel },
     mounted(){
-        const tabsEl = document.querySelector('ion-tab-bar');
-        if (tabsEl) {
-            tabsEl.hidden = false;
-            tabsEl.style.height = "1";
-        }
+        
         var duration = 4 * 1000;
         var animationEnd = Date.now() + duration;
         var defaults = { startVelocity: 20, spread: 260, ticks: 90, zIndex: 0 };
@@ -60,6 +56,12 @@
         confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.1 } }));
         confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.1 } }));
         }, 250);
+
+        const tabsEl = document.querySelector('ion-tab-bar');
+        if (tabsEl) {
+            tabsEl.hidden = false;
+            tabsEl.style.height = "1";
+        }
     }
   });
   </script>
