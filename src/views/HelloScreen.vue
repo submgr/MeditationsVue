@@ -2,9 +2,9 @@
   <ion-page>
       <ion-content :fullscreen="true" >
 
-          <img style="padding-top: 10rem; height: auto; width: 70%; max-width: 400px; margin-left: auto; margin-right: auto; display: block;" :src="natureEllipse">
+          <img style="padding-top: 10vh; height: auto; width: 70%; max-width: 400px; margin-left: auto; margin-right: auto; display: block;" :src="natureEllipse">
 
-          <p style="text-align: center;padding: 0px 18px 0px; margin-top: 2rem; margin-bottom: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 21px; font-weight: 400;">{{ natureText }}</p>
+          <p style="text-align: center;padding: 0px 18px 0px; margin-top: 7vh; margin-bottom: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 21px; font-weight: 400;">{{ natureText }}</p>
           <p style="text-align: center;padding: 0px 22px 0px; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 24px; font-weight: 700;">{{ user_firstname }}!</p>
           
           <div id="outer" style="margin-top: 4rem; display: flex; justify-content: center;">
