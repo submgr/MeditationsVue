@@ -21,10 +21,9 @@
                 <div class="ion-margin-top">
                     <ion-label style="white-space: pre-wrap;"><br><b style="font-size: 28px;">Вы готовы?</b><br><br>Ваша медитация готова. Перед началом мы обычно рекомендуем убедиться, что вам удобно и вы можете слышать звук. Если вокруг шумно, воспользуйтесь наушниками.</ion-label>
                 </div>
-                <div style="margin-top: 5% !important;">
-                    <ion-label style="white-space: pre-wrap;"><ion-button fill="clear" @click="startMeditation" style="font-weight: 700; margin-left: -3.95% !important;">Начать <ion-icon slot="end" :icon="arrowForward"></ion-icon>
-                    </ion-button></ion-label>
-                    
+                <div style="margin-top: 5% !important; margin-left: -18px;">
+                    <ion-button fill="clear" @click="startMeditation" style="font-weight: 700;">Начать <ion-icon slot="end" :icon="arrowForward"></ion-icon>
+                    </ion-button>
                 </div>
             </ion-content>
         </ion-modal>
