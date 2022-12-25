@@ -7,7 +7,7 @@
           <p style="text-align: center;padding: 0px 18px 0px; margin-top: 7vh; margin-bottom: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 21px; font-weight: 400;">{{ natureText }}</p>
           <p style="text-align: center;padding: 0px 22px 0px; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 24px; font-weight: 700;">{{ user_firstname }}!</p>
           
-          <div id="outer" style="margin-top: 4rem; display: flex; justify-content: center;">
+          <div id="outer" style="margin-top: 4vh; display: flex; justify-content: center;">
             <ion-spinner name="crescent"></ion-spinner>
           </div>
         </ion-content>
