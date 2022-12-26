@@ -259,6 +259,7 @@ export default defineComponent({
                 this.audiotrack = new Howl({
                     src: [data.content.audio.audiotrack.url],
                     html5: true,
+                    usingWebAudio: true,
                     onpause(){
                         parent_this.playerState = "stopped"
                     },
@@ -292,6 +293,7 @@ export default defineComponent({
                 this.backgroundtrack = new Howl({
                     src: [data.content.audio.backgroundtrack.url],
                     volume: 0.05,
+                    usingWebAudio: true,
                     html5: true
                 });
                 this.backgroundtrack_musicid = this.backgroundtrack.play();
