@@ -106,7 +106,10 @@
         finalScore: 0,
         loading: false,
         completed: false,
-        language: new LanguageModel(),
+        language: new LanguageModel({
+          pressEnter: "",
+          continue: "дальше"
+        }),
         questions: [
           {
             type: 'multiplechoice',
