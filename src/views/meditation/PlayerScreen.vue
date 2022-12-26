@@ -296,7 +296,7 @@ export default defineComponent({
                     usingWebAudio: true,
                     html5: true
                 });
-                this.backgroundtrack_musicid = this.backgroundtrack.play();
+                //this.backgroundtrack_musicid = this.backgroundtrack.play();
             } else {
                 console.log("[SCREEN] Can't find audio/backgroundtrack!")
             }
