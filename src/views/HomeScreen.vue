@@ -166,11 +166,13 @@ export default defineComponent({
             }).then((response) => {
                 localStorage.setItem("temp/alfa_meditationdata", JSON.stringify(response.data))
                 
-                if(sessionStorage && sessionStorage.getItem("useNonProgressiveAudioPlayer") == "true"){
+                if(localStorage && localStorage.getItem("useNonProgressiveAudioPlayer") == "true"){
+                    console.log("useNonProgressiveAudioPlayer? YES")
                     this.$router.push({
                         name: "meditation/playnonprogressive",
                     });
                 }else{
+                    console.log("useNonProgressiveAudioPlayer? NO")
                     this.$router.push({
                         name: "meditation/play",
                     });
