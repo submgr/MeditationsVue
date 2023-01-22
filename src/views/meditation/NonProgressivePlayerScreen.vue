@@ -32,7 +32,7 @@
                     <div class="ion-margin-top">
                         <Vue3Lottie :animationData="require('./../../assets/lottie/131216-loading.json')" :height="180" :width="200" />
                         <div text-center>
-                            <ion-label style="white-space: pre-wrap;"><span style="text-align: center;"><br><b style="font-size: 28px;">Медитация загружается</b><br><br>Мы создали медитацию специально для вас, осталось только загрузить ее.</span></ion-label>
+                            <ion-label style="white-space: pre-wrap;"><span style="text-align: center;"><br><b style="font-size: 28px;">Медитация загружается</b><br><br>Мы создали медитацию специально для вас, осталось только загрузить ее. Это не займет много времени.</span></ion-label>
                         </div>
                     </div>
                     <div style="margin-top: 5% !important; margin-left: -18px; display: none">
@@ -198,26 +198,30 @@
                     await toast.present();
             },
             async playerRewind(direction, time){
-                var audiotrack_playposition_now = this.audiotrack.seek(this.audiotrack_musicid)
+                this.audiotrack.pause()
+                var audiotrack_playposition_now = this.audiotrack.offsetTime
                 switch (direction) {
                     case "past":
                         if(time > audiotrack_playposition_now){
-                            this.audiotrack.seek(0, this.audiotrack_musicid)
+                            this.audiotrack.play()
                         }else{
-                            this.audiotrack.seek(audiotrack_playposition_now - time, this.audiotrack_musicid)
+                            this.audiotrack.play(0, audiotrack_playposition_now - time)
                         }
                         
                         break;
     
                     case "future":
-                        if( this.audiotrack.duration(this.audiotrack_musicid) < this.audiotrack.seek(this.audiotrack_musicid) + time){
-                            this.audiotrack.seek(audiotrack_playposition_now, this.audiotrack_musicid)
+                        
+                        if( this.audiotrack.sourceNode.buffer.duration < this.audiotrack.offsetTime + time){
+                            //nothing then? just start is back i guess
+                            this.audiotrack.play()
                         }else{
-                            this.audiotrack.seek(audiotrack_playposition_now + time, this.audiotrack_musicid)
+                            this.audiotrack.play(0, audiotrack_playposition_now + time)
                         }
                         break;
                 
                     default:
+                        this.audiotrack.play()
                         break;
                 }
     
@@ -228,14 +232,13 @@
                     switch (this.playerState) {
                         case "stopped":
                             this.playerState = "playing"
-                            this.audiotrack_musicid = this.audiotrack.play();
-                            this.backgroundtrack_musicid = this.backgroundtrack.play();
+                            this.audiotrack.play();
+                            this.backgroundtrack.play();
                             this.toastAction("player_state_change", "resume");
                             break;
                         case "playing":
-                            console.log(this.audiotrack.pause(this.audiotrack_musicid))
-                            this.audiotrack.pause(this.audiotrack_musicid);
-                            this.backgroundtrack.pause(this.backgroundtrack_musicid);
+                            this.audiotrack.pause();
+                            this.backgroundtrack.pause();
                             this.playerState = "stopped";
                             this.toastAction("player_state_change", "pause");
                             break;
@@ -259,6 +262,13 @@
                 await toast.present();
             },
             async startMeditation() {
+                console.log("a", this.audiotrack.lastTimePlayed)
+                // eslint-disable-next-line
+                const parent_this = this;
+                setInterval(() => {
+                    console.log("a", parent_this.audiotrack)
+                }, 5000);
+                console.log("a", this.audiotrack)
                 console.info("(1) context state:" + Tone.context.state)
                 if (Tone.context.state !== 'running') {
                     await Tone.context.resume()
@@ -268,13 +278,15 @@
                 this.audiotrack.play()
                 this.backgroundtrack.play()
 
-                this.meditationState = "playing"
+                this.playerState = "playing"
+
+                this.meditationState = "ready"
                 
                 
                 
                 
             },
-            loadMeditation() {
+            async loadMeditation() {
                 var data = JSON.parse(localStorage.getItem("temp/alfa_meditationdata"))
                 console.log("Received LOCAL persist data from localstorage.", data)
     
@@ -295,6 +307,22 @@
                         parent_this.meditationState = "prestart_info"
                         parent_this.showToastMessage("Медитация загружена")
                     });
+
+                    this.audiotrack.on('end', async function() {
+                        //...
+                        parent_this.playerState = "stopped"
+                        const toast = await toastController.create({
+                            message: 'Медитация подошла к концу. Через несколько секунд мы завершаем нашу сессию. Спасибо!',
+                            duration: 4000,
+                            position: 'top'
+                        });
+                        await toast.present();
+                        parent_this.audiotrack.stop();
+                        setTimeout(() => {
+                            parent_this.backgroundtrack.stop();
+                            parent_this.$router.push( { path:'/tabs/meditation/finished', replace: true } );
+                        }, 4000);
+                    })
                     
 
                     
@@ -305,6 +333,7 @@
                 if (data.content.audio.backgroundtrack) {
                     this.backgroundtrack = new Pizzicato.Sound({ 
                         source: 'file',
+                        release: '4',
                         options: { path: data.content.audio.backgroundtrack.url }
                     }, function() {
                         console.info('sound (backgroundtrack) file loaded!');
