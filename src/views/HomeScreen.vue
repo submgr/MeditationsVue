@@ -165,9 +165,18 @@ export default defineComponent({
                 }
             }).then((response) => {
                 localStorage.setItem("temp/alfa_meditationdata", JSON.stringify(response.data))
-                this.$router.push({
-                    name: "meditation/play",
-                });
+                
+                if(sessionStorage && sessionStorage.getItem("useNonProgressiveAudioPlayer") == "true"){
+                    this.$router.push({
+                        name: "meditation/playnonprogressive",
+                    });
+                }else{
+                    this.$router.push({
+                        name: "meditation/play",
+                    });
+                    
+                }
+                
             }).catch(function (error) {
                 console.log("CATCHED AN ERROR.", error)
             });

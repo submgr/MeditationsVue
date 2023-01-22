@@ -78,6 +78,14 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
+        name: 'meditation/playnonprogressive',
+        path: 'meditation/playnonprogressive',
+        component: () => import('@/views/meditation/NonProgressivePlayerScreen.vue'),
+        props: {
+          default: true,
+        },
+      },
+      {
         path: 'meditation/finished',
         component: () => import('@/views/meditation/OnFinishScreen.vue')
       },

@@ -34,6 +34,7 @@
     "lottie-vuejs": "^0.4.0",
     "lottie-web-vue": "^2.0.6",
     "pinia": "^2.0.23",
+    "pizzicato": "^0.6.4",
     "style-loader": "^3.3.1",
     "swiper": "^8.4.2",
     "tone": "^14.7.77",

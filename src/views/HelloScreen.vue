@@ -112,6 +112,7 @@ export default defineComponent({
       } else{
         if(this.$route.query.isYandexGames && this.$route.query.isYandexGames == "true"){
             console.log("isYandexGames -> true.");
+            sessionStorage.setItem("useNonProgressiveAudioPlayer", "true")
             this.$router.push( { path:'/tabs/auth/anonymous', replace: true } );
         }else{
           parent_this.$router.replace('/tabs/auth');
