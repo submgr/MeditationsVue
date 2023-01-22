@@ -9,10 +9,10 @@
             </ion-content>
             <ion-content :fullscreen="true" v-if="state == 'ready_askname' || state == 'ready_askname_processing'">
                 <img src="@/assets/illustrations/juicy-photo-of-dog.png" style="margin-top: 7vh; margin-left: 21.5px; height: 27vh; border-radius: 20px;">
-                <p style="text-align: left; padding: 0px 22px 0px; margin-top: 0rem; margin-bottom: 0;  align-items: flex-start; min-width: 100%; font-size: 34px; font-weight: 600;">Тебя зовут...</p>
+                <p style="text-align: left; padding: 0px 22px 0px; margin-top: 0rem; margin-bottom: 0;  align-items: flex-start; min-width: 100%; font-size: 34px; font-weight: 600;">вас зовут...</p>
                 <p style="text-align: left; padding: 0px 22px 0px; padding-top: 2%; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 18px; font-weight: 400;">Укажи свое имя, чтобы мы знали друг друга как друзья!</p>
         
-                <ion-input class="input-style" autofocus="true" type="text" placeholder="Имя, которым тебя зовут друзья" v-model="user_firstname" pattern="text"></ion-input>
+                <ion-input class="input-style" autofocus="true" type="text" placeholder="Имя, которым вас зовут друзья" v-model="user_firstname" pattern="text"></ion-input>
 
                 <ion-button @click="gonext" :disabled="state == 'ready_askname_processing'" color="danger" style="margin-right: 5%; margin-left: 35%; margin-top: 6%; --opacity: 0.7;" expand="block">
                     <ion-icon v-if="state == 'ready_askname'" class="send-button" slot="end" :icon="arrowForwardOutline"></ion-icon>
