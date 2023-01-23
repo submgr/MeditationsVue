@@ -71,6 +71,10 @@ export default defineComponent({
     mounted() {
         // eslint-disable-next-line
         const parent_this = this;
+        
+        if(localStorage){
+          localStorage.removeItem("useNonProgressiveAudioPlayer");
+        }
 
         if (this.$route.query.isYandexGames && this.$route.query.isYandexGames == "true") {
             console.log("isYandexGames -> true.");
@@ -156,12 +160,6 @@ export default defineComponent({
             } else {
                 parent_this.$router.replace('/tabs/auth');
             }
-        }
-
-        if(this.$route.query.isVKMiniApps || this.$route.query.isVKMiniApps == "true" || this.$route.query.isYandexGames || this.$route.query.isYandexGames == "true"){
-          //
-        }else{
-          localStorage.removeItem("useNonProgressiveAudioPlayer")
         }
 
         const tabsEl = document.querySelector('ion-tab-bar');
