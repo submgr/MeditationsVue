@@ -81,6 +81,18 @@ export default defineComponent({
                 .then(ysdk => {
                     console.log('Yandex SDK initialized');
                     (window as any).ysdk = ysdk;
+                    ysdk.adv.showFullscreenAdv({
+                        callbacks: {
+                            onClose: function(wasShown) {
+                              // some action after close
+                              console.log("ysdk.adv.showFullscreenAdv -> onClose", wasShown)
+                            },
+                            onError: function(error) {
+                              // some action on error
+                              console.log("ysdk.adv.showFullscreenAdv -> onError", error)
+                            }
+                        }
+                    })
                 });
               })
               .catch(() => {
