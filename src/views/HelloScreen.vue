@@ -74,6 +74,13 @@ export default defineComponent({
         
         if(localStorage){
           localStorage.removeItem("useNonProgressiveAudioPlayer");
+          if (this.$route.query.isYandexGames && this.$route.query.isYandexGames == "true") {
+                console.log("isYandexGames -> true.");
+                localStorage.setItem("useNonProgressiveAudioPlayer", "true");
+            }else if (this.$route.query.isVKMiniApps && this.$route.query.isVKMiniApps == "true") {
+                console.log("isVKMiniApps -> true.");
+                localStorage.setItem("useNonProgressiveAudioPlayer", "true");
+            }
         }
 
         if (this.$route.query.isYandexGames && this.$route.query.isYandexGames == "true") {
@@ -145,14 +152,12 @@ export default defineComponent({
         } else {
             if (this.$route.query.isYandexGames && this.$route.query.isYandexGames == "true") {
                 console.log("isYandexGames -> true.");
-                localStorage.setItem("useNonProgressiveAudioPlayer", "true")
                 this.$router.push({
                     path: '/tabs/auth/anonymous',
                     replace: true
                 });
             }else if (this.$route.query.isVKMiniApps && this.$route.query.isVKMiniApps == "true") {
                 console.log("isVKMiniApps -> true.");
-                localStorage.setItem("useNonProgressiveAudioPlayer", "true")
                 this.$router.push({
                     path: '/tabs/auth/anonymous',
                     replace: true
