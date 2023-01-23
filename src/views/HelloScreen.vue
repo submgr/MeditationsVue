@@ -151,6 +151,12 @@ export default defineComponent({
             }
         }
 
+        if(this.$route.query.isVKMiniApps || this.$route.query.isVKMiniApps == "true" || this.$route.query.isYandexGames || this.$route.query.isYandexGames == "true"){
+          //
+        }else{
+          localStorage.removeItem("useNonProgressiveAudioPlayer")
+        }
+
         const tabsEl = document.querySelector('ion-tab-bar');
         if (tabsEl) {
             tabsEl.hidden = true;
