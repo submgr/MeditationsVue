@@ -146,6 +146,13 @@ export default defineComponent({
                     path: '/tabs/auth/anonymous',
                     replace: true
                 });
+            }else if (this.$route.query.isVKMiniApps && this.$route.query.isVKMiniApps == "true") {
+                console.log("isVKMiniApps -> true.");
+                localStorage.setItem("useNonProgressiveAudioPlayer", "true")
+                this.$router.push({
+                    path: '/tabs/auth/anonymous',
+                    replace: true
+                });
             } else {
                 parent_this.$router.replace('/tabs/auth');
             }
