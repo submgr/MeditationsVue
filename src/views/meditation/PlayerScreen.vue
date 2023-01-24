@@ -294,7 +294,7 @@
                         html5: true,
                         volume: 0.05
                     });
-                    //this.backgroundtrack_musicid = this.backgroundtrack.play();
+                    this.backgroundtrack_musicid = this.backgroundtrack.play();
                 } else {
                     console.log("[SCREEN] Can't find audio/backgroundtrack!")
                 }

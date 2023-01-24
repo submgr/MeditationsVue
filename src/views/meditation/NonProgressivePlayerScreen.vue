@@ -338,6 +338,9 @@
                     }, function() {
                         console.info('sound (backgroundtrack) file loaded!');
                         parent_this.showToastMessage("Фоновое сопровождение загружено")
+                        if(parent_this.playerState == "playing"){
+                            parent_this.backgroundtrack.play();
+                        }
                     });
                     this.backgroundtrack.volume = 0.06;
                 } else {
