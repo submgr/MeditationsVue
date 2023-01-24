@@ -276,7 +276,9 @@
                 console.info("(1) context state:" + Tone.context.state)
                 console.log('audio is ready')
                 this.audiotrack.play()
-                this.backgroundtrack.play()
+                if(this.backgroundtrack_isReady == true){
+                    this.backgroundtrack.play()
+                }
 
                 this.playerState = "playing"
 
@@ -338,6 +340,7 @@
                     }, function() {
                         console.info('sound (backgroundtrack) file loaded!');
                         parent_this.showToastMessage("Фоновое сопровождение загружено")
+                        parent_this.backgroundtrack_isReady = true;
                         if(parent_this.playerState == "playing"){
                             parent_this.backgroundtrack.play();
                         }
@@ -358,6 +361,7 @@
                 meditationState: "downloading",
                 audio_ishtml5: false,
                 audiotrack: null,
+                backgroundtrack_isReady: false,
                 audiotrack_musicid: null,
                 backgroundtrack: null,
                 backgroundtrack_musicid: null,
