@@ -336,6 +336,7 @@
                     this.backgroundtrack = new Pizzicato.Sound({ 
                         source: 'file',
                         release: '4',
+                        loop: true,
                         options: { path: data.content.audio.backgroundtrack.url }
                     }, function() {
                         console.info('sound (backgroundtrack) file loaded!');
