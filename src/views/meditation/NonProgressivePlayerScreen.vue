@@ -336,8 +336,8 @@
                     this.backgroundtrack = new Pizzicato.Sound({ 
                         source: 'file',
                         release: '4',
-                        loop: true,
-                        options: { path: data.content.audio.backgroundtrack.url }
+                        
+                        options: { path: data.content.audio.backgroundtrack.url, loop: true, }
                     }, function() {
                         console.info('sound (backgroundtrack) file loaded!');
                         parent_this.showToastMessage("Фоновое сопровождение загружено")
