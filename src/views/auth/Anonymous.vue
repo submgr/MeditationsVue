@@ -192,7 +192,7 @@ ion-spinner {
                         parent_this.message_modal_text = `Произошла ошибка во время обмена данными о сессии. Попробуйте еще раз через несколько минут. Если проблема не проходит, очистите файлы cookie и кеш.`
                         parent_this.message_modal_isOpen = true;
                     });
-            }, 3333)
+            }, 1200)
         },
         setup() {
             return {

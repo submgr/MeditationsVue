@@ -79,7 +79,8 @@ export default defineComponent({
                 localStorage.setItem("useNonProgressiveAudioPlayer", "true");
             }else if (this.$route.query.isVKMiniApps && this.$route.query.isVKMiniApps == "true") {
                 console.log("isVKMiniApps -> true.");
-                localStorage.setItem("useNonProgressiveAudioPlayer", "true");
+                //localStorage.setItem("useNonProgressiveAudioPlayer", "true");
+                //currently turned off because they dont require this on vk mini apps platform!
             }
         }
 
