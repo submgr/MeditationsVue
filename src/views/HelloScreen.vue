@@ -76,10 +76,14 @@ export default defineComponent({
           localStorage.removeItem("useNonProgressiveAudioPlayer");
           if (this.$route.query.isYandexGames && this.$route.query.isYandexGames == "true") {
                 console.log("isYandexGames -> true.");
-                localStorage.setItem("useNonProgressiveAudioPlayer", "true");
+                setTimeout(() => {
+                    localStorage.setItem("useNonProgressiveAudioPlayer", "true");
+                }, 100);
             }else if (this.$route.query.isVKMiniApps && this.$route.query.isVKMiniApps == "true") {
                 console.log("isVKMiniApps -> true.");
-                //localStorage.setItem("useNonProgressiveAudioPlayer", "true");
+                //setTimeout(() => {
+                //    localStorage.setItem("useNonProgressiveAudioPlayer", "true");
+                //}, 100);
                 //currently turned off because they dont require this on vk mini apps platform!
             }
         }
