@@ -16,7 +16,7 @@
                     </ion-grid> 
                 </div>
             </div>
-            <ion-modal @willDismiss="Modal_onWillDismiss" :canDismiss="false" :is-open="meditationState == 'prestart_info' && playerState == 'stopped'" trigger="open-modal" :initial-breakpoint="0.50" :breakpoints="[0.50, 0.75]" handle-behavior="cycle">
+            <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="meditationState == 'prestart_info' && playerState == 'stopped'" trigger="open-modal" :initial-breakpoint="0.50" :breakpoints="[0.50, 0.75]" handle-behavior="cycle">
                 <ion-content class="ion-padding">
                     <div class="ion-margin-top">
                         <ion-label style="white-space: pre-wrap;"><br><b style="font-size: 28px;">Вы готовы?</b><br><br>Ваша медитация готова. Перед началом мы обычно рекомендуем убедиться, что вам удобно и вы можете слышать звук. Если вокруг шумно, воспользуйтесь наушниками.</ion-label>
@@ -27,7 +27,7 @@
                     </div>
                 </ion-content>
             </ion-modal>
-            <ion-modal @willDismiss="Modal_onWillDismiss" :canDismiss="false" :is-open="meditationState == 'downloading'" trigger="open-modal" :initial-breakpoint="0.6" :breakpoints="[0.6]" handle-behavior="cycle">
+            <ion-modal @willDismiss="Modal_onWillDismiss" :canDismiss="isCanDismissDownloaderModal" :is-open="meditationState == 'downloading'" trigger="open-modal" :initial-breakpoint="0.6" :breakpoints="[0.6]" handle-behavior="cycle">
                 <ion-content class="ion-padding">
                     <div class="ion-margin-top">
                         <Vue3Lottie :animationData="require('./../../assets/lottie/131216-loading.json')" :height="180" :width="200" />
@@ -306,6 +306,7 @@
                         options: { path: data.content.audio.audiotrack.url }
                     }, function() {
                         console.info('sound (audiotrack) file loaded!');
+                        parent_this.isCanDismissDownloaderModal = true;
                         parent_this.meditationState = "prestart_info"
                         parent_this.showToastMessage("Медитация загружена")
                     });
@@ -360,6 +361,7 @@
                 videoplayer: null,
                 //meditationState: "prestart_info",
                 meditationState: "downloading",
+                isCanDismissDownloaderModal: false,
                 audio_ishtml5: false,
                 audiotrack: null,
                 backgroundtrack_isReady: false,
