@@ -307,8 +307,10 @@
                     }, function() {
                         console.info('sound (audiotrack) file loaded!');
                         parent_this.isCanDismissDownloaderModal = true;
-                        parent_this.meditationState = "prestart_info"
-                        parent_this.showToastMessage("Медитация загружена")
+                        setTimeout(() => {
+                            parent_this.meditationState = "prestart_info"
+                            parent_this.showToastMessage("Медитация загружена")
+                        }, 200);
                     });
 
                     this.audiotrack.on('end', async function() {
