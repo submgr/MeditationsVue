@@ -227,7 +227,7 @@
     
                 this.toastAction("time_rewind", direction, time)
             },
-            changePlayerState(){
+            changePlayerState(source_of_action = "none"){
                 if(this.meditationState == "ready"){
                     switch (this.playerState) {
                         case "stopped":
@@ -237,6 +237,11 @@
                             this.toastAction("player_state_change", "resume");
                             break;
                         case "playing":
+                            if(source_of_action == "StoppedByListener"){
+                                this.isStoppedByListener = true;
+                            }else{
+                                this.isStoppedByListener = false;
+                            }
                             this.audiotrack.pause();
                             this.backgroundtrack.pause();
                             this.playerState = "stopped";
@@ -262,6 +267,8 @@
                 await toast.present();
             },
             async startMeditation() {
+                
+
                 console.log("a", this.audiotrack.lastTimePlayed)
                 // eslint-disable-next-line
                 const parent_this = this;
@@ -289,6 +296,25 @@
                 
             },
             async loadMeditation() {
+                // eslint-disable-next-line
+                const parent_this = this;
+
+                window.addEventListener('focus', function (event) {
+                    console.log('(player-listener) has focus');
+                    console.log("(player-listener) data list", parent_this.isStoppedByListener, parent_this.playerState)
+                    if(parent_this.isStoppedByListener == true && parent_this.playerState == "stopped"){
+                        console.log("(player-listener) has-focus ->> play meditation then")
+                        parent_this.changePlayerState();
+                    }
+                });
+
+                window.addEventListener('blur', function (event) {
+                    console.log('(player-listener) lost focus');
+                    if(parent_this.playerState == "playing"){
+                        parent_this.changePlayerState("StoppedByListener");
+                    }
+                });
+
                 var data = JSON.parse(localStorage.getItem("temp/alfa_meditationdata"))
                 console.log("Received LOCAL persist data from localstorage.", data)
     
@@ -296,9 +322,6 @@
                 if (!data.content) {
                     console.log("[SCREEN] CAN'T ACCESS $content AT $response!\nIt's critical!")
                 }
-    
-                // eslint-disable-next-line
-                const parent_this = this;
     
                 if (data.content.audio.audiotrack) {
                     this.audiotrack = new Pizzicato.Sound({ 
@@ -363,6 +386,7 @@
                 videoplayer: null,
                 //meditationState: "prestart_info",
                 meditationState: "downloading",
+                isStoppedByListener: false,
                 isCanDismissDownloaderModal: false,
                 audio_ishtml5: false,
                 audiotrack: null,
