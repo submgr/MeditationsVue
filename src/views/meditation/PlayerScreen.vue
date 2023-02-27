@@ -205,6 +205,12 @@ border-radius: 40px 40px 0 0;
             '$route' () {
                 this.audiotrack.pause(this.audiotrack_musicid);
                 this.backgroundtrack.pause(this.backgroundtrack_musicid);
+
+                const tabsEl = document.querySelector('ion-tab-bar');
+                if (tabsEl) {
+                    tabsEl.hidden = false;
+                    tabsEl.style.height = "1";
+                }
             }
         },
         mounted() {
