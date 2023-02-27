@@ -1,7 +1,16 @@
 <template lang="en">
-    <ion-page>
+    <ion-page id="ionpage">
         <ion-content :fullscreen="true">
-            <SimpleMeditationBackground/>
+            <div style="position: fixed; z-index: 6; color: white;">
+                <ion-grid id="top_el_holder">
+                    <ion-row>
+                        <ion-col @click="playerRewind('past', 10)"><ion-icon :icon="arrowBackOutline" /></ion-col>
+                        <ion-col></ion-col>
+                        <ion-col @click="meditationAdditional()"><ion-icon :icon="ellipsisHorizontal" /></ion-col>
+                    </ion-row>
+                </ion-grid> 
+            </div>
+            <SimpleMeditationBackground v-if="clinical_records != '1'"/>
             <div class="controllers_wrapper">
                 <div class="controllers">
                     <ion-grid class="controllers_grid">
@@ -16,6 +25,10 @@
                     </ion-grid> 
                 </div>
             </div>
+
+            <div class="shadow1"></div>
+            <div class="shadow2"></div>
+            
             <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="meditationState == 'prestart_info' && playerState == 'stopped'" trigger="open-modal" :initial-breakpoint="0.50" :breakpoints="[0.50, 0.75]" handle-behavior="cycle">
                 <ion-content class="ion-padding">
                     <div class="ion-margin-top">
@@ -27,37 +40,102 @@
                     </div>
                 </ion-content>
             </ion-modal>
+            <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="additionalModalOpenened == 'info'" trigger="open-modal" :initial-breakpoint="0.50" :breakpoints="[0.50, 0.75]" handle-behavior="cycle">
+                <ion-content class="ion-padding">
+                    <div class="ion-margin-top">
+                        <ion-label style="white-space: pre-wrap;"><br><b style="font-size: 28px;">Медитация</b><br/><br/>Вы хорошо проводите время!<span v-if="meditationAuthors != null" style="font-size: 13px;"><br><br>Медитация, которую вы сейчас слышите, появилась благодаря этим людям: {{meditationAuthors}}</span></ion-label>
+                    </div>
+                    <div style="margin-top: 5% !important; margin-left: -18px;">
+                        <ion-button fill="clear" @click="Modal_onWillDismiss" style="font-weight: 700;">Скрыть <ion-icon slot="end" :icon="chevronDown"></ion-icon>
+                        </ion-button>
+                    </div>
+                </ion-content>
+            </ion-modal>
         </ion-content>
     </ion-page>
     </template>
     
     <style scoped>
+    #top_el_holder{
+        background-color: #19202420 !important;
+        font-size: 34px;
+        opacity: 0.8;
+        margin-left: 2vw;
+    }
+
+    #ionpage{
+        background-color: red !important;
+    }
     .controllers_wrapper{
         margin: 0 auto;
         position: fixed;
         z-index: 5;
-        bottom: 3vh;
+        bottom: 0vh;
         left: 50%;
         transform: translate(-50%, 0);
+        left: 0 !important;
+        transform: translate(0, 0) !important;
+    }
+
+    .shadow1{
+        position: absolute;
+        width: 60vw;
+        height: 7vh;
+        left: 137px;
+        bottom: 0;
+
+        background: #192024;
+        filter: blur(41.5px);
+    }
+        /* shadow */
+    .shadow2{
+        position: absolute;
+        width: 60vw;
+        height: 7vh;
+        left: 2px;
+        bottom: 0;
+
+        background: #192024;
+        filter: blur(41.5px);
     }
     .controllers{
-        width: 86vw;
-        height: 9vh;
-        border-radius: 23px;
-        opacity: 0.46;
-        border-color: rgba(255, 255, 255, 0.144);
-        box-shadow: 0 0 19px #ffffff5a;
-        border-style:dotted;
-        border-width: 1px;
+
+        /* Auto layout */
+
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 0px;
+gap: 10px;
+/* MusicPlayer */
+
+
+/* Auto layout */
+
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 12px 24px 16px;
+gap: 2px;
+isolation: isolate;
+
+width: 100vw;
+height: 11vh;
+
+background: #24242475;
+background-blend-mode: hard-light, luminosity, overlay;
+backdrop-filter: blur(80px);
+border-radius: 40px 40px 0 0;
+
     }
     .controllers_grid{
-        color: rgba(255, 255, 255, 0.499);
-        font-size: 26px;
+        opacity: 1.0;
+        color: #FFFFFF;
+        font-size: 36px;
         position: relative;
-        top: 50%;
+        top: 70%;
         transform: translateY(-50%);
-        margin-left: 10vw;
-        margin-right: 10vw;
+        margin-bottom: 0;
         text-align: center;
     }
     
@@ -92,7 +170,10 @@
     import {
         closeOutline,
         playOutline,
-        arrowForward
+        arrowForward,
+        arrowBackOutline,
+        ellipsisHorizontal,
+        chevronDown
     } from 'ionicons/icons';
     
     import VuePlyr from 'vue-plyr'
@@ -136,6 +217,12 @@
         methods: {
             modalDisallowHiding(){
                 this.meditationState = "prestart_info"
+            },
+            async Modal_onWillDismiss(){
+                this.additionalModalOpenened = "none"
+            },
+            async meditationAdditional(){
+                this.additionalModalOpenened = "info"
             },
             async toastAction(type_of_action, direction = null, change_amount = null){
                     var msg = ""
@@ -280,6 +367,8 @@
                             }, 4000);
                         }
                     });
+                    this.meditationAuthors = data.content.audio.audiotrack.author;
+                    console.log("This meditation has been recorded with the help of this contributors: " + this.meditationAuthors)
                     setTimeout(() => {
                         this.audiotrack_musicid = this.audiotrack.play();
                     }, 0); //some time before we had here 9000 instead of 0.
@@ -304,12 +393,13 @@
             return {
                 test: this.$route.params.test,
                 playerState: "stopped",
-    
+                meditationAuthors: null,
                 videoplayer: null,
                 meditationState: "prestart_info",
                 audiotrack: null,
                 audiotrack_musicid: null,
                 backgroundtrack: null,
+                additionalModalOpenened: "none",
                 backgroundtrack_musicid: null,
                 popoverOpen: false,
                 event: null,
@@ -338,7 +428,10 @@
                 playBackOutline,
                 play,
                 pause,
-                playForwardOutline
+                playForwardOutline,
+                arrowBackOutline,
+                ellipsisHorizontal,
+                chevronDown
             }
         }
     });

@@ -159,7 +159,7 @@ export default defineComponent({
             this.showStory = !this.showStory
         },
         onClickButton() {
-            this.$http.get(globaldata.api.hostname + "access/meditations/demo_data", {
+            this.$http.get(globaldata.api.hostname + "access/meditations/get", {
                 params: {
                     method: "email"
                 }
