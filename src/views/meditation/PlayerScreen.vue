@@ -61,6 +61,7 @@
         font-size: 34px;
         opacity: 0.65;
         margin-left: 2vw;
+        margin-top: 0.7vh;
     }
     .controllers_wrapper{
         margin: 0 auto;
@@ -76,7 +77,7 @@
     .shadow1{
         position: absolute;
         width: 60vw;
-        height: 7vh;
+        height: 7.5vh;
         left: 137px;
         bottom: 0;
 
@@ -87,7 +88,7 @@
     .shadow2{
         position: absolute;
         width: 60vw;
-        height: 7vh;
+        height: 7.5vh;
         left: 2px;
         bottom: 0;
 
@@ -116,7 +117,7 @@ gap: 2px;
 isolation: isolate;
 
 width: 100vw;
-height: 11vh;
+height: 12vh;
 
 background: #24242475;
 background-blend-mode: hard-light, luminosity, overlay;
@@ -125,14 +126,15 @@ border-radius: 40px 40px 0 0;
 
     }
     .controllers_grid{
-        opacity: 1.0;
+        opacity: 0.7;
         color: #FFFFFF;
         font-size: 36px;
         position: relative;
-        top: 70%;
+        top: 61%;
         transform: translateY(-50%);
         margin-bottom: 0;
         text-align: center;
+        font-size: 42px;
     }
     
     .toast_center{
