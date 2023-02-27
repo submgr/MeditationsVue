@@ -4,7 +4,7 @@
             <div style="position: fixed; z-index: 6; color: white;">
                 <ion-grid id="top_el_holder">
                     <ion-row>
-                        <ion-col @click="playerRewind('past', 10)"><ion-icon :icon="arrowBackOutline" /></ion-col>
+                        <ion-col @click="getBack()"><ion-icon :icon="arrowBackOutline" /></ion-col>
                         <ion-col></ion-col>
                         <ion-col @click="meditationAdditional()"><ion-icon :icon="ellipsisHorizontal" /></ion-col>
                     </ion-row>
@@ -59,12 +59,8 @@
     #top_el_holder{
         background-color: #19202420 !important;
         font-size: 34px;
-        opacity: 0.8;
+        opacity: 0.65;
         margin-left: 2vw;
-    }
-
-    #ionpage{
-        background-color: red !important;
     }
     .controllers_wrapper{
         margin: 0 auto;
@@ -203,6 +199,12 @@ border-radius: 40px 40px 0 0;
             IonCol,
             IonButton
         },
+        watch: {
+            '$route' () {
+                this.audiotrack.pause(this.audiotrack_musicid);
+                this.backgroundtrack.pause(this.backgroundtrack_musicid);
+            }
+        },
         mounted() {
             const tabsEl = document.querySelector('ion-tab-bar');
             if (tabsEl) {
@@ -217,6 +219,9 @@ border-radius: 40px 40px 0 0;
         methods: {
             modalDisallowHiding(){
                 this.meditationState = "prestart_info"
+            },
+            getBack(){
+                this.$router.go(-1)
             },
             async Modal_onWillDismiss(){
                 this.additionalModalOpenened = "none"
