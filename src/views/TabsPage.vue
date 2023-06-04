@@ -19,8 +19,16 @@
         </ion-tab-button>--->
 
         <ion-tab-button tab="tab5" href="/tabs/home">
+          <ion-icon :icon="infiniteOutline" />
+          <ion-label>Спокойствие</ion-label>
+        </ion-tab-button>
+        <ion-tab-button tab="tab5" href="/tabs/home">
           <ion-icon :icon="homeOutline" />
           <ion-label>Главная</ion-label>
+        </ion-tab-button>
+        <ion-tab-button tab="tab5" href="/tabs/home">
+          <ion-icon :icon="happyOutline" />
+          <ion-label>Вы</ion-label>
         </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>
@@ -30,7 +38,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
-import { musicalNote, gameController, videocam, homeOutline } from 'ionicons/icons';
+import { musicalNote, gameController, videocam, infiniteOutline, homeOutline, happyOutline } from 'ionicons/icons';
 
 export default defineComponent({
   name: 'TabsPage',
@@ -40,7 +48,9 @@ export default defineComponent({
       musicalNote,
       gameController,
       videocam,
+      infiniteOutline,
       homeOutline,
+      happyOutline,
       footer: "show"
     }
   }

@@ -10,7 +10,7 @@
                     </ion-row>
                 </ion-grid> 
             </div>
-            <SimpleMeditationBackground v-if="clinical_records != '1'"/>
+            <SimpleMeditationBackground type="video" v-if="clinical_records != '1'"/>
             <div class="controllers_wrapper">
                 <div class="controllers">
                     <ion-grid class="controllers_grid">
@@ -62,6 +62,7 @@
         opacity: 0.65;
         margin-left: 2vw;
         margin-top: 0.7vh;
+        border-radius: 25px;
     }
     .controllers_wrapper{
         margin: 0 auto;
@@ -119,7 +120,7 @@ isolation: isolate;
 width: 100vw;
 height: 12vh;
 
-background: #24242475;
+background: #24242490;
 background-blend-mode: hard-light, luminosity, overlay;
 backdrop-filter: blur(80px);
 border-radius: 40px 40px 0 0;
