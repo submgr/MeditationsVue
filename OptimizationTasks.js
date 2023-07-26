@@ -1,3 +1,12 @@
+// automation tools to optimize image sizes by compression
+// by Aram Virabyan
+// 26.07.2023
+// modes: 1 - Image Optimization
+
+console.log("Running Optimization Tasks...")
+
+console.log("[1/1] Compressing Images...")
+
 const path = require('path')
 const fs = require('fs')
 const sharp = require("sharp")
@@ -55,7 +64,7 @@ fs.readdir(directoryPath, (err, files) => {
 
     images.forEach((dataload) => {
         var img = dataload.path
-        var destPath = img.split('.').slice(0, -1) + '.webp'
+        var destPath = img.split('.').slice(0, -1) + '.' + dataload.type
         destPath = destPath.replace(path.join("dist", "img"), path.join("dist", "img-new"))
         // console.log("destPath" + destPath)
         // console.log('converting jpg to => ', destPath)
