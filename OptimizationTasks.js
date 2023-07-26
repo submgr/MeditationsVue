@@ -44,6 +44,8 @@ fs.readdir(directoryPath, (err, files) => {
 
     imgs_overall = images.length
 
+    
+
     function fileFinished(info){
       cnt += 1
       overallFilesSizesOnend += info.size
@@ -55,7 +57,7 @@ fs.readdir(directoryPath, (err, files) => {
             console.log(err)
           } else {
             var compressionDelay = (overallFilesSizesOnstart - overallFilesSizesOnend) / (2**20)
-            console.log("Successfully completed Images Compression!\nCompressed by " + compressionDelay.toFixed(2) + "MegaBytes!")
+            console.log("Successfully completed Images Compression!\nCompressed by " + compressionDelay.toFixed(2) + "MegaBytes! (" + ((overallFilesSizesOnstart - overallFilesSizesOnend) / overallFilesSizesOnend * 100.0).toFixed(0) + "% saved)")
           }
         })
         console.log("Optimization Tasks are completed now.")
@@ -65,9 +67,10 @@ fs.readdir(directoryPath, (err, files) => {
     images.forEach((dataload) => {
         var img = dataload.path
         var destPath = img.split('.').slice(0, -1) + '.' + dataload.type
+        destPath = destPath.replaceAll(",", ".")
+        
         destPath = destPath.replace(path.join("dist", "img"), path.join("dist", "img-new"))
-        // console.log("destPath" + destPath)
-        // console.log('converting jpg to => ', destPath)
+
         sharp(img)
           .webp({
             quality: 80,
