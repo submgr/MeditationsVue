@@ -25,7 +25,7 @@ fs.readdir(directoryPath, (err, files) => {
     files.forEach((file) => {
         if (file.split('.').pop() === 'jpg' || file.split('.').pop() === 'webp' || file.split('.').pop() === 'png') {
             const imgpath = path.join(directoryPath, file)
-            images.push(imgpath)
+            images.push({path: imgpath, type: file.split('.').pop()})
             var stats = fs.statSync(imgpath)
             overallFilesSizesOnstart += stats.size;
         }
@@ -53,14 +53,25 @@ fs.readdir(directoryPath, (err, files) => {
       }
     }
 
-    images.forEach((img) => {
+    images.forEach((dataload) => {
+        var img = dataload.path
         var destPath = img.split('.').slice(0, -1) + '.webp'
         destPath = destPath.replace(path.join("dist", "img"), path.join("dist", "img-new"))
         // console.log("destPath" + destPath)
         // console.log('converting jpg to => ', destPath)
         sharp(img)
           .webp({
-            quality: 80
+            quality: 80,
+            force: false
+          })
+          .jpeg({
+            quality: 80,
+            force: false
+          })
+          .png({
+            quality: 83,
+            force: false,
+            compressionLevel: 9
           })
           .toFile(destPath, (err, info) => fileFinished(info))
         
