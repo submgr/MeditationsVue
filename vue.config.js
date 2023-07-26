@@ -5,6 +5,7 @@ module.exports = {
     configureWebpack: {
       plugins: [
         new ImageMinimizerPlugin({
+            deleteOriginalAssets: false,
             minimizer: {
               // Implementation
               implementation: ImageMinimizerPlugin.sharpMinify,
