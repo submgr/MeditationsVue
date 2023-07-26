@@ -1,18 +1,15 @@
 <template>
     <ion-page>
         <ion-content :fullscreen="true">
-            <h1 style="margin-left: 1.1rem; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Главная</h1>
-            <div style="display: none;">
-                <NotificationsBanner />
-            </div>
-            <div style="padding-top: 0.1rem; margin-top: 4vh;">
-                <div @click="getMeditation({ searchtype: 'random', searchtag: '' })">
+            <h1 style="margin-left: 4vw; margin-right: 4vw; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Главная</h1>
+            <div style="padding-top: 1.1rem;">
+                <div>
                     <div class="card-alfa custom-swiper suggestion-block bg-1 card-meditate">
-                        <div>
-                            <ion-icon :icon="playOutline"
-                                style="margin-left: 0.7rem; margin-top: 1.8rem; color: white; font-size: 3rem;"
-                                @click="toggleStory"></ion-icon>
-                            <div class="text-a1 suggestion-text text-meditate">Медитация</div>
+                        <div style="margin-left: 5vw;">
+                            <ion-icon :icon="createOutline"
+                                style="margin-left: 0.3rem; margin-top: 1.8rem; color: white; font-size: 3rem;"
+                                @click="openAccountEditor()"></ion-icon>
+                            <div class="text-a1 suggestion-text text-meditate">{{ name }}</div>
                         </div>
                     </div>
                 </div>
@@ -23,7 +20,33 @@
                 </div>--->
             </div>
 
-            <MeditationsList @event-getmeditation="getMeditation" />
+            <ion-card style="border-radius: 20px;">
+                <ion-card-header>
+                  <ion-card-title>У вас все получится!</ion-card-title>
+                  <ion-card-subtitle>Медитация — это хорошая привычка.</ion-card-subtitle>
+                </ion-card-header>
+            
+                <ion-card-content> За все время вы провели {{ meditationtime }} медитируя. Так держать! <br/><br/>Согласно исследованиям, важно медитировать периодически, чтобы усилить эффект. &nbsp;<span style="color:rgb(94, 94, 219)" @click="learnMore()">Узнайте&nbsp;больше</span></ion-card-content>
+              </ion-card>
+
+            <ion-modal
+                    @willDismiss="Modal_onWillDismiss"
+                    :is-open="myselfProfileEdit_isModalOpen"
+                    trigger="open-modal"
+                    :initial-breakpoint="0.75"
+                    :breakpoints="[0, 0.75]"
+                    handle-behavior="cycle"
+                >
+                    <ion-content class="ion-padding">
+                        <div class="ion-margin-top">
+                        <ion-label style="white-space: pre-wrap;">Вы можете изменить информацию о себе. Эти сведения видите только вы.</ion-label>
+                        <ion-item style="margin-top: 1.9vh; border-radius: 11px;">
+                            <ion-input :autofocus="true" label="Ваше имя" label-placement="stacked" :placeholder="name" v-model="name"></ion-input>
+                          </ion-item>
+                          <ion-button @click="saveProfileNewData()" style="margin-top: 2.8vh;"  expand="block">Сохранить</ion-button> 
+                    </div>
+                    </ion-content>
+                </ion-modal>
 
 
 
@@ -53,11 +76,23 @@
     background-color: rgba(255, 255, 255, 0.104) !important;
 }
 
+
 .bg-1 {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(1, 116, 9, 0.714)), url('https://images.unsplash.com/photo-1586078074298-05dca4848695?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1935&q=80') !important;
     background-position: 100%;
     background-size: cover !important;
 }
+
+@media (prefers-color-scheme: dark) {
+    .bg-1 {
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(7, 5, 36, 0.74)), url('https://images.unsplash.com/photo-1507400492013-162706c8c05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=659&q=80') !important;
+    }
+  }
+
+  @media (prefers-color-scheme: light) {
+    .bg-1 {
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(52, 45, 150, 0.74)), url('https://images.unsplash.com/photo-1465080357990-d4bc259ec4a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80') !important;
+    }
+  }
 
 .text-meditate {
     background-image: linear-gradient(45deg, #ffffff 0%, #e5f1e1 50%, #82d187 100%) !important;
@@ -74,8 +109,8 @@
 }
 
 .suggestion-block .text-a1 {
-    margin-left: 4vw;
-    margin-right: 4vw;
+    margin-left: 6vw;
+    margin-right: 6vw;
     text-align: left;
     position: absolute;
     white-space: normal;
@@ -141,20 +176,21 @@ import {
 import {
     IonPage,
     IonContent,
+    IonModal,
+    IonLabel,
+    IonIcon,
+    IonInput
 } from '@ionic/vue';
 
 import {
     closeOutline,
     contractOutline,
-    playOutline
+    playOutline,
+    createOutline,
+    rocketOutline
 } from 'ionicons/icons';
 
-import globaldata from '../modules/global';
-
-import MeditationsList from '@/components/MeditationsList.vue';
-import NotificationsBanner from '@/components/NotificationsBanner.vue';
-
-
+import globaldata from '../../modules/global';
 
 
 export default defineComponent({
@@ -162,8 +198,10 @@ export default defineComponent({
     components: {
         IonContent,
         IonPage,
-        MeditationsList,
-        NotificationsBanner
+        IonModal,
+        IonLabel,
+        IonIcon,
+        IonInput
     },
     mounted() {
         const tabsEl = document.querySelector('ion-tab-bar');
@@ -172,47 +210,52 @@ export default defineComponent({
             tabsEl.style.height = "1";
         }
 
+        this.name = localStorage.getItem("user_firstname")
+        this.meditationtime = this.meditationtimePrepare(localStorage.getItem("user_meditationtime"))
+
     },
     methods: {
         toggleStory() {
             this.showStory = !this.showStory
         },
-        getMeditation(obj) {
-            console.warn("Getting meditation data...")
-            console.log("provided obj for search..", obj)
-            this.$http.get(globaldata.api.hostname + "access/meditations/get", {
-                params: {
-                    searchtype: obj.searchtype,
-                    searchtag: obj.searchtag
-                }
-            }).then((response) => {
-                if (response.status == 200) {
-                    if (response.data.status == "okay") {
-                        localStorage.setItem("temp/alfa_meditationdata", JSON.stringify(response.data))
 
-                        if (localStorage && localStorage.getItem("useNonProgressiveAudioPlayer") == "true") {
-                            console.log("useNonProgressiveAudioPlayer? YES")
-                            this.$router.push({
-                                name: "meditation/playnonprogressive",
-                            });
-                        } else {
-                            console.log("useNonProgressiveAudioPlayer? NO")
-                            this.$router.push({
-                                name: "meditation/play",
-                            });
-
-                        }
-                    } else{
-                        // proccessed by the server, but without successfull result.
-                    }
-                } else {
-                    // can't proccess this request on server: some error happens.
-                }
-
-            }).catch(function (error) {
-                console.log("CATCHED AN ERROR.", error)
-            });
+        openAccountEditor() {
+            this.myselfProfileEdit_isModalOpen = true
         },
+
+        Modal_onWillDismiss(){
+            //nothing yet
+            this.myselfProfileEdit_isModalOpen = false
+        },
+
+        saveProfileNewData(){
+            localStorage.setItem("user_firstname", this.name)
+        },
+
+        learnMore(){
+            this.$router.push({
+                                name: "read/youshouldknow",
+                            });
+        },
+
+        meditationtimePrepare(rawMinutes) {
+
+            const hours = Math.floor(rawMinutes/60)
+
+            const minutes = rawMinutes - (hours * 60)
+
+            var formatted_message = ""
+
+            if (hours == 0){
+                formatted_message = minutes + "минут"
+            } else{
+                formatted_message = hours + "ч. " + minutes + "мин."
+            }
+
+            return formatted_message;
+
+        }
+        
     },
     data: () => ({
         showStory: false,
@@ -223,7 +266,10 @@ export default defineComponent({
                 url: "https://test.deqstudio.com/Vertical 4K Nature Film with Music - The Beauty of Big Island's Nature, Hawaii.mp4",
                 type: "video",
             },
-        ]
+        ],
+        myselfProfileEdit_isModalOpen: false,
+        name: "",
+        meditationtime: ""
     }),
     watch: {
         showStory: function (val) {
@@ -247,7 +293,11 @@ export default defineComponent({
 
         return {
             closeOutline,
-            playOutline
+            playOutline,
+            createOutline,
+            rocketOutline,
+            
+            
         }
     }
 });

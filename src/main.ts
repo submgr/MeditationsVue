@@ -6,6 +6,8 @@ import { IonicVue } from '@ionic/vue';
 
 import LoadScript from "vue-plugin-load-script";
 
+import './index.css'
+
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
 

@@ -89,6 +89,31 @@ const routes: Array<RouteRecordRaw> = [
         path: 'meditation/finished',
         component: () => import('@/views/meditation/OnFinishScreen.vue')
       },
+      {
+        path: 'relaxation',
+        redirect: '/tabs/relaxation/info'
+      },
+      {
+        path: 'relaxation/info',
+        component: () => import('@/views/relaxation/InfoScreen.vue')
+      },
+      {
+        path: 'relaxation/session',
+        component: () => import('@/views/relaxation/SessionScreen.vue')
+      },
+      {
+        path: 'relaxation/finished',
+        component: () => import('@/views/relaxation/OnFinishScreen.vue')
+      },
+      {
+        path: 'myself/overview',
+        component: () => import('@/views/myself/MyselfOverview.vue')
+      },
+      {
+        name: 'read/youshouldknow',
+        path: 'read/youshouldknow',
+        component: () => import('@/views/read/YouShouldKnow.vue')
+      },
     ]
   }
 ]

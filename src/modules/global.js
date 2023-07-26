@@ -5,8 +5,8 @@ function isLocalHost(url) {
 }
 
 if(isLocalHost(window.location.hostname)){
-  apiserver_hostname = "http://192.168.1.38:3000/";
-}else{
+  apiserver_hostname = "http://" + window.location.hostname + ":3000/";
+} else{
   apiserver_hostname = "https://meditations-backend.deqstudio.com/";
 }
 

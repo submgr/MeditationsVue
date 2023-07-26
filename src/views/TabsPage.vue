@@ -18,15 +18,15 @@
           <ion-label>Tab 3</ion-label>
         </ion-tab-button>--->
 
-        <ion-tab-button tab="tab5" href="/tabs/home">
+        <ion-tab-button tab="tab1" href="/tabs/relaxation/info">
           <ion-icon :icon="infiniteOutline" />
-          <ion-label>Спокойствие</ion-label>
+          <ion-label>Баланс</ion-label>
         </ion-tab-button>
-        <ion-tab-button tab="tab5" href="/tabs/home">
+        <ion-tab-button tab="tab2" href="/tabs/home">
           <ion-icon :icon="homeOutline" />
           <ion-label>Главная</ion-label>
         </ion-tab-button>
-        <ion-tab-button tab="tab5" href="/tabs/home">
+        <ion-tab-button tab="tab3" href="/tabs/myself/overview">
           <ion-icon :icon="happyOutline" />
           <ion-label>Вы</ion-label>
         </ion-tab-button>

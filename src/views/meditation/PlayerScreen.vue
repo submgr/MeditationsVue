@@ -43,7 +43,7 @@
             <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="additionalModalOpenened == 'info'" trigger="open-modal" :initial-breakpoint="0.50" :breakpoints="[0.50, 0.75]" handle-behavior="cycle">
                 <ion-content class="ion-padding">
                     <div class="ion-margin-top">
-                        <ion-label style="white-space: pre-wrap;"><br><b style="font-size: 28px;">Медитация</b><br/><br/>Вы хорошо проводите время!<span v-if="meditationAuthors != null" style="font-size: 13px;"><br><br>Медитация, которую вы сейчас слышите, появилась благодаря этим людям: {{meditationAuthors}}</span></ion-label>
+                        <ion-label style="white-space: pre-wrap;"><br><b style="font-size: 28px;">Медитация</b><br/><br/>Вы хорошо проводите время!<span v-if="meditationAuthors != null" style="font-size: 13px;"><br><br>Медитация, которую вы сейчас слышите, появилась благодаря этим людям: {{meditationAuthors.name}}</span></ion-label>
                     </div>
                     <div style="margin-top: 5% !important; margin-left: -18px;">
                         <ion-button fill="clear" @click="Modal_onWillDismiss" style="font-weight: 700;">Скрыть <ion-icon slot="end" :icon="chevronDown"></ion-icon>
@@ -381,8 +381,8 @@ border-radius: 40px 40px 0 0;
                             }, 4000);
                         }
                     });
-                    this.meditationAuthors = data.content.audio.audiotrack.author;
-                    console.log("This meditation has been recorded with the help of this contributors: " + this.meditationAuthors)
+                    this.meditationAuthors = JSON.parse(data.content.audio.audiotrack.author);
+                    console.log("This meditation has been recorded with the help of this contributors: " + this.meditationAuthors.name)
                     setTimeout(() => {
                         this.audiotrack_musicid = this.audiotrack.play();
                     }, 0); //some time before we had here 9000 instead of 0.
@@ -407,7 +407,10 @@ border-radius: 40px 40px 0 0;
             return {
                 test: this.$route.params.test,
                 playerState: "stopped",
-                meditationAuthors: null,
+                meditationAuthors: {
+                    name: null,
+                    photo: null
+                },
                 videoplayer: null,
                 meditationState: "prestart_info",
                 audiotrack: null,
