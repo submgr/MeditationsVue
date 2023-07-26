@@ -179,7 +179,9 @@ import {
     IonModal,
     IonLabel,
     IonIcon,
-    IonInput
+    IonInput,
+    IonItem,
+    IonCard
 } from '@ionic/vue';
 
 import {
@@ -201,7 +203,9 @@ export default defineComponent({
         IonModal,
         IonLabel,
         IonIcon,
-        IonInput
+        IonInput,
+        IonItem,
+        IonCard
     },
     mounted() {
         const tabsEl = document.querySelector('ion-tab-bar');
