@@ -180,6 +180,7 @@ export default defineComponent({
                     var idToken = userResponse.authentication.idToken;
                     // eslint-disable-next-line
                     const parent_this = this;
+                    
                     axios.get(globaldata.api.hostname + "service/auth_withGoogle", { params:
                             {accessToken: accessToken, idToken: idToken }
                         }).then((response) => {
@@ -192,7 +193,7 @@ export default defineComponent({
                                 this.message_modal_isOpen = true;
                             }
                         }).catch(function(error){
-                            parent_this.message_modal_text = `Сервер временно недоступен.\n\nСведения: ` + error
+                            parent_this.message_modal_text = `Сервер временно недоступен.\n\nСведения: ` + error + '\n' + globaldata.api.hostname
                             parent_this.message_modal_isOpen = true;
                         });
                     // add the code for the functionality your need

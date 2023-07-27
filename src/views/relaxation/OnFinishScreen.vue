@@ -6,9 +6,9 @@
         </ion-toolbar>
       </ion-header>
       <ion-content :fullscreen="true">
-        <Vue3Lottie :animationData="require('./../../assets/lottie/beam-meditation.json')" />
+        <Vue3Lottie :animationData="require('./../../assets/lottie/beam-meditation.json')" :height="150" :width="150" style="max-width: 80vw; margin-left: -3vw; margin-top: 4vh;" />
         
-        <ion-header collapse="condense" style="margin-top: 5vh;">
+        <ion-header collapse="condense" style="margin-top: 0.5vh;">
           <ion-toolbar>
             <ion-title size="large">Это баланс!</ion-title>
           </ion-toolbar>

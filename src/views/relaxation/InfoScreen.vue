@@ -1,15 +1,15 @@
 <template>
     <ion-page>
       <ion-content :fullscreen="true">
-        <p style="padding: 0px 18px 0px; margin-top: 0.5rem; margin-bottom: 0rem; margin-left: -60px">
-            <Vue3Lottie :animationData="require('./../../assets/lottie/125469-meditating-panda.json')" :height="150" :width="150" style="max-width: 280px;"/></p>
+        <div style="padding: 0px 18px 0px; margin-top: 0.42rem; margin-bottom: 0rem; margin-left: -40px">
+            <Vue3Lottie :animationData="require('./../../assets/lottie/125469-meditating-panda.json')" :height="150" :width="150" style="max-width: 240px;"/></div>
         <div style="padding: 1.4rem; padding-top: 0rem;">
             <h2 style="font-weight: 800; font-size: 25px;;">Баланс</h2>
             <p style="opacity: 0.8; font-size: 14px; font-weight: 500;  line-height: 20px !important; letter-spacing: -0.8px;">
               Возникла внезапная вспышка энергии или чувство нервного напряжения? Отлично! Наш уголок релаксации именно для этого создан. Здесь вы найдете атмосферу исцеления и специально разработанные методы, чтобы помочь вам найти умиротворение и баланс.
 <br/><br/> Плюс, вам понадобится всего несколько минут, и это доступно в любом месте! Не нужны наушники — просто наслаждайтесь моментом и восстановите свою гармонию.
             </p>
-            <ion-button style="margin-top: 0.8rem;" @click="startSession">Начать сессию</ion-button>
+            <ion-button style="margin-top: 0.97rem;" @click="startSession">Начать сессию</ion-button>
         </div>
         
     </ion-content>

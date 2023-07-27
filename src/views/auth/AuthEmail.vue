@@ -223,7 +223,7 @@
                             parent_this.state = "main"
                         }
                     }).catch(function(error){
-                        parent_this.message_modal_text = `Сервер временно недоступен.\n\nСведения: ` + error
+                        parent_this.message_modal_text = `Сервер временно недоступен.\n\nСведения: ` + error + '\n' + globaldata.api.hostname
                         parent_this.message_modal_isOpen = true;
                         parent_this.state = "main"
                     });
@@ -258,7 +258,7 @@
                             parent_this.state = "awaiting_code"
                         }
                     }).catch(function(error){
-                        parent_this.message_modal_text = `Сервер временно недоступен.\n\nСведения: ` + error
+                        parent_this.message_modal_text = `Сервер временно недоступен.\n\nСведения: ` + error + '\n' + globaldata.api.hostname
                         parent_this.message_modal_isOpen = true;
                         parent_this.state = "awaiting_code"
                     });

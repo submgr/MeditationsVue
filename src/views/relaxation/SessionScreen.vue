@@ -4,7 +4,7 @@
             <Transition :duration="{ enter: 500, leave: 800 }">
                 <div v-if="stage == 'getting_ready'">
                     <div style="padding: 0rem; margin-top: 15%; ">
-                        <div style="margin-left: -20%;">
+                        <div style="margin-left: -15%;">
                             <Vue3Lottie :animationData="require('./../../assets/lottie/26792-progress-loader.json')"
                                 style=" width: 120% !important;" />
                         </div>
@@ -17,7 +17,7 @@
             </Transition>
             <Transition :duration="{ enter: 500, leave: 800 }">
                 <div v-if="stage == 'awaiting'">
-                    <div style="padding: 0rem; margin-top: 15%; ">
+                    <div style="padding: 0rem; margin-top: 11%; ">
                         <div style="margin-left: -20%;">
                             <Vue3Lottie :animationData="require('./../../assets/lottie/26792-progress-loader.json')"
                                 style=" width: 120% !important;" />
@@ -31,7 +31,7 @@
             </Transition>
             <Transition :duration="{ enter: 500, leave: 800 }">
                 <div v-if="stage == 'breath_staged'">
-                    <div style="padding: 2rem; margin-top: 35%">
+                    <div style="padding: 2rem; margin-top: 31%">
                         <Vue3Lottie :animationData="require('./../../assets/lottie/142805-huff-cough-breathing.json')" />
                         <p class="linear-wipe"
                             style="text-align: center; margin: 0; margin-top: 2rem; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 24px; font-weight: 700;">
