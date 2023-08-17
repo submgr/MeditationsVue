@@ -9,7 +9,7 @@
               Возникла внезапная вспышка энергии или чувство нервного напряжения? Отлично! Наш уголок релаксации именно для этого создан. Здесь вы найдете атмосферу исцеления и специально разработанные методы, чтобы помочь вам найти умиротворение и баланс.
 <br/><br/> Плюс, вам понадобится всего несколько минут, и это доступно в любом месте! Не нужны наушники — просто наслаждайтесь моментом и восстановите свою гармонию.
             </p>
-            <ion-button style="margin-top: 0.97rem;" @click="startSession">Начать сессию</ion-button>
+            <ion-button id="relaxstartbtn" style="margin-top: 3.25vh; margin-left: -0.2vw; opacity: 0.9; --background: linear-gradient(134.98deg, rgba(255, 255, 255, 0.15) 0%, rgb(0, 181, 239, 0.2); font-weight: 700;" @click="startSession">Начать сессию</ion-button>
         </div>
         
     </ion-content>
@@ -18,6 +18,12 @@
 
   <style scoped>
   @media (prefers-color-scheme: light) {
+
+    #relaxstartbtn{
+      --background: rgb(43, 84, 209) !important;
+
+    }
+
     ion-content {
       --background: #f7f7f6 url('../../assets/abstract/chris-nguyen-lbmrrNgq2lo-unsplash.jpg') no-repeat center center / cover !important;
     }
@@ -25,7 +31,7 @@
   @media (prefers-color-scheme: dark) {
     ion-content {
       color: #ffffff !important;
-      --background: #000000 url('../../assets/abstract/manuel-will-gd3t5Dtbwkw-unsplash.jpg') no-repeat center center / cover !important;
+      --background: #000000 url('../../assets/abstract/aurora-retina-background.png') no-repeat center center / cover !important;
     }
   }
   

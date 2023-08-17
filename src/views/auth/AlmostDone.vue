@@ -3,18 +3,18 @@
         <ion-page>
             <ion-content :fullscreen="true" v-if="state == 'main' || state == 'main_processing' || state == 'finishing'">
         
-                <p style="padding: 0px 18px 0px; margin-top: 14rem; margin-bottom: 1rem;">
-                    <Vue3Lottie :animationData="require('./../../assets/lottie/preloader.json')" :height="200" :width="200" /></p>
+                <p style="padding: 0px 18px 0px; margin-top: 14rem; margin-bottom: 1rem;" >
+                    <Vue3Lottie :animationData="require('./../../assets/lottie/preloader.json')" :style="imgStyle" id="dogImage" :height="172" :width="172" /></p>
                 <p class="linear-wipe" style="text-align: center; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 24px; font-weight: 700;">Почти готово</p>
             </ion-content>
             <ion-content :fullscreen="true" v-if="state == 'ready_askname' || state == 'ready_askname_processing'">
                 <img src="@/assets/illustrations/juicy-photo-of-dog.png" style="margin-top: 7vh; margin-left: 21.5px; height: 27vh; border-radius: 20px;">
-                <p style="text-align: left; padding: 0px 22px 0px; margin-top: 0rem; margin-bottom: 0;  align-items: flex-start; min-width: 100%; font-size: 34px; font-weight: 600;">вас зовут...</p>
-                <p style="text-align: left; padding: 0px 22px 0px; padding-top: 2%; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 18px; font-weight: 400;">Укажи свое имя, чтобы мы знали друг друга как друзья!</p>
+                <!--<p style="text-align: left; padding: 0px 22px 0px; margin-top: 0rem; margin-bottom: 0;  align-items: flex-start; min-width: 100%; font-size: 34px; font-weight: 600;">вас зовут...</p>-->
+                <p style="text-align: left; padding: 0px 22px 0px; padding-top: 1%; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 18px; font-weight: 400;">Укажи свое имя, чтобы мы знали друг друга как друзья!</p>
         
-                <ion-input class="input-style" autofocus="true" type="text" placeholder="Имя, которым вас зовут друзья" v-model="user_firstname" pattern="text"></ion-input>
+                <ion-input @input="inputNameValueUpdated($event.target.value)" v-focus @focus="resizeImage" @blur="resetImage" class="input-style" type="text" placeholder="Имя, которым вас зовут друзья" v-model="user_firstname" pattern="text"></ion-input>
 
-                <ion-button @click="gonext" :disabled="state == 'ready_askname_processing'" color="danger" style="margin-right: 5%; margin-left: 35%; margin-top: 6%; --opacity: 0.7;" expand="block">
+                <ion-button @click="gonext" :disabled="state == 'ready_askname_processing'" color="danger" style="margin-right: 5%; margin-left: 35%; margin-top: 3.5%; --opacity: 0.7;" expand="block">
                     <ion-icon v-if="state == 'ready_askname'" class="send-button" slot="end" :icon="arrowForwardOutline"></ion-icon>
                     Продолжить
                     <ion-spinner v-if="state == 'ready_askname_processing'" name="crescent" style="margin-left: 6%; margin-right: -6%;"></ion-spinner>
@@ -111,14 +111,21 @@ ion-spinner {
         }
     }
     
+    #dogImage {
+        transition: transform 0.3s ease-in-out;
+    }
+
     .input-style {
-        margin-top: 8%;
+        margin-top: 4%;
         margin-left: 5%;
         width: 90%;
         line-height: 2.3;
         --background: #f8f8f834;
         --padding-start: 13px;
-        border-radius: 8px;
+        border-collapse: separate; 
+        perspective: 1px;
+        overflow: hidden;
+        border-radius: 8px !important;
     }
 
     .input-code[value]:not([value=""]){
@@ -138,7 +145,8 @@ ion-spinner {
     
     <script lang="ts">
     import {
-        defineComponent
+        defineComponent,
+        nextTick
     } from 'vue';
 
     import {
@@ -175,10 +183,24 @@ ion-spinner {
         },
         data() {
             return {
+                imgStyle: {
+                    
+                    WebkitTransform: 'scale(1)',
+                    transform: 'scale(1)',
+                    transition: 'transform 0.9s ease-in-out',
+                    WebkitTransition: 'transform 0.3s ease-in-out'
+                },
                 message_modal_isOpen: false,
                 state: "main",
                 user_firstname: "",
                 message_modal_text: "Something went wrong. Code: the text is not defined, but modal is called. Weird.",
+            }
+        },
+        directives: {
+            focus: {
+            mounted(el) {
+                el.focus();
+            }
             }
         },
         methods: {
@@ -195,6 +217,20 @@ ion-spinner {
             async Modal_onWillDismiss(){
                 this.message_modal_isOpen = false;
             },
+            async inputNameValueUpdated(val){
+                this.user_firstname = this.user_firstname.replace(/[^\p{L}]/gu, '');
+                const word = this.user_firstname
+
+                if (word.length > 0){
+                    const firstLetter = word.charAt(0)
+
+                    const firstLetterCap = firstLetter.toUpperCase()
+
+                    const remainingLetters = word.slice(1)
+
+                    this.user_firstname = firstLetterCap + remainingLetters
+                }
+            },
             async CompleteAuth(){
                 console.log("Done with AlmostDone-Auth. Going further...")
                 if(this.$route.query.auth_token){
@@ -208,12 +244,29 @@ ion-spinner {
                     this.$router.push({path:'/tabs/', replace: true, query: { justloggedin: "true" }});
                     this.state = "ready_askname";
                 }, 3000)
+            },
+            async resizeImage() {
+                await nextTick();
+                
+                this.imgStyle.WebkitTransform = 'scale(0.8, 0.8)';
+                this.imgStyle.transform = 'scale(0.8)';
+            },
+            resetImage() {
+                
+                this.imgStyle.WebkitTransform = 'scale(1, 1)';
+                this.imgStyle.transform = 'scale(1)';
             }
         },
         mounted(){
             setTimeout(() => {
                 this.state = "ready_askname";
             }, 3000)
+
+            const tabsEl = document.querySelector('ion-tab-bar');
+            if (tabsEl) {
+                tabsEl.hidden = true;
+                tabsEl.style.height = "1";
+            }
         },
         setup() {
             return {

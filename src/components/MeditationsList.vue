@@ -1,6 +1,9 @@
 <template>
-    <div id="container">
-        <div class="wrapper">
+    <div>
+        <div class="preloader" v-if="premadeMeditations.length == 0">
+            <h1><ion-spinner name="lines-sharp"></ion-spinner></h1>
+        </div>
+        <div class="wrapper" v-else>
             <!--- [START] Dynamically Generated Content Block Comes Here -->
             <div class="card" v-for="(item, index) in premadeMeditations" v-bind:key="item.id">
                 <div class="poster"><img :src="item.imgposterurl" alt="Location Unknown"></div>
@@ -47,9 +50,12 @@ import { defineComponent } from 'vue';
 import globaldata from '../modules/global';
 import { forEach } from 'xregexp';
 
+import { IonSpinner } from '@ionic/vue';
+
 
 export default defineComponent({
     name: 'ExploreContainer',
+    components: { IonSpinner },
     props: {
         name: String
     },
@@ -100,6 +106,15 @@ export default defineComponent({
 <style scoped>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
+        #container{
+            background-color: rgb(rgba(255, 0, 0, 0), rgba(0, 128, 0, 0), rgba(0, 0, 255, 0));
+        }
+
+        .preloader{
+            margin-top: 9vh;
+            text-align: center;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -133,7 +148,7 @@ export default defineComponent({
             width: 325px;
             height: 450px;
             background: #000;
-            border-radius: 18px;
+            border-radius: 27px;
             overflow: hidden;
             box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
             margin: 0 12px;
@@ -239,7 +254,7 @@ export default defineComponent({
     padding: .35rem .65rem;
     color: #fff;
     border: 1.5px solid rgba(255 255 255 / 0.4);
-    border-radius: 4px;
+    border-radius: 15px;
     border-radius: 50px;
 }
 

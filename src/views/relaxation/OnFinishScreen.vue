@@ -40,6 +40,8 @@
     name: 'Tab1Page',
     components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonLabel, Vue3Lottie },
     mounted(){
+
+      
         
         var duration = 4 * 1000;
         var animationEnd = Date.now() + duration;

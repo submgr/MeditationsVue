@@ -1,15 +1,7 @@
 <template lang="en">
     <ion-page id="ionpage">
         <ion-content :fullscreen="true">
-            <div style="position: fixed; z-index: 6; color: white;">
-                <ion-grid id="top_el_holder">
-                    <ion-row>
-                        <ion-col @click="getBack()"><ion-icon :icon="arrowBackOutline" /></ion-col>
-                        <ion-col></ion-col>
-                        <ion-col @click="meditationAdditional()"><ion-icon :icon="ellipsisHorizontal" /></ion-col>
-                    </ion-row>
-                </ion-grid> 
-            </div>
+            <NavbarController activatedfrom="Meditation/PlayerScreen" @backfunction="getBack()" @additionalmodalfunction="meditationAdditional()"/>
             <SimpleMeditationBackground type="video" v-if="clinical_records != '1'"/>
             <div class="controllers_wrapper">
                 <div class="controllers">
@@ -181,6 +173,7 @@ border-radius: 40px 40px 0 0;
     import globaldata from '../../modules/global';
     
     import SimpleMeditationBackground from '@/components/SimpleMeditationBackground.vue';
+    import NavbarController from '@/components/NavbarController.vue';
     
     import { gameController, playBackOutline, play, pause, playForwardOutline } from 'ionicons/icons';
     
@@ -196,6 +189,7 @@ border-radius: 40px 40px 0 0;
             IonLabel,
             VuePlyr,
             SimpleMeditationBackground,
+            NavbarController,
             IonIcon,
             IonGrid,
             IonRow,
@@ -215,6 +209,11 @@ border-radius: 40px 40px 0 0;
             }
         },
         mounted() {
+
+            // eslint-disable-next-line
+            const parent_this = this;
+
+
             const tabsEl = document.querySelector('ion-tab-bar');
             if (tabsEl) {
                 tabsEl.hidden = true;
@@ -224,6 +223,23 @@ border-radius: 40px 40px 0 0;
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             //sthis.videoplayer = this.$refs.videoplayer.player;
+
+            
+
+            setInterval(function() {
+
+                
+                // this timer helps us count total time spent with meditation and record it for each user individually
+                parent_this.temp_timeCounter_00 += 5
+                if ((parent_this.temp_timeCounter_00 >= 60) && (parent_this.playerState = "playing")){
+
+                    var minutes = ~~(parent_this.temp_timeCounter_00/60)
+                    parent_this.temp_timeCounter_00 = parent_this.temp_timeCounter_00 - (60*minutes)
+
+                    var updatedMeditationTime = parseInt(localStorage.getItem("user_meditationtime")) + minutes + 0
+                    localStorage.setItem("user_meditationtime", updatedMeditationTime + "")
+                }
+            }, 5000)
         },
         methods: {
             modalDisallowHiding(){
@@ -287,9 +303,12 @@ border-radius: 40px 40px 0 0;
                         break;
     
                     case "future":
+                        console.log("seek info (future)", "this.audiotrack.duration(this.audiotrack_musicid): " + this.audiotrack.duration(this.audiotrack_musicid), "this.audiotrack.seek(this.audiotrack_musicid) + time: " + this.audiotrack.seek(this.audiotrack_musicid) + time)
                         if( this.audiotrack.duration(this.audiotrack_musicid) < this.audiotrack.seek(this.audiotrack_musicid) + time){
+                            console.log("seek info (future)  w1")
                             this.audiotrack.seek(audiotrack_playposition_now, this.audiotrack_musicid)
                         }else{
+                            console.log("seek info (future)  w2")
                             this.audiotrack.seek(audiotrack_playposition_now + time, this.audiotrack_musicid)
                         }
                         break;
@@ -394,7 +413,7 @@ border-radius: 40px 40px 0 0;
                 if (data.content.audio.backgroundtrack) {
                     this.backgroundtrack = new Howl({
                         src: [data.content.audio.backgroundtrack.url],
-                        html5: true,
+                        html5: false,
                         volume: 0.05
                     });
                     this.backgroundtrack_musicid = this.backgroundtrack.play();
@@ -406,6 +425,7 @@ border-radius: 40px 40px 0 0;
         data() {
             return {
                 test: this.$route.params.test,
+                temp_timeCounter_00: 0,
                 playerState: "stopped",
                 meditationAuthors: {
                     name: null,

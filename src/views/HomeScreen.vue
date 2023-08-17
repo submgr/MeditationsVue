@@ -23,7 +23,7 @@
                 </div>--->
             </div>
 
-            <MeditationsList @event-getmeditation="getMeditation" />
+            <MeditationsList @event-getmeditation="getMeditation" style="margin-top: -2.5vh;"/>
 
 
 
@@ -43,7 +43,7 @@
 }
 
 .card-meditate {
-    height: 33.5vh !important;
+    height: 23.5vh !important;
 }
 
 .suggestion-block {

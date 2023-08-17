@@ -1,20 +1,20 @@
 <template>
     <ion-page>
         <ion-content :fullscreen="true">
-            <Transition :duration="{ enter: 500, leave: 800 }">
-                <div v-if="stage == 'getting_ready'">
-                    <div style="padding: 0rem; margin-top: 15%; ">
-                        <div style="margin-left: -15%;">
-                            <Vue3Lottie :animationData="require('./../../assets/lottie/26792-progress-loader.json')"
-                                style=" width: 120% !important;" />
-                        </div>
-
-                        <p class="linear-wipe"
-                            style="text-align: center; margin: 0; margin-top: 2rem; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 24px; font-weight: 700;">
-                            Приготовьтесь</p>
+            <NavbarController activatedfrom="Relaxation/SessionScreen" @backfunction="getBack()" />
+            <div v-if="stage == 'getting_ready'">
+                <div style="padding: 0rem; margin-top: 15%; ">
+                    <div style="margin-left: -15%;">
+                        <Vue3Lottie :animationData="require('./../../assets/lottie/26792-progress-loader.json')"
+                            style=" width: 120% !important;" />
                     </div>
+
+                    <p class="linear-wipe"
+                        style="text-align: center; margin: 0; margin-top: 2rem; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 24px; font-weight: 700;">
+                        Приготовьтесь</p>
                 </div>
-            </Transition>
+            </div>
+
             <Transition :duration="{ enter: 500, leave: 800 }">
                 <div v-if="stage == 'awaiting'">
                     <div style="padding: 0rem; margin-top: 11%; ">
@@ -64,9 +64,11 @@ import { IonPage, IonContent } from '@ionic/vue';
 
 import { Vue3Lottie } from 'vue3-lottie'
 
+import NavbarController from '@/components/NavbarController.vue';
+
 export default defineComponent({
     name: 'Tab1Page',
-    components: { IonContent, IonPage, Vue3Lottie },
+    components: { IonContent, IonPage, Vue3Lottie, NavbarController },
     data() {
         return {
             stage: "getting_ready",
@@ -82,9 +84,25 @@ export default defineComponent({
             }
         }
     },
+    watch: {
+            '$route' () {
+
+                const tabsEl = document.querySelector('ion-tab-bar');
+                if (tabsEl) {
+                    tabsEl.hidden = false;
+                    tabsEl.style.height = "1";
+                }
+            }
+        },
     mounted() {
         // eslint-disable-next-line
         var parent_this = this;
+
+        const tabsEl = document.querySelector('ion-tab-bar');
+        if (tabsEl) {
+            tabsEl.hidden = true;
+            tabsEl.style.height = "1";
+        }
 
         var timer_ready_fun = setInterval(function () {
             parent_this.timer_ready -= 1
@@ -97,6 +115,9 @@ export default defineComponent({
         }, 1000);
     },
     methods: {
+        getBack() {
+            this.$router.go(-1)
+        },
         isTimeAvailableForStage() {
             if (this.stage_timer > 0) {
                 return true
@@ -150,8 +171,10 @@ export default defineComponent({
                     } else {
                         parent_this.stage = "finished"
 
-                        this.$router.push({path:'/tabs/relaxation/finished', replace: true, query: {
-                        }});
+                        this.$router.push({
+                            path: '/tabs/relaxation/finished', replace: true, query: {
+                            }
+                        });
 
                         parent_this.advanced_stage_info = ""
                     }
@@ -171,7 +194,7 @@ export default defineComponent({
 
                     var times = 6
 
-                    parent_this.breathConfData = { inhale_time: 4600, exhale_time: 6600, breathPause_time: 2040 }
+                    parent_this.breathConfData = { inhale_time: 4900, exhale_time: 6600, breathPause_time: 2140 }
                     parent_this.stage_timer = ~~(((parent_this.breathConfData.breathPause_time * (times - 1)) + (times * (parent_this.breathConfData.inhale_time + parent_this.breathConfData.exhale_time))) / 1000)
                     console.log("parent_this.stage_timer :: " + parent_this.stage_timer)
                     parent_this.inhale()

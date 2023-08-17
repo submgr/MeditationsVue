@@ -26,7 +26,12 @@
                   <ion-card-subtitle>Медитация — это хорошая привычка.</ion-card-subtitle>
                 </ion-card-header>
             
-                <ion-card-content> За все время вы провели {{ meditationtime }} медитируя. Так держать! <br/><br/>Согласно исследованиям, важно медитировать периодически, чтобы усилить эффект. &nbsp;<span style="color:rgb(94, 94, 219)" @click="learnMore()">Узнайте&nbsp;больше</span></ion-card-content>
+                <ion-card-content>
+                    
+                    <span v-if="!enoughExpForTimeReview">Приложение будет становиться все более индивидуальным для вас с каждой пройденной медитацией! Продолжайте в том же духе!</span>
+                    <span v-if="enoughExpForTimeReview">За все время вы провели {{ meditationtime }} медитируя. Так держать!</span>
+                    
+                    <br/><br/>Согласно исследованиям, важно медитировать периодически, чтобы усилить эффект. &nbsp;<span style="color:rgb(94, 94, 219)" @click="learnMore()">Узнайте&nbsp;больше</span></ion-card-content>
               </ion-card>
 
             <ion-modal
@@ -215,7 +220,13 @@ export default defineComponent({
         }
 
         this.name = localStorage.getItem("user_firstname")
-        this.meditationtime = this.meditationtimePrepare(localStorage.getItem("user_meditationtime"))
+        if (localStorage.getItem("user_meditationtime") === null){
+            localStorage.setItem("user_meditationtime", "0")
+            this.meditationtime = "0"
+        }else{
+            this.meditationtime = this.meditationtimePrepare(localStorage.getItem("user_meditationtime"))
+        }
+        
 
     },
     methods: {
@@ -244,16 +255,24 @@ export default defineComponent({
 
         meditationtimePrepare(rawMinutes) {
 
+            
+
             const hours = Math.floor(rawMinutes/60)
 
             const minutes = rawMinutes - (hours * 60)
 
             var formatted_message = ""
 
+            if (minutes + (hours * 60) > 10){
+                this.enoughExpForTimeReview = true
+            }else{
+                this.enoughExpForTimeReview = false
+            }
+
             if (hours == 0){
-                formatted_message = minutes + "минут"
+                formatted_message = minutes + " минут"
             } else{
-                formatted_message = hours + "ч. " + minutes + "мин."
+                formatted_message = hours + " ч. " + minutes + " мин."
             }
 
             return formatted_message;
@@ -273,7 +292,8 @@ export default defineComponent({
         ],
         myselfProfileEdit_isModalOpen: false,
         name: "",
-        meditationtime: ""
+        meditationtime: "",
+        enoughExpForTimeReview: null
     }),
     watch: {
         showStory: function (val) {
