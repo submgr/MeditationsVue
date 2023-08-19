@@ -68,11 +68,11 @@ export default defineComponent({
     mounted(){
 
         switch (this.activatedfrom) {
-            case "Relaxation/PlayerScreen":
+            case "Meditation/PlayerScreen":
                 // some changes to nav for meditations player screen here
                 this.navConfig.infomodal = true
                 break;
-            case "Meditation/SessionScreen":
+            case "Relaxation/PlayerScreen":
                 // no changes, cuz we need just a back btn here
                 break;
         
