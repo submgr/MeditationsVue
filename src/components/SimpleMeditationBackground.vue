@@ -1,4 +1,5 @@
 <template>
+  <div v-if="backgroundCode != 'iwantsomecock'" style="z-index: 1; position: relative;"> 
     <div id="container" v-if="current_background == 'magic_circle'">
       <div class="circle">
         <div class="noise animated">
@@ -6,11 +7,17 @@
       </div>
     </div>
     <div v-if="current_background == 'video'" style="position: fixed; top: 0; bottom:0; width: 100%; height: 100%; z-index: -1; filter: brightness(100%);">
-      <video playsinline autoplay muted loop poster="" style="height: 100%;">
-        <source src="https://accessmeditation.pages.dev/video/pexels_ambientnature_atmosphere_1.mp4">
+      <video playsinline autoplay muted loop poster="" style="height: 100%; " class="myVideo" v-reload="backgroundCode">
+        <source :src="globaldata.assets.hostname + '/videos/mededitationbg/' + backgroundCode + '.mp4'">
           Ваше устройство не может воспроизвести это видео. Попробуйте обновить браузер или загрузить другой (например, Google Chrome). Возможно, вам необходимо установить последние драйвера или кодеки.<br/>Sorry, your device is unable to play this media. Update your browser or try out some other. In some cases it is recomended for users to update drivers and install latest codecs.
       </video>
     </div>
+  </div>
+
+  <div style="z-index: -99; position: relative; margin-top: 30vh; text-align: center;">
+    <h1><ion-spinner name="lines-sharp"></ion-spinner></h1>
+  </div>
+    
   </template>
 
   <style scoped>
@@ -29,11 +36,14 @@
   import { defineComponent } from 'vue';
   import VuePlyr from 'vue-plyr'
   import 'vue-plyr/dist/vue-plyr.css' 
+
+  import globaldata from '../modules/global';
   
   export default defineComponent({
     name: 'ExploreContainer',
     props: {
-      type: String
+      type: String,
+      backgroundCode: String
     },
     //components: {VuePlyr},
     mounted() {
@@ -47,11 +57,19 @@
           default:
             break;
         }
-        console.log("Registered the folowing current_background: " + this.current_background)
+        console.log("Registered the following current_background: " + this.current_background)
     },
-    setup(){
+    directives: {
+    reload(el, binding) {
+      if (binding.oldValue !== binding.value) {
+        el.load();
+      }
+    }
+  },
+    data() {
       return {
-        current_background: null
+        globaldata: globaldata,
+        current_background: null,
       }
     }
   });
