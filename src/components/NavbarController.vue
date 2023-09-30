@@ -1,10 +1,11 @@
 <template>
-    <div style="position: fixed; z-index: 100; color: white;">
+    <div style="position: fixed; z-index: 100; color: white; ">
         <ion-grid id="top_el_holder">
             <ion-row style="margin-top: 0.7vh;">
                 <ion-col v-if="navConfig.backbtn" @click="$emit('backfunction')"><ion-icon :icon="arrowBackOutline" /></ion-col>
                 <ion-col></ion-col>
                 <ion-col v-if="navConfig.infomodal" @click="$emit('additionalmodalfunction')"><ion-icon :icon="ellipsisHorizontal" /></ion-col>
+                <ion-col v-if="navConfig.bgpickmodal" @click="$emit('bgpickmodalfunction')"><ion-icon :icon="imageOutline" /></ion-col>
             </ion-row>
         </ion-grid> 
     </div>
@@ -36,7 +37,8 @@ import {
         arrowForward,
         arrowBackOutline,
         ellipsisHorizontal,
-        chevronDown
+        chevronDown,
+        imageOutline
     } from 'ionicons/icons';
 
 import {  } from '@ionic/vue';
@@ -54,10 +56,12 @@ export default defineComponent({
             MegaphoneIcon, XMarkIcon,
             arrowBackOutline,
             ellipsisHorizontal,
+            imageOutline,
 
             navConfig: {
                 backbtn: true,
-                infomodal: false
+                infomodal: false,
+                bgpickmodal: false
             }
         }
     },
@@ -71,6 +75,7 @@ export default defineComponent({
             case "Meditation/PlayerScreen":
                 // some changes to nav for meditations player screen here
                 this.navConfig.infomodal = true
+                this.navConfig.bgpickmodal = true
                 break;
             case "Relaxation/PlayerScreen":
                 // no changes, cuz we need just a back btn here

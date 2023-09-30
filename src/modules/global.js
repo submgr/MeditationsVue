@@ -1,5 +1,7 @@
 var apiserver_hostname;
 
+var assetsbase_hostname = "https://accessmeditation.pages.dev/";
+
 function isLocalHost(url) {
   return url.indexOf('localhost') !== -1 || url.indexOf('127.0.0.1') !== -1 || url.indexOf('192.') !== -1;
 }
@@ -29,6 +31,9 @@ if (isWebpackHotUpdate() == true) {
 const data = {
   api: {
     hostname: apiserver_hostname
+  },
+  assets: {
+    hostname: assetsbase_hostname
   }
 }
 

@@ -114,6 +114,10 @@ const routes: Array<RouteRecordRaw> = [
         path: 'read/youshouldknow',
         component: () => import('@/views/read/YouShouldKnow.vue')
       },
+      {
+        path: 'read/viewpost',
+        component: () => import('@/views/read/RenderRemoteContent.vue')
+      },
     ]
   }
 ]
