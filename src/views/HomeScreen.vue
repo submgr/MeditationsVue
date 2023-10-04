@@ -1,6 +1,7 @@
 <template>
     <ion-page>
         <ion-content :fullscreen="true">
+            <AdvancedLoader />
             <h1 style="margin-left: 1.1rem; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Главная</h1>
             <div style="display: none;">
                 <NotificationsBanner />
@@ -154,7 +155,7 @@ import globaldata from '../modules/global';
 import MeditationsList from '@/components/MeditationsList.vue';
 import NotificationsBanner from '@/components/NotificationsBanner.vue';
 
-
+import AdvancedLoader from '@/components/AdvancedLoader.vue';
 
 
 export default defineComponent({
@@ -163,7 +164,8 @@ export default defineComponent({
         IonContent,
         IonPage,
         MeditationsList,
-        NotificationsBanner
+        NotificationsBanner,
+        AdvancedLoader
     },
     mounted() {
         const tabsEl = document.querySelector('ion-tab-bar');

@@ -13,12 +13,12 @@
     --vff-main-text-color: #181818;
     --vff-secondary-text-color: #7f8c8d;
     --vff-tertiary-text-color: #f1f1f1;
-    --vff-main-accent-color: #27ae60;
+    --vff-main-accent-color: #9eae27;
     --vff-secondary-accent-color: #2ecc71;
     --vff-tertiary-accent-color: #8e44ad;
     --vff-header-color: var(--vff-tertiary-accent-color);
     --vff-header-border-color: transparent;
-    --vff-button-color: var(--vff-main-accent-color);
+    --vff-button-color: #691ccd;
     --vff-button-hover-color: var(--vff-secondary-accent-color);
     --vff-button-text-color: #fff;
     --vff-main-form-bg-color: #F9F6FB;
@@ -125,10 +125,10 @@
   /* field-multiplechoice */
   .vff ul.f-radios li {
     border: 1px solid var(--vff-secondary-form-bg-color);
-    background-color: var(--vff-main-form-bg-color);
-    padding-top: 0.8rem;
-    padding-bottom: 0.8rem;
-    border-radius: 10px;
+    background-color: #18181800;
+    padding-top: 0.9rem;
+    padding-bottom: 1.0rem;
+    border-radius: 15px;
   }
   
   .vff ul.f-radios li.f-selected,
@@ -220,6 +220,11 @@
   .vff .o-btn-action {
     color: var(--vff-button-text-color);
     background-color: var(--vff-button-color);
+    backdrop-filter: blur(33px);
+    background-blend-mode: overlay;
+    border-radius: 15px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
   
   .vff .o-btn-action:hover,
