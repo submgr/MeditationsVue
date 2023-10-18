@@ -145,7 +145,10 @@ export default defineComponent({
                         tabsEl.style.height = "1";
                     }
                 } else {
-                    parent_this.$router.replace('/tabs/diagnostics/emotionalstate')
+                    //CURRENTLY WE JUST SKIP IT!
+                    //parent_this.$router.replace('/tabs/diagnostics/emotionalstate')
+
+                    parent_this.$router.replace('/tabs/home')
                 }
 
             }, 5000);
