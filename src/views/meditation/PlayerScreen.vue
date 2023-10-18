@@ -3,7 +3,7 @@
         <ion-content :fullscreen="true">
             <NavbarController activatedfrom="Meditation/PlayerScreen" @backfunction="exitMeditation();" @additionalmodalfunction="meditationAdditional()" 
                     @bgpickmodalfunction="backgroundPick()"/>
-            <SimpleMeditationBackground v-if="isAvailable_SimpleMeditationBackground" type="video" 
+            <SimpleMeditationBackground v-if="isAvailable_SimpleMeditationBackground" :type="currentBackground.type" 
             :backgroundCode="currentBackground.bgcode" />
             <div class="controllers_wrapper">
                 <div class="controllers">
@@ -263,6 +263,11 @@ export default defineComponent({
             tabsEl.style.height = "1";
         }
 
+        this.currentBackground = {
+            bgcode: this.availableBackgrounds[0].code,
+            type: this.availableBackgrounds[0].type
+        }
+
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         //sthis.videoplayer = this.$refs.videoplayer.player;
@@ -328,8 +333,10 @@ export default defineComponent({
             console.log('Requested METHOD changeBackground. Updating background scene right now...', item)
             //this.isAvailable_SimpleMeditationBackground = false
             this.currentBackground.bgcode = item.code
+            this.currentBackground.type = item.type
             //this.isAvailable_SimpleMeditationBackground = true
             console.log('VAR currentBackground.bgcode updated.', this.currentBackground.bgcode)
+            console.log('VAR currentBackground.type updated.', this.currentBackground.type)
         },
         async checkboxEventChangeBackground(ev: CheckboxCustomEvent) {
             
@@ -520,14 +527,17 @@ export default defineComponent({
     data() {
         return {
             globaldata: globaldata,
-            currentBackground: {
-                bgcode: "underpalm"
-            },
             availableBackgrounds: [
                 // available types:
                 // video
                 // photo
                 // abstract
+                {
+                    code: "wavyshader",
+                    type: "wavy_shader",
+                    friendly_title: "Освещающий луч",
+                    source: "empty currently"
+                },
                 {
                     code: "skyontop",
                     type: "video",
@@ -539,9 +549,14 @@ export default defineComponent({
                     type: "video",
                     friendly_title: "Гармония пальм",
                     source: "empty currently"
-                }
+                },
+                
 
             ],
+            currentBackground: {
+                bgcode: null,
+                type: null
+            },
             isAvailable_SimpleMeditationBackground: true,
             test: this.$route.params.test,
             temp_timeCounter_00: 0,
