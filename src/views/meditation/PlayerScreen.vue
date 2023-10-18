@@ -1,7 +1,7 @@
 <template lang="en">
     <ion-page id="ionpage">
         <ion-content :fullscreen="true">
-            <NavbarController activatedfrom="Meditation/PlayerScreen" @backfunction="getBack()" @additionalmodalfunction="meditationAdditional()" 
+            <NavbarController activatedfrom="Meditation/PlayerScreen" @backfunction="exitMeditation();" @additionalmodalfunction="meditationAdditional()" 
                     @bgpickmodalfunction="backgroundPick()"/>
             <SimpleMeditationBackground v-if="isAvailable_SimpleMeditationBackground" type="video" 
             :backgroundCode="currentBackground.bgcode" />
@@ -191,7 +191,8 @@ import {
     IonSelect,
     IonSelectOption,
     CheckboxCustomEvent,
-    IonCheckbox
+    IonCheckbox,
+    actionSheetController
 
 
 } from '@ionic/vue';
@@ -284,6 +285,30 @@ export default defineComponent({
         }, 5000)
     },
     methods: {
+        async exitMeditation() {
+            // eslint-disable-next-line
+            var parent_this = this;
+            const actionSheet = await actionSheetController.create({
+                header: 'Вы уверены, что хотите прервать эту чудесную медитацию?',
+                buttons: [
+                    {
+                        text: 'Да',
+                        role: 'confirm',
+                    },
+                    {
+                        text: 'Нет',
+                        role: 'cancel',
+                    },
+                ],
+            });
+            actionSheet.present();
+
+            const { role } = await actionSheet.onWillDismiss();
+
+            if (role === 'confirm') {
+                parent_this.getBack()
+            }
+        },
         backgroundPick() {
             this.additionalModalOpenened = "bgpick"
         },
@@ -506,13 +531,13 @@ export default defineComponent({
                 {
                     code: "skyontop",
                     type: "video",
-                    friendly_title: "Волшебный лес",
+                    friendly_title: "Облака медитации",
                     source: "empty currently"
                 },
                 {
                     code: "underpalm",
                     type: "video",
-                    friendly_title: "Волшебный лес",
+                    friendly_title: "Гармония пальм",
                     source: "empty currently"
                 }
 

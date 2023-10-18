@@ -1,12 +1,12 @@
 <template>
     <ion-page>
         <ion-content :fullscreen="true">
-            <AdvancedLoader />
+            <AdvancedLoader v-if="1>2" />
             <h1 style="margin-left: 1.1rem; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Главная</h1>
-            <div style="display: none;">
+            <div style="display: block; margin-top: 4vh;">
                 <NotificationsBanner />
             </div>
-            <div style="padding-top: 0.1rem; margin-top: 4vh;">
+            <div style="padding-top: 0.1rem;">
                 <div @click="getMeditation({ searchtype: 'random', searchtag: '' })">
                     <div class="card-alfa custom-swiper suggestion-block bg-1 card-meditate">
                         <div>
@@ -33,6 +33,9 @@
 </template>
 
 <style scoped>
+
+@import '../assets/css/adaptative_ui.css';
+
 .standart_padding {
     margin: 0px 15px 30px 15px;
 }
@@ -133,6 +136,7 @@ ion-page {
     font-size: 35px;
     font-weight: 500;
 }
+
 </style>
 
 <script lang="ts">

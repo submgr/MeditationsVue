@@ -1,0 +1,329 @@
+.stop-animations {
+    animation: none !important;
+    transition: none !important;
+  }
+
+
+@property --hue {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+  }
+  @property --rotate {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+  }
+  @property --bg-y {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+  }
+  @property --bg-x {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+  }
+  @property --glow-translate-y {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+  }
+  @property --bg-size {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+  }
+  @property --glow-opacity {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+  }
+  @property --glow-blur {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+  }
+  @property --glow-scale {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 2;
+  }
+  
+  @property --glow-radius {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 2;
+  }
+  
+  @property --white-shadow {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+  }
+  
+  :root {
+    --debug: 0;
+    --supported: 0;
+    --not-supported: 0;
+  
+    --card-color: hsl(260deg 100% 3%);
+    --text-color: hsl(260deg 10% 55%);
+    --card-radius: 3.6vw;
+    --card-width: 35vw;
+    --border-width: 3px;
+    --bg-size: 1;
+  
+    --hue: 0;
+    --hue-speed: 1;
+  
+    --rotate: 0;
+    --animation-speed: 4s;
+  
+    --interaction-speed: 0.55s;
+    --glow-scale: 1.5;
+    --scale-factor: 1;
+    --glow-blur: 6;
+    --glow-opacity: 1;
+    --glow-radius: 100;
+    --glow-rotate-unit: 1deg;
+  }
+  
+  .glowing-card {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+  
+    animation: glow 8s ease-in-out infinite alternate; /* Apply the glow animation */
+  
+    /* Your other card styles here */
+  }
+  
+  
+  
+  .glow {
+    --glow-translate-y: 0;
+    display: block;
+    position: absolute;
+    width: calc(var(--card-width) / 5);
+    height: calc(var(--card-width) / 5);
+    animation: rotate var(--animation-speed) linear infinite;
+    transform: rotateZ(calc(var(--rotate) * var(--glow-rotate-unit)));
+    transform-origin: center;
+    border-radius: calc(var(--glow-radius) * 10vw);
+
+    &:after {
+      content: "";
+      display: block;
+      z-index: -2;
+      filter: blur(calc(var(--glow-blur) * 10px));
+      width: 130%;
+      height: 130%;
+      left: -15%;
+      top: -15%;
+      background: hsl(
+        calc(calc(var(--hue) * var(--hue-speed)) * 1deg) 100% 60%
+      );
+      position: relative;
+      border-radius: calc(var(--glow-radius) * 10vw);
+      animation: hue-animation var(--animation-speed) linear infinite;
+      transform: scaleY(calc(var(--glow-scale) * var(--scale-factor) / 1.1))
+        scaleX(calc(var(--glow-scale) * var(--scale-factor) * 1.2))
+        translateY(calc(var(--glow-translate-y) * 1%));
+      opacity: var(--glow-opacity);
+    }
+}
+
+@property --rotate {
+    syntax: "<angle>";
+    initial-value: 132deg;
+    inherits: false;
+  }
+  
+  :root {
+    --card-height: 65vh;
+    --card-width: calc(var(--card-height) / 1.5);
+  }
+  
+  .cardgradiened {
+    width: var(--card-width);
+    height: var(--card-height);
+    padding: 3px;
+    position: relative;
+    border-radius: 6px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    font-size: 1.5em;
+    color: rgb(88 199 250 / 0%);
+    cursor: pointer;
+    font-family: cursive;
+  }
+  
+  .cardgradiened:hover {
+    color: rgb(88 199 250 / 100%);
+    transition: color 1s;
+  }
+  .cardgradiened:hover:before, .cardgradiened:hover:after {
+    animation: none;
+    opacity: 0;
+  }
+  
+  
+  .cardgradiened::before {
+    content: "";
+    width: 104%;
+    height: 102%;
+    border-radius: 8px;
+    background-image: linear-gradient(
+      var(--rotate)
+      , #5ddcff, #3c67e3 43%, #4e00c2);
+      position: absolute;
+      z-index: -1;
+      top: -1%;
+      left: -2%;
+      animation: spin 2.5s linear infinite;
+  }
+  
+  .cardgradiened::after {
+    position: absolute;
+    content: "";
+    top: calc(var(--card-height) / 6);
+    left: 0;
+    right: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    transform: scale(0.8);
+    filter: blur(calc(var(--card-height) / 6));
+    background-image: linear-gradient(
+      var(--rotate)
+      , #5ddcff, #3c67e3 43%, #4e00c2);
+      opacity: 1;
+    transition: opacity .5s;
+    animation: spin 2.5s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      --rotate: 0deg;
+    }
+    100% {
+      --rotate: 360deg;
+    }
+  }
+  
+  a {
+    color: #212534;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-weight: bold;
+    margin-top: 2rem;
+  }
+
+
+
+
+  @property --rotate {
+    syntax: "<angle>";
+    initial-value: 132deg;
+    inherits: false;
+  }
+  
+  :root {
+    --card-height: 11vh;
+    --card-width: calc(var(--card-height) / 1.5);
+  }
+
+  .cardg{
+    position: relative;
+    
+  }
+  
+  
+  .cardg::before {
+    content: "";
+    width: 104%;
+    height: 102%;
+    border-radius: 8px;
+    background-image: linear-gradient(
+      var(--rotate)
+      , #5ddcff59, #3c67e359 43%, #4e00c259);
+      position: absolute;
+      z-index: -1;
+      top: -1%;
+      left: -2%;
+      animation: spin 2.5s linear infinite;
+  }
+  
+  .cardg::after {
+    position: absolute;
+    content: "";
+    top: calc(var(--card-height) / 6);
+    left: 0;
+    right: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    transform: scale(0.8);
+    filter: blur(calc(var(--card-height) / 6));
+    background-image: linear-gradient(
+      var(--rotate)
+      , #5ddcff, #3c67e3 43%, #4e00c2);
+      opacity: 1;
+    transition: opacity .5s;
+    animation: spin 2.5s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      --rotate: 0deg;
+    }
+    100% {
+      --rotate: 360deg;
+    }
+  }
+  
+  a {
+    color: #212534;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-weight: bold;
+    margin-top: 2rem;
+  }
+
+  
+  .innerdiv_notifcoloredradius{
+    border-radius: 18px;
+  }
+
+  
+@media (prefers-color-scheme: dark) {
+    .bg-colored{
+        background: hsl(260deg 100% 3%); 
+      }
+}
+
+@media (prefers-color-scheme: light) {
+    .bg-colored{
+        background: hsl(240, 6%, 97%); 
+      }
+}
+  
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  

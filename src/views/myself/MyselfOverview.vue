@@ -1,8 +1,11 @@
 <template>
     <ion-page>
         <ion-content :fullscreen="true">
-            <h1 style="margin-left: 4vw; margin-right: 4vw; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Главная</h1>
-            <div style="padding-top: 1.1rem;">
+            
+            <h1 style="margin-left: 4vw; margin-right: 4vw; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Мое благополучие</h1>
+            <div style="padding-top: 1.0rem;"></div>
+            <NotificationsBanner notificationType="emotionalStateFeature"/>
+            <div style="padding-top: 0.1rem;">
                 <div>
                     <div class="card-alfa custom-swiper suggestion-block bg-1 card-meditate">
                         <div style="margin-left: 5vw;">
@@ -199,6 +202,8 @@ import {
 
 import globaldata from '../../modules/global';
 
+import NotificationsBanner from '@/components/NotificationsBanner.vue';
+
 
 export default defineComponent({
     name: 'Tab1Page',
@@ -210,7 +215,8 @@ export default defineComponent({
         IonIcon,
         IonInput,
         IonItem,
-        IonCard
+        IonCard,
+        NotificationsBanner
     },
     mounted() {
         const tabsEl = document.querySelector('ion-tab-bar');
@@ -245,6 +251,7 @@ export default defineComponent({
 
         saveProfileNewData(){
             localStorage.setItem("user_firstname", this.name)
+            this.myselfProfileEdit_isModalOpen = false;
         },
 
         learnMore(){

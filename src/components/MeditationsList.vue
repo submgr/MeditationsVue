@@ -1,16 +1,18 @@
 <template>
-    <div>
-        <div class="preloader" v-if="premadeMeditations.length == 0">
-            <h1><ion-spinner name="lines-sharp"></ion-spinner></h1>
-        </div>
-        <div class="wrapper" v-else>
-            <!--- [START] Dynamically Generated Content Block Comes Here -->
-            <div class="card" v-for="(item, index) in premadeMeditations" v-bind:key="item.id">
-                <div class="poster"><img :src="item.imgposterurl" alt="Location Unknown"></div>
-                <div class="details">
-                    <span style="display: none">Meditation local ID is {{ index }}</span>
-                    <h1>{{ item.title }}</h1>
-                    <!---<h2>2021 • PG • 1hr 38min</h2>
+<div>
+    <div class="preloader" v-if="premadeMeditations.length == 0">
+        <h1>
+            <ion-spinner name="lines-sharp"></ion-spinner>
+        </h1>
+    </div>
+    <div class="wrapper" v-else ref="cardWrapper" @scroll="handleScroll">
+        <!--- [START] Dynamically Generated Content Block Comes Here -->
+        <div class="card" v-for="(item, index) in premadeMeditations" v-bind:key="item.id" :id="'card-' + index" :class="{ 'centered-card': index === centeredCard }">
+            <div class="poster"><img :src="item.imgposterurl" alt="Location Unknown"></div>
+            <div class="details">
+                <span style="display: none">Meditation local ID is {{ index }}</span>
+                <h1>{{ item.title }}</h1>
+                <!---<h2>2021 • PG • 1hr 38min</h2>
                     <div class="rating">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -19,14 +21,14 @@
                         <i class="far fa-star"></i>
                         <span>4.2/5</span>
                     </div>-->
-                    <div class="tags">
-                        <span v-for="(tag) in item.tags" v-bind:key="tag.code" class="tag">{{ tag.friendlycode }}</span>
-                    </div>
-                    <p class="desc">
-                        {{ item.description }}
-                    </p>
-                    <div class="cast">
-                        <!---<h3>Автор</h3>
+                <div class="tags">
+                    <span v-for="(tag) in item.tags" v-bind:key="tag.code" class="tag">{{ tag.friendlycode }}</span>
+                </div>
+                <p class="desc">
+                    {{ item.description }}
+                </p>
+                <div class="cast">
+                    <!---<h3>Автор</h3>
                         <ul>
                             <li><img src="https://i.postimg.cc/jqgkqhSb/cast-11.jpg" alt="Marco Andrews"
                                     title="Marco Andrews"></li>
@@ -35,181 +37,221 @@
                             <li><img src="https://i.postimg.cc/2SvHwRFk/cast-13.jpg
         " alt="Antonio Herrera" title="Antonio Herrera"></li>
                         </ul>-->
-                        <ion-button @click="$emit('event-getmeditation', item.searchobject)">Начать медитацию</ion-button>
-                    </div>
+                    <ion-button @click="$emit('event-getmeditation', item.searchobject)" style="margin-top: 0.1vh;">Начать медитацию</ion-button>
                 </div>
             </div>
-            <!--- [END] Dynamically Generated Content Block Comes Here -->
         </div>
+        <!--- [END] Dynamically Generated Content Block Comes Here -->
     </div>
+</div>
 </template>
-  
+
 <script lang="ts">
-import { defineComponent } from 'vue';
+import {
+    defineComponent
+} from 'vue';
 
 import globaldata from '../modules/global';
-import { forEach } from 'xregexp';
+import {
+    forEach
+} from 'xregexp';
 
-import { IonSpinner } from '@ionic/vue';
-
+import {
+    IonSpinner
+} from '@ionic/vue';
 
 export default defineComponent({
     name: 'ExploreContainer',
-    components: { IonSpinner },
+    components: {
+        IonSpinner
+    },
     props: {
         name: String
     },
     data() {
         return {
-            premadeMeditations: [   ]
+            premadeMeditations: [],
+            centeredCard: 0, // Initialize with the first card centered
         }
     },
-    setup(){
+    setup() {
 
         //setup
     },
-    mounted(){
-
+    methods: {
+        isCardCentered(index) {
+      const cardWrapper = this.$refs.cardWrapper as HTMLElement;
+      if (cardWrapper) {
+        const card = cardWrapper.querySelector(`#card-${index}`);
+        if (card) {
+          const cardRect = card.getBoundingClientRect();
+          const containerRect = cardWrapper.getBoundingClientRect();
+          const center = containerRect.width / 2;
+          const cardCenter = cardRect.left + cardRect.width / 2;
+          return Math.abs(center - cardCenter) < cardRect.width / 2;
+        }
+      }
+      return false;
+    },
+    handleScroll() {
+      const cardWrapper = this.$refs.cardWrapper as HTMLElement;
+      if (cardWrapper) {
+        const containerRect = cardWrapper.getBoundingClientRect();
+        const cardWidth = 325; // Adjust this to match your card width
+        const scrollLeft = cardWrapper.scrollLeft;
+        const center = containerRect.width / 2;
+        const cardIndex = Math.floor((scrollLeft + center) / cardWidth);
+        this.centeredCard = cardIndex;
+      }
+    },
+    },
+    mounted() {
         
 
         // eslint-disable-next-line
         const parent_this = this;
 
         this.$http.get(globaldata.api.hostname + "access/meditations/featured", {
-                params: {
-                    method: "email"
-                }
-            }).then((response) => {
-                console.log(response)
-                if (response.data.status == "okay"){
-                    console.log("[Server Message] Received featured meditations... length: " + response.data.content.length)
+            params: {
+                method: "email"
+            }
+        }).then((response) => {
+            console.log(response)
+            if (response.data.status == "okay") {
+                console.log("[Server Message] Received featured meditations... length: " + response.data.content.length)
 
-                    var meditations = response.data.content;
-                    meditations.forEach(element => {
-                        parent_this.premadeMeditations.push(element)
-                    });
+                var meditations = response.data.content;
+                meditations.forEach(element => {
+                    parent_this.premadeMeditations.push(element)
+                });
 
-                    console.info(parent_this.premadeMeditations)
+                console.info(parent_this.premadeMeditations)
 
+            } else {
+                console.log("[Server Message] This service isn't available at this time.")
+            }
 
-                } else {
-                    console.log("[Server Message] This service isn't available at this time.")
-                }
-                
-            }).catch(function (error) {
-                console.log("CATCHED AN ERROR.", error)
-            });
+        }).catch(function (error) {
+            console.log("CATCHED AN ERROR.", error)
+        });
     }
 });
 </script>
-  
+
 <style scoped>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
-        #container{
-            background-color: rgb(rgba(255, 0, 0, 0), rgba(0, 128, 0, 0), rgba(0, 0, 255, 0));
-        }
+#container {
+    background-color: rgb(rgba(255, 0, 0, 0), rgba(0, 128, 0, 0), rgba(0, 0, 255, 0));
+}
 
-        .preloader{
-            margin-top: 9vh;
-            text-align: center;
-        }
+.preloader {
+    margin-top: 9vh;
+    text-align: center;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Inter, sans-serif;
-        }
+.scroll-to {
+    background-color: yellow; /* Modify this to your desired effect */
+    transition: background-color 0.3s;
+  }
+  
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Inter, sans-serif;
+}
 
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background: #f5f5f5;
-        }
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #f5f5f5;
+}
 
-        .wrapper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            padding: 20px;
-            padding-left: 5px;
-            display: flex;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-        }
+.wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    padding-left: 5px;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+}
 
-        .card {
-            flex: 0 0 325px;
-            position: relative;
-            width: 325px;
-            height: 450px;
-            background: #000;
-            border-radius: 27px;
-            overflow: hidden;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-            margin: 0 12px;
-        }
+.card {
+    flex: 0 0 325px;
+    position: relative;
+    width: 325px;
+    height: 450px;
+    background: #000;
+    border-radius: 27px;
+    overflow: hidden;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    margin: 0 12px;
+    scroll-snap-align: center;
+    transition: transform 0.3s ease-in-out;
+}
 
-        .poster {
-            position: relative;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
+.poster {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
 
-        .poster::before {
-            content: '';
-            position: absolute;
-            bottom: -45%;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            transition: .3s;
-        }
+.poster::before {
+    content: '';
+    position: absolute;
+    bottom: -45%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    transition: .3s;
+}
 
-        .card:hover .poster::before {
-            bottom: 0;
-        }
+.centered-card .poster::before {
+    bottom: 0;
+}
 
-        .poster img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: .3s;
-        }
+.poster img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .3s;
+}
 
-        .card:hover .poster img {
-            transform: scale(1.1);
-        }
+.centered-card .poster img {
+    transform: scale(1.1);
+}
 
-        .details {
-            position: absolute;
-            bottom: -100%;
-            left: 0;
-            width: 100%;
-            height: auto;
-            padding: 1.5em 1.5em 2em;
-            background: #000a;
-            backdrop-filter: blur(16px) saturate(120%);
-            transition: .3s;
-            color: #fff;
-            z-index: 2;
-        }
+.details {
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    height: auto;
+    padding: 1.5em 1.5em 2em;
+    background: #000a;
+    backdrop-filter: blur(16px) saturate(120%);
+    transition: .3s;
+    color: #fff;
+    z-index: 2;
+}
 
-        .card:hover .details {
-            bottom: 0;
-        }
-
+.centered-card .details {
+    bottom: 0;
+}
 
 .details h1,
 .details h2 {
@@ -289,5 +331,5 @@ export default defineComponent({
 .details .cast ul li img {
     width: 100%;
     height: 100%;
-}</style>
-  
+}
+</style>
