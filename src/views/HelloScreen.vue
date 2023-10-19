@@ -2,6 +2,8 @@
 <ion-page>
     <ion-content :fullscreen="true">
 
+        <WellbeingQuestionnaire ref="wellbeingQuestionnaireRef" @completion-event="WellbeingQuestionnaireCompleted" />
+
         <img style="padding-top: 10vh; height: auto; width: 70%; max-width: 400px; margin-left: auto; margin-right: auto; display: block;" :src="natureEllipse">
 
         <p style="text-align: center;padding: 0px 18px 0px; margin-top: 7vh; margin-bottom: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 21px; font-weight: 400;">{{ natureText }}</p>
@@ -51,6 +53,8 @@ import {
 declare const YaGames;
 declare const vkBridge;
 
+import WellbeingQuestionnaire from '@/components/questionnaire/WellbeingQuestionnaire.vue';
+
 import globaldata from '../modules/global';
 import {
     loadScript
@@ -61,11 +65,17 @@ export default defineComponent({
     components: {
         IonContent,
         IonPage,
-        IonSpinner
+        IonSpinner,
+        WellbeingQuestionnaire
     },
     data() {
         return {
             user_firstname: "Человек"
+        }
+    },
+    methods: {
+        WellbeingQuestionnaireCompleted(){
+            this.$router.replace('/tabs/home')
         }
     },
     mounted() {
@@ -148,7 +158,12 @@ export default defineComponent({
                     //CURRENTLY WE JUST SKIP IT!
                     //parent_this.$router.replace('/tabs/diagnostics/emotionalstate')
 
-                    parent_this.$router.replace('/tabs/home')
+                    // Define the type for the child component reference
+                    const childComponent = parent_this.$refs.wellbeingQuestionnaireRef as any;
+
+                    // Now TypeScript knows the type and you can access 'open' method
+                    childComponent.open();
+                    
                 }
 
             }, 5000);
