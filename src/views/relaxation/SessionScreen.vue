@@ -85,15 +85,15 @@ export default defineComponent({
         }
     },
     watch: {
-            '$route' () {
+        '$route'() {
 
-                const tabsEl = document.querySelector('ion-tab-bar');
-                if (tabsEl) {
-                    tabsEl.hidden = false;
-                    tabsEl.style.height = "1";
-                }
+            const tabsEl = document.querySelector('ion-tab-bar');
+            if (tabsEl) {
+                tabsEl.hidden = false;
+                tabsEl.style.height = "1";
             }
-        },
+        }
+    },
     mounted() {
         // eslint-disable-next-line
         var parent_this = this;
@@ -116,7 +116,10 @@ export default defineComponent({
     },
     methods: {
         getBack() {
-            this.$router.go(-1)
+            this.$router.push({
+                path: "/tabs/relaxation/info",
+                replace: true
+            });
         },
         isTimeAvailableForStage() {
             if (this.stage_timer > 0) {

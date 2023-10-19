@@ -321,7 +321,10 @@ export default defineComponent({
             this.meditationState = "prestart_info"
         },
         getBack() {
-            this.$router.go(-1)
+            this.$router.push({
+                    path: "/tabs/home",
+                    replace: true
+                });
         },
         async Modal_onWillDismiss() {
             this.additionalModalOpenened = "none"
