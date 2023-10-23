@@ -321,6 +321,11 @@ export default defineComponent({
             this.meditationState = "prestart_info"
         },
         getBack() {
+            const tabsEl = document.querySelector('ion-tab-bar');
+            if (tabsEl) {
+                tabsEl.hidden = false;
+                tabsEl.style.height = "1";
+            }
             this.$router.push({
                     path: "/tabs/home",
                     replace: true

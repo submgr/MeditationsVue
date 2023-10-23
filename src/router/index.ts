@@ -118,6 +118,10 @@ const routes: Array<RouteRecordRaw> = [
         path: 'read/viewpost',
         component: () => import('@/views/read/RenderRemoteContent.vue')
       },
+      {
+        path: '3rd-embed/deleteaccount',
+        component: () => import('@/views/3rd-embed/DeleteAccount.vue')
+      },
     ]
   }
 ]
