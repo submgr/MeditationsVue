@@ -280,8 +280,8 @@ export default defineComponent({
                 if (!parent_this.isLocalStorageAvailable()) {
                     alert("Произошла ошибка: не удалось прочитать набор данных. Отмена транзакции. Попробуйте позже, или воспользуйтесь другим браузером. Обратите внимание на то, что функционал приложения может быть ограничен в режиме браузера 'Инкогнито'.")
                 } else {
-                    var local = localStorage.getItem("flag_waitingForAuthPath") + ""
-                    if (local) {
+                    var local = localStorage.getItem("flag_waitingForAuthPath")
+                    if (local && local.length > 1) {
                         markerIsRedirectedAlready = true
                         localStorage.setItem("flag_waitingForAuthPath", "authCompletedSuccessfully")
                         setTimeout(() => {

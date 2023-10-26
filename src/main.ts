@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
+import { Capacitor } from '@capacitor/core';
 
 import { IonicVue } from '@ionic/vue';
 
@@ -36,6 +37,13 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 app.config.globalProperties.$http = axios; // Allow axios in all componenets this.$http.get
+
+import * as adsEngine from "./modules/ads_engine"
+adsEngine.prepareAdsService();
+
+setTimeout(() => {
+  adsEngine.showBanner();
+}, 3000);
 
   
 router.isReady().then(() => {

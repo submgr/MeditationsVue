@@ -2,6 +2,9 @@
 include ':capacitor-android'
 project(':capacitor-android').projectDir = new File('../node_modules/@capacitor/android/capacitor')
 
+include ':capacitor-community-admob'
+project(':capacitor-community-admob').projectDir = new File('../node_modules/@capacitor-community/admob/android')
+
 include ':capacitor-app'
 project(':capacitor-app').projectDir = new File('../node_modules/@capacitor/app/android')
 
@@ -16,3 +19,6 @@ project(':capacitor-status-bar').projectDir = new File('../node_modules/@capacit
 
 include ':codetrix-studio-capacitor-google-auth'
 project(':codetrix-studio-capacitor-google-auth').projectDir = new File('../node_modules/@codetrix-studio/capacitor-google-auth/android')
+
+include ':hmscore-hms-js-account'
+project(':hmscore-hms-js-account').projectDir = new File('../node_modules/@hmscore/hms-js-account/android')

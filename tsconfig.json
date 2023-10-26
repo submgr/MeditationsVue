@@ -5,6 +5,7 @@
     "noImplicitReturns": false,
     "strictNullChecks":false,
     "allowJs": true,
+    "resolveJsonModule": true,
     "target": "esnext",
     "module": "esnext",
     "strict": true,
