@@ -44,7 +44,6 @@ export async function prepareAdsService() {
         }
 
         AdMob.initialize({
-            requestTrackingAuthorization: true,
             testingDevices: admobConfig.testing_devices,
             initializeForTesting: admobConfig.is_testing,
         });
