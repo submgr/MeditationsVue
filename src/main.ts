@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
+import i18n from './i18n'
 import { Capacitor } from '@capacitor/core';
 
 import { IonicVue } from '@ionic/vue';
@@ -36,7 +37,11 @@ const app = createApp(App)
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
+import i18next from 'i18next'
+
 app.config.globalProperties.$http = axios; // Allow axios in all componenets this.$http.get
+app.config.globalProperties.$i18next = i18next;
+
 
 import * as adsEngine from "./modules/ads_engine"
 adsEngine.prepareAdsService();

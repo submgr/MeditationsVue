@@ -8,7 +8,7 @@ const config: CapacitorConfig = {
   plugins: {
     GoogleAuth: {
       scopes: ['profile', 'email'],
-      androidClientId: '33960040607-1es2ealj7oevideh0ugqovec1n3vi4q5.apps.googleusercontent.com',
+      androidClientId: '70119537016-fopt4mu69mtdvf4seb12i3drcfa7i41s.apps.googleusercontent.com',
       forceCodeForRefreshToken: true,
     },
   },

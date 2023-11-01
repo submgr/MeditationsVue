@@ -1,13 +1,13 @@
 <template>
     <ion-page>
-        <ion-content :fullscreen="true">
+        <ion-content :fullscreen="true" :forceOverscroll="false">
             <AdvancedLoader v-if="1>2" />
             <h1 style="margin-left: 1.1rem; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Главная</h1>
             <div style="display: block; margin-top: 4vh;">
                 <NotificationsBanner />
             </div>
             <div style="padding-top: 0.1rem;">
-                <div @click="getMeditation({ searchtype: 'random', searchtag: '' })">
+                <div @click="getMeditation({ servicetype: 'dynamic', searchtype: 'random', searchtag: '' })">
                     <div class="card-alfa custom-swiper suggestion-block bg-1 card-meditate">
                         <div>
                             <ion-icon :icon="playOutline"
@@ -26,7 +26,7 @@
 
             <MeditationsList @event-getmeditation="getMeditation" style="margin-top: -2.5vh;"/>
 
-
+            <div class="padding_from_bottom_line"></div>
 
         </ion-content>
     </ion-page>
@@ -162,6 +162,8 @@ import NotificationsBanner from '@/components/NotificationsBanner.vue';
 import AdvancedLoader from '@/components/AdvancedLoader.vue';
 
 
+
+
 export default defineComponent({
     name: 'Tab1Page',
     components: {
@@ -178,6 +180,7 @@ export default defineComponent({
             tabsEl.style.height = "1";
         }
 
+        console.log(this.$i18next)
     },
     methods: {
         toggleStory() {
@@ -186,11 +189,34 @@ export default defineComponent({
         getMeditation(obj) {
             console.warn("Getting meditation data...")
             console.log("provided obj for search..", obj)
-            this.$http.get(globaldata.api.hostname + "access/meditations/get", {
-                params: {
-                    searchtype: obj.searchtype,
-                    searchtag: obj.searchtag
-                }
+            var additionalurl = ""
+            var preparedparams = {}
+            switch (obj.servicetype) {
+                case "dynamic":
+                    additionalurl = "getDynamicMeditation"
+                    var newbieprogress = 0;
+                    if(localStorage.getItem("newbie_progress") == null){
+                        newbieprogress = 0
+                    }else{
+                        newbieprogress = parseInt(localStorage.getItem("newbie_progress"))
+                    }
+                    preparedparams = {
+                        newbie_progress: newbieprogress,
+                        language: globaldata.language.currentlang
+                    }
+                    
+                    break;
+                default:
+                    additionalurl = "getStaticMeditation"
+                    preparedparams = {
+                        searchtype: obj.searchtype,
+                        searchtag: obj.searchtag,
+                        language: globaldata.language.currentlang
+                    }
+                    break;
+            }
+            this.$http.get(globaldata.api.hostname + "access/meditations/" + additionalurl, {
+                params: preparedparams
             }).then((response) => {
                 if (response.status == 200) {
                     if (response.data.status == "okay") {

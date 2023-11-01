@@ -171,7 +171,7 @@ export default defineComponent({
         }
         
         GoogleAuth.initialize({
-            clientId: '33960040607-coalo6hl8cscmu8mngtb3rf6jgnibr5q.apps.googleusercontent.com',
+            clientId: '70119537016-q8lv3166vpeodq1jj1mav4dc83mpkmq4.apps.googleusercontent.com',
             scopes: ['profile', 'email'],
             grantOfflineAccess: true,
         });

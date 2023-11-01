@@ -34,6 +34,9 @@ const data = {
   },
   assets: {
     hostname: assetsbase_hostname
+  },
+  language: {
+    currentlang: "ru"
   }
 }
 

@@ -1,30 +1,56 @@
 <template>
   <ion-app>
+    
     <ion-router-outlet />
   </ion-app>
 </template>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-  @import url('https://fonts.googleapis.com/css2?family=Roboto:opsz,wght@8..144,100;8..144,200;8..144,300;8..144,400;8..144,500;8..144,600;8..144,700;8..144,800;8..144,900&display=swap');
-  @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
-  @import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
-  *{
-    font-family: 'Inter', sans-serif;
-  }
-  @media (prefers-color-scheme: lig4ssssssssqqht) {
-    ion-app {
-      --background: linear-gradient(to right, rgba(191, 209, 212, 0.07), rgba(250, 255, 241, 0.07)),
-    url(https://grainy-gradients.vercel.app/noise.svg);;
-    filter: contrast(100%) brightness(100%);
-    }
-  }
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:opsz,wght@8..144,100;8..144,200;8..144,300;8..144,400;8..144,500;8..144,600;8..144,700;8..144,800;8..144,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 
-  @media (prefers-color-scheme: dark) {
-    ion-app {
-      --background: #000 url('./assets/abstract/black-and-noise-background.png') no-repeat center center / cover !important;
-    }
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+
+
+ion-tab-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.padding_from_bottom_line {
+  margin-top: 7.5vh;
+}
+
+<!-- ion-content {
+  --overflow: scroll;
+  scrollbar-width: 4px;
+  --scrollbar-width: 4px;
+  overflow: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
   }
+} -->
+
+
+@media (prefers-color-scheme: light) {
+  ion-content {
+    --background: #ffffff00 url("./assets/abstract/light-colorful-background.svg") no-repeat center center / cover !important;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  ion-content {
+    --background: #000000 url("./assets/abstract/dark-colorful-background.svg") no-repeat center center / cover !important;
+  }
+}
 </style>
 
 <script lang="ts">

@@ -5,7 +5,12 @@
             <ion-spinner name="lines-sharp"></ion-spinner>
         </h1>
     </div>
-    <div class="wrapper" v-else ref="cardWrapper" @scroll="handleScroll">
+    <div class="wrapper scroll" v-else ref="cardWrapper" @scroll="handleScroll">
+        <div class="scroll-container">
+            <div class="scroll-content">
+                <!-- Your scrollable content here -->
+            </div>
+        </div>
         <!--- [START] Dynamically Generated Content Block Comes Here -->
         <div class="card" v-for="(item, index) in premadeMeditations" v-bind:key="item.id" :id="'card-' + index" :class="{ 'centered-card': index === centeredCard }">
             <div class="poster"><img :src="item.imgposterurl" alt="Location Unknown"></div>
@@ -123,6 +128,7 @@ export default defineComponent({
                 var meditations = response.data.content;
                 meditations.forEach(element => {
                     parent_this.premadeMeditations.push(element)
+                    element = element['servicetype'] = "static"
                 });
 
                 console.info(parent_this.premadeMeditations)
@@ -181,7 +187,57 @@ body {
     overflow-x: auto;
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+
+    --scroll-size: 5px;
+    --scroll-sidemargin: 100px;
+        --scroll-radius: 20px;
+        --scroll-track: rgb(255 255 255 / 10%);
+        --scroll-thumb: linear-gradient(45deg, #ff00f7c3, #8061ef);
+
+     
 }
+
+::-webkit-scrollbar {
+    width: 120px; /* Adjust the width of the scrollbar as needed */
+  }
+.scroll {
+    scrollbar-color: var(--scroll-thumb-color, grey) var(--scroll-track, transparent);
+    scrollbar-width: thin;
+  }
+  .scroll::-webkit-scrollbar {
+    width: var(--scroll-size, 10px);
+    height: var(--scroll-size, 10px);
+  }
+  .scroll::-webkit-scrollbar-track {
+    background-color: var(--scroll-track, transparent);
+    border-radius: var(--scroll-track-radius, var(--scroll-radius));
+  }
+  .scroll::-webkit-scrollbar-thumb {
+    background-color: var(--scroll-thumb-color, grey);
+    background-image: var(--scroll-thumb, none);
+    border-radius: var(--scroll-thumb-radius, var(--scroll-radius));
+  }
+
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color of the track */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the thumb */
+    border-radius: 6px; /* Round the thumb */
+  }
+  
+  /* Add left and right margin to the scrollbar */
+  ::-webkit-scrollbar-button:start:decrement {
+    margin-right: var(--scroll-sidemargin); /* Adjust the margin as needed */
+  }
+  
+  ::-webkit-scrollbar-button:end:increment {
+    margin-left: var(--scroll-sidemargin); /* Adjust the margin as needed */
+  }
+  
 
 .card {
     flex: 0 0 325px;
