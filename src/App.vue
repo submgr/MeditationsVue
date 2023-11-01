@@ -28,7 +28,7 @@ ion-tab-bar {
   margin-top: 7.5vh;
 }
 
-<!-- ion-content {
+/* ion-content {
   --overflow: scroll;
   scrollbar-width: 4px;
   --scrollbar-width: 4px;
@@ -37,7 +37,7 @@ ion-tab-bar {
   &::-webkit-scrollbar {
     display: none;
   }
-} -->
+} */
 
 
 @media (prefers-color-scheme: light) {
