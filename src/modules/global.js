@@ -1,6 +1,7 @@
 var apiserver_hostname;
 
-var assetsbase_hostname = "https://accessmeditation.pages.dev/";
+//var assetsbase_hostname = "https://accessmeditation.pages.dev/";
+var assetsbase_hostname = "https://xn--80aaafmfwb5a7d2bq4h.xn--p1ai/assets/";
 
 function isLocalHost(url) {
   return url.indexOf('localhost') !== -1 || url.indexOf('127.0.0.1') !== -1 || url.indexOf('192.') !== -1;

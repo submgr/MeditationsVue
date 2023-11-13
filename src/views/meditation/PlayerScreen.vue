@@ -1,6 +1,13 @@
 <template lang="en">
     <ion-page id="ionpage">
         <ion-content :fullscreen="true">
+
+            <div class="loader_at_corner" v-if="audiotrack_isLoading && (meditationState != 'prestart_info')">
+                <!-- Your loading spinner content (e.g., a GIF or CSS animation) goes here -->
+                <h1><ion-spinner name="lines-sharp"></ion-spinner></h1>
+            </div>
+            
+    
             <NavbarController activatedfrom="Meditation/PlayerScreen" @backfunction="exitMeditation();" @additionalmodalfunction="meditationAdditional()" 
                     @bgpickmodalfunction="backgroundPick()"/>
             <SimpleMeditationBackground v-if="isAvailable_SimpleMeditationBackground" :type="currentBackground.type" 
@@ -11,8 +18,10 @@
                         <ion-row>
                             <ion-col @click="playerRewind('past', 10)"><ion-icon :icon="playBackOutline" /></ion-col>
                             <ion-col></ion-col>
-                            <ion-col v-if="playerState == 'stopped'" @click="changePlayerState"><ion-icon :icon="play" /></ion-col>
-                            <ion-col v-if="playerState == 'playing'" @click="changePlayerState"><ion-icon :icon="pause" /></ion-col>
+                            <ion-col v-if="playerState == 'stopped' && !audiotrack_isLoading && meditationState != 'finished'" @click="changePlayerState"><ion-icon :icon="play" /></ion-col>
+                            <ion-col v-if="playerState == 'playing' && !audiotrack_isLoading && meditationState != 'finished'" @click="changePlayerState"><ion-icon :icon="pause" /></ion-col>
+                            <ion-col v-if="meditationState == 'finished'" style="opacity: 0.35;"><ion-icon :icon="play" /></ion-col>
+                            <ion-col v-if="audiotrack_isLoading && playerState != 'stopped' && meditationState != 'finished'" @click="changePlayerState"><ion-spinner style="top: -1vh;" name="lines-sharp"></ion-spinner></ion-col>
                             <ion-col></ion-col>
                             <ion-col @click="playerRewind('future', 10)"><ion-icon :icon="playForwardOutline" /></ion-col>
                         </ion-row>
@@ -74,6 +83,25 @@
     </template>
     
 <style scoped>
+.loader_at_corner {
+    position: fixed;
+    /* Fixed position for the loader */
+    top: 1.8vh;
+    /* Position at the top of the viewport */
+    right: 3.5vw;
+    /* Position at the right of the viewport */
+    width: 50px;
+    /* Adjust the width and height as needed */
+    height: 50px;
+    color: #fff;
+    /* Text color of the loader */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    /* Make sure it's on top of other content */
+}
+
 #top_el_holder {
     background-color: #19202420 !important;
     font-size: 34px;
@@ -241,7 +269,7 @@ export default defineComponent({
     },
     watch: {
         '$route'() {
-            this.audiotrack.pause(this.audiotrack_musicid);
+            this.audiotrack[this.audiotrack_currentplaying_index].pause(this.audiotrack_musicid);
             this.backgroundtrack.pause(this.backgroundtrack_musicid);
 
             const tabsEl = document.querySelector('ion-tab-bar');
@@ -327,9 +355,9 @@ export default defineComponent({
                 tabsEl.style.height = "1";
             }
             this.$router.push({
-                    path: "/tabs/home",
-                    replace: true
-                });
+                path: "/tabs/home",
+                replace: true
+            });
         },
         async Modal_onWillDismiss() {
             this.additionalModalOpenened = "none"
@@ -347,19 +375,19 @@ export default defineComponent({
             console.log('VAR currentBackground.type updated.', this.currentBackground.type)
         },
         async checkboxEventChangeBackground(ev: CheckboxCustomEvent) {
-            
+
             const elements: HTMLInputElement[] = Array.from(document.querySelectorAll('.bgpicker_checkbox_element'));
 
             console.log(elements)
 
             elements.forEach((v: HTMLInputElement) => {
-                
-                if (this.currentBackground.bgcode == v.id){
+
+                if (this.currentBackground.bgcode == v.id) {
                     v.checked = true
-                }else{
+                } else {
                     v.checked = false
                 }
-            
+
             });
 
             ev.detail.checked = true
@@ -400,26 +428,202 @@ export default defineComponent({
             });
             await toast.present();
         },
+        // NOTE: PREVIOUS VERSION OF FUNCTION 'playerRewind'! Below there is a new, which supports time seeking in playlist of multiple audiofiles.
+        // async playerRewind(direction, time) {
+        //     var audiotrack_playposition_now = this.audiotrack[this.audiotrack_currentplaying_index].seek(this.audiotrack_musicid)
+        //     let seeked = null;
+        //     switch (direction) {
+        //         case "past":
+        //             if (time > audiotrack_playposition_now) {
+        //                 this.audiotrack[this.audiotrack_currentplaying_index].seek(0, this.audiotrack_musicid)
+        //             } else {
+        //                 this.audiotrack[this.audiotrack_currentplaying_index].seek(audiotrack_playposition_now - time, this.audiotrack_musicid)
+        //             }
+
+        //             break;
+
+        //         case "future":
+        //             console.log("this.audiotrack", this.audiotrack)
+        //             console.log("this.audiotrack_currentplaying_index", this.audiotrack_currentplaying_index)
+        //             console.log("this.audiotrack[this.audiotrack_currentplaying_index]", this.audiotrack[this.audiotrack_currentplaying_index])
+        //             console.log("this.audiotrack[this.audiotrack_currentplaying_index].seek(this.audiotrack_musicid)", this.audiotrack[this.audiotrack_currentplaying_index].seek(this.audiotrack_musicid))
+
+        //             //TEMPORARE DEBUG OUTPUTS
+        //             console.info("this.audiotrack[this.audiotrack_currentplaying_index].seek(this.audiotrack_musicid)", this.audiotrack[this.audiotrack_currentplaying_index].seek(this.audiotrack_musicid))
+        //             console.info("this.audiotrack[this.audiotrack_currentplaying_index].duration(this.audiotrack_musicid)", this.audiotrack[this.audiotrack_currentplaying_index].duration(this.audiotrack_musicid))
+
+        //             seeked = Number(this.audiotrack[this.audiotrack_currentplaying_index].seek(this.audiotrack_musicid))
+        //             if (isNaN(seeked)) {
+        //                 console.info("SEEKED debug 1" + JSON.stringify(this.audiotrack[this.audiotrack_currentplaying_index]))
+        //                 seeked = this.audiotrack[this.audiotrack_currentplaying_index]._sounds[0]._seek
+        //             }
+        //             console.info("provided seek is: " +  seeked)
+
+        //             console.log("seek info (future)", "this.audiotrack.duration(this.audiotrack_musicid): " + this.audiotrack[this.audiotrack_currentplaying_index].duration(this.audiotrack_musicid), "this.audiotrack.seek(this.audiotrack_musicid) + time: " + this.audiotrack[this.audiotrack_currentplaying_index].seek(this.audiotrack_musicid) + time)
+        //             if (this.audiotrack[this.audiotrack_currentplaying_index].duration(this.audiotrack_musicid) < this.audiotrack[this.audiotrack_currentplaying_index].seek(this.audiotrack_musicid) + time) {
+        //                 console.log("seek info (future)  w1")
+        //                 this.audiotrack[this.audiotrack_currentplaying_index].seek(audiotrack_playposition_now, this.audiotrack_musicid)
+        //             } else {
+        //                 console.log("seek info (future)  w2")
+        //                 console.log("this.audiotrack_currentplaying_index", this.audiotrack_currentplaying_index)
+        //                 this.audiotrack[this.audiotrack_currentplaying_index].seek(audiotrack_playposition_now + time, this.audiotrack_musicid)
+        //             }
+        //             break;
+
+        //         default:
+        //             break;
+        //     }
+
+        //     this.toastAction("time_rewind", direction, time)
+        // },
+        async changeCurrentAudioTrack(data) {
+            console.log("Changing current Audio Track from FUNCTION 'changeCurrentAudioTrack()' with provided data...", data)
+
+            this.updateAudiotrackLoadingState(true)
+
+            switch (data.special_conditions) {
+                case "not_added_to_timetable_track_yet":
+                    console.log("SPECIAL CONDITION IN ACTION! =>/not_added_to_timetable_track_yet/<=")
+                    console.log("this.audiotrack[data.audiotrack_index]", this.audiotrack[data.audiotrack_index])
+
+                    this.audiotrack[this.audiotrack_currentplaying_index].seek(this.audiotrack[this.audiotrack_currentplaying_index].duration(this.audiotrack_musicid), this.audiotrack_musicid);
+
+                    break;
+
+                default:
+                    this.audiotrack[this.audiotrack_currentplaying_index].stop();
+                    this.audiotrack_currentplaying_index = data.audiotrack_index;
+                    this.audiotrack_musicid = this.audiotrack[data.audiotrack_index].play();
+                    break;
+            }
+
+            console.log("data.seek_moment", data.seek_moment)
+            console.log("this.audiotrack_musicid", this.audiotrack_musicid)
+
+            this.audio_seekafterplayingstarted = data.seek_moment;
+        },
+        async eventHandler_audioOnPlay(audioid) {
+            console.log("eventHandler_audioOnPlay", this.audio_seekafterplayingstarted)
+            console.log("this.audiotrack_currentplaying_index", this.audiotrack_currentplaying_index)
+            if (this.audio_seekafterplayingstarted != 0) {
+                this.audiotrack[this.audiotrack_currentplaying_index].seek(this.audio_seekafterplayingstarted, audioid)
+            }
+
+            this.audio_seekafterplayingstarted = 0;
+        },
+        async updateAudiotrackLoadingState(state = true) {
+            switch (state) {
+                case true:
+                    this.audiotrack_isLoading = true;
+                    break;
+                case false:
+                    this.audiotrack_isLoading = false;
+                    break;
+                default:
+                    break;
+            }
+        },
         async playerRewind(direction, time) {
-            var audiotrack_playposition_now = this.audiotrack.seek(this.audiotrack_musicid)
+            var audiotrack_playposition_now = this.audiotrack[this.audiotrack_currentplaying_index].seek(this.audiotrack_musicid)
+            let seeked = null;
+            var current_element_on_timetable = this.audiotrack_timetable.filter(obj => {
+                return obj.audiotrack_index === this.audiotrack_currentplaying_index;
+            })[0];
+            console.warn("+++++++++++ current_element_on_timetable", current_element_on_timetable)
+            var currentposition_on_timetable = current_element_on_timetable["starts_on"] + audiotrack_playposition_now;
+            console.warn("+++++++++++ currentposition_on_timetable", currentposition_on_timetable);
+
             switch (direction) {
                 case "past":
-                    if (time > audiotrack_playposition_now) {
-                        this.audiotrack.seek(0, this.audiotrack_musicid)
+                    var xlookingforposition_on_timetable = currentposition_on_timetable - time;
+                    console.warn("+++++++++++ lookingforposition_on_timetable", xlookingforposition_on_timetable)
+                    if (xlookingforposition_on_timetable < 0) {
+                        console.warn("+++++++++++ < 0")
+                        //nothing?
                     } else {
-                        this.audiotrack.seek(audiotrack_playposition_now - time, this.audiotrack_musicid)
+                        console.warn("+++++++++++ NOT< 0")
+                        for (var x = this.audiotrack_timetable.length - 1; x >= 0; x--) {
+                            var marker_alreadyFound = false;
+                            if (!marker_alreadyFound) {
+                                console.warn("+++++++++++ NOT< 0 LOOP ITERATION x = ", x)
+                                var x_startson = this.audiotrack_timetable[x].starts_on;
+                                var x_endson = this.audiotrack_timetable[x].ends_on;
+                                if ((xlookingforposition_on_timetable > x_startson) && (xlookingforposition_on_timetable < x_endson)) {
+                                    marker_alreadyFound = true;
+                                    if (this.audiotrack_timetable[x].audiotrack_index == this.audiotrack_currentplaying_index) {
+                                        this.audiotrack[this.audiotrack_currentplaying_index].seek(xlookingforposition_on_timetable - x_startson, this.audiotrack_musicid)
+                                    } else {
+                                        this.changeCurrentAudioTrack(
+                                            {
+                                                audiotrack_index: this.audiotrack_timetable[x].audiotrack_index,
+                                                seek_moment: xlookingforposition_on_timetable - x_startson
+                                            }
+                                        )
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     break;
 
                 case "future":
-                    console.log("seek info (future)", "this.audiotrack.duration(this.audiotrack_musicid): " + this.audiotrack.duration(this.audiotrack_musicid), "this.audiotrack.seek(this.audiotrack_musicid) + time: " + this.audiotrack.seek(this.audiotrack_musicid) + time)
-                    if (this.audiotrack.duration(this.audiotrack_musicid) < this.audiotrack.seek(this.audiotrack_musicid) + time) {
+                    console.log("this.audiotrack", this.audiotrack)
+                    console.log("this.audiotrack_currentplaying_index", this.audiotrack_currentplaying_index)
+                    console.log("this.audiotrack[this.audiotrack_currentplaying_index]", this.audiotrack[this.audiotrack_currentplaying_index])
+                    console.log("this.audiotrack[this.audiotrack_currentplaying_index].seek(this.audiotrack_musicid)", this.audiotrack[this.audiotrack_currentplaying_index].seek(this.audiotrack_musicid))
+
+                    console.log("seek info (future)", "this.audiotrack.duration(this.audiotrack_musicid): " + this.audiotrack[this.audiotrack_currentplaying_index].duration(this.audiotrack_musicid), "this.audiotrack.seek(this.audiotrack_musicid) + time: " + this.audiotrack[this.audiotrack_currentplaying_index].seek(this.audiotrack_musicid) + time)
+                    if (this.audiotrack[this.audiotrack_currentplaying_index].duration(this.audiotrack_musicid) < this.audiotrack[this.audiotrack_currentplaying_index].seek(this.audiotrack_musicid) + time) {
                         console.log("seek info (future)  w1")
-                        this.audiotrack.seek(audiotrack_playposition_now, this.audiotrack_musicid)
+                        //if all the tracks are added into timetable array
+                        if (this.audiotrack_timetable.length == this.fetched_remotedata_audiotrack_length) {
+                            var ylookingforposition_on_timetable = parseInt(currentposition_on_timetable) + parseInt(time);
+                            var ymarker_alreadyFound = false;
+                            var yfound_index = 0;
+                            for (var y = this.audiotrack_timetable.length - 1; y >= 0; y--) {
+                                    
+                                    if (!ymarker_alreadyFound) {
+                                        console.warn("+++++++++++ (looking for future tracks...) LOOP ITERATION x = ", y)
+                                        var y_startson = this.audiotrack_timetable[y].starts_on;
+                                        var y_endson = this.audiotrack_timetable[y].ends_on;
+                                        console.log("+++++++++++ (looking for future tracks...) y_startson y_endson", y_startson, y_endson)
+                                        if ((ylookingforposition_on_timetable > y_startson) && (ylookingforposition_on_timetable < y_endson)) {
+                                            console.log("+++++++++++ (looking for future tracks...) FOUND for x = ")
+                                            ymarker_alreadyFound = true;
+                                            yfound_index = y;
+                                            if (this.audiotrack_timetable[y].audiotrack_index == this.audiotrack_currentplaying_index) {
+                                                this.audiotrack[this.audiotrack_currentplaying_index].seek(ylookingforposition_on_timetable - y_startson, this.audiotrack_musicid)
+                                            }
+                                        }
+                                    }
+                                }
+                                if(ymarker_alreadyFound == false){
+                                    this.audiotrack[this.audiotrack_currentplaying_index].seek(audiotrack_playposition_now, this.audiotrack_musicid)
+                                }else{
+                                    this.changeCurrentAudioTrack(
+                                        {
+                                            audiotrack_index: this.audiotrack_timetable[yfound_index].audiotrack_index,
+                                            seek_moment: ylookingforposition_on_timetable - y_startson,
+                                            special_conditions: "no"
+                                        }
+                                    )
+                                }
+                            
+                        }else{
+                            this.changeCurrentAudioTrack(
+                                        {
+                                            audiotrack_index: -1,
+                                            seek_moment: ylookingforposition_on_timetable - this.audiotrack[this.audiotrack_currentplaying_index].duration(this.audiotrack_musicid),
+                                            special_conditions: "not_added_to_timetable_track_yet"
+                                        }
+                                    )
+
+                        }
                     } else {
                         console.log("seek info (future)  w2")
-                        this.audiotrack.seek(audiotrack_playposition_now + time, this.audiotrack_musicid)
+                        console.log("this.audiotrack_currentplaying_index", this.audiotrack_currentplaying_index)
+                        this.audiotrack[this.audiotrack_currentplaying_index].seek(audiotrack_playposition_now + time, this.audiotrack_musicid)
                     }
                     break;
 
@@ -434,13 +638,13 @@ export default defineComponent({
                 switch (this.playerState) {
                     case "stopped":
                         this.playerState = "playing"
-                        this.audiotrack_musicid = this.audiotrack.play();
+                        this.audiotrack_musicid = this.audiotrack[this.audiotrack_currentplaying_index].play();
                         this.backgroundtrack_musicid = this.backgroundtrack.play();
                         this.toastAction("player_state_change", "resume");
                         break;
                     case "playing":
-                        console.log(this.audiotrack.pause(this.audiotrack_musicid))
-                        this.audiotrack.pause(this.audiotrack_musicid);
+                        console.log(this.audiotrack[this.audiotrack_currentplaying_index].pause(this.audiotrack_musicid))
+                        this.audiotrack[this.audiotrack_currentplaying_index].pause(this.audiotrack_musicid);
                         this.backgroundtrack.pause(this.backgroundtrack_musicid);
                         this.playerState = "stopped";
                         this.toastAction("player_state_change", "pause");
@@ -485,35 +689,108 @@ export default defineComponent({
             // eslint-disable-next-line
             const parent_this = this;
 
+            console.log(data.content.audio.audiotrack.length)
+
+            var isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1 &&
+                navigator.userAgent &&
+                navigator.userAgent.indexOf('CriOS') == -1 &&
+                navigator.userAgent.indexOf('FxiOS') == -1;
+
+            //    var config_html5 = false;
+            //    var config_usingWebAudio = true;
+
+            //    // Temporare workaround as long as our assets server (Cloudflare Pages) doesn't support byte-to-byte media sharing.
+            //    // because it's the reason why it breaks time seeking and pause-play functions...
+            //    // In the future I better fix this problem on server side (we need to set 'Accept-range' to bytes)!
+            //    if(isSafari){
+            //     config_html5 = true;
+            //     config_usingWebAudio = false;
+            //    }
+
+            var config_backgroundIsHtml5 = true;
+            var config_isSafari = false;
+
+            if(isSafari){
+                config_isSafari = true
+            }
+
+
             if (data.content.audio.audiotrack) {
-                this.audiotrack = new Howl({
-                    src: [data.content.audio.audiotrack.url],
-                    html5: true,
-                    onpause() {
-                        parent_this.playerState = "stopped"
-                    },
-                    onstop() {
-                        parent_this.playerState = "stopped"
-                    },
-                    async onend() {
-                        parent_this.playerState = "stopped"
-                        const toast = await toastController.create({
-                            message: 'Медитация подошла к концу. Через несколько секунд мы завершаем нашу сессию. Спасибо!',
-                            duration: 4000,
-                            position: 'top'
-                        });
-                        await toast.present();
-                        setTimeout(() => {
-                            parent_this.audiotrack.fade(parent_this.audiotrack.volume(parent_this.audiotrack_musicid), 0, 2000, parent_this.audiotrack_musicid);
-                            parent_this.backgroundtrack.fade(parent_this.backgroundtrack.volume(parent_this.backgroundtrack_musicid), 0, 2000, parent_this.backgroundtrack_musicid);
-                            parent_this.$router.push({ path: '/tabs/meditation/finished', replace: true });
-                        }, 4000);
-                    }
-                });
-                this.meditationAuthors = JSON.parse(data.content.audio.audiotrack.author);
+                this.fetched_remotedata_audiotrack_length = data.content.audio.audiotrack.length;
+                for (let x = 0; x < data.content.audio.audiotrack.length; x++) {
+                    console.log("[LOOP](started) Defining audio track with INDEX " + x)
+                    this.audiotrack.push(new Howl({
+                        preload: true,
+                        src: [data.content.audio.audiotrack[x].url],
+                        // html5: config_html5,
+                        // usingWebAudio: config_usingWebAudio,
+                        html5: true,
+                        onplay(audioid) {
+                            var preparetimetableelement_startson = parent_this.audiotrack_timetable.length == 0 ? 0 : parent_this.audiotrack_timetable[parent_this.audiotrack_timetable.length - 1].ends_on;
+                            var duration = parent_this.audiotrack[x].duration(audioid);
+                            parent_this.audiotrack_timetable.push({
+                                audiotrack_index: x,
+                                starts_on: preparetimetableelement_startson,
+                                ends_on: preparetimetableelement_startson + duration,
+                                duration: duration
+                            })
+
+                            console.info("DEBUG FOR ++audiotrack_timetable++ ", parent_this.audiotrack_timetable)
+                            console.info("DEBUG FOR ++duration++ ", duration)
+
+                            parent_this.updateAudiotrackLoadingState(false)
+                            parent_this.playerState = "playing"
+
+                            parent_this.eventHandler_audioOnPlay(audioid);
+                        },
+                        onload() {
+                            //
+
+                        },
+                        onpause() {
+                            parent_this.playerState = "stopped"
+                        },
+                        onstop() {
+                            parent_this.playerState = "stopped"
+                        },
+                        async onend() {
+
+                            const audiotrack_len_indexingcontext = data.content.audio.audiotrack.length - 1;
+
+                            console.info("x_curr: " + x + "\nAUDIOTRACK ARR LEN: " + audiotrack_len_indexingcontext)
+
+                            if (x == audiotrack_len_indexingcontext) {
+                                parent_this.playerState = "stopped"
+                                const toast = await toastController.create({
+                                    message: 'Медитация подошла к концу. Через несколько секунд мы завершаем нашу сессию. Спасибо!',
+                                    duration: 10000,
+                                    position: 'top'
+                                });
+                                parent_this.meditationState = "finished"
+                                await toast.present();
+                                setTimeout(() => {
+                                    //FIX IT LATER PLEEEEASE!!!
+                                    //parent_this.audiotrack[this.audiotrack_currentplaying_index].fade(parent_this.audiotrack[this.audiotrack_currentplaying_index].volume(parent_this.audiotrack_musicid), 0, 2000, parent_this.audiotrack_musicid);
+                                    parent_this.backgroundtrack.fade(parent_this.backgroundtrack.volume(parent_this.backgroundtrack_musicid), 0, 2000, parent_this.backgroundtrack_musicid);
+                                    parent_this.$router.push({ path: '/tabs/meditation/finished', replace: true });
+                                }, 10500);
+                            } else {
+                                console.log("perf-1")
+                                parent_this.audiotrack_currentplaying_index += 1;
+                                console.log("perf-2")
+                                parent_this.updateAudiotrackLoadingState(true)
+                                parent_this.audiotrack_musicid = parent_this.audiotrack[parent_this.audiotrack_currentplaying_index].play();
+                            }
+
+                        }
+                    }))
+                    console.log("[LOOP](finished) Defined audio track with INDEX " + x)
+                    console.log("[LOOP](finished) Current array containing audiotracks info is: " + parent_this.audiotrack)
+                }
+                this.meditationAuthors = { name: 'ON MAINTENANCE', photo: "" };
                 console.log("This meditation has been recorded with the help of this contributors: " + this.meditationAuthors.name)
                 setTimeout(() => {
-                    this.audiotrack_musicid = this.audiotrack.play();
+                    parent_this.audiotrack_musicid = parent_this.audiotrack[parent_this.audiotrack_currentplaying_index].play();
                 }, 0); //some time before we had here 9000 instead of 0.
                 this.playerState = "playing"
             } else {
@@ -521,10 +798,12 @@ export default defineComponent({
             }
 
             if (data.content.audio.backgroundtrack) {
+
                 this.backgroundtrack = new Howl({
+                    //src: [data.content.audio.backgroundtrack.url],
                     src: [data.content.audio.backgroundtrack.url],
-                    html5: false,
-                    volume: 0.05
+                    html5: true,
+                    volume: 1
                 });
                 this.backgroundtrack_musicid = this.backgroundtrack.play();
             } else {
@@ -558,7 +837,7 @@ export default defineComponent({
                     friendly_title: "Гармония пальм",
                     source: "empty currently"
                 },
-                
+
 
             ],
             currentBackground: {
@@ -575,8 +854,13 @@ export default defineComponent({
             },
             videoplayer: null,
             meditationState: "prestart_info",
-            audiotrack: null,
+            audiotrack: [],
+            audio_seekafterplayingstarted: 0,
+            fetched_remotedata_audiotrack_length: 0,
+            audiotrack_currentplaying_index: 0,
+            audiotrack_isLoading: true,
             audiotrack_musicid: null,
+            audiotrack_timetable: [],
             backgroundtrack: null,
             additionalModalOpenened: "none",
             backgroundtrack_musicid: null,

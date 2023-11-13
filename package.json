@@ -25,6 +25,8 @@
     "@codetrix-studio/capacitor-google-auth": "^3.3.2",
     "@ditdot-dev/vue-flow-form": "^2.3.1",
     "@heroicons/vue": "^2.0.18",
+    "@hmscore/cordova-plugin-hms-ads": "^13.4.65-300",
+    "@hmscore/cordova-plugin-hms-adsprime": "^13.4.65-300",
     "@hmscore/hms-js-account": "^5.2.0-300",
     "@ionic/vue": "^7.0.0",
     "@ionic/vue-router": "^7.0.0",

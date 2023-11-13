@@ -6,7 +6,7 @@
         </ion-toolbar>
       </ion-header>
       <ion-content :fullscreen="true">
-        <img style="height: 30vh; margin-top: 7vh; margin-left: 3vw;" src="../../assets/graphics/juicy-sitting-girl.png"/>
+        <img style="height: 25vh; margin-top: 7vh; margin-left: 3vw;" src="../../assets/graphics/juicy-sitting-girl.png"/>
         <ion-header collapse="condense" style="margin-top: 5vh;">
           <ion-toolbar>
             <ion-title size="large">Вы молодец!</ion-title>
@@ -17,7 +17,7 @@
             <ion-label>Медитация закончилась, а ваш день только начинается</ion-label>
           </div>
           <div style="margin-top: 4vh;">
-            <ion-label>Теперь вы чувствуете себя куда лучше: вас захватыет спокойствие и хорошее настроение, вы понимаете сейчас себя лучше и абсолютно рациональны.<br/><br/>Спасибо за отлично проведенное время!</ion-label>
+            <ion-label>Теперь вы чувствуете себя куда лучше: вас захватывает спокойствие и хорошее настроение, вы понимаете сейчас себя лучше и абсолютно рациональны.<br/><br/>Спасибо за отлично проведенное время!</ion-label>
           </div>
           
         </div>
