@@ -24,6 +24,10 @@ ion-tab-bar {
   width: 100%;
 }
 
+.input-wrapper{
+  border-radius: 1.25vh !important;
+}
+
 .padding_from_bottom_line {
   margin-top: 7.5vh;
 }

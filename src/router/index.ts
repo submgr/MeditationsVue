@@ -47,6 +47,11 @@ const routes: Array<RouteRecordRaw> = [
         meta: { transition: 'slide-left' },
       },
       {
+        path: 'auth/loggedOut',
+        component: () => import('@/views/auth/LoggedOut.vue'),
+        meta: { transition: 'slide-left' },
+      },
+      {
         path: 'auth/almostdone',
         component: () => import('@/views/auth/AlmostDone.vue'),
         props: true,

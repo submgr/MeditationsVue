@@ -4,6 +4,8 @@ import router from './router';
 import i18n from './i18n'
 import { Capacitor } from '@capacitor/core';
 
+import store from "./store";
+
 import { IonicVue } from '@ionic/vue';
 
 import LoadScript from "vue-plugin-load-script";
@@ -32,7 +34,8 @@ import './theme/variables.css';
 const app = createApp(App)
   .use(IonicVue)
   .use(router)
-  .use(LoadScript);
+  .use(LoadScript)
+  .use(store)
 
 import axios from 'axios'
 import VueAxios from 'vue-axios'

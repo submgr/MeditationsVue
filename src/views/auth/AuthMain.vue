@@ -25,22 +25,26 @@
               <ion-button router-link="/tabs/auth/email" color="primary" style="left: 0px; margin-right: 5%; margin-left: 5%; margin-top: 7.5%; --opacity: 0.7; --padding-start: 0; --padding-end: 0;" expand="block">
                 <ion-icon class="send-button" slot="start" :icon="mailOutline" style="text-align: left;"></ion-icon>
                 <span style="text-align:left; width: 72%;">
-                    Продолжить с эл. почтой
+                    &nbsp;&nbsp;Продолжить с эл. почтой
                 </span>
                 <ion-icon class="send-button" slot="end" :icon="arrowForwardOutline" style="text-align: end;"></ion-icon>
                 
             </ion-button>
-            <ion-button @click="authenticateWithGoogle" color="primary" style="left: 0px; margin-right: 5%; margin-left: 5%; margin-top: 2.5%; --opacity: 0.7; --padding-start: 0; --padding-end: 0;" expand="block">
+            <!---<ion-button @click="authenticateWithGoogle" color="primary" style="left: 0px; margin-right: 5%; margin-left: 5%; margin-top: 2.5%; --opacity: 0.7; --padding-start: 0; --padding-end: 0;" expand="block">
                 <ion-icon class="send-button" slot="start" :icon="chatbubbleOutline" style="text-align: left;"></ion-icon>
                 <span style="text-align:left; width: 72%;">
                     Продолжить с Telegram
                 </span>
                 <ion-icon class="send-button" slot="end" :icon="arrowForwardOutline" style="text-align: end;"></ion-icon>
             </ion-button>
+            
     
-            <hr class="hr-line">
+            ---><hr class="hr-line" style="margin-top: 4%;">
+            <div style="margin-bottom: 4%;"></div>
+            
+
     
-            <ion-button @click="authenticateWithGoogle"  style="margin-right: 5%; margin-left: 5%; margin-top: 6%; --opacity: 0.7;" expand="block">
+            <ion-button @click="authenticateWithGoogle"  style="margin-right: 5%; margin-left: 5%; margin-top: 3.5%; --opacity: 0.7;" expand="block">
                 <ion-icon class="send-button" slot="end" :icon="logoGoogle"></ion-icon>
                 Войти с Google
             </ion-button>
@@ -72,7 +76,7 @@
 @import '../../assets/css/adaptative_ui.css';
 
 .hr-line{
-    margin-right: 7%; margin-left: 7%; background-color: white; margin-top: 7%; opacity: 0.3;
+    margin-right: 7%; margin-left: 7%; background-color: white;  opacity: 0.3;
 }
 
 @media (prefers-color-scheme: light) {

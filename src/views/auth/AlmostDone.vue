@@ -167,7 +167,8 @@ ion-spinner {
 <script lang="ts">
 import {
     defineComponent,
-    nextTick
+    nextTick,
+    computed
 } from 'vue';
 
 import {
@@ -182,7 +183,8 @@ import {
     arrowForwardOutline,
     mailOutline,
     logoGoogle,
-    chatbubbleOutline
+    chatbubbleOutline,
+    thunderstormOutline
 } from 'ionicons/icons';
 
 import { Vue3Lottie } from 'vue3-lottie'
@@ -191,6 +193,12 @@ import 'vue3-lottie/dist/style.css'
 import globaldata from '../../modules/global';
 
 import XRegExp from 'xregexp';
+
+import store from "../../store";
+
+const getUserData = computed(() => {
+    return store.getters.getUserData;
+});
 
 export default defineComponent({
     name: 'Tab1Page',
@@ -264,13 +272,6 @@ export default defineComponent({
         },
         async CompleteAuth() {
             console.log("Done with AlmostDone-Auth. Going further...")
-            if (this.$route.query.auth_token) {
-                localStorage.setItem("auth_token", (this.$route.query.auth_token).toString());
-            }
-            if (this.$route.query.auth_userid) {
-                localStorage.setItem("auth_userid", (this.$route.query.auth_userid).toString());
-            }
-
             // eslint-disable-next-line
             var parent_this = this;
 
@@ -311,15 +312,34 @@ export default defineComponent({
         }
     },
     mounted() {
+        if (this.$route.query.auth_token) {
+            localStorage.setItem("auth_token", (this.$route.query.auth_token).toString());
+        }
+        if (this.$route.query.auth_userid) {
+            localStorage.setItem("auth_userid", (this.$route.query.auth_userid).toString());
+        }
+
         setTimeout(() => {
             this.state = "ready_askname";
         }, 3000)
+
+
+        console.log(this.$store)
+        this.$store.dispatch("fetchUserData").then(() => {
+            if (getUserData.value.name != null && getUserData.value.name != undefined) {
+                this.user_firstname = getUserData.value.name + ""
+            }
+            // this.$router.push('/') // Also, its better to invoke router's method from a component than in a store file, anyway reference of a component may not be defined in the store file till you explicity pass it
+        });
 
         const tabsEl = document.querySelector('ion-tab-bar');
         if (tabsEl) {
             tabsEl.hidden = true;
             tabsEl.style.height = "1";
         }
+
+
+
     },
     setup() {
         return {

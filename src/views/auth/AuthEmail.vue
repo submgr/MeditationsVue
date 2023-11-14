@@ -131,7 +131,7 @@
         line-height: 2.3;
         --background: #f8f8f834;
         --padding-start: 13px;
-        border-radius: 8px;
+        border-radius: 8px !important;
     }
 
     .input-code[value]:not([value=""]){
