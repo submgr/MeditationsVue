@@ -118,11 +118,11 @@ export default defineComponent({
         const cardWidth = 325; // Adjust this to match your card width
         const scrollLeft = cardWrapper.scrollLeft;
         const center = containerRect.width / 2;
-        const cardIndex = Math.floor((scrollLeft) / cardWidth);
+        const cardIndex = Math.floor((scrollLeft + center) / cardWidth);
         this.centeredCard = cardIndex;
-
+        
         // Scroll to the nearest card
-        this.scrollToCard(cardIndex);
+        // this.scrollToCard(cardIndex);
         
       }
     },
