@@ -97,14 +97,19 @@ export default defineComponent({
       if (cardWrapper) {
         const card = cardWrapper.querySelector(`#card-${index}`);
         if (card) {
-          const cardRect = card.getBoundingClientRect();
-          const containerRect = cardWrapper.getBoundingClientRect();
-          const center = containerRect.width / 2;
-          const cardCenter = cardRect.left + cardRect.width / 2;
-          return Math.abs(center - cardCenter) < cardRect.width / 2;
+          card.scrollIntoView({ behavior: 'smooth' });
         }
       }
       return false;
+    },
+    scrollToCard(index: number) {
+      const cardWrapper = this.$refs.cardWrapper as HTMLElement;
+      if (cardWrapper) {
+        const card = cardWrapper.querySelector(`#card-${index}`);
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
     },
     handleScroll() {
       const cardWrapper = this.$refs.cardWrapper as HTMLElement;
@@ -113,8 +118,11 @@ export default defineComponent({
         const cardWidth = 325; // Adjust this to match your card width
         const scrollLeft = cardWrapper.scrollLeft;
         const center = containerRect.width / 2;
-        const cardIndex = Math.floor((scrollLeft + center) / cardWidth);
+        const cardIndex = Math.floor((scrollLeft) / cardWidth);
         this.centeredCard = cardIndex;
+
+        // Scroll to the nearest card
+        this.scrollToCard(cardIndex);
         
       }
     },
