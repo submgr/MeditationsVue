@@ -115,6 +115,7 @@ export default defineComponent({
         const center = containerRect.width / 2;
         const cardIndex = Math.floor((scrollLeft + center) / cardWidth);
         this.centeredCard = cardIndex;
+        
       }
     },
     },
@@ -185,6 +186,8 @@ body {
 }
 
 .wrapper {
+    scroll-snap-type: x mandatory;
+-webkit-scroll-snap-type: x mandatory;
     position: relative;
     width: 100%;
     height: 100%;
