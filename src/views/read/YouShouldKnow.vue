@@ -86,6 +86,7 @@
             <ion-card-content>До 6% населения планеты медитируют. После йоги медитация является самой популярной
                 практикой работы с телом и разумом в мире.</ion-card-content>
         </ion-card>
+        <div style="height: calc(50px + 1.5vh);"></div>
     </ion-content>
 </ion-page></template>
   

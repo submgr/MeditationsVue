@@ -62,13 +62,15 @@ import {
 } from 'xregexp';
 
 import {
-    IonSpinner
+    IonSpinner,
+    IonButton
 } from '@ionic/vue';
 
 export default defineComponent({
     name: 'ExploreContainer',
     components: {
-        IonSpinner
+        IonSpinner,
+        IonButton
     },
     props: {
         name: String
@@ -84,6 +86,12 @@ export default defineComponent({
         //setup
     },
     methods: {
+        smoothScroll(){
+            this.$smoothScroll({
+            scrollTo: myEl, // scrollTo is also allowed to be number
+            hash: '#sampleHash' // required if updateHistory is true
+            })
+        },
         isCardCentered(index) {
       const cardWrapper = this.$refs.cardWrapper as HTMLElement;
       if (cardWrapper) {

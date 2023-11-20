@@ -1,14 +1,22 @@
 <template>
     <ion-page>
         <ion-content :fullscreen="true" :forceOverscroll="false">
+            
+            <SystemAnnoncementProvider/>
             <AdvancedLoader v-if="1>2" /> 
             <h1 style="margin-left: 1.1rem; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Главная</h1>
             <div style="display: block; margin-top: 4vh;">
                 <NotificationsBanner />
             </div>
-            <div style="padding-top: 0.1rem;">
+
+            
+            
+            <div style="padding-top: 0.0rem;" >
+                
                 <div @click="getMeditation({ servicetype: 'dynamic', searchtype: 'random', searchtag: '' })">
-                    <div class="card-alfa custom-swiper suggestion-block bg-1 card-meditate">
+                    
+                    <div class="card-alfa custom-swiper suggestion-block bg-1 card-meditate ion-activatable">
+                        <ion-ripple-effect></ion-ripple-effect>
                         <div>
                             <ion-icon :icon="playOutline"
                                 style="margin-left: 0.7rem; margin-top: 1.8rem; color: white; font-size: 3rem;"
@@ -23,6 +31,8 @@
                     </div>
                 </div>--->
             </div>
+
+            <MoodCheck/>
 
             <MeditationsList @event-getmeditation="getMeditation" style="margin-top: -2.5vh;"/>
 
@@ -146,6 +156,7 @@ import {
 import {
     IonPage,
     IonContent,
+    IonRippleEffect
 } from '@ionic/vue';
 
 import {
@@ -158,6 +169,8 @@ import globaldata from '../modules/global';
 
 import MeditationsList from '@/components/MeditationsList.vue';
 import NotificationsBanner from '@/components/NotificationsBanner.vue';
+import SystemAnnoncementProvider from '@/components/system/AnnoncementProvider.vue';
+import MoodCheck from "@/components/questionnaire/MoodCheck.vue"
 
 import AdvancedLoader from '@/components/AdvancedLoader.vue';
 
@@ -171,7 +184,10 @@ export default defineComponent({
         IonPage,
         MeditationsList,
         NotificationsBanner,
-        AdvancedLoader
+        AdvancedLoader,
+        SystemAnnoncementProvider,
+        IonRippleEffect,
+        MoodCheck
     },
     mounted() {
         const tabsEl = document.querySelector('ion-tab-bar');

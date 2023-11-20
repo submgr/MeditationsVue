@@ -1,10 +1,11 @@
 <template>
-    <span v-if="notificationType == 'emotionalStateFeature'">
+    <span v-if="notificationType == 'emotionalStateFeature'" >
         <WellbeingQuestionnaire ref="wellbeingQuestionnaireRef" @completion-event="WellbeingQuestionnaireCompleted" />
         <ion-card :class="{ 'stop-animations': stopAllAnimations }" @click="runWellbeingQuestionnaire()" color="light"
             style="--glow-opacity: 1; --glow-scale: 2.5; --glow-blur: 6; --glow-radius: 100; --glow-rotate-unit: 1deg;"
-            class="ion-text-centerOFF gradient-border-card glowing-card cardg">
+            class="ion-text-centerOFF gradient-border-card glowing-card cardg ion-activatable ripple-parent rounded-rectangle">
             <span class="glow"></span>
+            <ion-ripple-effect></ion-ripple-effect>
             <div style="margin: 2px;" class="innerdiv_notifcoloredradius bg-colored">
                 <div style="height: 3vh;"></div>
                 <img src="../assets/graphics/3d-glassy-four-plastic-rectangles-1.png" style="margin: 0;

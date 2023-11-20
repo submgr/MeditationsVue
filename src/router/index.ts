@@ -127,6 +127,22 @@ const routes: Array<RouteRecordRaw> = [
         path: '3rd-embed/deleteaccount',
         component: () => import('@/views/3rd-embed/DeleteAccount.vue')
       },
+      {
+        path: 'support/main',
+        component: () => import('@/views/support/MainPage.vue')
+      },
+      {
+        path: 'support/chat',
+        component: () => import('@/views/support/SupportProvider.vue')
+      },
+      {
+        path: 'settings/main',
+        component: () => import('@/views/settings/MainPage.vue')
+      },
+      {
+        path: 'settings/deleteaccount',
+        component: () => import('@/views/settings/DeleteAccount.vue')
+      },
     ]
   }
 ]

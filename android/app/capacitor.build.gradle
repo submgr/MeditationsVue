@@ -16,18 +16,9 @@ dependencies {
     implementation project(':capacitor-status-bar')
     implementation project(':codetrix-studio-capacitor-google-auth')
     implementation project(':hmscore-hms-js-account')
-    implementation "com.huawei.hms:stats:6.11.0.301"
-    implementation "com.huawei.agconnect:agconnect-core:1.7.2.300"
-    implementation "com.huawei.hms:ads-identifier:3.4.62.300"
-    implementation "com.huawei.hms:ads-installreferrer:3.4.62.300"
-    implementation "com.huawei.hms:ads-consent:3.4.65.300"
-    implementation "com.huawei.hms:ads-vast:3.4.44.303"
-    implementation "com.huawei.hms:ads-vast-player:3.4.44.303"
-    implementation "com.huawei.hms:ads-lite:13.4.65.300"
     implementation "com.android.support:support-v4:+"
     implementation "com.android.support:recyclerview-v7:27.1.1"
 }
-apply from: "../../node_modules/@hmscore/cordova-plugin-hms-ads/src/android/build-extras.gradle"
 apply from: "../../node_modules/cordova-plugin-yandex-ads/src/android/yandexads.gradle"
 
 if (hasProperty('postBuildExtras')) {

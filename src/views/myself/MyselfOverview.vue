@@ -4,7 +4,7 @@
             
             <h1 style="margin-left: 4vw; margin-right: 4vw; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Мое благополучие</h1>
             <div style="padding-top: 1.0rem;"></div>
-            <NotificationsBanner notificationType="emotionalStateFeature"/>
+            
             <div style="padding-top: 0.1rem;">
                 <div>
                     <div class="card-alfa custom-swiper suggestion-block bg-1 card-meditate">
@@ -36,6 +36,41 @@
                     
                     <br/><br/>Согласно исследованиям, важно медитировать периодически, чтобы усилить эффект. &nbsp;<span style="color:rgb(94, 94, 219)" @click="learnMore()">Узнайте&nbsp;больше</span></ion-card-content>
               </ion-card>
+
+              <NotificationsBanner notificationType="emotionalStateFeature"/>
+
+              <ion-grid style="--ion-grid-padding: 0 0 0 0;">
+
+            
+                <ion-row style="margin-top: -3vh; ">
+                  <ion-col style="margin-right: -0.69rem;" @click="$router.push({path:'/tabs/support/main', replace: false});">
+                    <ion-card class="ion-activatable ripple-parent rectangle" style="border-radius: 20px;">
+                        <ion-ripple-effect></ion-ripple-effect>
+                        <ion-card-header>
+                          <ion-card-title><ion-icon style="font-size: 5vh; margin-top: 1vh;" :icon="helpBuoyOutline"></ion-icon></ion-card-title>
+                        </ion-card-header>
+                        <ion-card-content>
+                            Поддержка
+                          </ion-card-content>
+                      </ion-card>
+                  </ion-col>
+                  <ion-col style="margin-left: -0.69rem; display: none;" @click="$router.push({path:'/tabs/settings/main', replace: false});">
+                    <ion-card class="ion-activatable ripple-parent rectangle" style="border-radius: 20px; " >
+                        <ion-ripple-effect></ion-ripple-effect>
+                        <ion-card-header>
+                          <ion-card-title><ion-icon style="font-size: 5vh; margin-top: 1vh;" :icon="settingsOutline"></ion-icon></ion-card-title>
+                        </ion-card-header>
+                    
+                        <ion-card-content>
+                          Настройки
+                        </ion-card-content>
+                      </ion-card>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+
+              <div style="height: calc(50px + 1.5vh);"></div>
+              
 
             <ion-modal
                     @willDismiss="Modal_onWillDismiss"
@@ -189,7 +224,12 @@ import {
     IonIcon,
     IonInput,
     IonItem,
-    IonCard
+    IonCard,
+    IonCardTitle,
+    IonCardSubtitle,
+    IonButton,
+    IonCardHeader,
+    IonCardContent,
 } from '@ionic/vue';
 
 import {
@@ -197,7 +237,9 @@ import {
     contractOutline,
     playOutline,
     createOutline,
-    rocketOutline
+    rocketOutline,
+    helpBuoyOutline,
+    settingsOutline
 } from 'ionicons/icons';
 
 import globaldata from '../../modules/global';
@@ -216,7 +258,12 @@ export default defineComponent({
         IonInput,
         IonItem,
         IonCard,
-        NotificationsBanner
+        NotificationsBanner,
+        IonCardTitle,
+        IonCardSubtitle,
+        IonButton,
+        IonCardHeader,
+        IonCardContent
     },
     mounted() {
         const tabsEl = document.querySelector('ion-tab-bar');
@@ -327,7 +374,8 @@ export default defineComponent({
             playOutline,
             createOutline,
             rocketOutline,
-            
+            helpBuoyOutline,
+            settingsOutline
             
         }
     }

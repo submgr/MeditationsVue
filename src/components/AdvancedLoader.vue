@@ -1,7 +1,7 @@
 <template>
     <div id="container">
       <div>
-        <p class="linear-wipe" style="text-align: left; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 44px; font-weight: 700;">Сейчас вы пройдете опрос...</p>
+        <p class="linear-wipe" style="text-align: left; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 44px; font-weight: 700;">Сейчас загрузится чат...</p>
       </div>
     </div>
   </template>

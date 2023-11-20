@@ -269,8 +269,15 @@ export default defineComponent({
     },
     watch: {
         '$route'() {
-            this.audiotrack[this.audiotrack_currentplaying_index].pause(this.audiotrack_musicid);
-            this.backgroundtrack.pause(this.backgroundtrack_musicid);
+            if(this.audiotrack[this.audiotrack_currentplaying_index] != undefined){
+                this.audiotrack[this.audiotrack_currentplaying_index].pause(this.audiotrack_musicid);
+            }
+
+            if(this.backgroundtrack != undefined){
+                this.backgroundtrack.pause(this.backgroundtrack_musicid);
+            }
+            
+            
 
             const tabsEl = document.querySelector('ion-tab-bar');
             if (tabsEl) {

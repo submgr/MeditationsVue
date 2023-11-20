@@ -11,6 +11,7 @@
             </p>
             <ion-button id="relaxstartbtn" style="margin-top: 3.25vh; margin-left: -0.2vw; opacity: 0.9; --background: linear-gradient(134.98deg, rgba(255, 255, 255, 0.15) 0%, rgb(0, 181, 239, 0.2); font-weight: 700;" @click="startSession">Начать сессию</ion-button>
         </div>
+        <div style="height: calc(50px + 1.5vh);"></div>
         
     </ion-content>
     </ion-page>

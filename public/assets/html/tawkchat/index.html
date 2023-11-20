@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="minimum-scale=1.0, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width, height=device-height" />
+<title></title>
+<script type="text/javascript" src="https://tawk.to/public/scripts/popout.js"></script>
+<style>body{ background-color: none}</style>
+<script type="text/javascript">
+    
+			var Tawk_API = {
+				isPopup: true,
+                visitor: {
+                        name  : 'Newuser',
+                        email : 'mainx@yandex.ru',
+                        hash  : 'DWHjWahDcExQOCoCfCE2u0Tso78qpirAoAI+yoEKXzc'
+                    },
+				onLoad: function () {
+
+                    window.parent.postMessage("tawkto_layer_loaded", "*")
+                    
+					var dataObj = parseQueryString();
+
+					if (dataObj.tags !== undefined) {
+						Tawk_API.addTags(dataObj.tags);
+					}
+
+					if (dataObj.event !== undefined) {
+						if (dataObj.attrLength !== 0) {
+							Tawk_API.addEvent(dataObj.event, dataObj.attributes);
+						} else {
+							Tawk_API.addEvent(dataObj.event);
+						}
+					};
+
+                    //tawk-card tawk-card-inverse tawk-card-xsmall tawk-footer tawk-flex-none
+				},
+                onChatStarted(){
+                    console.log("started")
+                }
+
+			}
+            
+            Tawk_LoadStart = new Date();
+
+            
+
+			(function(){
+				var s1=document.createElement("script"),
+					s0=document.getElementsByTagName("script")[0];
+
+				s1.async=true;
+				s1.src='https://embed.tawk.to/6555ee9e958be55aeab02e65/1hfbqo73v';
+				s1.charset='UTF-8';
+				s1.setAttribute('crossorigin','*');
+
+				s0.parentNode.insertBefore(s1,s0);
+			})();
+		</script>
+</head>
+<body style="margin: 0px;"></body>
+</html>
