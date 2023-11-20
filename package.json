@@ -43,6 +43,7 @@
     "i18next-http-backend": "^2.3.1",
     "i18next-vue": "^3.0.0",
     "ionicons": "^6.0.3",
+    "locomotive-scroll": "^4.1.4",
     "lottie-vuejs": "^0.4.0",
     "lottie-web-vue": "^2.0.6",
     "markdown-it-vue": "^1.1.7",
@@ -62,6 +63,7 @@
     "vue-plugin-load-script": "^2.1.1",
     "vue-plyr": "^7.0.0",
     "vue-router": "^4.0.12",
+    "vue-scroll-snap": "^0.1.11",
     "vue3-lottie": "^2.3.0",
     "vuex": "^4.1.0",
     "xregexp": "^5.1.1"
