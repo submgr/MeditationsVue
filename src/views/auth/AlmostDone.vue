@@ -327,7 +327,10 @@ export default defineComponent({
 
         console.log(this.$store)
         this.$store.dispatch("fetchUserData").then(() => {
-            if (getUserData.value.name != null && getUserData.value.name != undefined) {
+            console.log(getUserData)
+            if (getUserData.value.name == undefined || getUserData.value.name == null) {
+                this.user_firstname = ""
+            }else{
                 this.user_firstname = getUserData.value.name + ""
             }
             // this.$router.push('/') // Also, its better to invoke router's method from a component than in a store file, anyway reference of a component may not be defined in the store file till you explicity pass it
