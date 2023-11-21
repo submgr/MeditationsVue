@@ -237,6 +237,7 @@ export default defineComponent({
             if (XRegExp("^[0-9\\p{L}_.]+$").test(this.user_firstname) === true) {
                 this.state = 'finishing'
                 localStorage.setItem("user_firstname", this.user_firstname)
+                this.$store.dispatch("setNewName", this.user_firstname)
                 this.CompleteAuth();
             } else {
                 this.message_modal_text = `Не удалось проверить имя!\n\nУбедитесь, что в указанном имени отсутствуют лишние символы. Оно может содержать только буквы алфавита.\n\nОбратите внимание: пробелы не допускаются.\n\nЕсли ваше имя состоит из нескольких слов, укажите неофициальный вариант без пробела.`

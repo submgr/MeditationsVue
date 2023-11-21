@@ -2,6 +2,7 @@
   "name": "meditations-ionic-vue",
   "version": "0.0.1",
   "private": true,
+  "homepage": "./",
   "scripts": {
     "serve": "vue-cli-service serve",
     "installandbuild": "npm install --legacy-peer-deps && npm run build",
@@ -55,6 +56,7 @@
     "swiper": "^8.4.2",
     "tone": "^14.7.77",
     "video.js": "^7.20.3",
+    "vite-plugin-require": "^1.1.11",
     "vue": "^3.2.21",
     "vue-axios": "^3.4.1",
     "vue-insta-stories": "^0.9.3",
@@ -93,9 +95,13 @@
     "jest": "^27.3.1",
     "postcss": "^8.4.26",
     "sharp": "^0.31.0",
+    "svg-inline-loader": "^0.8.2",
     "tailwindcss": "^3.3.3",
     "ts-jest": "^27.0.7",
-    "typescript": "^4.3.5"
+    "typescript": "^4.3.5",
+    "vite-svg-loader": "^5.0.1",
+    "vue-loader": "^17.0.1",
+    "svg-vue3-loader": "^1.0.2"
   },
   "description": "An Ionic project"
 }

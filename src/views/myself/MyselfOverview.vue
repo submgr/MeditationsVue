@@ -127,13 +127,13 @@
 
 @media (prefers-color-scheme: dark) {
     .bg-1 {
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(7, 5, 36, 0.74)), url('https://images.unsplash.com/photo-1507400492013-162706c8c05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=659&q=80') !important;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(7, 5, 36, 0.74)), url('../../assets/photo/photo-1507400492013-162706c8c05e.webp') !important;
     }
   }
 
   @media (prefers-color-scheme: light) {
     .bg-1 {
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(52, 45, 150, 0.74)), url('https://images.unsplash.com/photo-1465080357990-d4bc259ec4a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80') !important;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(52, 45, 150, 0.74)), url('../../assets/photo/photo-1465080357990-d4bc259ec4a9.webp') !important;
     }
   }
 
@@ -214,7 +214,8 @@ ion-page {
 
 <script lang="ts">
 import {
-    defineComponent
+    defineComponent,
+    computed
 } from 'vue';
 import {
     IonPage,
@@ -245,6 +246,12 @@ import {
 import globaldata from '../../modules/global';
 
 import NotificationsBanner from '@/components/NotificationsBanner.vue';
+
+import store from "../../store";
+
+const getUserData = computed(() => {
+    return store.getters.getUserData;
+});
 
 
 export default defineComponent({
@@ -298,6 +305,7 @@ export default defineComponent({
 
         saveProfileNewData(){
             localStorage.setItem("user_firstname", this.name)
+            this.$store.dispatch("setNewName", this.name)
             this.myselfProfileEdit_isModalOpen = false;
         },
 
@@ -336,14 +344,6 @@ export default defineComponent({
     },
     data: () => ({
         showStory: false,
-        items: [
-            "https://images.unsplash.com/photo-1531804159968-24716780d214?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=388&q=80",
-            "https://images.unsplash.com/photo-1529974019031-b0cd38fd54fc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-            {
-                url: "https://test.deqstudio.com/Vertical 4K Nature Film with Music - The Beauty of Big Island's Nature, Hawaii.mp4",
-                type: "video",
-            },
-        ],
         myselfProfileEdit_isModalOpen: false,
         name: "",
         meditationtime: "",

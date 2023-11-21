@@ -54,10 +54,16 @@ export default createStore({
         console.log(error);
       }
     },
+    async setNewName({ commit }, name){
+      commit("SET_NAME", name);
+    }
   },
   mutations: {
     SET_USERDATA(state, user_data) {
       state.user_data = user_data;
+    },
+    SET_NAME(state, name) {
+      state.user_data.name = name;
     },
   },
 });

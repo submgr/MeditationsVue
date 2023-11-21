@@ -40,7 +40,7 @@ import { Vue3Lottie } from 'vue3-lottie'
 export default defineComponent({
     name: 'ExploreContainer',
     props: {
-        name: String
+        origin: String
     },
     components: { IonContent, IonModal, IonLabel, Vue3Lottie, IonButton },
     data() {
@@ -114,8 +114,8 @@ export default defineComponent({
     },
     mounted() {
 
-        localStorage.setItem("temp_metricsVal_0x11320214", "00111_compaign1")
         this.checkForFreePremiumAccessRedeem()
+
     }
 });
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <iframe :class="{ elementHidden: isloading, elementVisible: !isloading }" class="iframe_smooth"
-            :src="`/assets/html/tawkchat/`" sandbox="allow-scripts allow-same-origin"
+            :src="`/assets/html/tawkchat/?email=` + user_email" sandbox="allow-scripts allow-same-origin"
             style="position:fixed; top:-0.12vh; left: -10px; bottom:50px; right:-10px; width:105%; height:calc(100% - 50px); border:none; margin:0; padding:0; overflow:hidden; z-index: -1; "
             allowtransparency="true">
             При выполнении на вашем устройстве возникла проблема: Iframe is not supported on your device. Эта функция будет
@@ -41,7 +41,8 @@ export default defineComponent({
             freePremiumServerMagicToken: "mi3si0fbl27kad4bxtfwcbzebbb6yjrl",
             freePremiumForPeriod: "1 год (1-year)",
             openedModal: "none",
-            isloading: true
+            isloading: true,
+            user_email: ""
         }
     },
     methods: {
@@ -55,6 +56,8 @@ export default defineComponent({
         var parent_this = this;
 
         console.log("Going to load chat script from third-party provider... (tawk.to)");
+        
+        this.user_email = getUserData.value.email;
 
         window.addEventListener("message", function (event) {
 

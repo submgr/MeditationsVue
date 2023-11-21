@@ -5,6 +5,8 @@
           <ion-title>Tab 1</ion-title>
         </ion-toolbar>
       </ion-header>
+
+      <SystemAnnoncementProvider origin="meditations/onfinishscreen"/>
       <ion-content :fullscreen="true">
         <img style="height: 25vh; margin-top: 7vh; margin-left: 3vw;" src="../../assets/graphics/juicy-sitting-girl.png"/>
         <ion-header collapse="condense" style="margin-top: 5vh;">
@@ -29,11 +31,13 @@
   import { defineComponent } from 'vue';
   import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel } from '@ionic/vue';
 
+  import SystemAnnoncementProvider from "../../components/system/AnnoncementProvider.vue"
+
   import confetti from 'canvas-confetti';
   
   export default  defineComponent({
     name: 'Tab1Page',
-    components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonLabel },
+    components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonLabel, SystemAnnoncementProvider },
     mounted(){
         
         var duration = 4 * 1000;

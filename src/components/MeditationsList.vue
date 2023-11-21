@@ -115,7 +115,7 @@ export default defineComponent({
       const cardWrapper = this.$refs.cardWrapper as HTMLElement;
       if (cardWrapper) {
         const containerRect = cardWrapper.getBoundingClientRect();
-        const cardWidth = 325; // Adjust this to match your card width
+        const cardWidth = 280; // Adjust this to match your card width
         const scrollLeft = cardWrapper.scrollLeft;
         const center = containerRect.width / 2;
         const cardIndex = Math.floor((scrollLeft + center) / cardWidth);
@@ -257,10 +257,10 @@ body {
   
 
 .card {
-    flex: 0 0 325px;
+    flex: 0 0 280px;
     position: relative;
-    width: 325px;
-    height: 450px;
+    width: 280px;
+    height: 410px;
     background: #000;
     border-radius: 27px;
     overflow: hidden;

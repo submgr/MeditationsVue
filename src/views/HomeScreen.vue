@@ -2,14 +2,12 @@
     <ion-page>
         <ion-content :fullscreen="true" :forceOverscroll="false">
             
-            <SystemAnnoncementProvider/>
+            <SystemAnnoncementProvider origin="home"/>
             <AdvancedLoader v-if="1>2" /> 
             <h1 style="margin-left: 1.1rem; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Главная</h1>
             <div style="display: block; margin-top: 4vh;">
                 <NotificationsBanner />
             </div>
-
-            
             
             <div style="padding-top: 0.0rem;" >
                 
@@ -68,7 +66,7 @@
 }
 
 .bg-1 {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(1, 116, 9, 0.714)), url('https://images.unsplash.com/photo-1586078074298-05dca4848695?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1935&q=80') !important;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(1, 116, 9, 0.714)), url('../assets/photo/ezgifprocessed_palms.webp') !important;
     background-position: 100%;
     background-size: cover !important;
 }
