@@ -143,6 +143,14 @@ const routes: Array<RouteRecordRaw> = [
         path: 'settings/deleteaccount',
         component: () => import('@/views/settings/DeleteAccount.vue')
       },
+      {
+        path: 'music/main',
+        component: () => import('@/views/music/MusicMainScreen.vue')
+      },
+      {
+        path: 'sleep/main',
+        component: () => import('@/views/sleep/SleepMainScreen.vue')
+      },
     ]
   }
 ]

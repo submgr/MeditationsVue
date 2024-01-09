@@ -244,6 +244,14 @@ import NavbarController from '@/components/NavbarController.vue';
 
 import { gameController, playBackOutline, play, pause, playForwardOutline } from 'ionicons/icons';
 
+import { Capacitor } from '@capacitor/core'
+
+import { ScreenBrightness } from '@capacitor-community/screen-brightness';
+
+import NoSleep from 'nosleep.js';
+
+import { Device } from '@capacitor/device';
+
 export default defineComponent({
     name: 'Tab1Page',
     props: {
@@ -286,11 +294,16 @@ export default defineComponent({
             }
         }
     },
-    mounted() {
+    async mounted() {
 
         // eslint-disable-next-line
         const parent_this = this;
 
+        if(Capacitor.isPluginAvailable('ScreenBrightness')){
+            //getting current brightness!!!
+            const initial_brightness = await ScreenBrightness.getBrightness();
+            this.mobiledevice_brightness = initial_brightness.brightness;
+        }   
 
         const tabsEl = document.querySelector('ion-tab-bar');
         if (tabsEl) {
@@ -325,6 +338,29 @@ export default defineComponent({
         }, 5000)
     },
     methods: {
+        async wakeLockOn() {
+            console.log("(wakeLock) now is ON")
+            this.noSleep.enable();
+            
+            if(Capacitor.isPluginAvailable('ScreenBrightness')){
+                const brightness = 0.2;
+                await ScreenBrightness.setBrightness({ brightness });
+            }
+            
+        },
+        async wakeLockOff() {
+            console.log("(wakeLock) now is OFF")
+            this.noSleep.disable();
+            const info = await Device.getInfo();
+
+            if(info.platform == 'android'){
+                const brightness = -1;
+                await ScreenBrightness.setBrightness({ brightness });       
+            }else if(info.platform == 'ios'){
+                const brightness = this.mobiledevice_brightness;
+                await ScreenBrightness.setBrightness({ brightness });
+            }
+        },
         async exitMeditation() {
             // eslint-disable-next-line
             var parent_this = this;
@@ -365,6 +401,7 @@ export default defineComponent({
                 path: "/tabs/home",
                 replace: true
             });
+            this.wakeLockOff();
         },
         async Modal_onWillDismiss() {
             this.additionalModalOpenened = "none"
@@ -416,9 +453,11 @@ export default defineComponent({
                 switch (direction) {
                     case "resume":
                         msg = `проигрывается`
+                        this.wakeLockOn();
                         break;
                     case "pause":
                         msg = `на паузе`
+                        this.wakeLockOff();
                         break;
                     default:
                         break;
@@ -670,6 +709,8 @@ export default defineComponent({
 
             var a = 1;
 
+            this.wakeLockOn();
+
             if (1 > a + 1) {
                 //this.videoplayer.source = {
                 //    type: 'video',
@@ -845,6 +886,12 @@ export default defineComponent({
                     friendly_title: "Гармония пальм",
                     source: "empty currently"
                 },
+                {
+                    code: "cssgodrays",
+                    type: "css_god_rays",
+                    friendly_title: "Северное сияние",
+                    source: "empty currently"
+                }
 
 
             ],
@@ -874,6 +921,7 @@ export default defineComponent({
             backgroundtrack_musicid: null,
             popoverOpen: false,
             event: null,
+            mobiledevice_brightness: null,
             options: {
                 autoplay: false,
                 loop: {
@@ -891,6 +939,7 @@ export default defineComponent({
         }
     },
     setup() {
+        var noSleep = new NoSleep();
         return {
             gameController,
             closeOutline,
@@ -902,7 +951,8 @@ export default defineComponent({
             playForwardOutline,
             arrowBackOutline,
             ellipsisHorizontal,
-            chevronDown
+            chevronDown,
+            noSleep
         }
     }
 });

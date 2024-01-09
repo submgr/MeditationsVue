@@ -17,16 +17,23 @@
           <ion-icon :icon="gameController" />
           <ion-label>Tab 3</ion-label>
         </ion-tab-button>--->
-
-        <ion-tab-button tab="tab1" href="/tabs/relaxation/info">
+        <ion-tab-button tab="sleep" href="/tabs/sleep/main">
+          <ion-icon :icon="bedOutline" />
+          <ion-label>Сон</ion-label>
+        </ion-tab-button>
+        <ion-tab-button tab="music" href="/tabs/music/main">
+          <ion-icon :icon="musicalNotesOutline" />
+          <ion-label>Музыка</ion-label>
+        </ion-tab-button>
+        <ion-tab-button tab="home" href="/tabs/home">
+          <ion-icon :icon="homeOutline" />
+          <ion-label>Медитация</ion-label>
+        </ion-tab-button>
+        <ion-tab-button tab="relaxation" href="/tabs/relaxation/info">
           <ion-icon :icon="infiniteOutline" />
           <ion-label>Баланс</ion-label>
         </ion-tab-button>
-        <ion-tab-button tab="tab2" href="/tabs/home">
-          <ion-icon :icon="homeOutline" />
-          <ion-label>Главная</ion-label>
-        </ion-tab-button>
-        <ion-tab-button tab="tab3" href="/tabs/myself/overview">
+        <ion-tab-button tab="myself" href="/tabs/myself/overview">
           <ion-icon :icon="happyOutline" />
           <ion-label>Вы</ion-label>
         </ion-tab-button>
@@ -38,7 +45,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
-import { musicalNote, gameController, videocam, infiniteOutline, homeOutline, happyOutline } from 'ionicons/icons';
+import { musicalNote, gameController, videocam, infiniteOutline, homeOutline, happyOutline, bedOutline, musicalNotesOutline } from 'ionicons/icons';
 
 export default defineComponent({
   name: 'TabsPage',
@@ -51,6 +58,8 @@ export default defineComponent({
       infiniteOutline,
       homeOutline,
       happyOutline,
+      bedOutline,
+      musicalNotesOutline,
       footer: "show"
     }
   }
