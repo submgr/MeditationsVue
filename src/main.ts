@@ -31,6 +31,10 @@ import '@ionic/vue/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+// Above the createApp() line
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
+defineCustomElements(window);
+
 const app = createApp(App)
   .use(IonicVue)
   .use(router)
@@ -41,6 +45,34 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 import i18next from 'i18next'
+
+import { Network } from '@capacitor/network';
+
+import { toastController } from '@ionic/vue';
+
+axios.interceptors.response.use(function (response) {
+  // Any status code that lie within the range of 2xx cause this function to trigger
+  // Do something with response data
+  return response;
+}, async function (error) {
+  // Any status codes that falls outside the range of 2xx cause this function to trigger
+  // Do something with response error
+  const status = await Network.getStatus();
+  console.log('Network status:', status);
+  if (!status.connected) {
+    const toast = await toastController.create({
+      message: 'Для работы этой функции необходимо подключение к Интернету. Подключитесь к сети и повторите попытку.',
+      duration: 3500,
+      position: 'top',
+      color: 'danger'
+    });
+
+    await toast.present();
+  }else{
+    router.push({path:'/tabs/system/unavailable', replace: false, query: { }});
+  }
+  return Promise.reject(error);
+});
 
 app.config.globalProperties.$http = axios; // Allow axios in all componenets this.$http.get
 app.config.globalProperties.$i18next = i18next;
@@ -53,7 +85,7 @@ setTimeout(() => {
   adsEngine.showBanner();
 }, 3000);
 
-  
+
 router.isReady().then(() => {
   app.mount('#app');
 });

@@ -21,10 +21,16 @@ import axios from "axios";
 import globaldata from '../modules/global';
 export default createStore({
   state: {
+    packageVersion: process.env.PACKAGE_VERSION || '0',
+    // the rest of your state here
     user_data: [],
   },
   getters: {
+    appVersion: (state) => {
+      return state.packageVersion
+    },
     getUserData: (state) => state.user_data,
+
   },
   actions: {
     async fetchUserData({ commit }) {

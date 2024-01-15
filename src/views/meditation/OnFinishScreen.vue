@@ -9,9 +9,9 @@
       <SystemAnnoncementProvider origin="meditations/onfinishscreen"/>
       <ion-content :fullscreen="true">
         <img style="height: 25vh; margin-top: 7vh; margin-left: 3vw;" src="../../assets/graphics/juicy-sitting-girl.png"/>
-        <ion-header collapse="condense" style="margin-top: 5vh;">
-          <ion-toolbar>
-            <ion-title size="large">Вы молодец!</ion-title>
+        <ion-header collapse="condense" style="margin-top: 5vh; --background: none;">
+          <ion-toolbar style="--background: none;">
+            <ion-title size="large" style="--background: none;">Вы молодец!</ion-title>
           </ion-toolbar>
         </ion-header>
         <div style="margin-left: 1rem;">

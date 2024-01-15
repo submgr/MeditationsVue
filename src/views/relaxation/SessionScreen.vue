@@ -1,12 +1,12 @@
 <template>
     <ion-page>
         <ion-content :fullscreen="true">
-            <NavbarController activatedfrom="Relaxation/SessionScreen" @backfunction="getBack()" />
+            <NavbarController activatedfrom="Relaxation/SessionScreen" @backfunction="getBack()"/>
             <div v-if="stage == 'getting_ready'">
-                <div style="padding: 0rem; margin-top: 15%; ">
-                    <div style="margin-left: -15%;">
-                        <Vue3Lottie :animationData="require('./../../assets/lottie/26792-progress-loader.json')"
-                            style=" width: 120% !important;" />
+                <div style="padding: 0rem; margin-top: 5vh; ">
+                    <div style="margin-left: -10vw;">
+                        <Vue3Lottie :loop="1" :animationData="require('./../../assets/lottie/26792-progress-loader.json')"
+                            style=" width: 120vw !important;" />
                     </div>
 
                     <p class="linear-wipe"
@@ -32,7 +32,7 @@
             <Transition :duration="{ enter: 500, leave: 800 }">
                 <div v-if="stage == 'breath_staged'">
                     <div style="padding: 2rem; margin-top: 31%">
-                        <Vue3Lottie :animationData="require('./../../assets/lottie/142805-huff-cough-breathing.json')" />
+                        <Vue3Lottie :loop="breath_animation_loops" :animationData="require('./../../assets/lottie/142805-huff-cough-breathing.json')" />
                         <p class="linear-wipe"
                             style="text-align: center; margin: 0; margin-top: 2rem; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 24px; font-weight: 700;">
                             {{ advanced_stage_info }}</p>
@@ -46,14 +46,14 @@
 <style scoped>
 @media (prefers-color-scheme: light) {
     ion-content {
-        --background: #F7930D url('../../assets/abstract/chris-nguyen-lbmrrNgq2lo-unsplash.jpg') no-repeat center center / cover !important;
+        --background: #f7920d00 url('../../assets/abstract/chris-nguyen-lbmrrNgq2lo-unsplash.jpg') no-repeat center center / cover !important;
     }
 }
 
 @media (prefers-color-scheme: dark) {
     ion-content {
         color: #ffffff !important;
-        --background: #000000 url('../../assets/abstract/manuel-will-gd3t5Dtbwkw-unsplash.jpg') no-repeat center center / cover !important;
+        --background: #00000000 url('../../assets/abstract/manuel-will-gd3t5Dtbwkw-unsplash.jpg') no-repeat center center / cover !important;
     }
 }
 </style>
@@ -61,6 +61,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { IonPage, IonContent } from '@ionic/vue';
+
 
 import { Vue3Lottie } from 'vue3-lottie'
 
@@ -72,8 +73,10 @@ export default defineComponent({
     data() {
         return {
             stage: "getting_ready",
-            timer_ready: 9,
+            timer_ready: 11,
             stage_timer: 0,
+            breath_times: 2,
+            breath_animation_loops: 2,
             stage_completed: false,
             advanced_stage_info: "",
 
@@ -195,16 +198,17 @@ export default defineComponent({
 
                     parent_this.stage = "breath_staged"
 
-                    var times = 6
+                    var times = this.breath_times
+                    this.breath_animation_loops = times;
 
-                    parent_this.breathConfData = { inhale_time: 4900, exhale_time: 6600, breathPause_time: 2140 }
+                    parent_this.breathConfData = { inhale_time: 4900, exhale_time: 6620, breathPause_time: 2450 }
                     parent_this.stage_timer = ~~(((parent_this.breathConfData.breathPause_time * (times - 1)) + (times * (parent_this.breathConfData.inhale_time + parent_this.breathConfData.exhale_time))) / 1000)
                     console.log("parent_this.stage_timer :: " + parent_this.stage_timer)
                     parent_this.inhale()
 
                     var stage_timer_fun = setInterval(function () {
                         parent_this.stage_timer -= 1
-                        if (parent_this.stage_timer < 1.) {
+                        if (parent_this.stage_timer < 1) {
                             // getting_ready is ready, switching to the next stage
                             parent_this.stage_completed = true
 

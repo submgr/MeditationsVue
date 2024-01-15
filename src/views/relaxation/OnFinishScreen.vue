@@ -8,9 +8,9 @@
       <ion-content :fullscreen="true">
         <Vue3Lottie :animationData="require('./../../assets/lottie/beam-meditation.json')" :height="150" :width="150" style="max-width: 80vw; margin-left: -3vw; margin-top: 4vh;" />
         
-        <ion-header collapse="condense" style="margin-top: 0.5vh;">
-          <ion-toolbar>
-            <ion-title size="large">Это баланс!</ion-title>
+        <ion-header collapse="condense" style="margin-top: 0.5vh; --background: none;">
+          <ion-toolbar style="--background: none;">
+            <ion-title size="large" style="--background: none;">Это баланс!</ion-title>
           </ion-toolbar>
         </ion-header>
         <div style="margin-left: 1rem;">

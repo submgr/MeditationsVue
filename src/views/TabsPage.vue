@@ -21,10 +21,10 @@
           <ion-icon :icon="bedOutline" />
           <ion-label>Сон</ion-label>
         </ion-tab-button>
-        <ion-tab-button tab="music" href="/tabs/music/main">
+        <!--<ion-tab-button tab="music" href="/tabs/music/main">
           <ion-icon :icon="musicalNotesOutline" />
           <ion-label>Музыка</ion-label>
-        </ion-tab-button>
+        </ion-tab-button>--->
         <ion-tab-button tab="home" href="/tabs/home">
           <ion-icon :icon="homeOutline" />
           <ion-label>Медитация</ion-label>

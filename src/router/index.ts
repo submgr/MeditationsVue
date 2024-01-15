@@ -75,6 +75,14 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/meditation/PrepareScreen.vue')
       },
       {
+        path: 'system/unavailable',
+        component: () => import('@/views/system/UnavailableScreen.vue')
+      },
+      {
+        path: 'system/updaterequired',
+        component: () => import('@/views/system/UpdateRequired.vue')
+      },
+      {
         name: 'meditation/play',
         path: 'meditation/play',
         component: () => import('@/views/meditation/PlayerScreen.vue'),
@@ -150,6 +158,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'sleep/main',
         component: () => import('@/views/sleep/SleepMainScreen.vue')
+      },
+      {
+        path: 'emotions/smile',
+        component: () => import('@/views/emotions/MakeSmilePhoto.vue')
       },
     ]
   }

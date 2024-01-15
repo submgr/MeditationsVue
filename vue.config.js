@@ -1,6 +1,12 @@
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const path = require('path');
 
+const webpack = require('webpack');
+
+const fs = require('fs')
+const packageJson = fs.readFileSync('./package.json')
+const version = JSON.parse(packageJson).version || 0
+
 // vue.config.js
 module.exports = {
   chainWebpack: config => {
@@ -16,23 +22,28 @@ module.exports = {
       .use('svg-vue3-loader')
       .loader('svg-vue3-loader');
   },
-    configureWebpack: {
-      plugins: [
-        new ImageMinimizerPlugin({
-            deleteOriginalAssets: false,
-            minimizer: {
-              // Implementation
-              implementation: ImageMinimizerPlugin.sharpMinify,
-              // Options
-              options: {
-                encodeOptions: {
-                  jpeg: {
-                    quality: 90,
-                  },
-                },
+  configureWebpack: {
+    plugins: [
+      new webpack.DefinePlugin({
+        'process.env': {
+          PACKAGE_VERSION: '"' + version + '"'
+        }
+      }),
+      new ImageMinimizerPlugin({
+        deleteOriginalAssets: false,
+        minimizer: {
+          // Implementation
+          implementation: ImageMinimizerPlugin.sharpMinify,
+          // Options
+          options: {
+            encodeOptions: {
+              jpeg: {
+                quality: 90,
               },
             },
-          })
-      ]
-    }
+          },
+        },
+      })
+    ]
   }
+}

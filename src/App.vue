@@ -49,6 +49,11 @@ ion-tab-bar {
     --background: #ffffff00 url("./assets/abstract/light-colorful-background.svg") no-repeat center center / cover !important;
   }
 }
+/* @media (prefers-color-scheme: light) {
+  ion-content {
+    --background: #ffffff00 url("https://hubhtml.liquid-themes.com/assets/images/demo/start-hub-8/banner-bg.jpg") no-repeat center center / cover !important;
+  }
+} */
 
 @media (prefers-color-scheme: dark) {
   ion-content {
