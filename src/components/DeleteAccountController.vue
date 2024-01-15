@@ -38,7 +38,7 @@
                 </div>
                 <div v-if="current_state == 'deleted'">
                     <p>Спасибо за то, что уделили время нашему приложению. Для нас это очень ценно. <br/><br/>Мы хотим стать лучше, поэтому будем признательны, если расскажете нам хотя бы немного о том, что сподвигло вас удалить вашу учетную запись навсегда.</p><br/>
-                    <iframe src="https://tally.so/r/wzYWr1?transparentBackground=1" sandbox="allow-scripts allow-same-origin" style="width: 75vw; height: 100vh;"></iframe>
+                    <iframe src="https://tally.so/r/wzYWr1?transparentBackground=1" allowtransparency="true" sandbox="allow-scripts allow-same-origin" style="width: 75vw; height: 100vh; background: none transparent;"></iframe>
                 </div>
             </div>
             <div v-else>
