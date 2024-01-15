@@ -5,7 +5,7 @@
             <div v-if="!isAnythingLoadingNow">
                 <div v-if="current_state == 'onboard'">
                     <br>
-                    <img :src="svg_photos_array['graphics/kitekat-7.svg']" style="max-width: 40vw; max-height: 20vh;" />
+                    <img :src="svg_photos_array['graphics/kitekat-7.svg'].src" style="max-width: 40vw; max-height: 20vh;" />
                     <br>
                     <p><i>Вы точно хотите уйти, оставив этого милого котика под дождем? &#60;3</i></p><br>
                     <p>Вы можете запросить удаление вашей учетной записи из системы. <br><br>Обратите внимание, что это
@@ -23,7 +23,7 @@
                 </div>
                 <div v-if="current_state == 'authorization_confirmed'">
                     <br>
-                    <img :src="svg_photos_array['graphics/kitekat-19.svg']" style="max-width: 40vw; max-height: 20vh;" />
+                    <img :src="svg_photos_array['graphics/kitekat-19.svg'].src" style="max-width: 40vw; max-height: 20vh;" />
                     <br>
                     <p><i>Медитирующий котик считает, что вы — лучше всех! &#60;3</i></p><br>
                     <p>Вы успешно подтвердили, что именно вы являетесь владельцем этой учетной записи.</p>
@@ -37,7 +37,7 @@
                 </div>
                 <div v-if="current_state == 'deleted'">
                     <p>Спасибо за то, что уделили время нашему приложению. Для нас это очень ценно. <br/><br/>Мы хотим стать лучше, поэтому будем признательны, если расскажете нам хотя бы немного о том, что сподвигло вас удалить вашу учетную запись навсегда.</p><br/>
-                    <iframe src="https://forms.yandex.com/cloud/65353670f47e7379f9b1bc77/" style="width: 75vw; height: 100vh;"></iframe>
+                    <iframe src="https://tally.so/r/wzYWr1?transparentBackground=1" sandbox="allow-scripts allow-same-origin" style="width: 75vw; height: 100vh;"></iframe>
                 </div>
             </div>
             <div v-else>
