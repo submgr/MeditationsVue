@@ -75,7 +75,6 @@
     "vue-plyr": "^7.0.0",
     "vue-router": "^4.0.12",
     "vue-scroll-snap": "^0.1.11",
-    "vue-svg-loader": "^0.16.0",
     "vue3-lottie": "^2.3.0",
     "vuex": "^4.1.0",
     "xregexp": "^5.1.1"
