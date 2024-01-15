@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@awesome-cordova-plugins/core": "6.4.0",
-    "@awesome-cordova-plugins/native-audio": "^5.45.0",
     "@capacitor-community/admob": "^5.0.0",
     "@capacitor-community/screen-brightness": "^5.0.0",
     "@capacitor/android": "5.2.2",
