@@ -9,7 +9,6 @@ const version = JSON.parse(packageJson).version || 0
 
 // vue.config.js
 module.exports = {
-  publicPath: '',
   chainWebpack: config => {
     config.resolve.alias.set('@', path.resolve(__dirname, 'src'));
   },
