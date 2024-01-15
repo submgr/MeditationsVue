@@ -5,7 +5,7 @@
             <div v-if="!isAnythingLoadingNow">
                 <div v-if="current_state == 'onboard'">
                     <br>
-                    <img src="../assets/graphics/kitekat-7.svg" style="max-width: 40vw; max-height: 20vh;" />
+                    <img :src="svg_photos_array['graphics/kitekat-7.svg']" style="max-width: 40vw; max-height: 20vh;" />
                     <br>
                     <p><i>Вы точно хотите уйти, оставив этого милого котика под дождем? &#60;3</i></p><br>
                     <p>Вы можете запросить удаление вашей учетной записи из системы. <br><br>Обратите внимание, что это
@@ -23,7 +23,7 @@
                 </div>
                 <div v-if="current_state == 'authorization_confirmed'">
                     <br>
-                    <img src="../assets/graphics/kitekat-19.svg" style="max-width: 40vw; max-height: 20vh;" />
+                    <img :src="svg_photos_array['graphics/kitekat-19.svg']" style="max-width: 40vw; max-height: 20vh;" />
                     <br>
                     <p><i>Медитирующий котик считает, что вы — лучше всех! &#60;3</i></p><br>
                     <p>Вы успешно подтвердили, что именно вы являетесь владельцем этой учетной записи.</p>
@@ -71,7 +71,16 @@ export default defineComponent({
         return {
             current_state: "onboard",
             isAnythingLoadingNow: false,
-            loading_spinner_text: "Сейчас вам нужно будет еще раз войти в свою учетную запись"
+            loading_spinner_text: "Сейчас вам нужно будет еще раз войти в свою учетную запись",
+            svg_photos_array: {
+                "graphics/kitekat-7.svg": {
+                    src: require("../assets/graphics/kitekat-7.svg")
+                },
+                "graphics/kitekat-19.svg": {
+                    src: require("../assets/graphics/kitekat-19.svg")
+                }
+
+            }
         }
     },
     setup() {
