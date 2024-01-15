@@ -6,6 +6,7 @@
                 <div v-if="current_state == 'onboard'">
                     <br>
                     <img :src="`/assets/svg/kitekat-7.svg`" style="max-width: 40vw; max-height: 20vh;" />
+                    <img :src="svg_photos_array['test'].src" style="max-width: 40vw; max-height: 20vh;" />
                     <br>
                     <p><i>Вы точно хотите уйти, оставив этого милого котика под дождем? &#60;3</i></p><br>
                     <p>Вы можете запросить удаление вашей учетной записи из системы. <br><br>Обратите внимание, что это
@@ -58,6 +59,9 @@
 import {
     defineComponent
 } from 'vue';
+
+import test_svg from "../assets/graphics/kitekat-19.svg";
+
 import {
     IonCard, IonCardContent, IonButton, actionSheetController, IonSpinner
 } from '@ionic/vue';
@@ -78,6 +82,9 @@ export default defineComponent({
                 },
                 "graphics/kitekat-19.svg": {
                     src: require("../assets/graphics/kitekat-19.svg")
+                },
+                "test": {
+                    src: test_svg
                 }
 
             }
