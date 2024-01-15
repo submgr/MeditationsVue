@@ -46,7 +46,7 @@ ion-tab-bar {
 
 @media (prefers-color-scheme: light) {
   ion-content {
-    --background: #ffffff00 url("/public/assets/svg/light-colorful-background.svg") no-repeat center center / cover !important;
+    --background: #ffffff00 url(/assets/svg/light-colorful-background.svg) no-repeat center center / cover !important;
   }
 }
 /* @media (prefers-color-scheme: light) {
@@ -57,7 +57,7 @@ ion-tab-bar {
 
 @media (prefers-color-scheme: dark) {
   ion-content {
-    --background: #000000 url("/public/assets/svg/dark-colorful-background.svg") no-repeat center center / cover !important;
+    --background: #000000 url(/assets/svg/dark-colorful-background.svg) no-repeat center center / cover !important;
   }
 }
 </style>
