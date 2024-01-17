@@ -127,9 +127,11 @@ export default defineComponent({
           }
 
           console.warn("aaai3")
+          
 
           // Assume `blob` is a PNG image file.
-          const img_blob = b64toBlob(base64String);
+          const img_blob = b64toBlob(base64String, "image/jpeg");
+          alert(img_blob.type)
           const data = {
             files: [
               new File([img_blob], 'image.png', {
