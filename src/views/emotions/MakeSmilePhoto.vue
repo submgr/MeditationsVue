@@ -1,70 +1,175 @@
 <template>
-    <ion-page>
-      <ion-content :fullscreen="true">
-        <NavbarController activatedfrom="Sleep/SleepMainScreen" @infomodalfunction="infomodalfunction()" align="right" />
-        <h1 style="margin-left: 1.1rem; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Улыбка</h1>
+  <ion-page>
+    <ion-content :fullscreen="true">
+      <NavbarController activatedfrom="Sleep/SleepMainScreen" @infomodalfunction="infomodalfunction()" align="right" />
+      <h1 style="margin-left: 1.1rem; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Улыбка</h1>
 
-        <h1 @click="cameraSnap()">testbtn</h1>
-  
-  
-        <ExploreContainer name="Tab 3 page" />
-  
-      </ion-content>
-    </ion-page>
-  </template>
+
+
+
+      <ion-card color="danger" v-if="camera_access_denied">
+        <ion-card-header>
+          <ion-card-title>Необходимо разрешение</ion-card-title>
+          <ion-card-subtitle>Не удается получить доступ к камере</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+
+          Для этой функции необходим доступ к камере: так вы сможете увидеть себя и запечатлеть свою улыбку. Похоже, что
+          вы отказали приложению в доступе к камере. <br /><br />
+          <span v-if="user_browser == 'ios'" style="font-style: italic;">aA > Website Settings > Camera > Allow</span>
+          <span v-else-if="user_browser == 'android'" style="font-style: italic;">··· > Settings > Site Settings > Camera
+            > On</span>
+          <span v-else-if="user_browser == 'windows'" style="font-style: italic;">🔒 > 🔑 Permission for this site >
+            Camera > Allow</span>
+          <span v-else style="font-style: italic;"></span>
+
+          <ion-button @click="cameraSnap()" color="light">Я выдал резрешение приложению</ion-button>
+        </ion-card-content>
+      </ion-card>
+
+      <div style="width: 105vw; margin-top: -2vh; z-index: -1;">
+        <img src="https://svgshare.com/i/123k.svg" style="margin-left: -2vw; margin-right: -2vw; " />
+      </div>
+
+      <ion-card style="border-radius: 20px; margin-top: -7.5vh;">
+        <ion-card-header>
+          <ion-card-title>Встречайте свою яркую улыбку!</ion-card-title>
+          <ion-card-subtitle>Улыбнитесь себе!</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+
+          Раскройте силу своей улыбки! Исследования показывают, что улыбка способна поднять настроение и вызвать
+          положительные эмоции. Сделайте веселое селфи и зарядитесь весельем на весь день! <br /><br />
+
+          <ion-button expand="block" @click="cameraSnap()"
+            style="margin-left: 2vw; margin-right: 2vw; margin-top: 0vh;">Улыбнуться!</ion-button>
+        </ion-card-content>
+      </ion-card>
+
+
+
+
+      <ExploreContainer name="Tab 3 page" />
+
+    </ion-content>
+  </ion-page>
+</template>
     
-  <script lang="ts">
-  import { defineComponent } from 'vue';
-  import { IonPage, IonContent } from '@ionic/vue';
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { IonPage, IonContent } from '@ionic/vue';
 
-  import { Device } from '@capacitor/device';
-  
-  import NavbarController from '@/components/NavbarController.vue';
-  
-  import { Camera, CameraResultType, CameraDirection } from '@capacitor/camera';
-  
-  export default defineComponent({
-    name: 'Tab3Page',
-    components: { IonContent, IonPage, NavbarController },
-    setup() {
-      //
-    },
-    methods: {
-      async cameraSnap() {
-        const cameraPermissionsData = await Camera.checkPermissions();
-        alert(JSON.stringify(cameraPermissionsData))
+import { Device } from '@capacitor/device';
 
-        const deviceInfo = await Device.getInfo();
+import NavbarController from '@/components/NavbarController.vue';
 
-        alert(JSON.stringify(deviceInfo))
+import { Camera, CameraResultType, CameraDirection } from '@capacitor/camera';
 
-        if(cameraPermissionsData.camera == "granted" || cameraPermissionsData.camera == "prompt"){
-          const image = await Camera.getPhoto({
+export default defineComponent({
+  name: 'Tab3Page',
+  components: { IonContent, IonPage, NavbarController },
+  setup() {
+    //
+  },
+  data() {
+    return {
+      camera_access_denied: false,
+      user_browser: 'default'
+    }
+  },
+  methods: {
+    async cameraSnap() {
+      const cameraPermissionsData = await Camera.checkPermissions();
+
+      const deviceInfo = await Device.getInfo();
+      console.log(deviceInfo)
+
+      if (cameraPermissionsData.camera == "granted" || cameraPermissionsData.camera == "prompt") {
+        var image = null;
+        try {
+          image = await Camera.getPhoto({
             quality: 90,
             allowEditing: true,
-            resultType: CameraResultType.Uri,
+            resultType: CameraResultType.Base64,
             direction: CameraDirection.Front
           });
-    
+
+          console.warn("aaai1")
+
           // image.webPath will contain a path that can be set as an image src.
           // You can access the original file using image.path, which can be
           // passed to the Filesystem API to read the raw data of the image,
           // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
-          var imageUrl = image.webPath;
-        }else if(cameraPermissionsData.camera == "denied"){
-          //SORRY??
-          //deviceInfo.
-          if(deviceInfo.platform == "web"){
-            //cant reask permission
-          }else{
-            Camera.requestPermissions();
-            this.cameraSnap();
+          var base64String = image.base64String;
+
+          console.warn("aaai2")
+
+          const b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
+            const byteCharacters = atob(b64Data);
+            const byteArrays = [];
+
+            for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+              const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+              const byteNumbers = new Array(slice.length);
+              for (let i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+              }
+
+              const byteArray = new Uint8Array(byteNumbers);
+              byteArrays.push(byteArray);
+            }
+
+            const blob = new Blob(byteArrays, { type: contentType });
+            return blob;
           }
+
+          console.warn("aaai3")
+
+          // Assume `blob` is a PNG image file.
+          const img_blob = b64toBlob(base64String);
+          const data = {
+            files: [
+              new File([img_blob], 'image.png', {
+                type: img_blob.type,
+              }),
+            ],
+            title: 'My title',
+            text: 'My text',
+          };
+          console.warn("aaai4")
+          if (navigator.canShare(data)) {
+            console.warn("aaai5")
+            await navigator.share(data);
+          }
+          console.warn("aaai6")
+        } catch (error) {
+          console.error(error);
+
+          // Expected output: ReferenceError: nonExistentFunction is not defined
+          // (Note: the exact output may be browser-dependent)
         }
-        
+
+
+
+
+      } else if (cameraPermissionsData.camera == "denied") {
+        //SORRY??
+        //deviceInfo.
+        if (deviceInfo.platform == "web") {
+          //cant reask permission
+          this.camera_access_denied = true;
+        } else {
+          Camera.requestPermissions();
+          this.cameraSnap();
+        }
       }
+
     }
-  });
-  
-  </script>
+  }
+});
+
+</script>
     
