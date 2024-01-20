@@ -80,6 +80,8 @@ export default defineComponent({
             stage_completed: false,
             advanced_stage_info: "",
 
+            isThisScreenDestroyed: false,
+
             breathConfData: {
                 inhale_time: 0,
                 exhale_time: 0,
@@ -119,6 +121,7 @@ export default defineComponent({
     },
     methods: {
         getBack() {
+            this.isThisScreenDestroyed = true;
             this.$router.push({
                 path: "/tabs/relaxation/info",
                 replace: true
@@ -176,11 +179,13 @@ export default defineComponent({
                         this.inhale()
                     } else {
                         parent_this.stage = "finished"
-
-                        this.$router.push({
-                            path: '/tabs/relaxation/finished', replace: true, query: {
-                            }
-                        });
+                        if(parent_this.isThisScreenDestroyed != true){
+                            this.$router.push({
+                                path: '/tabs/relaxation/finished', replace: true, query: {
+                                }
+                            });
+                        }
+                        
 
                         parent_this.advanced_stage_info = ""
                     }

@@ -114,7 +114,11 @@ export default defineComponent({
                 this.navConfig.infomodal = true
                 this.navConfig.backbtn = false
                 break;
-        
+            case "Emotions/MakeSmilePhoto":
+                this.navConfig.infomodal = false
+                this.navConfig.backbtn = true;
+                break;
+                
             default:
                 break;
         }

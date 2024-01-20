@@ -1,11 +1,9 @@
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <NavbarController activatedfrom="Sleep/SleepMainScreen" @infomodalfunction="infomodalfunction()" align="right" />
+      <NavbarController activatedfrom="Emotions/MakeSmilePhoto" @backfunction="$router.back()"
+        @infomodalfunction="infomodalfunction()" align="right" />
       <h1 style="margin-left: 1.1rem; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Улыбка</h1>
-
-
-
 
       <ion-card color="danger" v-if="camera_access_denied">
         <ion-card-header>
@@ -28,25 +26,44 @@
         </ion-card-content>
       </ion-card>
 
-      <div style="width: 105vw; margin-top: -2vh; z-index: -1;">
-        <img src="https://svgshare.com/i/123k.svg" style="margin-left: -2vw; margin-right: -2vw; " />
+      <div>
+        <div style="width: 105vw; margin-top: -2vh; z-index: -1;">
+          <img src="https://svgshare.com/i/123k.svg" style="margin-left: -2vw; margin-right: -2vw; " />
+        </div>
+
+        <ion-card style="border-radius: 20px; margin-top: -7.5vh; opacity: 0.95;" v-if="currentstep != 'photo_view'">
+          <ion-card-header>
+            <ion-card-title>Встречайте свою яркую улыбку!</ion-card-title>
+            <ion-card-subtitle>Улыбнитесь себе!</ion-card-subtitle>
+          </ion-card-header>
+
+          <ion-card-content>
+
+            Раскройте силу своей улыбки! Исследования показывают, что улыбка способна поднять настроение и вызвать
+            положительные эмоции. Сделайте веселое селфи и зарядитесь весельем на весь день! <br /><br />
+
+            <ion-button expand="block" @click="cameraSnap()"
+              style="margin-left: 2vw; margin-right: 2vw; margin-top: 0vh;">Улыбнуться!</ion-button>
+          </ion-card-content>
+        </ion-card>
+        <ion-card style="border-radius: 20px; margin-top: -20.5vh; opacity: 0.9;" v-if="currentstep == 'photo_view'">
+          <ion-card-header>
+            <ion-card-title>Сногшибательно!</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+
+            <img style="transform: rotate(5deg); margin-top: 2vh; max-height: 40vh; margin-bottom: 4vh; display: block;
+              margin-left: auto;
+              margin-right: auto;
+              width: 50%;" :src="'data:image/png;base64, ' + last_shoot_base64String">
+
+            <ion-button expand="block" @click="sharePhoto()"
+              style="margin-left: 2vw; margin-right: 2vw; margin-top: 0vh;">Поделиться!</ion-button>
+          </ion-card-content>
+        </ion-card>
       </div>
 
-      <ion-card style="border-radius: 20px; margin-top: -7.5vh;">
-        <ion-card-header>
-          <ion-card-title>Встречайте свою яркую улыбку!</ion-card-title>
-          <ion-card-subtitle>Улыбнитесь себе!</ion-card-subtitle>
-        </ion-card-header>
-
-        <ion-card-content>
-
-          Раскройте силу своей улыбки! Исследования показывают, что улыбка способна поднять настроение и вызвать
-          положительные эмоции. Сделайте веселое селфи и зарядитесь весельем на весь день! <br /><br />
-
-          <ion-button expand="block" @click="cameraSnap()"
-            style="margin-left: 2vw; margin-right: 2vw; margin-top: 0vh;">Улыбнуться!</ion-button>
-        </ion-card-content>
-      </ion-card>
 
 
 
@@ -61,11 +78,17 @@
 import { defineComponent } from 'vue';
 import { IonPage, IonContent } from '@ionic/vue';
 
+import {
+  arrowBackCircleOutline
+} from 'ionicons/icons';
+
 import { Device } from '@capacitor/device';
 
 import NavbarController from '@/components/NavbarController.vue';
 
 import { Camera, CameraResultType, CameraDirection } from '@capacitor/camera';
+
+import confetti from 'canvas-confetti';
 
 export default defineComponent({
   name: 'Tab3Page',
@@ -76,11 +99,24 @@ export default defineComponent({
   data() {
     return {
       camera_access_denied: false,
-      user_browser: 'default'
+      user_browser: 'default',
+      //currentstep: "awaiting"
+      currentstep: "awaiting",
+      last_shoot_imgblob: null,
+      last_shoot_base64String: null,
+      arrowBackCircleOutline
     }
   },
   methods: {
+    randomInRange(min, max) {
+      return Math.random() * (max - min) + min;
+    },
     async cameraSnap() {
+
+      // eslint-disable-next-line
+      var parent_this = this;
+
+      this.currentstep = "awaiting";
       const cameraPermissionsData = await Camera.checkPermissions();
 
       const deviceInfo = await Device.getInfo();
@@ -103,6 +139,7 @@ export default defineComponent({
           // passed to the Filesystem API to read the raw data of the image,
           // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
           var base64String = image.base64String;
+          parent_this.last_shoot_base64String = base64String;
 
           console.warn("aaai2")
 
@@ -127,26 +164,31 @@ export default defineComponent({
           }
 
           console.warn("aaai3")
-          
+
 
           // Assume `blob` is a PNG image file.
-          const img_blob = b64toBlob(base64String, "image/jpeg");
-          alert(img_blob.type)
-          const data = {
-            files: [
-              new File([img_blob], 'image.png', {
-                type: img_blob.type,
-              }),
-            ],
-            title: 'My title',
-            text: 'My text',
-          };
-          console.warn("aaai4")
-          if (navigator.canShare(data)) {
-            console.warn("aaai5")
-            await navigator.share(data);
-          }
-          console.warn("aaai6")
+          parent_this.last_shoot_imgblob = b64toBlob(base64String, "image/jpeg");
+
+          parent_this.currentstep = "photo_view"
+
+          var duration = 4 * 1000;
+          var animationEnd = Date.now() + duration;
+          var defaults = { startVelocity: 20, spread: 260, ticks: 90, zIndex: 0 };
+
+
+          var interval = setInterval(function () {
+            var timeLeft = animationEnd - Date.now();
+
+            if (timeLeft <= 0) {
+              return clearInterval(interval);
+            }
+
+            var particleCount = 100 * (timeLeft / duration);
+            // since particles fall down, start a bit higher than random
+            confetti(Object.assign({}, defaults, { particleCount, origin: { x: parent_this.randomInRange(0.1, 0.3), y: Math.random() - 0.1 } }));
+            confetti(Object.assign({}, defaults, { particleCount, origin: { x: parent_this.randomInRange(0.7, 0.9), y: Math.random() - 0.1 } }));
+          }, 250);
+
         } catch (error) {
           console.error(error);
 
@@ -169,6 +211,23 @@ export default defineComponent({
         }
       }
 
+    },
+    async sharePhoto() {
+      const data = {
+        files: [
+          new File([this.last_shoot_imgblob], 'YourMeditation_Smile.png', {
+            type: this.last_shoot_imgblob.type,
+          }),
+        ],
+        title: 'Поделитесь своей улыбкой с миром',
+        text: 'Какое у меня веселое селфи вышло! ❤️‍🔥 Заряд весельем на весь день получен! 😎 #круто #вашамедитация',
+      };
+      console.warn("aaai4")
+      if (navigator.canShare(data)) {
+        console.warn("aaai5")
+        await navigator.share(data);
+      }
+      console.warn("aaai6")
     }
   }
 });

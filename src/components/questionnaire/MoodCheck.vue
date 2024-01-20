@@ -269,5 +269,6 @@ export default defineComponent({
   50% {
     background-position: 100% 0;
   }
-}</style>
+}
+</style>
   
