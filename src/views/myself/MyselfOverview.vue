@@ -1,10 +1,11 @@
 <template>
     <ion-page>
         <ion-content :fullscreen="true">
-            
-            <h1 style="margin-left: 4vw; margin-right: 4vw; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Мое благополучие</h1>
+
+            <h1 style="margin-left: 4vw; margin-right: 4vw; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Мое
+                благополучие</h1>
             <div style="padding-top: 1.0rem;"></div>
-            
+
             <div style="padding-top: 0.1rem;">
                 <div>
                     <div class="card-alfa custom-swiper suggestion-block bg-1 card-meditate">
@@ -25,71 +26,75 @@
 
             <ion-card style="border-radius: 20px;">
                 <ion-card-header>
-                  <ion-card-title>У вас все получится!</ion-card-title>
-                  <ion-card-subtitle>Медитация — это хорошая привычка.</ion-card-subtitle>
+                    <ion-card-title>У вас все получится!</ion-card-title>
+                    <ion-card-subtitle>Медитация — это хорошая привычка.</ion-card-subtitle>
                 </ion-card-header>
-            
+
                 <ion-card-content>
-                    
-                    <span v-if="!enoughExpForTimeReview">Приложение будет становиться все более индивидуальным для вас с каждой пройденной медитацией! Продолжайте в том же духе!</span>
-                    <span v-if="enoughExpForTimeReview">За все время вы провели {{ meditationtime }} медитируя. Так держать!</span>
-                    
-                    <br/><br/>Согласно исследованиям, важно медитировать периодически, чтобы усилить эффект. &nbsp;<span style="color:rgb(94, 94, 219)" @click="learnMore()">Узнайте&nbsp;больше</span></ion-card-content>
-              </ion-card>
 
-              <NotificationsBanner notificationType="emotionalStateFeature"/>
+                    <span v-if="!enoughExpForTimeReview">Приложение будет становиться все более индивидуальным для вас с
+                        каждой пройденной медитацией! Продолжайте в том же духе!</span>
+                    <span v-if="enoughExpForTimeReview">За все время вы провели {{ meditationtime }} медитируя. Так
+                        держать!</span>
 
-              <ion-grid style="--ion-grid-padding: 0 0 0 0;">
+                    <br /><br />Согласно исследованиям, важно медитировать периодически, чтобы усилить эффект. &nbsp;<span
+                        style="color:rgb(94, 94, 219)" @click="learnMore()">Узнайте&nbsp;больше</span></ion-card-content>
+            </ion-card>
 
-            
+            <NotificationsBanner notificationType="emotionalStateFeature" />
+
+            <ion-grid style="--ion-grid-padding: 0 0 0 0;">
+
+
                 <ion-row style="margin-top: -3vh; ">
-                  <ion-col style="margin-right: -0.69rem;" @click="$router.push({path:'/tabs/support/main', replace: false});">
-                    <ion-card class="ion-activatable ripple-parent rectangle" style="border-radius: 20px;">
-                        <ion-ripple-effect></ion-ripple-effect>
-                        <ion-card-header>
-                          <ion-card-title><ion-icon style="font-size: 5vh; margin-top: 1vh;" :icon="helpBuoyOutline"></ion-icon></ion-card-title>
-                        </ion-card-header>
-                        <ion-card-content>
-                            Поддержка
-                          </ion-card-content>
-                      </ion-card>
-                  </ion-col>
-                  <ion-col style="margin-left: -0.69rem; display: none;" @click="$router.push({path:'/tabs/settings/main', replace: false});">
-                    <ion-card class="ion-activatable ripple-parent rectangle" style="border-radius: 20px; " >
-                        <ion-ripple-effect></ion-ripple-effect>
-                        <ion-card-header>
-                          <ion-card-title><ion-icon style="font-size: 5vh; margin-top: 1vh;" :icon="settingsOutline"></ion-icon></ion-card-title>
-                        </ion-card-header>
-                    
-                        <ion-card-content>
-                          Настройки
-                        </ion-card-content>
-                      </ion-card>
-                  </ion-col>
+                    <ion-col style="margin-right: -0.69rem;"
+                        @click="$router.push({ path: '/tabs/support/main', replace: false });">
+                        <ion-card class="ion-activatable ripple-parent rectangle" style="border-radius: 20px;">
+                            <ion-ripple-effect></ion-ripple-effect>
+                            <ion-card-header>
+                                <ion-card-title><ion-icon style="font-size: 5vh; margin-top: 1vh;"
+                                        :icon="helpBuoyOutline"></ion-icon></ion-card-title>
+                            </ion-card-header>
+                            <ion-card-content>
+                                Поддержка
+                            </ion-card-content>
+                        </ion-card>
+                    </ion-col>
+                    <ion-col style="margin-left: -0.69rem; display: none;"
+                        @click="$router.push({ path: '/tabs/settings/main', replace: false });">
+                        <ion-card class="ion-activatable ripple-parent rectangle" style="border-radius: 20px; ">
+                            <ion-ripple-effect></ion-ripple-effect>
+                            <ion-card-header>
+                                <ion-card-title><ion-icon style="font-size: 5vh; margin-top: 1vh;"
+                                        :icon="settingsOutline"></ion-icon></ion-card-title>
+                            </ion-card-header>
+
+                            <ion-card-content>
+                                Настройки
+                            </ion-card-content>
+                        </ion-card>
+                    </ion-col>
                 </ion-row>
-              </ion-grid>
+            </ion-grid>
 
-              <div style="height: calc(50px + 1.5vh);"></div>
-              
+            <div style="height: calc(50px + 1.5vh);"></div>
 
-            <ion-modal
-                    @willDismiss="Modal_onWillDismiss"
-                    :is-open="myselfProfileEdit_isModalOpen"
-                    trigger="open-modal"
-                    :initial-breakpoint="0.75"
-                    :breakpoints="[0, 0.75]"
-                    handle-behavior="cycle"
-                >
-                    <ion-content class="ion-padding">
-                        <div class="ion-margin-top">
-                        <ion-label style="white-space: pre-wrap;">Вы можете изменить информацию о себе. Эти сведения видите только вы.</ion-label>
+
+            <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="myselfProfileEdit_isModalOpen" trigger="open-modal"
+                :initial-breakpoint="0.75" :breakpoints="[0, 0.75]" handle-behavior="cycle">
+                <ion-content class="ion-padding">
+                    <div class="ion-margin-top">
+                        <ion-label style="white-space: pre-wrap;">Вы можете изменить информацию о себе. Эти сведения видите
+                            только вы.</ion-label>
                         <ion-item style="margin-top: 1.9vh; border-radius: 11px;">
-                            <ion-input :autofocus="true" label="Ваше имя" label-placement="stacked" :placeholder="name" v-model="name"></ion-input>
-                          </ion-item>
-                          <ion-button @click="saveProfileNewData()" style="margin-top: 2.8vh;"  expand="block">Сохранить</ion-button> 
+                            <ion-input :autofocus="true" label="Ваше имя" label-placement="stacked" :placeholder="name"
+                                v-model="name"></ion-input>
+                        </ion-item>
+                        <ion-button @click="saveProfileNewData()" style="margin-top: 2.8vh;"
+                            expand="block">Сохранить</ion-button>
                     </div>
-                    </ion-content>
-                </ion-modal>
+                </ion-content>
+            </ion-modal>
 
 
 
@@ -129,13 +134,13 @@
     .bg-1 {
         background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(7, 5, 36, 0.74)), url('../../assets/photo/photo-1507400492013-162706c8c05e.webp') !important;
     }
-  }
+}
 
-  @media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: light) {
     .bg-1 {
         background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(52, 45, 150, 0.74)), url('../../assets/photo/photo-1465080357990-d4bc259ec4a9.webp') !important;
     }
-  }
+}
 
 .text-meditate {
     background-image: linear-gradient(45deg, #ffffff 0%, #e5f1e1 50%, #82d187 100%) !important;
@@ -231,6 +236,10 @@ import {
     IonButton,
     IonCardHeader,
     IonCardContent,
+    IonRippleEffect,
+    IonGrid,
+    IonCol,
+    IonRow
 } from '@ionic/vue';
 
 import {
@@ -270,7 +279,11 @@ export default defineComponent({
         IonCardSubtitle,
         IonButton,
         IonCardHeader,
-        IonCardContent
+        IonCardContent,
+        IonRippleEffect,
+        IonGrid,
+        IonCol,
+        IonRow
     },
     mounted() {
         const tabsEl = document.querySelector('ion-tab-bar');
@@ -280,13 +293,13 @@ export default defineComponent({
         }
 
         this.name = localStorage.getItem("user_firstname")
-        if (localStorage.getItem("user_meditationtime") === null){
+        if (localStorage.getItem("user_meditationtime") === null) {
             localStorage.setItem("user_meditationtime", "0")
             this.meditationtime = "0"
-        }else{
+        } else {
             this.meditationtime = this.meditationtimePrepare(localStorage.getItem("user_meditationtime"))
         }
-        
+
 
     },
     methods: {
@@ -298,49 +311,49 @@ export default defineComponent({
             this.myselfProfileEdit_isModalOpen = true
         },
 
-        Modal_onWillDismiss(){
+        Modal_onWillDismiss() {
             //nothing yet
             this.myselfProfileEdit_isModalOpen = false
         },
 
-        saveProfileNewData(){
+        saveProfileNewData() {
             localStorage.setItem("user_firstname", this.name)
             this.$store.dispatch("setNewName", this.name)
             this.myselfProfileEdit_isModalOpen = false;
         },
 
-        learnMore(){
+        learnMore() {
             this.$router.push({
-                                name: "read/youshouldknow",
-                            });
+                name: "read/youshouldknow",
+            });
         },
 
         meditationtimePrepare(rawMinutes) {
 
-            
 
-            const hours = Math.floor(rawMinutes/60)
+
+            const hours = Math.floor(rawMinutes / 60)
 
             const minutes = rawMinutes - (hours * 60)
 
             var formatted_message = ""
 
-            if (minutes + (hours * 60) > 10){
+            if (minutes + (hours * 60) > 10) {
                 this.enoughExpForTimeReview = true
-            }else{
+            } else {
                 this.enoughExpForTimeReview = false
             }
 
-            if (hours == 0){
+            if (hours == 0) {
                 formatted_message = minutes + " минут"
-            } else{
+            } else {
                 formatted_message = hours + " ч. " + minutes + " мин."
             }
 
             return formatted_message;
 
         }
-        
+
     },
     data: () => ({
         showStory: false,
@@ -376,7 +389,7 @@ export default defineComponent({
             rocketOutline,
             helpBuoyOutline,
             settingsOutline
-            
+
         }
     }
 });

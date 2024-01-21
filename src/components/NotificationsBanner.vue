@@ -244,7 +244,7 @@ import globaldata from '../modules/global';
 import { MegaphoneIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { forEach } from 'xregexp';
 
-import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton } from '@ionic/vue';
+import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonRippleEffect, IonIcon, IonSpinner } from '@ionic/vue';
 
 import {
     arrowForwardOutline
@@ -256,7 +256,7 @@ import WellbeingQuestionnaire from '@/components/questionnaire/WellbeingQuestion
 
 export default defineComponent({
     name: 'ExploreContainer',
-    components: { IonCard, IonCardHeader, IonCardTitle, IonCardContent, WellbeingQuestionnaire, IonButton },
+    components: { IonCard, IonCardHeader, IonCardTitle, IonCardContent, WellbeingQuestionnaire, IonButton, IonRippleEffect, IonIcon },
     props: {
         name: String,
         notificationType: String

@@ -47,7 +47,8 @@ import {
 import {
     IonPage,
     IonContent,
-    IonSpinner
+    IonSpinner,
+    
 } from '@ionic/vue';
 
 declare const YaGames;
@@ -66,7 +67,7 @@ export default defineComponent({
         IonContent,
         IonPage,
         IonSpinner,
-        WellbeingQuestionnaire
+        WellbeingQuestionnaire,
     },
     data() {
         return {

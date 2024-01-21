@@ -61,6 +61,8 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
 
+import { IonCard, IonCardHeader, IonCardTitle, IonRippleEffect } from '@ionic/vue';
+
 import { TransitionRoot } from '@headlessui/vue'
 
 import globaldata from '../../modules/global';
@@ -78,7 +80,9 @@ export default defineComponent({
   props: {
     field_test: String
   },
-  components: {},
+  components: {
+    IonCard, IonCardHeader, IonCardTitle, IonRippleEffect
+  },
   data() {
     return {
       openedModal: "none",

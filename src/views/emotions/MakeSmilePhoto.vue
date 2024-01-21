@@ -64,11 +64,7 @@
         </ion-card>
       </div>
 
-
-
-
-
-      <ExploreContainer name="Tab 3 page" />
+      <div class="padding_from_bottom_line" style="padding-top: 1vh;"></div>
 
     </ion-content>
   </ion-page>
@@ -76,7 +72,6 @@
     
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonPage, IonContent } from '@ionic/vue';
 
 import {
   arrowBackCircleOutline
@@ -88,11 +83,30 @@ import NavbarController from '@/components/NavbarController.vue';
 
 import { Camera, CameraResultType, CameraDirection } from '@capacitor/camera';
 
+import {
+    IonPage,
+    IonContent,
+    IonCard,
+    IonCardTitle,
+    IonCardSubtitle,
+    IonButton,
+    IonCardHeader,
+    IonCardContent,
+} from '@ionic/vue';
+
 import confetti from 'canvas-confetti';
 
 export default defineComponent({
   name: 'Tab3Page',
-  components: { IonContent, IonPage, NavbarController },
+  components: { IonPage,
+    IonContent,
+    IonCard,
+    IonCardTitle,
+    IonCardSubtitle,
+    IonButton,
+    IonCardHeader,
+    IonCardContent,
+    NavbarController },
   setup() {
     //
   },

@@ -82,7 +82,7 @@ ion-content {
   
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonPage, IonContent, pickerController, toastController } from '@ionic/vue';
+import { IonPage, IonContent, pickerController, toastController, IonButton, IonIcon } from '@ionic/vue';
 
 import globaldata from '../../modules/global';
 
@@ -99,7 +99,7 @@ import {
 
 export default defineComponent({
   name: 'Tab3Page',
-  components: { IonContent, IonPage, NavbarController },
+  components: { IonContent, IonPage, NavbarController, IonButton, IonIcon },
   setup() {
     //
   },

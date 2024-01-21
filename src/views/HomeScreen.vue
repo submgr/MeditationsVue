@@ -154,7 +154,8 @@ import {
 import {
     IonPage,
     IonContent,
-    IonRippleEffect
+    IonRippleEffect,
+    IonIcon
 } from '@ionic/vue';
 
 import {
@@ -185,7 +186,8 @@ export default defineComponent({
         AdvancedLoader,
         SystemAnnoncementProvider,
         IonRippleEffect,
-        MoodCheck
+        MoodCheck,
+        IonIcon
     },
     mounted() {
         const tabsEl = document.querySelector('ion-tab-bar');

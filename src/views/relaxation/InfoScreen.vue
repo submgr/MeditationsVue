@@ -40,13 +40,13 @@
   
   <script lang="ts">
   import { defineComponent } from 'vue';
-  import { IonPage, IonContent } from '@ionic/vue';
+  import { IonPage, IonContent, IonButton } from '@ionic/vue';
 
   import { Vue3Lottie } from 'vue3-lottie'
   
   export default  defineComponent({
     name: 'Tab1Page',
-    components: { IonContent, IonPage, Vue3Lottie },
+    components: { IonContent, IonPage, Vue3Lottie, IonButton },
     methods: {
       startSession(){
         console.log("Requesting Relaxing Session...")

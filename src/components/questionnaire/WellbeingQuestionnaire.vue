@@ -126,7 +126,8 @@ import {
     IonTitle,
     IonPage,
     actionSheetController,
-    IonCheckbox
+    IonCheckbox,
+    IonSpinner
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 
@@ -147,6 +148,7 @@ export default defineComponent({
         IonTitle,
         IonCheckbox,
         FlowForm,
+        IonSpinner
     },
     data() {
         return {

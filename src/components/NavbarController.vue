@@ -68,12 +68,14 @@ import {
         helpCircleOutline
     } from 'ionicons/icons';
 
-import {  } from '@ionic/vue';
+import { IonIcon, IonCol, IonRow, IonGrid } from '@ionic/vue';
 
 
 export default defineComponent({
     name: 'ExploreContainer',
-    components: { },
+    components: { 
+        IonIcon, IonCol, IonRow, IonGrid
+    },
     props: {
         activatedfrom: String,
         align: String
