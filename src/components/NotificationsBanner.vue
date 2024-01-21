@@ -44,7 +44,7 @@
             </div>
         </Transition>
     </div>
-    <span v-if="notificationType == 'suggestToSmileToday'">
+    <span v-if="notificationType == 'suggestToSmileToday' && !hasUserSmiledToday()">
         <WellbeingQuestionnaire ref="wellbeingQuestionnaireRef" @completion-event="WellbeingQuestionnaireCompleted" />
         <ion-card :class="{ 'stop-animations': stopAllAnimations }" @click="$router.push({ path: '/tabs/emotions/smile' })" color="light"
             style="--glow-opacity: 1; --glow-scale: 2.5; --glow-blur: 6; --glow-radius: 100; --glow-rotate-unit: 1deg;"
@@ -323,7 +323,7 @@ export default defineComponent({
             console.log("(smile check) You've already smiled today!");
         } else {
             console.log("(smile check) You haven't smiled today yet. Time to smile!");
-            this.updateUserSmile(); // Call this when the user completes the task
+            
         }
 
     }

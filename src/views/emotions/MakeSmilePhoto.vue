@@ -84,6 +84,21 @@ import NavbarController from '@/components/NavbarController.vue';
 import { Camera, CameraResultType, CameraDirection } from '@capacitor/camera';
 
 import {
+  IonPage,
+  IonContent,
+  IonCard,
+  IonCardTitle,
+  IonCardSubtitle,
+  IonButton,
+  IonCardHeader,
+  IonCardContent,
+} from '@ionic/vue';
+
+import confetti from 'canvas-confetti';
+
+export default defineComponent({
+  name: 'Tab3Page',
+  components: {
     IonPage,
     IonContent,
     IonCard,
@@ -92,21 +107,8 @@ import {
     IonButton,
     IonCardHeader,
     IonCardContent,
-} from '@ionic/vue';
-
-import confetti from 'canvas-confetti';
-
-export default defineComponent({
-  name: 'Tab3Page',
-  components: { IonPage,
-    IonContent,
-    IonCard,
-    IonCardTitle,
-    IonCardSubtitle,
-    IonButton,
-    IonCardHeader,
-    IonCardContent,
-    NavbarController },
+    NavbarController
+  },
   setup() {
     //
   },
@@ -122,6 +124,16 @@ export default defineComponent({
     }
   },
   methods: {
+    updateUserSmile() {
+      // Create an object with the current date
+      const smileData = {
+        date: new Date().toISOString().split('T')[0], // Store today's date in YYYY-MM-DD format
+        smiled: true // Indicate that the user has smiled
+      };
+
+      // Save the smile data to localStorage as a JSON string
+      localStorage.setItem('appData__temp__dailySmile', JSON.stringify(smileData));
+    },
     randomInRange(min, max) {
       return Math.random() * (max - min) + min;
     },
@@ -179,6 +191,7 @@ export default defineComponent({
 
           console.warn("aaai3")
 
+          this.updateUserSmile();
 
           // Assume `blob` is a PNG image file.
           parent_this.last_shoot_imgblob = b64toBlob(base64String, "image/jpeg");

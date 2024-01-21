@@ -2,7 +2,7 @@
     <ion-page>
       <ion-content :fullscreen="true">
         <div style="padding: 0px 18px 0px; margin-top: 0.42rem; margin-bottom: 0rem; margin-left: -40px">
-            <Vue3Lottie :animationData="require('./../../assets/lottie/125469-meditating-panda.json')" :height="150" :width="150" style="max-width: 240px;"/></div>
+            <Vue3Lottie :animationData="require('./../../assets/lottie/125469-meditating-panda.json')" :height="150" :width="150" style="height: 40vh; max-width: 240px;"/></div>
         <div style="padding: 1.4rem; padding-top: 0rem;">
             <h2 style="font-weight: 800; font-size: 25px;;">Баланс</h2>
             <p style="opacity: 0.8; font-size: 14px; font-weight: 500;  line-height: 20px !important; letter-spacing: -0.8px;">
