@@ -60,7 +60,7 @@
                                             шкале - 399. Однако, вовсе не нужно набирать максимум, чтобы чувствовать себя
                                             великолепно.</span></p>
                                 </div><br />
-                                <span style="font-size: 2.2em; !important;">
+                                <span style="font-size: 14px; !important;">
                                     The Autonomy subscale: {{ scores_detailed.autonomy_subscale_score }} <br />
                                     Environmental Mastery subscale: {{
                                         scores_detailed.environmental_mastery_subscale_score }}<br />
