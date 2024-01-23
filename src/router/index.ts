@@ -163,6 +163,10 @@ const routes: Array<RouteRecordRaw> = [
         path: 'emotions/smile',
         component: () => import('@/views/emotions/MakeSmilePhoto.vue')
       },
+      {
+        path: 'research/takequiz',
+        component: () => import('@/views/research/QuizTake.vue')
+      },
     ]
   }
 ]
