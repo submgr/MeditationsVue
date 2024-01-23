@@ -2431,7 +2431,7 @@ export default defineComponent({
             const self = this
             const data = this.getData()
 
-            console.log(JSON.stringify(data))
+            //console.log(JSON.stringify(data))
 
             this.loading = true
 
@@ -2545,15 +2545,15 @@ export default defineComponent({
 
                 var QuestionsNeedReverse = ["Q1", "Q2", "Q3", "Q4", "Q6", "Q7", "Q11", "Q13", "Q17", "Q20", "Q21", "Q22", "Q23", "Q27", "Q29", "Q31", "Q35", "Q36", "Q37", "Q38", "Q40", "48", "49", "50", "51", "52", "53", "54", "55", "56",];
 
-                console.log('point1', QuestionsNeedReverse.includes(question_id))
-                console.log('point2', question_id)
+                //console.log('point1', QuestionsNeedReverse.includes(question_id))
+                //console.log('point2', question_id)
                 if (QuestionsNeedReverse.includes(question_id)) {
                     question_score = (7 + 1) - parseInt(question.model);
                 } else {
                     question_score = parseInt(question.model);
                 }
-                console.log('point3', question_score)
-                console.log('point4', question.model)
+                //console.log('point3', question_score)
+                //console.log('point4', question.model)
 
                 //For the Autonomy subscale:
 
@@ -2646,7 +2646,7 @@ export default defineComponent({
                 email: email_param
             };
 
-            console.log(data)
+            //console.log(data)
 
             //localStorage.setItem("stats_emotionalstate_atleast_once", "true")
 
