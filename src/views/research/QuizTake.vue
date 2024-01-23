@@ -2600,6 +2600,11 @@ export default defineComponent({
             alert("Не продолжайте заполнение формы: ошибка не исправлена и данные не сохранятся. ")
             window.location.replace("https://вашамедитация.рф/");
         }
+
+        const tabsEl = document.querySelector('ion-tabs');
+        if (tabsEl) {
+            tabsEl.hidden = true;
+        }
     }
 });
 </script>
