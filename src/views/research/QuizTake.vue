@@ -2575,10 +2575,6 @@ export default defineComponent({
         }
     },
     mounted() {
-        const tabsEl = document.querySelector('ion-tabs');
-        if (tabsEl) {
-            tabsEl.hidden = true;
-        }
         const urlParams = new URLSearchParams(window.location.search);
         const email_param = urlParams.get('email');
 
