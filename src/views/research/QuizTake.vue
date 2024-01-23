@@ -114,28 +114,6 @@ export default defineComponent({
             tabsEl.hidden = true;
             tabsEl.style.height = "1";
         }
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const email_param = urlParams.get('email');
-
-
-        //cats - is day when this link issued, i just masked it under cat so they wouldn't know, hah! :)
-        if (!urlParams.has('email') || !urlParams.has('cats')) {
-            alert("Произошла ошибка (x*unable to find email address in query). Попробуйте еще раз перейти по ссылке. Если проблема не решается, напишите мне в Telegram: @aramtop или на support@deqstudio.com.")
-            alert("Не продолжайте заполнение формы: ошибка не исправлена и данные не сохранятся. ")
-            window.location.replace("https://вашамедитация.рф/");
-        }
-
-        const now = new Date();
-        const day = now.getDay();
-
-        if (day < parseInt(urlParams.get('cats')) + 2) {
-            //ok
-        } else {
-            alert("Произошла ошибка (x*expired link). Попробуйте еще раз перейти по ссылке. Если проблема не решается, напишите мне в Telegram: @aramtop или на support@deqstudio.com.")
-            alert("Не продолжайте заполнение формы: ошибка не исправлена и данные не сохранятся. ")
-            window.location.replace("https://вашамедитация.рф/");
-        }
     },
     data() {
         return {
@@ -2690,5 +2668,11 @@ export default defineComponent({
 /* @import '~@ditdot-dev/vue-flow-form/dist/vue-flow-form.theme-minimal.css'; */
 /* @import '~@ditdot-dev/vue-flow-form/dist/vue-flow-form.theme-green.css'; */
 @import '../../assets/css/quiz-flow.css';
+</style>
+
+<style scoped>
+.vff {
+    margin: 10vh 0 60px !important;
+}
 </style>
   
