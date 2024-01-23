@@ -108,6 +108,35 @@ import globaldata from '../../modules/global';
 export default defineComponent({
     name: 'Tab1Page',
     components: { IonContent, IonPage, FlowForm, Question },
+    mounted() {
+        const tabsEl = document.querySelector('ion-tab-bar');
+        if (tabsEl) {
+            tabsEl.hidden = true;
+            tabsEl.style.height = "1";
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const email_param = urlParams.get('email');
+
+
+        //cats - is day when this link issued, i just masked it under cat so they wouldn't know, hah! :)
+        if (!urlParams.has('email') || !urlParams.has('cats')) {
+            alert("Произошла ошибка (x*unable to find email address in query). Попробуйте еще раз перейти по ссылке. Если проблема не решается, напишите мне в Telegram: @aramtop или на support@deqstudio.com.")
+            alert("Не продолжайте заполнение формы: ошибка не исправлена и данные не сохранятся. ")
+            window.location.replace("https://вашамедитация.рф/");
+        }
+
+        const now = new Date();
+        const day = now.getDay();
+
+        if (day < parseInt(urlParams.get('cats')) + 2) {
+            //ok
+        } else {
+            alert("Произошла ошибка (x*expired link). Попробуйте еще раз перейти по ссылке. Если проблема не решается, напишите мне в Telegram: @aramtop или на support@deqstudio.com.")
+            alert("Не продолжайте заполнение формы: ошибка не исправлена и данные не сохранятся. ")
+            window.location.replace("https://вашамедитация.рф/");
+        }
+    },
     data() {
         return {
             finalScore: 0,
@@ -2364,6 +2393,29 @@ export default defineComponent({
         }
     },
     methods: {
+        resendhttpdata(payload) {
+            this.$http.post(globaldata.api.hostname + "research/savesurveydata",
+                JSON.stringify(payload), {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }
+            ).then(response => {
+                console.log('Submit Success', response)
+
+                //if(localStorage.getItem("user_email")){
+                //    this.show_ratebox_boolean = true;
+                //}else{
+                //    this.message_modal_isOpen = "result_askforemail"
+                //}
+            }).catch(e => {
+                console.log('Submit Fail', e)
+                setTimeout(() => {
+                    this.resendhttpdata(payload)
+                }, 5000);
+                alert(e)
+            });
+        },
         /* eslint-disable-next-line no-unused-vars */
         onComplete(completed, questionList) {
             // This method is called whenever the "completed" status is changed.
@@ -2393,6 +2445,9 @@ export default defineComponent({
                 body: JSON.stringify(data)
               })
             */
+            // eslint-disable-next-line
+            var parent_this = this;
+
             this.$http.post(globaldata.api.hostname + "research/savesurveydata",
                 JSON.stringify(data), {
                 headers: {
@@ -2435,31 +2490,7 @@ export default defineComponent({
                     }).catch(e => {
                         console.log('Submit Fail', e)
                         setTimeout(() => {
-                            this.$http.post(globaldata.api.hostname + "research/savesurveydata",
-                                JSON.stringify(data), {
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                }
-                            }
-                            ).then(response => {
-                                console.log('Submit Success', response)
-
-                                setTimeout(() => {
-                                    self.loading = false
-                                }, 1500)
-
-                                //if(localStorage.getItem("user_email")){
-                                //    this.show_ratebox_boolean = true;
-                                //}else{
-                                //    this.message_modal_isOpen = "result_askforemail"
-                                //}
-                            }).catch(e => {
-                                console.log('Submit Fail', e)
-                                setTimeout(() => {
-
-                                }, 5000);
-                                alert(e)
-                            });
+                            parent_this.resendhttpdata(data)
                         }, 5000);
                         alert(e)
                     });
@@ -2626,34 +2657,6 @@ export default defineComponent({
             this.$router.push({ path: '/tabs/hello', replace: true });
         }
     },
-    mounted() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const email_param = urlParams.get('email');
-
-
-        //cats - is day when this link issued, i just masked it under cat so they wouldn't know, hah! :)
-        if (!urlParams.has('email') || !urlParams.has('cats')) {
-            alert("Произошла ошибка (x*unable to find email address in query). Попробуйте еще раз перейти по ссылке. Если проблема не решается, напишите мне в Telegram: @aramtop или на support@deqstudio.com.")
-            alert("Не продолжайте заполнение формы: ошибка не исправлена и данные не сохранятся. ")
-            window.location.replace("https://вашамедитация.рф/");
-        }
-
-        const now = new Date();
-        const day = now.getDay();
-
-        if (day < parseInt(urlParams.get('cats')) + 2) {
-            //ok
-        } else {
-            alert("Произошла ошибка (x*expired link). Попробуйте еще раз перейти по ссылке. Если проблема не решается, напишите мне в Telegram: @aramtop или на support@deqstudio.com.")
-            alert("Не продолжайте заполнение формы: ошибка не исправлена и данные не сохранятся. ")
-            window.location.replace("https://вашамедитация.рф/");
-        }
-
-        const tabsEl = document.querySelector('ion-tabs');
-        if (tabsEl) {
-            tabsEl.hidden = true;
-        }
-    }
 });
 </script>
 
