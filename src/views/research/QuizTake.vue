@@ -2394,14 +2394,24 @@ export default defineComponent({
     },
     methods: {
         resendhttpdata(payload) {
+            // eslint-disable-next-line
+            var parent_this = this;
+
             this.$http.post(globaldata.api.hostname + "research/savesurveydata",
                 JSON.stringify(payload), {
+                    validateStatus: null,
                 headers: {
                     'Content-Type': 'application/json',
                 }
             }
             ).then(response => {
                 console.log('Submit Success', response)
+
+                if (response.status != 200) {
+                    setTimeout(() => {
+                        parent_this.resendhttpdata(payload)
+                    }, 5000);
+                }
 
                 //if(localStorage.getItem("user_email")){
                 //    this.show_ratebox_boolean = true;
@@ -2450,12 +2460,19 @@ export default defineComponent({
 
             this.$http.post(globaldata.api.hostname + "research/savesurveydata",
                 JSON.stringify(data), {
+                validateStatus: null,
                 headers: {
                     'Content-Type': 'application/json',
                 }
             }
             ).then(response => {
                 console.log('Submit Success', response)
+
+                if (response.status != 200) {
+                    setTimeout(() => {
+                        parent_this.resendhttpdata(data)
+                    }, 5000);
+                }
 
                 setTimeout(() => {
                     self.loading = false
@@ -2477,6 +2494,12 @@ export default defineComponent({
                     }
                     ).then(response => {
                         console.log('Submit Success', response)
+                        if (response.status != 200) {
+                            setTimeout(() => {
+                                parent_this.resendhttpdata(data)
+                            }, 5000);
+                        }
+
 
                         setTimeout(() => {
                             self.loading = false
