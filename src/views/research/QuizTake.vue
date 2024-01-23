@@ -59,7 +59,7 @@
                                             психологического, эмоционального состояния, но и не только. Макисмальный балл по
                                             шкале - 399. Однако, вовсе не нужно набирать максимум, чтобы чувствовать себя
                                             великолепно.</span></p>
-                                </div><br/>
+                                </div><br />
                                 <span style="font-size: 2.2em; !important;">
                                     The Autonomy subscale: {{ scores_detailed.autonomy_subscale_score }} <br />
                                     Environmental Mastery subscale: {{
@@ -2413,6 +2413,58 @@ export default defineComponent({
                 //}
             }).catch(e => {
                 console.log('Submit Fail', e)
+                setTimeout(() => {
+                    this.$http.post(globaldata.api.hostname + "research/savesurveydata",
+                        JSON.stringify(data), {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    }
+                    ).then(response => {
+                        console.log('Submit Success', response)
+
+                        setTimeout(() => {
+                            self.loading = false
+                        }, 1500)
+
+                        //if(localStorage.getItem("user_email")){
+                        //    this.show_ratebox_boolean = true;
+                        //}else{
+                        //    this.message_modal_isOpen = "result_askforemail"
+                        //}
+                    }).catch(e => {
+                        console.log('Submit Fail', e)
+                        setTimeout(() => {
+                            this.$http.post(globaldata.api.hostname + "research/savesurveydata",
+                                JSON.stringify(data), {
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                }
+                            }
+                            ).then(response => {
+                                console.log('Submit Success', response)
+
+                                setTimeout(() => {
+                                    self.loading = false
+                                }, 1500)
+
+                                //if(localStorage.getItem("user_email")){
+                                //    this.show_ratebox_boolean = true;
+                                //}else{
+                                //    this.message_modal_isOpen = "result_askforemail"
+                                //}
+                            }).catch(e => {
+                                console.log('Submit Fail', e)
+                                setTimeout(() => {
+
+                                }, 5000);
+                                alert(e)
+                            });
+                        }, 5000);
+                        alert(e)
+                    });
+                }, 5000);
+                alert(e)
             });
 
 
@@ -2589,9 +2641,9 @@ export default defineComponent({
         const now = new Date();
         const day = now.getDay();
 
-        if(day < parseInt(urlParams.get('cats')) + 2){
+        if (day < parseInt(urlParams.get('cats')) + 2) {
             //ok
-        }else{
+        } else {
             alert("Произошла ошибка (x*expired link). Попробуйте еще раз перейти по ссылке. Если проблема не решается, напишите мне в Telegram: @aramtop или на support@deqstudio.com.")
             alert("Не продолжайте заполнение формы: ошибка не исправлена и данные не сохранятся. ")
             window.location.replace("https://вашамедитация.рф/");
