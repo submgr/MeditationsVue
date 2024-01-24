@@ -1,18 +1,18 @@
 <template>
     <ion-page>
         <ion-content :fullscreen="true" :forceOverscroll="false">
-            
-            <SystemAnnoncementProvider origin="home"/>
-            <AdvancedLoader v-if="1>2" /> 
+
+            <SystemAnnoncementProvider origin="home" />
+            <AdvancedLoader v-if="1 > 2" />
             <h1 style="margin-left: 1.1rem; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Главная</h1>
             <div style="display: block; margin-top: 4vh;">
-                <NotificationsBanner notificationType="suggestToSmileToday"/>
+                <NotificationsBanner notificationType="suggestToSmileToday" />
             </div>
-            
-            <div style="padding-top: 0.0rem;" >
-                
-                <div @click="getMeditation({ servicetype: 'dynamic', searchtype: 'random', searchtag: '' })">
-                    
+
+            <div style="padding-top: 0.0rem;">
+
+                <div @click="loadMeditation()">
+
                     <div class="card-alfa custom-swiper suggestion-block bg-1 card-meditate ion-activatable">
                         <ion-ripple-effect></ion-ripple-effect>
                         <div>
@@ -30,9 +30,9 @@
                 </div>--->
             </div>
 
-            <MoodCheck/>
+            <MoodCheck />
 
-            <MeditationsList @event-getmeditation="getMeditation" style="margin-top: -2.5vh;"/>
+            <MeditationsList @event-getmeditation="getMeditation" style="margin-top: -2.5vh;" />
 
             <div class="padding_from_bottom_line"></div>
 
@@ -41,7 +41,6 @@
 </template>
 
 <style scoped>
-
 @import '../assets/css/adaptative_ui.css';
 
 .standart_padding {
@@ -144,7 +143,6 @@ ion-page {
     font-size: 35px;
     font-weight: 500;
 }
-
 </style>
 
 <script lang="ts">
@@ -202,6 +200,29 @@ export default defineComponent({
         toggleStory() {
             this.showStory = !this.showStory
         },
+        loadMeditation() {
+            // eslint-disable-next-line
+            var parent_this = this;
+            // Function to check the number of listened meditations in local storage
+            // Retrieve the current value of listened meditations from local storage
+            var currentListenedMeditations = parseInt(localStorage.getItem('listenedMeditations'));
+
+            // Use a switch statement to handle different cases
+            switch (currentListenedMeditations) {
+                case 0:
+                    console.log("No meditations listened");
+                    parent_this.getMeditation({ servicetype: 'static', searchtype: 'id', searchtag: '1' })
+                    break;
+                case 1:
+                    console.log("Listened 1 meditation");
+                    parent_this.getMeditation({ servicetype: 'static', searchtype: 'id', searchtag: '2' })
+                    break;
+                default:
+                    parent_this.getMeditation({ servicetype: 'dynamic', searchtype: 'random', searchtag: '' })
+                    break;
+            }
+
+        },
         getMeditation(obj) {
             console.warn("Getting meditation data...")
             console.log("provided obj for search..", obj)
@@ -211,16 +232,16 @@ export default defineComponent({
                 case "dynamic":
                     additionalurl = "getDynamicMeditation"
                     var newbieprogress = 0;
-                    if(localStorage.getItem("newbie_progress") == null){
+                    if (localStorage.getItem("newbie_progress") == null) {
                         newbieprogress = 0
-                    }else{
+                    } else {
                         newbieprogress = parseInt(localStorage.getItem("newbie_progress"))
                     }
                     preparedparams = {
                         newbie_progress: newbieprogress,
                         language: globaldata.language.currentlang
                     }
-                    
+
                     break;
                 default:
                     additionalurl = "getStaticMeditation"
@@ -250,7 +271,7 @@ export default defineComponent({
                             });
 
                         }
-                    } else{
+                    } else {
                         // proccessed by the server, but without successfull result.
                     }
                 } else {

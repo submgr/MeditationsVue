@@ -277,15 +277,15 @@ export default defineComponent({
     },
     watch: {
         '$route'() {
-            if(this.audiotrack[this.audiotrack_currentplaying_index] != undefined){
+            if (this.audiotrack[this.audiotrack_currentplaying_index] != undefined) {
                 this.audiotrack[this.audiotrack_currentplaying_index].pause(this.audiotrack_musicid);
             }
 
-            if(this.backgroundtrack != undefined){
+            if (this.backgroundtrack != undefined) {
                 this.backgroundtrack.pause(this.backgroundtrack_musicid);
             }
-            
-            
+
+
 
             const tabsEl = document.querySelector('ion-tab-bar');
             if (tabsEl) {
@@ -299,11 +299,11 @@ export default defineComponent({
         // eslint-disable-next-line
         const parent_this = this;
 
-        if(Capacitor.isPluginAvailable('ScreenBrightness')){
+        if (Capacitor.isPluginAvailable('ScreenBrightness')) {
             //getting current brightness!!!
             const initial_brightness = await ScreenBrightness.getBrightness();
             this.mobiledevice_brightness = initial_brightness.brightness;
-        }   
+        }
 
         const tabsEl = document.querySelector('ion-tab-bar');
         if (tabsEl) {
@@ -341,22 +341,22 @@ export default defineComponent({
         async wakeLockOn() {
             console.log("(wakeLock) now is ON")
             this.noSleep.enable();
-            
-            if(Capacitor.isPluginAvailable('ScreenBrightness')){
+
+            if (Capacitor.isPluginAvailable('ScreenBrightness')) {
                 const brightness = 0.2;
                 await ScreenBrightness.setBrightness({ brightness });
             }
-            
+
         },
         async wakeLockOff() {
             console.log("(wakeLock) now is OFF")
             this.noSleep.disable();
             const info = await Device.getInfo();
 
-            if(info.platform == 'android'){
+            if (info.platform == 'android') {
                 const brightness = -1;
-                await ScreenBrightness.setBrightness({ brightness });       
-            }else if(info.platform == 'ios'){
+                await ScreenBrightness.setBrightness({ brightness });
+            } else if (info.platform == 'ios') {
                 const brightness = this.mobiledevice_brightness;
                 await ScreenBrightness.setBrightness({ brightness });
             }
@@ -628,42 +628,42 @@ export default defineComponent({
                             var ymarker_alreadyFound = false;
                             var yfound_index = 0;
                             for (var y = this.audiotrack_timetable.length - 1; y >= 0; y--) {
-                                    
-                                    if (!ymarker_alreadyFound) {
-                                        console.warn("+++++++++++ (looking for future tracks...) LOOP ITERATION x = ", y)
-                                        var y_startson = this.audiotrack_timetable[y].starts_on;
-                                        var y_endson = this.audiotrack_timetable[y].ends_on;
-                                        console.log("+++++++++++ (looking for future tracks...) y_startson y_endson", y_startson, y_endson)
-                                        if ((ylookingforposition_on_timetable > y_startson) && (ylookingforposition_on_timetable < y_endson)) {
-                                            console.log("+++++++++++ (looking for future tracks...) FOUND for x = ")
-                                            ymarker_alreadyFound = true;
-                                            yfound_index = y;
-                                            if (this.audiotrack_timetable[y].audiotrack_index == this.audiotrack_currentplaying_index) {
-                                                this.audiotrack[this.audiotrack_currentplaying_index].seek(ylookingforposition_on_timetable - y_startson, this.audiotrack_musicid)
-                                            }
+
+                                if (!ymarker_alreadyFound) {
+                                    console.warn("+++++++++++ (looking for future tracks...) LOOP ITERATION x = ", y)
+                                    var y_startson = this.audiotrack_timetable[y].starts_on;
+                                    var y_endson = this.audiotrack_timetable[y].ends_on;
+                                    console.log("+++++++++++ (looking for future tracks...) y_startson y_endson", y_startson, y_endson)
+                                    if ((ylookingforposition_on_timetable > y_startson) && (ylookingforposition_on_timetable < y_endson)) {
+                                        console.log("+++++++++++ (looking for future tracks...) FOUND for x = ")
+                                        ymarker_alreadyFound = true;
+                                        yfound_index = y;
+                                        if (this.audiotrack_timetable[y].audiotrack_index == this.audiotrack_currentplaying_index) {
+                                            this.audiotrack[this.audiotrack_currentplaying_index].seek(ylookingforposition_on_timetable - y_startson, this.audiotrack_musicid)
                                         }
                                     }
                                 }
-                                if(ymarker_alreadyFound == false){
-                                    this.audiotrack[this.audiotrack_currentplaying_index].seek(audiotrack_playposition_now, this.audiotrack_musicid)
-                                }else{
-                                    this.changeCurrentAudioTrack(
-                                        {
-                                            audiotrack_index: this.audiotrack_timetable[yfound_index].audiotrack_index,
-                                            seek_moment: ylookingforposition_on_timetable - y_startson,
-                                            special_conditions: "no"
-                                        }
-                                    )
-                                }
-                            
-                        }else{
+                            }
+                            if (ymarker_alreadyFound == false) {
+                                this.audiotrack[this.audiotrack_currentplaying_index].seek(audiotrack_playposition_now, this.audiotrack_musicid)
+                            } else {
+                                this.changeCurrentAudioTrack(
+                                    {
+                                        audiotrack_index: this.audiotrack_timetable[yfound_index].audiotrack_index,
+                                        seek_moment: ylookingforposition_on_timetable - y_startson,
+                                        special_conditions: "no"
+                                    }
+                                )
+                            }
+
+                        } else {
                             this.changeCurrentAudioTrack(
-                                        {
-                                            audiotrack_index: -1,
-                                            seek_moment: ylookingforposition_on_timetable - this.audiotrack[this.audiotrack_currentplaying_index].duration(this.audiotrack_musicid),
-                                            special_conditions: "not_added_to_timetable_track_yet"
-                                        }
-                                    )
+                                {
+                                    audiotrack_index: -1,
+                                    seek_moment: ylookingforposition_on_timetable - this.audiotrack[this.audiotrack_currentplaying_index].duration(this.audiotrack_musicid),
+                                    special_conditions: "not_added_to_timetable_track_yet"
+                                }
+                            )
 
                         }
                     } else {
@@ -758,7 +758,7 @@ export default defineComponent({
             var config_backgroundIsHtml5 = true;
             var config_isSafari = false;
 
-            if(isSafari){
+            if (isSafari) {
                 config_isSafari = true
             }
 
@@ -816,6 +816,21 @@ export default defineComponent({
                                 });
                                 parent_this.meditationState = "finished"
                                 await toast.present();
+                                // Function to add +1 to the number of listened meditations in local storage
+                                
+                                // Check if the 'listenedMeditations' key exists in local storage
+                                if (localStorage.getItem('listenedMeditations')) {
+                                    // If it exists, retrieve the current value
+                                    var currentListenedMeditations = parseInt(localStorage.getItem('listenedMeditations'));
+                                    // Increment the value by 1
+                                    currentListenedMeditations += 1;
+                                    // Update the value in local storage
+                                    localStorage.setItem('listenedMeditations', currentListenedMeditations + "");
+                                } else {
+                                    // If the 'listenedMeditations' key does not exist, set it to 1
+                                    localStorage.setItem('listenedMeditations', 1 + "");
+                                }
+
                                 setTimeout(() => {
                                     //FIX IT LATER PLEEEEASE!!!
                                     //parent_this.audiotrack[this.audiotrack_currentplaying_index].fade(parent_this.audiotrack[this.audiotrack_currentplaying_index].volume(parent_this.audiotrack_musicid), 0, 2000, parent_this.audiotrack_musicid);
