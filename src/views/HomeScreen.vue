@@ -206,18 +206,22 @@ export default defineComponent({
             // Function to check the number of listened meditations in local storage
             // Retrieve the current value of listened meditations from local storage
             var currentListenedMeditations = parseInt(localStorage.getItem('listenedMeditations'));
+            if(Number.isNaN(currentListenedMeditations)){
+                currentListenedMeditations = 0;
+            }
 
             // Use a switch statement to handle different cases
             switch (currentListenedMeditations) {
                 case 0:
                     console.log("No meditations listened");
-                    parent_this.getMeditation({ servicetype: 'static', searchtype: 'id', searchtag: '1' })
+                    parent_this.getMeditation({ servicetype: 'static', searchtype: 'theme', searchtag: 'newbie1' })
                     break;
-                case 1:
-                    console.log("Listened 1 meditation");
-                    parent_this.getMeditation({ servicetype: 'static', searchtype: 'id', searchtag: '2' })
-                    break;
+                // case 1:
+                //     console.log("Listened 1 meditation");
+                //     parent_this.getMeditation({ servicetype: 'static', searchtype: 'theme', searchtag: 'newbie2' })
+                //     break;
                 default:
+                    console.log("Listened 1+ meditation (default route)");
                     parent_this.getMeditation({ servicetype: 'dynamic', searchtype: 'random', searchtag: '' })
                     break;
             }
