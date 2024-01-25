@@ -1,36 +1,45 @@
 <template>
-<ion-page>
-    <ion-content :fullscreen="true">
+    <GoogleLogin />
+    <ion-page>
+        <ion-content :fullscreen="true">
 
-        
 
-        <!-----<ion-input class="input-style" placeholder="Электронный адрес"></ion-input> 
+
+            <!-----<ion-input class="input-style" placeholder="Электронный адрес"></ion-input> 
 
         <ion-button @click="authenticateWithGoogle" color="danger" style="margin-right: 5%; margin-left: 35%; margin-top: 6%; --opacity: 0.7;" expand="block">
             <ion-icon class="send-button" slot="end" :icon="arrowForwardOutline"></ion-icon>
             Продолжить
         </ion-button>--->
-        
-        
 
-        <div class="split-container">
-            <div class="left-side">
-                <img style="margin-left: 6.5%; margin-top: 4rem; height: 230px; opacity: 0.99;" src="../../assets/graphics/creative_hello_purpleversion.png">
 
-                <p style="text-align: left; padding: 0px 22px 0px; margin-top: 1rem; margin-bottom: 0;  align-items: flex-start; min-width: 100%; font-size: 34px; font-weight: 600;">Почти готово!</p>
-                <p style="text-align: left; padding: 0px 22px 0px; padding-top: 2%; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 18px; font-weight: 200;">Войдите в систему, чтобы мы могли предоставить вам уникальный опыт медитации.</p>
-            </div>
-            <div class="right-side">
-              <!-- Buttons go here -->
-              <ion-button router-link="/tabs/auth/email" color="primary" style="left: 0px; margin-right: 5%; margin-left: 5%; margin-top: 7.5%; --opacity: 0.7; --padding-start: 0; --padding-end: 0;" expand="block">
-                <ion-icon class="send-button" slot="start" :icon="mailOutline" style="text-align: left;"></ion-icon>
-                <span style="text-align:left; width: 72%;">
-                    &nbsp;&nbsp;Продолжить с эл. почтой
-                </span>
-                <ion-icon class="send-button" slot="end" :icon="arrowForwardOutline" style="text-align: end;"></ion-icon>
-                
-            </ion-button>
-            <!---<ion-button @click="authenticateWithGoogle" color="primary" style="left: 0px; margin-right: 5%; margin-left: 5%; margin-top: 2.5%; --opacity: 0.7; --padding-start: 0; --padding-end: 0;" expand="block">
+
+            <div class="split-container">
+                <div class="left-side">
+                    <img style="margin-left: 6.5%; margin-top: 4rem; height: 230px; opacity: 0.99;"
+                        src="../../assets/graphics/creative_hello_purpleversion.png">
+
+                    <p
+                        style="text-align: left; padding: 0px 22px 0px; margin-top: 1rem; margin-bottom: 0;  align-items: flex-start; min-width: 100%; font-size: 34px; font-weight: 600;">
+                        Почти готово!</p>
+                    <p
+                        style="text-align: left; padding: 0px 22px 0px; padding-top: 2%; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 18px; font-weight: 200;">
+                        Войдите в систему, чтобы мы могли предоставить вам уникальный опыт медитации.</p>
+                </div>
+                <div class="right-side">
+                    <!-- Buttons go here -->
+                    <ion-button router-link="/tabs/auth/email" color="primary"
+                        style="left: 0px; margin-right: 5%; margin-left: 5%; margin-top: 7.5%; --opacity: 0.7; --padding-start: 0; --padding-end: 0;"
+                        expand="block">
+                        <ion-icon class="send-button" slot="start" :icon="mailOutline" style="text-align: left;"></ion-icon>
+                        <span style="text-align:left; width: 72%;">
+                            &nbsp;&nbsp;Продолжить с эл. почтой
+                        </span>
+                        <ion-icon class="send-button" slot="end" :icon="arrowForwardOutline"
+                            style="text-align: end;"></ion-icon>
+
+                    </ion-button>
+                    <!---<ion-button @click="authenticateWithGoogle" color="primary" style="left: 0px; margin-right: 5%; margin-left: 5%; margin-top: 2.5%; --opacity: 0.7; --padding-start: 0; --padding-end: 0;" expand="block">
                 <ion-icon class="send-button" slot="start" :icon="chatbubbleOutline" style="text-align: left;"></ion-icon>
                 <span style="text-align:left; width: 72%;">
                     Продолжить с Telegram
@@ -39,44 +48,41 @@
             </ion-button>
             
     
-            ---><hr class="hr-line" style="margin-top: 4%;">
-            <div style="margin-bottom: 4%;"></div>
-            
+            --->
+                    <hr class="hr-line" style="margin-top: 4%;">
+                    <div style="margin-bottom: 4%;"></div>
 
-    
-            <ion-button @click="authenticateWithGoogle"  style="margin-right: 5%; margin-left: 5%; margin-top: 3.5%; --opacity: 0.7;" expand="block">
-                <ion-icon class="send-button" slot="end" :icon="logoGoogle"></ion-icon>
-                Войти с Google
-            </ion-button>
-            </div>
-          </div>
 
-        <ion-modal
-                @willDismiss="Modal_onWillDismiss"
-                :is-open="message_modal_isOpen"
-                trigger="open-modal"
-                :initial-breakpoint="0.25"
-                :breakpoints="[0, 0.25, 0.5, 0.75]"
-                handle-behavior="cycle"
-        >
-            <ion-content class="ion-padding">
-                <div class="ion-margin-top">
-                    <ion-label style="white-space: pre-wrap;">{{message_modal_text}}</ion-label>
+
+                    <ion-button @click="authenticateWithGoogle"
+                        style="margin-right: 5%; margin-left: 5%; margin-top: 3.5%; --opacity: 0.7;" expand="block">
+                        <ion-icon class="send-button" slot="end" :icon="logoGoogle"></ion-icon>
+                        Войти с Google
+                    </ion-button>
                 </div>
-            </ion-content>
-        </ion-modal>
+            </div>
 
-    </ion-content>
-</ion-page>
+            <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="message_modal_isOpen" trigger="open-modal"
+                :initial-breakpoint="0.25" :breakpoints="[0, 0.25, 0.5, 0.75]" handle-behavior="cycle">
+                <ion-content class="ion-padding">
+                    <div class="ion-margin-top">
+                        <ion-label style="white-space: pre-wrap;">{{ message_modal_text }}</ion-label>
+                    </div>
+                </ion-content>
+            </ion-modal>
+
+        </ion-content>
+    </ion-page>
 </template>
 
 <style scoped>
-
-
 @import '../../assets/css/adaptative_ui.css';
 
-.hr-line{
-    margin-right: 7%; margin-left: 7%; background-color: white;  opacity: 0.3;
+.hr-line {
+    margin-right: 7%;
+    margin-left: 7%;
+    background-color: white;
+    opacity: 0.3;
 }
 
 @media (prefers-color-scheme: light) {
@@ -84,7 +90,7 @@
         --background: #fff url('../../assets/abstract/noised-white-background.png') no-repeat center center / cover;
     }
 
-    .hr-line{
+    .hr-line {
         opacity: 0.12;
         background-color: rgb(0, 0, 0);
     }
@@ -94,7 +100,8 @@
     ion-content {
         --background: #000 url('../../assets/abstract/black-and-noise-background.png') no-repeat center center / cover;
     }
-    .hr-line{
+
+    .hr-line {
         background-color: white;
     }
 }
@@ -145,6 +152,10 @@ import {
     GoogleAuth
 } from '@codetrix-studio/capacitor-google-auth';
 
+import { googleTokenLogin } from 'vue3-google-login';
+
+import { Capacitor } from '@capacitor/core'
+
 import axios from 'axios'
 
 import globaldata from '../../modules/global';
@@ -159,26 +170,39 @@ export default defineComponent({
         IonButton,
         IonIcon,
         IonModal,
-        IonLabel
+        IonLabel,
     },
-    data () {
+    data() {
         return {
             message_modal_isOpen: false,
-            message_modal_text: "ModalText"
+            message_modal_text: "ModalText",
+            clientId: '70119537016-fopt4mu69mtdvf4seb12i3drcfa7i41s.apps.googleusercontent.com',
         }
     },
-    mounted () {
+    mounted() {
+
         const tabsEl = document.querySelector('ion-tab-bar');
         if (tabsEl) {
             tabsEl.hidden = true;
             tabsEl.style.height = "1";
         }
-        
-        GoogleAuth.initialize({
-            clientId: '70119537016-q8lv3166vpeodq1jj1mav4dc83mpkmq4.apps.googleusercontent.com',
-            scopes: ['profile', 'email'],
-            grantOfflineAccess: true,
-        });
+
+        if (Capacitor.isNativePlatform()) {
+            GoogleAuth.initialize({
+                clientId: '70119537016-q8lv3166vpeodq1jj1mav4dc83mpkmq4.apps.googleusercontent.com',
+                scopes: ['profile', 'email'],
+                grantOfflineAccess: true,
+            });
+        } else {
+            //web
+            GoogleAuth.initialize({
+                clientId: '70119537016-fopt4mu69mtdvf4seb12i3drcfa7i41s.apps.googleusercontent.com',
+                scopes: ['profile', 'email'],
+                grantOfflineAccess: true,
+            });
+        }
+
+
     },
     setup() {
         return {
@@ -189,34 +213,48 @@ export default defineComponent({
         }
     },
     methods: {
-        async Modal_onWillDismiss(){
+        async callback(response) {
+            // This callback will be triggered when the user selects or login to
+            // his Google account from the popup
+            console.log("Handle the response", response)
+        },
+        async Modal_onWillDismiss() {
             this.message_modal_isOpen = false;
         },
-        async authenticateWithGoogle(){
-            const userResponse = await GoogleAuth.signIn()
-                    var accessToken = userResponse.authentication.accessToken;
-                    var idToken = userResponse.authentication.idToken;
-                    // eslint-disable-next-line
-                    const parent_this = this;
-                    
-                    axios.get(globaldata.api.hostname + "service/auth_withGoogle", { params:
-                            {accessToken: accessToken, idToken: idToken }
-                        }).then((response) => {
-                            if(response.data.status == "okay"){
-                                this.$router.push({path:'/tabs/auth/almostdone', replace: true, query: { auth_token: response.data.auth_token, auth_userid:response.data.userid }});
-                                //this.message_modal_text = `Выполнен вход.`
-                                //this.message_modal_isOpen = true;
-                            }else {
-                                this.message_modal_text = `Произошла ошибка при входе с помощью учетной записи Google. Попробуйте еще раз или воспользуйтесь другим способом входа.\n\nСведения: ` + JSON.stringify(response)
-                                this.message_modal_isOpen = true;
-                            }
-                        }).catch(function(error){
-                            parent_this.message_modal_text = `Сервер временно недоступен.\n\nСведения: ` + error + '\n' + globaldata.api.hostname
-                            parent_this.message_modal_isOpen = true;
-                        });
-                    // add the code for the functionality your need
+        async authenticateWithGoogle() {
+            var userResponse = await GoogleAuth.signIn();
+            this.proccessGoogleResponse(userResponse)
+        },
+        async proccessGoogleResponse(response) {
+            console.log("response: ", response)
+
+            const userResponse = response;
+            var accessToken = userResponse.authentication.accessToken;
+            var idToken = userResponse.authentication.idToken;
+            //var idToken = userResponse.authentication.serverAuthCode
+            // eslint-disable-next-line
+            const parent_this = this;
+
+            axios.get(globaldata.api.hostname + "service/auth_withGoogle", {
+                params:
+                    { accessToken: accessToken, idToken: idToken }
+            }).then((response) => {
+                console.log(response)
+                if (response.data.status == "okay") {
+                    this.$router.push({ path: '/tabs/auth/almostdone', replace: true, query: { auth_token: response.data.auth_token, auth_userid: response.data.userid } });
+                    //this.message_modal_text = `Выполнен вход.`
+                    //this.message_modal_isOpen = true;
+                } else {
+                    this.message_modal_text = `Произошла ошибка при входе с помощью учетной записи Google. Попробуйте еще раз или воспользуйтесь другим способом входа.\n\nСведения: ` + JSON.stringify(response)
+                    this.message_modal_isOpen = true;
+                }
+            }).catch(function (error) {
+                parent_this.message_modal_text = `Сервер временно недоступен.\n\nСведения: ` + error + '\n' + globaldata.api.hostname
+                parent_this.message_modal_isOpen = true;
+            });
+            // add the code for the functionality your need
         }
-            
+
     }
 })
 </script>
