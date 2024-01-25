@@ -226,7 +226,7 @@ export default defineComponent({
             this.proccessGoogleResponse(userResponse)
         },
         async proccessGoogleResponse(response) {
-            console.log("response: ", response)
+            //console.log("response: ", response)
 
             const userResponse = response;
             var accessToken = userResponse.authentication.accessToken;
@@ -239,7 +239,7 @@ export default defineComponent({
                 params:
                     { accessToken: accessToken, idToken: idToken }
             }).then((response) => {
-                console.log(response)
+                //console.log(response)
                 if (response.data.status == "okay") {
                     this.$router.push({ path: '/tabs/auth/almostdone', replace: true, query: { auth_token: response.data.auth_token, auth_userid: response.data.userid } });
                     //this.message_modal_text = `Выполнен вход.`
