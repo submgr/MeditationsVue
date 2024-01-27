@@ -10,6 +10,8 @@ import { IonicVue } from '@ionic/vue';
 
 import LoadScript from "vue-plugin-load-script";
 
+import axiosRetry from 'axios-retry';
+
 import './index.css'
 
 /* Core CSS required for Ionic components to work properly */
@@ -50,6 +52,10 @@ import { Network } from '@capacitor/network';
 
 import { toastController } from '@ionic/vue';
 
+axiosRetry(axios, { retries: 3, retryDelay: (retryCount) => {
+  return 1000;
+} });
+
 axios.interceptors.response.use(function (response) {
   // Any status code that lie within the range of 2xx cause this function to trigger
   // Do something with response data
@@ -79,6 +85,8 @@ axios.interceptors.response.use(function (response) {
   }
   return Promise.reject(error);
 });
+
+
 
 app.config.globalProperties.$http = axios; // Allow axios in all componenets this.$http.get
 app.config.globalProperties.$i18next = i18next;
