@@ -68,8 +68,14 @@ axios.interceptors.response.use(function (response) {
     });
 
     await toast.present();
-  }else{
-    router.push({path:'/tabs/system/unavailable', replace: false, query: { }});
+  } else {
+    if (error.response.status === 525) {
+      // If the error has status code 429, retry the request
+      return axios.request(error.config);
+    } else {
+      router.push({ path: '/tabs/system/unavailable', replace: false, query: {} });
+    }
+
   }
   return Promise.reject(error);
 });
