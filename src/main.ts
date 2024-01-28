@@ -87,7 +87,6 @@ axios.interceptors.response.use(function (response) {
 });
 
 
-
 app.config.globalProperties.$http = axios; // Allow axios in all componenets this.$http.get
 app.config.globalProperties.$i18next = i18next;
 
