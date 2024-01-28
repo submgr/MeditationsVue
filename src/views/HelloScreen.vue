@@ -187,7 +187,7 @@ export default defineComponent({
                     replace: true
                 });
             } else {
-                parent_this.$router.replace('/tabs/auth');
+                parent_this.$router.replace('/tabs/onboarding');
             }
         }
 

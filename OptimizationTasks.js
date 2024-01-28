@@ -11,6 +11,8 @@ const path = require('path')
 const fs = require('fs-extra')
 const sharp = require("sharp")
 
+sharp.cache(false);
+
 // dir where we are looking for!
 const directoryPath = path.join(__dirname, 'dist', 'img')
 const endDirectoryPath = path.join(__dirname, 'dist', 'img-new')
@@ -29,7 +31,7 @@ fs.readdir(directoryPath, (err, files) => {
     return console.log('Unable to scan directory: ' + err)
   }
   files.forEach((file) => {
-    console.log(file.split('.').pop())
+    //console.log(file.split('.').pop())
     if (file.split('.').pop() === 'jpg' || file.split('.').pop() === 'webp' || file.split('.').pop() === 'png') {
       const imgpath = path.join(directoryPath, file)
       images.push({ path: imgpath, type: file.split('.').pop() })
