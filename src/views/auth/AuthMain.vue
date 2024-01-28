@@ -71,6 +71,15 @@
                 </ion-content>
             </ion-modal>
 
+            <ion-modal :is-open="googleauth_awaiting">
+                <ion-content>
+                    <h1 style="margin-top: 15vh; text-align: center;">
+                        <ion-spinner name="lines-sharp"></ion-spinner>
+                    </h1>
+                    <p style="text-align: center;">Ожидание ответа<br/>от Google...</p>
+                </ion-content>
+              </ion-modal>
+
         </ion-content>
     </ion-page>
 </template>
@@ -177,6 +186,7 @@ export default defineComponent({
             message_modal_isOpen: false,
             message_modal_text: "ModalText",
             clientId: '70119537016-fopt4mu69mtdvf4seb12i3drcfa7i41s.apps.googleusercontent.com',
+            googleauth_awaiting: false
         }
     },
     mounted() {
@@ -209,7 +219,7 @@ export default defineComponent({
             arrowForwardOutline,
             logoGoogle,
             mailOutline,
-            chatbubbleOutline
+            chatbubbleOutline,
         }
     },
     methods: {
@@ -222,8 +232,20 @@ export default defineComponent({
             this.message_modal_isOpen = false;
         },
         async authenticateWithGoogle() {
-            var userResponse = await GoogleAuth.signIn();
-            this.proccessGoogleResponse(userResponse)
+            this.googleauth_awaiting = true;
+            var err_on_googleauth = false;
+            try {
+                var userResponse = await GoogleAuth.signIn();
+            } catch (error) {
+                this.googleauth_awaiting = false;
+                err_on_googleauth = true;
+            }
+
+            if(!err_on_googleauth){
+                this.proccessGoogleResponse(userResponse)
+            }
+            
+            
         },
         async proccessGoogleResponse(response) {
             //console.log("response: ", response)
@@ -239,6 +261,7 @@ export default defineComponent({
                 params:
                     { accessToken: accessToken, idToken: idToken }
             }).then((response) => {
+                parent_this.googleauth_awaiting = false;
                 //console.log(response)
                 if (response.data.status == "okay") {
                     this.$router.push({ path: '/tabs/auth/almostdone', replace: true, query: { auth_token: response.data.auth_token, auth_userid: response.data.userid } });
