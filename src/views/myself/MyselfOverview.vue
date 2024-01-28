@@ -132,13 +132,13 @@
 
 @media (prefers-color-scheme: dark) {
     .bg-1 {
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(7, 5, 36, 0.74)), url('../../assets/photo/photo-1507400492013-162706c8c05e.webp') !important;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(7, 5, 36, 0.74)), url('../../assets/photo/photo1507400492013.webp') !important;
     }
 }
 
 @media (prefers-color-scheme: light) {
     .bg-1 {
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(52, 45, 150, 0.74)), url('../../assets/photo/photo-1465080357990-d4bc259ec4a9.webp') !important;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(52, 45, 150, 0.74)), url('../../assets/photo/photo1465080357990.webp') !important;
     }
 }
 
