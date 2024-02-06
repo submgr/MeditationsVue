@@ -63,12 +63,12 @@
             <!-- List out the new features -->
             <div v-for="(feature, index) in features" :key="index" class="feature-item"  style="text-align: left; margin-top: 2vh;">
               <ion-icon
-                style="margin-left: 15px; margin-right: 25px;"
+                style="margin-left: 10px; margin-right: 10px;"
                 :icon="stopwatchOutline"
                 class="feature-icon"
                 color="primary"
               ></ion-icon>
-              <div style="width: 85vw;">
+              <div style="width: 80vw; margin-left: 1vw;">
                 <h4 style="font-weight: 800 !important; opacity: 0.75;">{{ feature.title }}</h4>
                 <p style="font-weight: 400 !important; opacity: 0.65;  margin-top: -5px;">{{ feature.description }}</p>
               </div>
@@ -242,7 +242,7 @@ export default defineComponent({
       },
       {
         title: 'Настраиваемый таймер сна',
-        description: 'Установите таймер сна, чтобы выбранный вами фоновый звук мягко затих. Настройте продолжительность в соответствии с вашими личными предпочтениями, чтобы музыка не играла всю ночь, а убаюкивала вас до глубокой дремоты.'
+        description: 'Установите таймер сна, чтобы выбранный вами фоновый звук мягко затих.'
       },
       // Add more features...
     ];
