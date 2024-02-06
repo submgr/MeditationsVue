@@ -206,7 +206,7 @@ export default defineComponent({
             // Function to check the number of listened meditations in local storage
             // Retrieve the current value of listened meditations from local storage
             var currentListenedMeditations = parseInt(localStorage.getItem('listenedMeditations'));
-            if(Number.isNaN(currentListenedMeditations)){
+            if (Number.isNaN(currentListenedMeditations)) {
                 currentListenedMeditations = 0;
             }
 
@@ -298,24 +298,6 @@ export default defineComponent({
             },
         ]
     }),
-    watch: {
-        showStory: function (val) {
-            if (this.showStory) {
-                const tabsEl = document.querySelector('ion-tab-bar');
-                if (tabsEl) {
-                    tabsEl.hidden = true;
-                    tabsEl.style.height = "1";
-                }
-            } else {
-                const tabsEl = document.querySelector('ion-tab-bar');
-                if (tabsEl) {
-                    tabsEl.hidden = false;
-                    tabsEl.style.height = "1";
-                }
-            }
-
-        }
-    },
     setup() {
 
         return {

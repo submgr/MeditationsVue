@@ -38,15 +38,16 @@
                         <ion-card-content style="">Исследования показывают, что улыбка может вызвать выброс эндорфинов, а
                             также возбуждение и эмоции, которые вызывают чувство счастья.</ion-card-content>
 
-                            
+
                     </div>
                 </ul>
             </div>
         </Transition>
     </div>
-    <span v-if="notificationType == 'suggestToSmileToday' && !hasUserSmiledToday()">
+    <span v-if="notificationType == 'suggestToSmileToday' && varHasUserSmiledToday != true">
         <WellbeingQuestionnaire ref="wellbeingQuestionnaireRef" @completion-event="WellbeingQuestionnaireCompleted" />
-        <ion-card :class="{ 'stop-animations': stopAllAnimations }" @click="$router.push({ path: '/tabs/emotions/smile' })" color="light"
+        <ion-card :class="{ 'stop-animations': stopAllAnimations }" @click="$router.push({ path: '/tabs/emotions/smile' })"
+            color="light"
             style="--glow-opacity: 1; --glow-scale: 2.5; --glow-blur: 6; --glow-radius: 100; --glow-rotate-unit: 1deg;"
             class="ion-text-centerOFF gradient-border-card glowing-card cardg ion-activatable ripple-parent rounded-rectangle">
             <span class="glow"></span>
@@ -65,12 +66,13 @@
                 <ion-card-content style="">Улыбнитесь в приложении сейчас, чтобы заложить отличное начало для этого
                     великолепного дня! Исследования показывают, что улыбка вызывает выброс эндорфинов, а также возбуждение и
                     эмоции, которые вызывают чувство счастья. Улыбнитесь себе!
-                
-                    <br/><br/><ion-button>Улыбнуться<ion-icon slot="end" :icon="arrowForwardOutline"></ion-icon></ion-button>
-                
+
+                    <br /><br /><ion-button>Улыбнуться<ion-icon slot="end"
+                            :icon="arrowForwardOutline"></ion-icon></ion-button>
+
                 </ion-card-content>
 
-                    
+
             </div>
         </ion-card>
     </span>
@@ -266,12 +268,20 @@ export default defineComponent({
             premadeMeditations: [],
             stopAllAnimations: true,
             MegaphoneIcon, XMarkIcon,
-            arrowForwardOutline
+            arrowForwardOutline,
+            varHasUserSmiledToday: null
         }
     },
     setup() {
 
         //setup
+    },
+    watch: {
+        '$route'() {
+            console.log("observed route update...")
+            this.varHasUserSmiledToday = this.checkAndLoadSmileProposalBanner();
+            console.log(this.varHasUserSmiledToday)
+        }
     },
     methods: {
         runWellbeingQuestionnaire() {
@@ -312,6 +322,15 @@ export default defineComponent({
 
             // Save the smile data to localStorage as a JSON string
             localStorage.setItem('appData__temp__dailySmile', JSON.stringify(smileData));
+        },
+        checkAndLoadSmileProposalBanner() {
+            if (this.hasUserSmiledToday()) {
+                console.log("(smile check) You've already smiled today!");
+            } else {
+                console.log("(smile check) You haven't smiled today yet. Time to smile!");
+
+            }
+            return this.hasUserSmiledToday()
         }
     },
     mounted() {
@@ -319,12 +338,8 @@ export default defineComponent({
         // eslint-disable-next-line
         const parent_this = this;
 
-        if (this.hasUserSmiledToday()) {
-            console.log("(smile check) You've already smiled today!");
-        } else {
-            console.log("(smile check) You haven't smiled today yet. Time to smile!");
-            
-        }
+        this.varHasUserSmiledToday = this.checkAndLoadSmileProposalBanner();
+        console.log(this.varHasUserSmiledToday)
 
     }
 });

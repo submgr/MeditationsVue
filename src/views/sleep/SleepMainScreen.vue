@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <NavbarController activatedfrom="Sleep/SleepMainScreen" @infomodalfunction="infomodalfunction()" align="right" />
+      <NavbarController activatedfrom="Sleep/SleepMainScreen" @infomodalfunction="showOnboarding()" align="right" />
       <h1 style="margin-left: 1.1rem; margin-top: 2.4rem; font-weight: 700; font-size: 34px; "
         class="light_upper_gradient">Сон</h1>
 
@@ -47,6 +47,46 @@
 
       </div>
 
+      <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="currentModalOpened == 'sleep_intro'" trigger="open-modal" style="margin-top: 5vh;"
+        :initial-breakpoint="1" :breakpoints="[1]" handle-behavior="cycle">
+        <ion-header >
+          <ion-toolbar>
+            <ion-buttons slot="end">
+              <ion-button @click="Modal_onWillDismiss()">Close</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding ion-text-center" style="text-align: center;">
+          <div class="ion-margin-top ion-text-center">
+            <img src="https://img.icons8.com/3d-fluency/750/sleeping.png" style="width: 30vw; margin: auto;" class="centered-image"/>
+            <h1 style="margin-top: 5vh;"><b>Засыпайте быстрее,<br/>спите лучше</b></h1>
+            <!-- List out the new features -->
+            <div v-for="(feature, index) in features" :key="index" class="feature-item"  style="text-align: left; margin-top: 2vh;">
+              <ion-icon
+                style="margin-left: 15px; margin-right: 25px;"
+                :icon="stopwatchOutline"
+                class="feature-icon"
+                color="primary"
+              ></ion-icon>
+              <div style="width: 85vw;">
+                <h4 style="font-weight: 800 !important; opacity: 0.75;">{{ feature.title }}</h4>
+                <p style="font-weight: 400 !important; opacity: 0.65;  margin-top: -5px;">{{ feature.description }}</p>
+              </div>
+            </div>
+          </div>
+          <ion-button 
+            expand="block" 
+            @click="Modal_onWillDismiss()" 
+            color="primary" 
+            style="margin-bottom: 7vh; margin-top: 4vh;"
+          >
+            Хорошо
+          </ion-button>
+        </ion-content>
+        
+        
+      </ion-modal>
+
     </ion-content>
   </ion-page>
 </template>
@@ -63,9 +103,46 @@
   opacity: 0;
 }
 
-ion-content {
-  --background: #000000 v-bind("`url(assets/svg/experimental-abstract-night-sky-background-dark-blue.svg)`") no-repeat center center / cover !important;
+ion-toolbar {
+  --background: none;
 }
+
+.header-ios ion-toolbar:last-of-type {
+  --border-width: 0 0 0px;
+}
+
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px; /* Adjust the margin as needed */
+}
+
+.feature-icon {
+  color: white;
+  opacity: 0.8;
+  font-size: 50px;
+  margin-right: 10px; /* Adjust the margin as needed */
+}
+
+
+/*ion-content {
+  --background: #000000 v-bind("`url(assets/svg/experimental-abstract-night-sky-background-dark-blue.svg)`") no-repeat center center / cover !important;
+}*/
+
+ion-content {
+  --background: #000000 url(../../assets/photo/zane-lee-7jus80HTnK0-unsplash_darken.jpg) no-repeat center center / cover !important;
+}
+
+ion-modal ion-content {
+  --background: none !important;
+}
+
+.centered-image {
+  width: 50vw; /* Adjust the width as needed */
+  max-width: 100%; /* Optional: ensures the image is not bigger than its container */
+}
+
 
 .light_upper_gradient {
   background: -webkit-linear-gradient(153deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.7259497549019608) 100%);
@@ -82,7 +159,7 @@ ion-content {
   
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonPage, IonContent, pickerController, toastController, IonButton, IonIcon } from '@ionic/vue';
+import { IonPage, IonContent, pickerController, toastController, IonButton, IonIcon, IonModal } from '@ionic/vue';
 
 import globaldata from '../../modules/global';
 
@@ -99,10 +176,7 @@ import {
 
 export default defineComponent({
   name: 'Tab3Page',
-  components: { IonContent, IonPage, NavbarController, IonButton, IonIcon },
-  setup() {
-    //
-  },
+  components: { IonContent, IonPage, NavbarController, IonButton, IonIcon, IonModal },
   data() {
     return {
       stopwatchOutline,
@@ -114,6 +188,7 @@ export default defineComponent({
       current_timer_timevalue_minutes: 15,
       SleepingCompanion_timeoutContainer: null,
       timerPicker_LastOptionIndex: 1,
+      currentModalOpened: "none",
       availableBgSounds: [
         {
           text: "Природа",
@@ -151,7 +226,38 @@ export default defineComponent({
       };
     }
   },
+  setup(){
+    const features = [
+      {
+        title: 'Успокаивающие саундскейпы',
+        description: 'Найдите свою идеальную фоновую мелодию для спокойного сна: от мягкого потрескивания теплого камина до тихого шепота леса в сумерках.'
+      },
+      {
+        title: 'Ускоренное наступление сна',
+        description: 'Попрощайтесь с бессонницей и долгими попытками заснуть. Наши звуковые ландшафты созданы для того, чтобы помочь вам заснуть быстрее, чем когда-либо прежде.'
+      },
+      {
+        title: 'Спите хорошо в любом месте',
+        description: 'Где бы вы ни находились - дома или в дороге, - это средство поможет вам заснуть естественным образом.'
+      },
+      {
+        title: 'Настраиваемый таймер сна',
+        description: 'Установите таймер сна, чтобы выбранный вами фоновый звук мягко затих. Настройте продолжительность в соответствии с вашими личными предпочтениями, чтобы музыка не играла всю ночь, а убаюкивала вас до глубокой дремоты.'
+      },
+      // Add more features...
+    ];
+
+    return {
+      features,
+    };
+  },
   methods: {
+    async showOnboarding() {
+      this.currentModalOpened = "sleep_intro"
+    },
+    Modal_onWillDismiss() {
+      this.currentModalOpened = "none"
+    },
     async startSession() {
       if (this.current_audiobackground.audio_url == null) {
         this.current_audiobackground = {
