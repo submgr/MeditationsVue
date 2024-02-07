@@ -12,7 +12,7 @@
                         </ion-buttons>
                     </ion-toolbar>
                 </ion-header>
-                <ion-content class="ion-padding">
+                <ion-content class="ion-padding" style="--background: none;">
 
                     <div v-if="wellbeingQuestionnaireState == 'intro'">
 
@@ -577,6 +577,19 @@ export default defineComponent({
 </script>
   
 <style scoped>
+
+ion-toolbar {
+    --background: none;
+}
+
+.header-ios ion-toolbar:last-of-type {
+    --border-width: 0 0 0px;
+}
+
+ion-modal ion-content {
+    --background: none !important;
+  }
+  
 #container {
     text-align: center;
     position: absolute;

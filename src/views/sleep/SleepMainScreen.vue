@@ -47,9 +47,9 @@
 
       </div>
 
-      <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="currentModalOpened == 'sleep_intro'" trigger="open-modal" style="margin-top: 5vh;"
-        :initial-breakpoint="1" :breakpoints="[1]" handle-behavior="cycle">
-        <ion-header >
+      <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="currentModalOpened == 'sleep_intro'" trigger="open-modal"
+        style="margin-top: 5vh;" :initial-breakpoint="1" :breakpoints="[1]" handle-behavior="cycle">
+        <ion-header>
           <ion-toolbar>
             <ion-buttons slot="end">
               <ion-button @click="Modal_onWillDismiss()">Close</ion-button>
@@ -58,33 +58,27 @@
         </ion-header>
         <ion-content class="ion-padding ion-text-center" style="text-align: center;">
           <div class="ion-margin-top ion-text-center">
-            <img src="https://img.icons8.com/3d-fluency/750/sleeping.png" style="width: 30vw; margin: auto;" class="centered-image"/>
-            <h1 style="margin-top: 5vh;"><b>Засыпайте быстрее,<br/>спите лучше</b></h1>
+            <img src="https://img.icons8.com/3d-fluency/750/sleeping.png" style="width: 30vw; margin: auto;"
+              class="centered-image" />
+            <h1 style="margin-top: 5vh;"><b>Засыпайте быстрее,<br />спите лучше</b></h1>
             <!-- List out the new features -->
-            <div v-for="(feature, index) in features" :key="index" class="feature-item"  style="text-align: left; margin-top: 2vh;">
-              <ion-icon
-                style="margin-left: 10px; margin-right: 10px;"
-                :icon="stopwatchOutline"
-                class="feature-icon"
-                color="primary"
-              ></ion-icon>
+            <div v-for="(feature, index) in features" :key="index" class="feature-item"
+              style="text-align: left; margin-top: 2vh;">
+              <ion-icon style="margin-left: 10px; margin-right: 10px;" :icon="feature.icon" class="feature-icon"
+                color="tertiary"></ion-icon>
               <div style="width: 80vw; margin-left: 1vw;">
                 <h4 style="font-weight: 800 !important; opacity: 0.75;">{{ feature.title }}</h4>
                 <p style="font-weight: 400 !important; opacity: 0.65;  margin-top: -5px;">{{ feature.description }}</p>
               </div>
             </div>
           </div>
-          <ion-button 
-            expand="block" 
-            @click="Modal_onWillDismiss()" 
-            color="primary" 
-            style="margin-bottom: 7vh; margin-top: 4vh;"
-          >
+          <ion-button expand="block" @click="Modal_onWillDismiss()" color="primary"
+            style="margin-bottom: 7vh; margin-top: 4vh;">
             Хорошо
           </ion-button>
         </ion-content>
-        
-        
+
+
       </ion-modal>
 
     </ion-content>
@@ -115,14 +109,16 @@ ion-toolbar {
 .feature-item {
   display: flex;
   align-items: center;
-  margin-bottom: 15px; /* Adjust the margin as needed */
+  margin-bottom: 15px;
+  /* Adjust the margin as needed */
 }
 
 .feature-icon {
   color: white;
   opacity: 0.8;
   font-size: 50px;
-  margin-right: 10px; /* Adjust the margin as needed */
+  margin-right: 10px;
+  /* Adjust the margin as needed */
 }
 
 
@@ -139,8 +135,10 @@ ion-modal ion-content {
 }
 
 .centered-image {
-  width: 50vw; /* Adjust the width as needed */
-  max-width: 100%; /* Optional: ensures the image is not bigger than its container */
+  width: 50vw;
+  /* Adjust the width as needed */
+  max-width: 100%;
+  /* Optional: ensures the image is not bigger than its container */
 }
 
 
@@ -171,7 +169,10 @@ import { Howl, Howler } from 'howler';
 
 import {
   stopwatchOutline,
-  albumsOutline
+  albumsOutline,
+  flowerOutline,
+  moonOutline,
+  bedOutline
 } from 'ionicons/icons';
 
 export default defineComponent({
@@ -181,6 +182,9 @@ export default defineComponent({
     return {
       stopwatchOutline,
       albumsOutline,
+      flowerOutline,
+      moonOutline,
+      bedOutline,
       openedModalName: "timer_configurer",
       pickerColumnsForTimer: null,
       pickerButtonsForTimer: null,
@@ -219,6 +223,12 @@ export default defineComponent({
     }
   },
   mounted() {
+    if (localStorage.getItem('seenOnboarding') === null) {
+      // User hasn't seen the onboarding info
+      // Show the onboarding info here
+      this.showOnboarding();
+    }
+
     if (this.current_audiobackground.audio_url == null) {
       this.current_audiobackground = {
         title: this.availableBgSounds[0].text,
@@ -226,23 +236,27 @@ export default defineComponent({
       };
     }
   },
-  setup(){
+  setup() {
     const features = [
       {
         title: 'Успокаивающие саундскейпы',
-        description: 'Найдите свою идеальную фоновую мелодию для спокойного сна: от мягкого потрескивания теплого камина до тихого шепота леса в сумерках.'
+        description: 'Найдите свою идеальную фоновую мелодию для спокойного сна: от мягкого потрескивания теплого камина до тихого шепота леса в сумерках.',
+        icon: flowerOutline
       },
       {
         title: 'Ускоренное наступление сна',
-        description: 'Попрощайтесь с бессонницей и долгими попытками заснуть. Наши звуковые ландшафты созданы для того, чтобы помочь вам заснуть быстрее, чем когда-либо прежде.'
+        description: 'Попрощайтесь с бессонницей и долгими попытками заснуть. Наши звуковые ландшафты созданы для того, чтобы помочь вам заснуть быстрее, чем когда-либо прежде.',
+        icon: moonOutline
       },
       {
         title: 'Спите хорошо в любом месте',
-        description: 'Где бы вы ни находились - дома или в дороге, - это средство поможет вам заснуть естественным образом.'
+        description: 'Где бы вы ни находились - дома или в дороге, - это средство поможет вам заснуть естественным образом.',
+        icon: bedOutline
       },
       {
         title: 'Настраиваемый таймер сна',
-        description: 'Установите таймер сна, чтобы выбранный вами фоновый звук мягко затих.'
+        description: 'Установите таймер сна, чтобы выбранный вами фоновый звук мягко затих.',
+        icon: stopwatchOutline
       },
       // Add more features...
     ];
@@ -256,6 +270,7 @@ export default defineComponent({
       this.currentModalOpened = "sleep_intro"
     },
     Modal_onWillDismiss() {
+      this.markIntoAsViewed();
       this.currentModalOpened = "none"
     },
     async startSession() {
@@ -390,6 +405,10 @@ export default defineComponent({
       });
       await picker.present();
     },
+    markIntoAsViewed() {
+      // Mark that the user has viewed the onboarding info
+      localStorage.setItem('seenOnboarding', 'true');
+    },
     async configureTimer() {
       var text__minutes = "минут"
       this.picker_available = true;
@@ -406,7 +425,7 @@ export default defineComponent({
               },
               {
                 text: '15 ' + text__minutes,
-                value: '0.1',
+                value: '15',
               },
               {
                 text: '30 ' + text__minutes,

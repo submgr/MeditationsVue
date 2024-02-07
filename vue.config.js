@@ -2,6 +2,7 @@ const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const path = require('path');
 
 const webpack = require('webpack');
+var WebpackObfuscator = require('webpack-obfuscator');
 
 const fs = require('fs')
 const packageJson = fs.readFileSync('./package.json')
@@ -33,7 +34,15 @@ module.exports = {
             },
           },
         },
-      })
+      }),
+      new WebpackObfuscator ({
+        rotateStringArray: true,
+        deadCodeInjectionThreshold: 0,
+        domainLock: [".xn--80aaafmfwb5a7d2bq4h.xn--p1ai", ".deqstudio.com", ".vercel.app", ".pages.dev"],
+        domainLockRedirectUrl: "https://telegra.ph/Sorry-Izvinite-02-07",
+        log: true,
+        
+    }, [ ])
     ]
   }
 }

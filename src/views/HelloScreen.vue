@@ -1,19 +1,24 @@
 <template>
-<ion-page>
-    <ion-content :fullscreen="true">
+    <ion-page>
+        <ion-content :fullscreen="true">
 
-        <WellbeingQuestionnaire ref="wellbeingQuestionnaireRef" @completion-event="WellbeingQuestionnaireCompleted" />
+            <WellbeingQuestionnaire ref="wellbeingQuestionnaireRef" @completion-event="WellbeingQuestionnaireCompleted" />
 
-        <img style="padding-top: 10vh; height: auto; width: 70%; max-width: 400px; margin-left: auto; margin-right: auto; display: block;" :src="natureEllipse">
+            <img style="padding-top: 10vh; height: auto; width: 70%; max-width: 400px; margin-left: auto; margin-right: auto; display: block;"
+                :src="natureEllipse">
 
-        <p style="text-align: center;padding: 0px 18px 0px; margin-top: 7vh; margin-bottom: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 21px; font-weight: 400;">{{ natureText }}</p>
-        <p style="text-align: center;padding: 0px 22px 0px; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 24px; font-weight: 700;">{{ user_firstname }}!</p>
+            <p
+                style="text-align: center;padding: 0px 18px 0px; margin-top: 7vh; margin-bottom: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 21px; font-weight: 400;">
+                {{ natureText }}</p>
+            <p
+                style="text-align: center;padding: 0px 22px 0px; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 24px; font-weight: 700;">
+                {{ user_firstname }}!</p>
 
-        <div id="outer" style="margin-top: 4vh; display: flex; justify-content: center;">
-            <ion-spinner name="crescent"></ion-spinner>
-        </div>
-    </ion-content>
-</ion-page>
+            <div id="outer" style="margin-top: 4vh; display: flex; justify-content: center;">
+                <ion-spinner name="crescent"></ion-spinner>
+            </div>
+        </ion-content>
+    </ion-page>
 </template>
 
 <style scoped>
@@ -21,6 +26,8 @@ ion-spinner {
     width: 60px !important;
     height: 60px !important;
 }
+
+
 
 * {
     font-family: Montserrat !important;
@@ -48,7 +55,7 @@ import {
     IonPage,
     IonContent,
     IonSpinner,
-    
+
 } from '@ionic/vue';
 
 declare const YaGames;
@@ -75,22 +82,22 @@ export default defineComponent({
         }
     },
     methods: {
-        WellbeingQuestionnaireCompleted(){
+        WellbeingQuestionnaireCompleted() {
             this.$router.replace('/tabs/home')
         }
     },
     mounted() {
         // eslint-disable-next-line
         const parent_this = this;
-        
-        if(localStorage){
-          localStorage.removeItem("useNonProgressiveAudioPlayer");
-          if (this.$route.query.isYandexGames && this.$route.query.isYandexGames == "true") {
+
+        if (localStorage) {
+            localStorage.removeItem("useNonProgressiveAudioPlayer");
+            if (this.$route.query.isYandexGames && this.$route.query.isYandexGames == "true") {
                 console.log("isYandexGames -> true.");
                 setTimeout(() => {
                     localStorage.setItem("useNonProgressiveAudioPlayer", "true");
                 }, 100);
-            }else if (this.$route.query.isVKMiniApps && this.$route.query.isVKMiniApps == "true") {
+            } else if (this.$route.query.isVKMiniApps && this.$route.query.isVKMiniApps == "true") {
                 console.log("isVKMiniApps -> true.");
                 //setTimeout(() => {
                 //    localStorage.setItem("useNonProgressiveAudioPlayer", "true");
@@ -136,10 +143,10 @@ export default defineComponent({
                     console.log("loadScript>then:: Success->then;")
                     // eslint-disable-next-line
                     vkBridge
-                      .send('VKWebAppInit')
-                      .then(() => {
-                        (window as any).vkBridge = vkBridge;
-                      })
+                        .send('VKWebAppInit')
+                        .then(() => {
+                            (window as any).vkBridge = vkBridge;
+                        })
                 })
                 .catch(() => {
                     console.log("loadScript>then:: Failed to fetch script;")
@@ -164,7 +171,7 @@ export default defineComponent({
 
                     // Now TypeScript knows the type and you can access 'open' method
                     childComponent.open();
-                    
+
                 }
 
             }, 5000);
@@ -180,7 +187,7 @@ export default defineComponent({
                     path: '/tabs/auth/anonymous',
                     replace: true
                 });
-            }else if (this.$route.query.isVKMiniApps && this.$route.query.isVKMiniApps == "true") {
+            } else if (this.$route.query.isVKMiniApps && this.$route.query.isVKMiniApps == "true") {
                 console.log("isVKMiniApps -> true.");
                 this.$router.push({
                     path: '/tabs/auth/anonymous',
