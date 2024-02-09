@@ -18,6 +18,7 @@ log.txt
 package-lock.json
 npm-debug.log*
 
+/desktop
 /.idea
 /.ionic
 /.sass-cache
@@ -27,6 +28,8 @@ npm-debug.log*
 /coverage
 /dist
 /node_modules
+/desktop/node_modules
+/desktop/webapp/dist
 /platforms
 /plugins
 /www

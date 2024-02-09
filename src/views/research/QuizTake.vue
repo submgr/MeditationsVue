@@ -2401,7 +2401,6 @@ export default defineComponent({
                 setTimeout(() => {
                     this.resendhttpdata(payload)
                 }, 5000);
-                alert(e)
             });
         },
         /* eslint-disable-next-line no-unused-vars */

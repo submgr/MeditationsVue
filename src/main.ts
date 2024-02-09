@@ -4,6 +4,8 @@ import router from './router';
 import i18n from './i18n'
 import { Capacitor } from '@capacitor/core';
 
+import { App as CapacitorApp, URLOpenListenerEvent as CapacitorURLOpenListenerEvent } from "@capacitor/app";
+
 import store from "./store";
 
 import { IonicVue } from '@ionic/vue';
@@ -84,6 +86,26 @@ axios.interceptors.response.use(function (response) {
 
   }
   return Promise.reject(error);
+});
+
+CapacitorApp.addListener('appUrlOpen', function (event: CapacitorURLOpenListenerEvent) {
+  // Example url: https://deqstudio.com/servicereserved/meditationsapp/tabs/tabs2
+  // slug = /tabs/tabs2
+  const appurlopen_url = event.url;
+  let slug = null;
+  if(appurlopen_url.startsWith("yourmeditation:")){
+    slug = "/tabs/" + appurlopen_url.split("yourmeditation:").pop();
+  }else{
+    slug = appurlopen_url.split("deqstudio.com/servicereserved/meditationsapp").pop();
+  }
+  
+
+  // We only push to the route if there is a slug present
+  if (slug) {
+    router.push({
+      path: slug,
+    });
+  }
 });
 
 

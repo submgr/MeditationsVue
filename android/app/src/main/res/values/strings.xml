@@ -3,7 +3,7 @@
     <string name="app_name">Ваша Медитация</string>
     <string name="title_activity_main">Ваша Медитация</string>
     <string name="package_name">io.ionic.starter</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="custom_url_scheme">com.aramvirabyan.yourmeditation</string>
     <string name="admob_app_id">ca-app-pub-1091706109493372~8477728611</string>
     <string name="server_client_id">70119537016-fopt4mu69mtdvf4seb12i3drcfa7i41s.apps.googleusercontent.com</string>
 </resources>

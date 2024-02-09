@@ -22,9 +22,6 @@
         </div>
       </div>
 
-
-
-
       <div>
         <div style="bottom: 15vh !important; position:fixed !important; z-index: 5500 !important; width: 80vw; display: block;
       margin-left: 10vw;
@@ -58,17 +55,17 @@
         </ion-header>
         <ion-content class="ion-padding ion-text-center" style="text-align: center;">
           <div class="ion-margin-top ion-text-center">
-            <img src="https://img.icons8.com/3d-fluency/750/sleeping.png" style="width: 30vw; margin: auto;"
+            <img src="../../assets/graphics/sleeping_emoji.png" style="width: 30vw; margin: auto;"
               class="centered-image" />
-            <h1 style="margin-top: 5vh;"><b>Засыпайте быстрее,<br />спите лучше</b></h1>
+            <h1 style="margin-top: 5vh; font-size: 1.625rem !important;"><b>Засыпайте быстрее,<br />спите лучше</b></h1>
             <!-- List out the new features -->
             <div v-for="(feature, index) in features" :key="index" class="feature-item"
               style="text-align: left; margin-top: 2vh;">
               <ion-icon style="margin-left: 10px; margin-right: 10px;" :icon="feature.icon" class="feature-icon"
                 color="tertiary"></ion-icon>
               <div style="width: 80vw; margin-left: 1vw;">
-                <h4 style="font-weight: 800 !important; opacity: 0.75;">{{ feature.title }}</h4>
-                <p style="font-weight: 400 !important; opacity: 0.65;  margin-top: -5px;">{{ feature.description }}</p>
+                <h4 style="font-weight: 800 !important; opacity: 0.75; font-size: 1.25rem !important;">{{ feature.title }}</h4>
+                <p style="font-weight: 400 !important; opacity: 0.65;  margin-top: -1vh;">{{ feature.description }}</p>
               </div>
             </div>
           </div>
