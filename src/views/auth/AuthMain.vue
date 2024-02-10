@@ -1,5 +1,4 @@
 <template>
-    <GoogleLogin />
     <ion-page>
         <ion-content :fullscreen="true">
 
@@ -76,9 +75,9 @@
                     <h1 style="margin-top: 15vh; text-align: center;">
                         <ion-spinner name="lines-sharp"></ion-spinner>
                     </h1>
-                    <p style="text-align: center;">Ожидание ответа<br/>от Google...</p>
+                    <p style="text-align: center;">Ожидание ответа<br />от Google...</p>
                 </ion-content>
-              </ion-modal>
+            </ion-modal>
 
         </ion-content>
     </ion-page>
@@ -241,11 +240,11 @@ export default defineComponent({
                 err_on_googleauth = true;
             }
 
-            if(!err_on_googleauth){
+            if (!err_on_googleauth) {
                 this.proccessGoogleResponse(userResponse)
             }
-            
-            
+
+
         },
         async proccessGoogleResponse(response) {
             //console.log("response: ", response)
