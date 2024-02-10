@@ -65,7 +65,7 @@
                 color="tertiary"></ion-icon>
               <div style="width: 80vw; margin-left: 1vw;">
                 <h4 style="font-weight: 800 !important; opacity: 0.75; font-size: 1.25rem !important;">{{ feature.title }}</h4>
-                <p style="font-weight: 400 !important; opacity: 0.65;  margin-top: -1vh;">{{ feature.description }}</p>
+                <p style="font-weight: 400 !important; opacity: 0.65;  margin-top: 1px; line-height: 1.45 !important;">{{ feature.description }}</p>
               </div>
             </div>
           </div>
