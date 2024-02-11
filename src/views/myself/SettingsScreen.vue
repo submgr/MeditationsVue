@@ -2,14 +2,19 @@
     <ion-page>
         <ion-content :fullscreen="true">
 
-            <h1 style="margin-left: 4vw; margin-right: 4vw; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Мое
-                благополучие</h1>
+            <NavbarController activatedfrom="Emotions/MakeSmilePhoto" @backfunction="$router.push({ path: '/tabs/myself/overview', replace: false });"
+        @infomodalfunction="infomodalfunction()" align="right" />
+
+            <h1 style="margin-left: 4vw; margin-right: 4vw; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Профиль</h1>
             <div style="padding-top: 1.0rem;"></div>
 
-            <div style="padding-top: 0.1rem;">
+            <div style="padding-top: 0.1rem; ">
                 <div>
-                    <div class="card-alfa custom-swiper suggestion-block bg-1 card-meditate">
+                    <div class="p-ripple card-alfa custom-swiper suggestion-block bg-1 card-meditate " v-ripple @click="openAccountEditor()">
                         <div style="margin-left: 5vw;">
+                            <ion-icon :icon="createOutline"
+                                style="margin-left: 0.3rem; margin-top: 1.8rem; color: white; font-size: 3rem;"
+                                ></ion-icon>
                             <div class="text-a1 suggestion-text text-meditate"><p style="display:inline;">{{ name }}</p><img v-if="isPremiumActive" style="margin-left: 5vw; margin-top: -3.2vh; height: 10vh; display:inline;" src="../../assets/graphics/premium_glowing_pink_text_fromcanva.png"/></div>
                         </div>
                     </div>
@@ -21,58 +26,19 @@
                 </div>--->
             </div>
 
-            <ion-card style="border-radius: 20px;">
-                <ion-card-header>
-                    <ion-card-title>У вас все получится!</ion-card-title>
-                    <ion-card-subtitle>Медитация — это хорошая привычка.</ion-card-subtitle>
-                </ion-card-header>
+            <ion-list :inset="true" style="--background: red;">
+                <ion-item @click="userAgreements();">
+                  <ion-label>Пользовательские соглашения</ion-label>
+                </ion-item>
+                <ion-item @click="$router.push({ path: '/tabs/support/main', replace: false });">
+                    <ion-label>Поддержка</ion-label>
+                  </ion-item>
+                <ion-item @click="signOut()">
+                  <ion-label>Выйти из учетной записи</ion-label>
+                </ion-item>
+              </ion-list>
 
-                <ion-card-content>
-
-                    <span v-if="!enoughExpForTimeReview">Приложение будет становиться все более индивидуальным для вас с
-                        каждой пройденной медитацией! Продолжайте в том же духе!</span>
-                    <span v-if="enoughExpForTimeReview">За все время вы провели {{ meditationtime }} медитируя. Так
-                        держать!</span>
-
-                    <br /><br />Согласно исследованиям, важно медитировать периодически, чтобы усилить эффект. &nbsp;<span
-                        style="color:rgb(94, 94, 219)" @click="learnMore()">Узнайте&nbsp;больше</span></ion-card-content>
-            </ion-card>
-
-            <NotificationsBanner notificationType="emotionalStateFeature" />
-
-            <ion-grid style="--ion-grid-padding: 0 0 0 0;">
-
-
-                <ion-row style="margin-top: -3vh; ">
-                    <ion-col style="margin-right: -0.69rem;"
-                        @click="$router.push({ path: '/tabs/support/main', replace: false });">
-                        <ion-card class="ion-activatable ripple-parent rectangle" style="border-radius: 20px;">
-                            <ion-ripple-effect></ion-ripple-effect>
-                            <ion-card-header>
-                                <ion-card-title><ion-icon style="font-size: 5vh; margin-top: 1vh;"
-                                        :icon="helpBuoyOutline"></ion-icon></ion-card-title>
-                            </ion-card-header>
-                            <ion-card-content>
-                                Поддержка
-                            </ion-card-content>
-                        </ion-card>
-                    </ion-col>
-                    <ion-col style="margin-left: -0.69rem; display: block;"
-                        @click="$router.push({ path: '/tabs/myself/settings', replace: false });">
-                        <ion-card class="ion-activatable ripple-parent rectangle" style="border-radius: 20px; ">
-                            <ion-ripple-effect></ion-ripple-effect>
-                            <ion-card-header>
-                                <ion-card-title><ion-icon style="font-size: 5vh; margin-top: 1vh;"
-                                        :icon="settingsOutline"></ion-icon></ion-card-title>
-                            </ion-card-header>
-
-                            <ion-card-content>
-                                Настройки
-                            </ion-card-content>
-                        </ion-card>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
+            
 
             <div style="height: calc(50px + 1.5vh);"></div>
 
@@ -100,6 +66,10 @@
 </template>
 
 <style scoped>
+
+ion-item{
+    --background: var(--ion-card-background);
+}
 .standart_padding {
     margin: 0px 15px 30px 15px;
 }
@@ -111,7 +81,7 @@
 }
 
 .card-meditate {
-    height: 18.5vh !important;
+    height: 33.5vh !important;
 }
 
 .suggestion-block {
@@ -224,19 +194,10 @@ import {
     IonContent,
     IonModal,
     IonLabel,
-    IonIcon,
     IonInput,
     IonItem,
-    IonCard,
-    IonCardTitle,
-    IonCardSubtitle,
     IonButton,
-    IonCardHeader,
-    IonCardContent,
-    IonRippleEffect,
-    IonGrid,
-    IonCol,
-    IonRow
+    actionSheetController
 } from '@ionic/vue';
 
 import {
@@ -249,11 +210,15 @@ import {
     settingsOutline
 } from 'ionicons/icons';
 
+import NavbarController from '@/components/NavbarController.vue';
+
 import globaldata from '../../modules/global';
 
-import NotificationsBanner from '@/components/NotificationsBanner.vue';
+//import NotificationsBanner from '@/components/NotificationsBanner.vue';
 
 import store from "../../store";
+
+import auth_logout from "../../store";
 
 const getUserData = computed(() => {
     return store.getters.getUserData;
@@ -267,20 +232,11 @@ export default defineComponent({
         IonPage,
         IonModal,
         IonLabel,
-        IonIcon,
         IonInput,
         IonItem,
-        IonCard,
-        NotificationsBanner,
-        IonCardTitle,
-        IonCardSubtitle,
         IonButton,
-        IonCardHeader,
-        IonCardContent,
-        IonRippleEffect,
-        IonGrid,
-        IonCol,
-        IonRow
+        NavbarController
+        
     },
     mounted() {
         const tabsEl = document.querySelector('ion-tab-bar');
@@ -357,7 +313,69 @@ export default defineComponent({
 
             return formatted_message;
 
-        }
+        },
+        async signOut() {
+            // eslint-disable-next-line
+            var parent_this = this;
+            const actionSheet = await actionSheetController.create({
+                header: 'Вы уверены, что хотите выйти из текущей учетной записи?',
+                buttons: [
+                    {
+                        text: 'Выйти',
+                        role: 'confirm',
+                    },
+                    {
+                        text: 'Отмена',
+                        role: 'cancel',
+                    },
+                ],
+            });
+            actionSheet.present();
+
+            const { role } = await actionSheet.onWillDismiss();
+
+            if (role === 'confirm') {
+                
+                auth_logout();
+            }
+        },
+        async userAgreements() {
+            // eslint-disable-next-line
+            var parent_this = this;
+            const actionSheet = await actionSheetController.create({
+                header: 'Текущие пользовательские соглашения',
+                buttons: [
+                    {
+                        text: 'Политика конфиденциальности',
+                        role: 'privacypolicy',
+                    },
+                    {
+                        text: 'Условия использования',
+                        role: 'termsofuse',
+                    },
+                    {
+                        text: 'Удаление учетной записи',
+                        role: 'accountdeleteprocedure',
+                    },
+                ],
+            });
+            actionSheet.present();
+
+            const { role } = await actionSheet.onWillDismiss();
+
+            if (role === 'privacypolicy') {
+                window.open("https://вашамедитация.рф/privacypolicy/", "_blank")
+            }
+
+            if (role === 'termsofuse') {
+                window.open("https://вашамедитация.рф/termsofservice/", "_blank")
+            }
+
+            if (role === 'accountdeleteprocedure') {
+                window.open("https://вашамедитация.рф/accountdeletion/", "_blank")
+            }
+        },
+
 
     },
     data: () => ({

@@ -5,6 +5,9 @@
     <ion-page>
       <ion-content :fullscreen="true">
 
+        <NavbarController activatedfrom="Emotions/MakeSmilePhoto" @backfunction="$router.back()"
+        @infomodalfunction="infomodalfunction()" align="right" />
+
         <h1 style="margin-left: 1.1rem; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Поддержка</h1>
 
         <div style="margin-left: 1.1rem; margin-right: 2vw;">
@@ -53,9 +56,11 @@
   import { IonPage, IonContent, IonGrid, IonLabel, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonRippleEffect } from '@ionic/vue';
   import { chatbubblesOutline, mailOutline } from 'ionicons/icons';
 
+  import NavbarController from '@/components/NavbarController.vue';
+
   export default  defineComponent({
     name: 'Tab1Page',
-    components: { IonContent, IonPage, IonGrid, IonRow, IonCol, IonCard, IonLabel, IonCardHeader, IonCardTitle, IonCardContent, IonRippleEffect  },
+    components: { IonContent, IonPage, IonGrid, IonRow, IonCol, IonCard, IonLabel, IonCardHeader, IonCardTitle, IonCardContent, IonRippleEffect, NavbarController  },
     mounted(){
         //
     },

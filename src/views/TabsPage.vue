@@ -3,6 +3,8 @@
     <ion-tabs translucent="true">
       <ion-router-outlet></ion-router-outlet>
       <ion-tab-bar slot="bottom" translucent="true" mode="ios">
+        
+        
         <!---<ion-tab-button tab="tab1" href="/tabs/tab1">
           <ion-icon :icon="musicalNote" />
           <ion-label>Tab 1</ion-label>
@@ -21,14 +23,19 @@
           <ion-icon :icon="bedOutline" />
           <ion-label>Сон</ion-label>
         </ion-tab-button>
+        <ion-tab-button tab="meditation" href="/tabs/meditation/main">
+          <ion-icon :icon="sparklesOutline" />
+          <ion-label>Медитация</ion-label>
+        </ion-tab-button>
+        <ion-tab-button tab="home" href="/tabs/home">
+          <ion-icon :icon="homeOutline" />
+          <ion-label>Главная</ion-label>
+        </ion-tab-button>
         <!--<ion-tab-button tab="music" href="/tabs/music/main">
           <ion-icon :icon="musicalNotesOutline" />
           <ion-label>Музыка</ion-label>
         </ion-tab-button>--->
-        <ion-tab-button tab="home" href="/tabs/home">
-          <ion-icon :icon="homeOutline" />
-          <ion-label>Медитация</ion-label>
-        </ion-tab-button>
+        
         <ion-tab-button tab="relaxation" href="/tabs/relaxation/info">
           <ion-icon :icon="infiniteOutline" />
           <ion-label>Баланс</ion-label>
@@ -45,7 +52,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
-import { musicalNote, gameController, videocam, infiniteOutline, homeOutline, happyOutline, bedOutline, musicalNotesOutline } from 'ionicons/icons';
+import { musicalNote, gameController, videocam, infiniteOutline, homeOutline, happyOutline, bedOutline, musicalNotesOutline, sparklesOutline } from 'ionicons/icons';
 
 export default defineComponent({
   name: 'TabsPage',
@@ -60,6 +67,7 @@ export default defineComponent({
       happyOutline,
       bedOutline,
       musicalNotesOutline,
+      sparklesOutline,
       footer: "show"
     }
   }

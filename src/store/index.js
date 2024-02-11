@@ -1,25 +1,35 @@
 // store/index.js
 
-function check_if_begins_with(input, substring){
-    var processed_data = input.toString();
-    if(input[0] == substring){
-        return true;
-    }else{
-        return false;
-    }
+function check_if_begins_with(input, substring) {
+  var processed_data = input.toString();
+  if (input[0] == substring) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
-function auth_logout(){
-    console.log("auth_logout Function() called, logging out...")
-    localStorage.removeItem("auth_token");
-    localStorage.removeItem("auth_userid");
-    this.$router.push({ path: "/tabs/auth/loggedOut", replace: true });
+export function auth_logout() {
+  console.log("auth_logout Function() called, logging out...")
+  localStorage.removeItem("auth_token");
+  localStorage.removeItem("auth_userid");
+  this.$router.push({ path: "/tabs/auth/loggedOut", replace: true });
 }
 
 import { createStore } from "vuex";
+import createPersistedState from 'vuex-persistedstate'
+import * as Cookies from 'js-cookie'
+
 import axios from "axios";
 import globaldata from '../modules/global';
 export default createStore({
+  plugins: [
+    createPersistedState({
+      getItem: key => localStorage.getItem(key),
+      setItem: (key, value) => localStorage.setItem(key, value),
+      removeItem: key => localStorage.removeItem(key)
+    })
+  ],
   state: {
     packageVersion: process.env.PACKAGE_VERSION || '0',
     // the rest of your state here
@@ -35,32 +45,34 @@ export default createStore({
   actions: {
     async fetchUserData({ commit }) {
       try {
-        const data = await axios.get(globaldata.api.hostname + "access/user/getData", { params:
-                            {auth_id: localStorage.getItem("auth_userid"), auth_token: localStorage.getItem("auth_token")}});
-        
+        const data = await axios.get(globaldata.api.hostname + "access/user/getData", {
+          params:
+            { auth_id: localStorage.getItem("auth_userid"), auth_token: localStorage.getItem("auth_token") }
+        });
+
         commit("SET_USERDATA", data.data.results);
       } catch (error) {
         if (error.response) {
-            switch (error.response.status.toString()) {
-                case "401":
-                    //UNAUTHORIZED!!
-                    auth_logout();
-                    break;
-                case "404":
-                    //wtf??
-                    break;
-                case check_if_begins_with(error.response.status.toString(), "5"):
-                    //SERVER ERROR!!
-                    break;
-                default:
-                    //UNKNOWN ERROR!!
-                    break;
-            }
+          switch (error.response.status.toString()) {
+            case "401":
+              //UNAUTHORIZED!!
+              auth_logout();
+              break;
+            case "404":
+              //wtf??
+              break;
+            case check_if_begins_with(error.response.status.toString(), "5"):
+              //SERVER ERROR!!
+              break;
+            default:
+              //UNKNOWN ERROR!!
+              break;
           }
+        }
         console.log(error);
       }
     },
-    async setNewName({ commit }, name){
+    async setNewName({ commit }, name) {
       commit("SET_NAME", name);
     }
   },

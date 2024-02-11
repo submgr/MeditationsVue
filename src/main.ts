@@ -6,6 +6,7 @@ import { Capacitor } from '@capacitor/core';
 
 import { App as CapacitorApp, URLOpenListenerEvent as CapacitorURLOpenListenerEvent } from "@capacitor/app";
 
+
 import store from "./store";
 
 import { IonicVue } from '@ionic/vue';
@@ -39,11 +40,22 @@ import './theme/variables.css';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 defineCustomElements(window);
 
+import PrimeVue from 'primevue/config';
+import 'primevue/resources/themes/aura-dark-purple/theme.css'
+
 const app = createApp(App)
   .use(IonicVue)
   .use(router)
   .use(LoadScript)
   .use(store)
+  .use(PrimeVue, { ripple: true })
+
+
+import Ripple from 'primevue/ripple';
+
+app.directive('ripple', Ripple);
+
+
 
 import axios from 'axios'
 import VueAxios from 'vue-axios'

@@ -6,9 +6,9 @@
 
             <SystemAnnoncementProvider origin="home" />
             <AdvancedLoader v-if="1 > 2" />
-            <h1 style="margin-left: 1.1rem; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Главная</h1>
+            <h1 style="margin-left: 1.1rem; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Медитация</h1>
             <div style="display: block; margin-top: 4vh;">
-                <NotificationsBanner notificationType="suggestToSmileToday" />
+                <NotificationsBanner notificationType="none" />
             </div>
 
             <div style="padding-top: 0.0rem;">
@@ -32,7 +32,7 @@
                 </div>--->
             </div>
 
-            <MoodCheck />
+            
 
             <MeditationsList @event-getmeditation="getMeditation" style="margin-top: -2.5vh;" />
 
@@ -43,7 +43,7 @@
 </template>
 
 <style scoped>
-@import '../assets/css/adaptative_ui.css';
+@import '../../assets/css/adaptative_ui.css';
 
 .standart_padding {
     margin: 0px 15px 30px 15px;
@@ -67,7 +67,7 @@
 }
 
 .bg-1 {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(1, 116, 9, 0.714)), url('../assets/photo/ezgifprocessed_palms.webp') !important;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(1, 116, 9, 0.714)), url('../../assets/photo/ezgifprocessed_palms.webp') !important;
     background-position: 100%;
     background-size: cover !important;
 }
@@ -167,13 +167,12 @@ import {
     playOutline
 } from 'ionicons/icons';
 
-import globaldata from '../modules/global';
-import { get as getMeditation} from '../modules/getMeditation';
+import globaldata from '../../modules/global';
 
 import MeditationsList from '@/components/MeditationsList.vue';
 import NotificationsBanner from '@/components/NotificationsBanner.vue';
 import SystemAnnoncementProvider from '@/components/system/AnnoncementProvider.vue';
-import MoodCheck from "@/components/questionnaire/MoodCheck.vue"
+//import MoodCheck from "@/components/questionnaire/MoodCheck.vue"
 
 import AdvancedLoader from '@/components/AdvancedLoader.vue';
 import LoadingActivity from '@/components/system/LoadingActivity.vue';
@@ -191,7 +190,7 @@ export default defineComponent({
         AdvancedLoader,
         SystemAnnoncementProvider,
         IonRippleEffect,
-        MoodCheck,
+        //MoodCheck,
         IonIcon,
         LoadingActivity,
     },
@@ -223,8 +222,7 @@ export default defineComponent({
             switch (currentListenedMeditations) {
                 case 0:
                     console.log("No meditations listened");
-                    //parent_this.getMeditation({ servicetype: 'static', searchtype: 'theme', searchtag: 'newbie1' })
-                    getMeditation({ servicetype: 'static', searchtype: 'theme', searchtag: 'newbie1' }, parent_this)
+                    parent_this.getMeditation({ servicetype: 'static', searchtype: 'theme', searchtag: 'newbie1' })
                     break;
                 // case 1:
                 //     console.log("Listened 1 meditation");
@@ -232,8 +230,7 @@ export default defineComponent({
                 //     break;
                 default:
                     console.log("Listened 1+ meditation (default route)");
-                    //parent_this.getMeditation({ servicetype: 'dynamic', searchtype: 'random', searchtag: '' })
-                    getMeditation({ servicetype: 'dynamic', searchtype: 'random', searchtag: '' }, parent_this)
+                    parent_this.getMeditation({ servicetype: 'dynamic', searchtype: 'random', searchtag: '' })
                     break;
             }
 

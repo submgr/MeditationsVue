@@ -91,6 +91,10 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
+        path: 'meditation/main',
+        component: () => import('@/views/meditation/MainScreen.vue')
+      },
+      {
         name: 'meditation/playnonprogressive',
         path: 'meditation/playnonprogressive',
         component: () => import('@/views/meditation/NonProgressivePlayerScreen.vue'),
@@ -121,6 +125,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'myself/overview',
         component: () => import('@/views/myself/MyselfOverview.vue')
+      },
+      {
+        path: 'myself/settings',
+        component: () => import('@/views/myself/SettingsScreen.vue')
       },
       {
         name: 'read/youshouldknow',
