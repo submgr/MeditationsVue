@@ -120,13 +120,21 @@ CapacitorApp.addListener('appUrlOpen', function (event: CapacitorURLOpenListener
   }
 });
 
+import * as gamificationEngine from "./modules/gamificationEngine"
+const achievementsSystem = gamificationEngine.createAchievementsSystem('userAchievements');
+
 
 app.config.globalProperties.$http = axios; // Allow axios in all componenets this.$http.get
 app.config.globalProperties.$i18next = i18next;
+app.config.globalProperties.$achievements = achievementsSystem;
 
 
 import * as adsEngine from "./modules/ads_engine"
 adsEngine.prepareAdsService();
+
+
+
+
 
 setTimeout(() => {
   adsEngine.showBanner();

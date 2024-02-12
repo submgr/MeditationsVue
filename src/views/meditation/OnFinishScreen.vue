@@ -33,6 +33,8 @@
 
   import SystemAnnoncementProvider from "../../components/system/AnnoncementProvider.vue"
 
+  import * as gamificationEngine from "../../modules/gamificationEngine"
+
   import confetti from 'canvas-confetti';
   
   export default  defineComponent({
@@ -66,6 +68,8 @@
             tabsEl.hidden = false;
             tabsEl.style.height = "1";
         }
+
+        gamificationEngine.recordUserEvent(this.$achievements, "meditationsplayed", 1)
     }
   });
   </script>

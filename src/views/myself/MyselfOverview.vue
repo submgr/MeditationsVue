@@ -26,12 +26,13 @@
                     <ion-card-title>У вас все получится!</ion-card-title>
                     <ion-card-subtitle>Медитация — это хорошая привычка.</ion-card-subtitle>
                 </ion-card-header>
-
+                
                 <ion-card-content>
 
                     <span v-if="!enoughExpForTimeReview">Приложение будет становиться все более индивидуальным для вас с
                         каждой пройденной медитацией! Продолжайте в том же духе!</span>
-                    <span v-if="enoughExpForTimeReview">За все время вы провели {{ meditationtime }} медитируя. Так
+                    <span v-if="enoughExpForTimeReview">
+                        За все время вы провели {{ meditationtime }} медитируя. Так
                         держать!</span>
 
                     <br /><br />Согласно исследованиям, важно медитировать периодически, чтобы усилить эффект. &nbsp;<span

@@ -32,6 +32,8 @@
                 </div>--->
             </div>
 
+            <TasksController />
+
             <MoodCheck />
 
             <MeditationsList @event-getmeditation="getMeditation" style="margin-top: -2.5vh;" />
@@ -178,6 +180,8 @@ import MoodCheck from "@/components/questionnaire/MoodCheck.vue"
 import AdvancedLoader from '@/components/AdvancedLoader.vue';
 import LoadingActivity from '@/components/system/LoadingActivity.vue';
 
+import TasksController from '@/components/gamification/TasksController.vue';
+
 
 
 
@@ -194,8 +198,12 @@ export default defineComponent({
         MoodCheck,
         IonIcon,
         LoadingActivity,
+        TasksController
     },
     mounted() {
+
+        console.log(this.$achievements)
+
         const tabsEl = document.querySelector('ion-tab-bar');
         if (tabsEl) {
             tabsEl.hidden = false;
@@ -203,6 +211,7 @@ export default defineComponent({
         }
 
         console.log(this.$i18next)
+
     },
     methods: {
         toggleStory() {
