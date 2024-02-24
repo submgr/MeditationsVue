@@ -2,7 +2,7 @@
   "name": "meditations-ionic-vue",
   "version": "0.0.1",
   "private": true,
-  "homepage": "./",
+  "homepage": "./", 
   "scripts": {
     "serve": "vue-cli-service serve",
     "installandbuild": "npm install && npm run build",
