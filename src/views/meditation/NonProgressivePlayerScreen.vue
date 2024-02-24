@@ -44,8 +44,7 @@
         </ion-content>
     </ion-page>
     </template>
-    
-    <style scoped>
+<style scoped>
     .controllers_wrapper{
         margin: 0 auto;
         position: fixed;
@@ -80,8 +79,7 @@
     }
     
     </style>
-    
-    <script lang="ts">
+<script lang="ts">
     import {
         defineComponent
     } from 'vue';
@@ -426,4 +424,3 @@
         }
     });
     </script>
-    
