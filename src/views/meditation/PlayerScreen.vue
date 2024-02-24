@@ -81,6 +81,7 @@
         </ion-content>
     </ion-page>
     </template>
+    
 <style scoped>
 .loader_at_corner {
     position: fixed;
@@ -192,6 +193,7 @@
     --text-align: center;
 }
 </style>
+    
 <script lang="ts">
 import {
     defineComponent
@@ -970,3 +972,4 @@ export default defineComponent({
     }
 });
 </script>
+    
