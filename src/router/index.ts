@@ -175,6 +175,14 @@ const routes: Array<RouteRecordRaw> = [
         path: 'research/takequiz',
         component: () => import('@/views/research/QuizTake.vue')
       },
+      {
+        path: 'payment/main',
+        component: () => import('@/views/payment/PaymentScreen.vue')
+      },
+      {
+        path: 'payment/success',
+        component: () => import('@/views/payment/PaymentSuccess.vue')
+      },
     ]
   }
 ]
