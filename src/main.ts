@@ -78,6 +78,10 @@ axiosRetry(axios, { retries: 3, retryDelay: (retryCount) => {
 
 // Add request interceptor
 axios.interceptors.request.use((config) => {
+  if (config.url.includes('user/getData')) {
+    return config;
+  }
+  
   // Assuming the params are in config.params for GET requests
   // and in config.data for POST requests
   if (config.method === 'get') {

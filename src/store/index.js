@@ -47,6 +47,7 @@ export default createStore({
       try {
         var var_userauthtoken = localStorage.getItem("auth_token");
         var var_userid = localStorage.getItem("auth_userid");
+        alert(localStorage.getItem("auth_userid"))
         const data = await axios.get(globaldata.api.hostname + "access/user/getData", {
           params:
             { auth_userid: var_userid, auth_token: var_userauthtoken }
