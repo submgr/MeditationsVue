@@ -337,7 +337,7 @@ export default defineComponent({
             if (role === 'confirm') {
                 
                 //auth_logout();
-                this.$store.dispatch("accountLogout").then(() => {
+                this.$store.dispatch("accountLogout", parent_this).then(() => {
                         //done! logged out!
                     });
             }

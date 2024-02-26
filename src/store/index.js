@@ -81,12 +81,18 @@ export default createStore({
     async setNewName({ commit }, name) {
       commit("SET_NAME", name);
     },
-    async accountLogout({ commit }) {
+    async accountLogout({ commit }, vueobject = null) {
+      // VUE CONTEXT NEEDS TO BE PASSED TO THIS FUNCTION TO MAKE REDIRECT WORK
+      // eslint-disable-next-line
+      var parent_this = vueobject;
       console.log("auth_logout Function() called, logging out...")
       localStorage.removeItem("auth_token");
       localStorage.removeItem("auth_userid");
       localStorage.removeItem("vuex"); //remove vuex Store
-      this.$router.push({ path: "/tabs/auth/loggedOut", replace: true });
+      if(parent_this != null){
+        parent_this.$router.push({ path: "/tabs/auth/loggedOut", replace: true });
+      }
+      
     },
   },
   mutations: {
