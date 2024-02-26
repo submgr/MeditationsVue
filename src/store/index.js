@@ -80,7 +80,14 @@ export default createStore({
     },
     async setNewName({ commit }, name) {
       commit("SET_NAME", name);
-    }
+    },
+    async accountLogout({ commit }) {
+      console.log("auth_logout Function() called, logging out...")
+      localStorage.removeItem("auth_token");
+      localStorage.removeItem("auth_userid");
+      localStorage.removeItem("vuex"); //remove vuex Store
+      this.$router.push({ path: "/tabs/auth/loggedOut", replace: true });
+    },
   },
   mutations: {
     SET_USERDATA(state, user_data) {

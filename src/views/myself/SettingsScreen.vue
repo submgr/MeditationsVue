@@ -336,7 +336,10 @@ export default defineComponent({
 
             if (role === 'confirm') {
                 
-                auth_logout();
+                //auth_logout();
+                this.$store.dispatch("accountLogout").then(() => {
+                        //done! logged out!
+                    });
             }
         },
         async userAgreements() {
