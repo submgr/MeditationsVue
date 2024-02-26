@@ -46,9 +46,10 @@ export default createStore({
     async fetchUserData({ commit }) {
       try {
         var var_userauthtoken = localStorage.getItem("auth_token");
+        var var_userid = localStorage.getItem("auth_userid");
         const data = await axios.get(globaldata.api.hostname + "access/user/getData", {
           params:
-            { auth_userid: localStorage.getItem("auth_userid"), auth_token: var_userauthtoken }
+            { auth_userid: var_userid, auth_token: var_userauthtoken }
         });
 
         data.data.results.token = var_userauthtoken;
