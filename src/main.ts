@@ -66,9 +66,34 @@ import { Network } from '@capacitor/network';
 
 import { toastController } from '@ionic/vue';
 
+import { computed } from 'vue';
+
+const getUserData = computed(() => {
+  return store.getters.getUserData;
+});
+
 axiosRetry(axios, { retries: 3, retryDelay: (retryCount) => {
   return 1000;
 } });
+
+// Add request interceptor
+axios.interceptors.request.use((config) => {
+  // Assuming the params are in config.params for GET requests
+  // and in config.data for POST requests
+  if (config.method === 'get') {
+    config.params = config.params || {};
+    config.params.auth_userid = getUserData.value.id;
+    config.params.auth_token = getUserData.value.token;
+  } else if (config.method === 'post') {
+    config.data = config.data || {};
+    config.data.auth_userid = getUserData.value.id;
+    config.data.auth_token = getUserData.value.token;
+  }
+  return config;
+}, (error) => {
+  // Do something with request error
+  return Promise.reject(error);
+});
 
 axios.interceptors.response.use(function (response) {
   // Any status code that lie within the range of 2xx cause this function to trigger
