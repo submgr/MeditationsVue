@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="preloader" v-if="premadeMeditations.length == 0">
+    <div class="preloader" v-if="premadeMeditations.length == 0 && !meditationsListReceivedResponseWithData">
         <h1>
             <ion-spinner name="lines-sharp"></ion-spinner>
         </h1>
@@ -78,7 +78,8 @@ export default defineComponent({
     data() {
         return {
             premadeMeditations: [],
-            centeredCard: 0, // Initialize with the first card centered
+            centeredCard: 0, // Initialize with the first card centered,
+            meditationsListReceivedResponseWithData: false
         }
     },
     setup() {
@@ -147,6 +148,8 @@ export default defineComponent({
                     parent_this.premadeMeditations.push(element)
                     element = element['servicetype'] = "static"
                 });
+
+                parent_this.meditationsListReceivedResponseWithData = true;
 
                 console.info(parent_this.premadeMeditations)
 
