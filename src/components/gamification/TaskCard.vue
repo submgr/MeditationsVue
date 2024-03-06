@@ -39,6 +39,10 @@
 
 import * as gamificationEngine from "../../modules/gamificationEngine"
 
+import {
+    IonProgressBar
+} from '@ionic/vue';
+
 export default {
     props: {
         title: {
@@ -57,6 +61,9 @@ export default {
             type: Number,
             required: true
         }
+    },
+    components: {
+      IonProgressBar
     },
     data() {
         return {
