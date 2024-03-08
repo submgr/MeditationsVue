@@ -2372,6 +2372,7 @@ export default defineComponent({
     },
     methods: {
         resendhttpdata(payload) {
+            console.log("quiz send payload: ", payload)
             // eslint-disable-next-line
             var parent_this = this;
 
