@@ -15,67 +15,111 @@
                                 <span class="fh2">Пожалуйста, подождите: сервер анализирует ваши ответ...</span>
                             </div>
                             <div v-else>
+
                                 <div v-if="finalScore >= 285">
                                     <span class="fh2">Результат по шкале: {{ finalScore }} (выше среднего)</span>
-                                    <div style="border: 1px solid #ccc!important; border-radius: 10px; margin-right: 20%;">
+                                    <div
+                                        style="border: 1px solid #ccc!important; border-radius: 10px; margin-right: 20%;">
                                         <div style="background-color:green;height:24px;width:88%; border-radius: 10px;">
                                         </div>
                                     </div>
-                                    <p class="f-description" style="margin-top: 15px;"><span>По разработанной нами шкалой,
-                                            ваш результат выше среднего (бывают следующие категории: выше среднего, среднее,
-                                            ниже среднего). Используется эксклюзивная шкала Арама <i>(автор)</i>, которая
-                                            включает в себя шкалы SPARQTools.org Measuring Mobility toolkit, Oxford Anxiety
+                                    <p class="f-description savestatustext" style="margin-top: 15px;"><span>Статус
+                                            сохранения:</span>
+                                        <span v-if="!dataSendSuccess">ожидание сохранения на сервере...</span>
+                                        <span v-if="dataSendSuccess">успешно сохранено на сервере.</span>
+                                    </p>
+                                    <p class="f-description" style="margin-top: 15px;"><span>По разработанной нами
+                                            шкалой,
+                                            ваш результат выше среднего (бывают следующие категории: выше среднего,
+                                            среднее,
+                                            ниже среднего). Используется эксклюзивная шкала Арама <i>(автор)</i>,
+                                            которая
+                                            включает в себя шкалы SPARQTools.org Measuring Mobility toolkit, Oxford
+                                            Anxiety
                                             Scale и некоторые другие. Данная шкала позволяет определить аспекты вашего
-                                            психологического, эмоционального состояния, но и не только. Макисмальный балл по
-                                            шкале - 399. Однако, вовсе не нужно набирать максимум, чтобы чувствовать себя
+                                            психологического, эмоционального состояния, но и не только. Макисмальный
+                                            балл по
+                                            шкале - 399. Однако, вовсе не нужно набирать максимум, чтобы чувствовать
+                                            себя
                                             великолепно.</span></p>
                                 </div>
                                 <div v-else-if="finalScore >= 195">
                                     <span class="fh2">Результат по шкале: {{ finalScore }} (среднее)</span>
-                                    <div style="border: 1px solid #ccc!important; border-radius: 10px; margin-right: 20%;">
-                                        <div style="background-color:orange;height:24px;width:68%; border-radius: 10px;">
+                                    <div
+                                        style="border: 1px solid #ccc!important; border-radius: 10px; margin-right: 20%;">
+                                        <div
+                                            style="background-color:orange;height:24px;width:68%; border-radius: 10px;">
                                         </div>
                                     </div>
-                                    <p class="f-description" style="margin-top: 15px;"><span>По разработанной нами шкалой,
+                                    <p class="f-description savestatustext" style="margin-top: 15px;"><span>Статус
+                                            сохранения:</span>
+                                        <span v-if="!dataSendSuccess">ожидание сохранения на сервере...</span>
+                                        <span v-if="dataSendSuccess">успешно сохранено на сервере.</span>
+                                    </p>
+                                    <p class="f-description" style="margin-top: 15px;"><span>По разработанной нами
+                                            шкалой,
                                             ваш результат равен среднему (бывают следующие категории: выше среднего,
-                                            среднее, ниже среднего). Используется эксклюзивная шкала Арама <i>(автор)</i>,
-                                            которая включает в себя шкалы SPARQTools.org Measuring Mobility toolkit, Oxford
+                                            среднее, ниже среднего). Используется эксклюзивная шкала Арама
+                                            <i>(автор)</i>,
+                                            которая включает в себя шкалы SPARQTools.org Measuring Mobility toolkit,
+                                            Oxford
                                             Anxiety Scale и некоторые другие. Данная шкала позволяет определить аспекты
-                                            вашего психологического, эмоционального состояния, но и не только. Макисмальный
-                                            балл по шкале - 399. Однако, вовсе не нужно набирать максимум, чтобы чувствовать
+                                            вашего психологического, эмоционального состояния, но и не только.
+                                            Макисмальный
+                                            балл по шкале - 399. Однако, вовсе не нужно набирать максимум, чтобы
+                                            чувствовать
                                             себя великолепно.</span></p>
                                 </div>
+
                                 <div v-else-if="finalScore >= 0">
                                     <span class="fh2">Результат по шкале: {{ finalScore }} (ниже среднего)</span>
-                                    <div style="border: 1px solid #ccc!important; border-radius: 10px; margin-right: 20%;">
-                                        <div style="background-color: darkred;height:24px;width:48%; border-radius: 10px;">
+                                    <div
+                                        style="border: 1px solid #ccc!important; border-radius: 10px; margin-right: 20%;">
+                                        <div
+                                            style="background-color: darkred;height:24px;width:48%; border-radius: 10px;">
                                         </div>
                                     </div>
-                                    <p class="f-description" style="margin-top: 15px;"><span>По разработанной нами шкалой,
-                                            ваш результат ниже среднего (бывают следующие категории: выше среднего, среднее,
-                                            ниже среднего). Используется эксклюзивная шкала Арама <i>(автор)</i>, которая
-                                            включает в себя шкалы SPARQTools.org Measuring Mobility toolkit, Oxford Anxiety
+                                    <p class="f-description savestatustext" style="margin-top: 15px;"><span>Статус
+                                            сохранения:</span>
+                                        <span v-if="!dataSendSuccess">ожидание сохранения на сервере...</span>
+                                        <span v-if="dataSendSuccess">успешно сохранено на сервере.</span>
+                                    </p>
+                                    <p class="f-description" style="margin-top: 15px;"><span>По разработанной нами
+                                            шкалой,
+                                            ваш результат ниже среднего (бывают следующие категории: выше среднего,
+                                            среднее,
+                                            ниже среднего). Используется эксклюзивная шкала Арама <i>(автор)</i>,
+                                            которая
+                                            включает в себя шкалы SPARQTools.org Measuring Mobility toolkit, Oxford
+                                            Anxiety
                                             Scale и некоторые другие. Данная шкала позволяет определить аспекты вашего
-                                            психологического, эмоционального состояния, но и не только. Макисмальный балл по
-                                            шкале - 399. Однако, вовсе не нужно набирать максимум, чтобы чувствовать себя
+                                            психологического, эмоционального состояния, но и не только. Макисмальный
+                                            балл по
+                                            шкале - 399. Однако, вовсе не нужно набирать максимум, чтобы чувствовать
+                                            себя
                                             великолепно.</span></p>
                                 </div><br />
                                 <span style="font-size: 14px; !important;">
                                     The Autonomy subscale: {{ scores_detailed.autonomy_subscale_score }} <br />
                                     Environmental Mastery subscale: {{
-                                        scores_detailed.environmental_mastery_subscale_score }}<br />
-                                    The Personal Growth subscale: {{ scores_detailed.personal_growth_subscale_score }}<br />
+            scores_detailed.environmental_mastery_subscale_score }}<br />
+                                    The Personal Growth subscale: {{ scores_detailed.personal_growth_subscale_score
+                                    }}<br />
                                     Positive Relations with Others subscale:
                                     {{ scores_detailed.positive_relations_subscale_score }}<br />
-                                    The Purpose in Life subscale: {{ scores_detailed.purpose_in_life_subscale_score }}<br />
-                                    The Self-Acceptance subscale: {{ scores_detailed.self_acceptance_subscale_score }}<br />
-                                    Aram's Additional subscale: {{ scores_detailed.arams_subscale_score }}<br /><br /><br />
+                                    The Purpose in Life subscale: {{ scores_detailed.purpose_in_life_subscale_score
+                                    }}<br />
+                                    The Self-Acceptance subscale: {{ scores_detailed.self_acceptance_subscale_score
+                                    }}<br />
+                                    Aram's Additional subscale: {{ scores_detailed.arams_subscale_score
+                                    }}<br /><br /><br />
                                 </span>
                             </div>
                         </div>
                     </div>
                 </template>
                 <!-- We've overriden the default "complete" slot content -->
+
                 <template v-slot:completeButton>
                     <div class="f-submit">
                         <!-- Leave empty to hide default submit button -->
@@ -97,7 +141,7 @@ rion-content {
     border-radius: 20px !important;
 }
 </style>
-  
+
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { IonPage, IonContent } from '@ionic/vue';
@@ -114,11 +158,14 @@ export default defineComponent({
             tabsEl.hidden = true;
             tabsEl.style.height = "1";
         }
+
+        //alert(globaldata.api.hostname + "research/savesurveydata")
     },
     data() {
         return {
             finalScore: 0,
             loading: false,
+            dataSendSuccess: false,
             scores_detailed: {
                 autonomy_subscale_score: 0,
                 environmental_mastery_subscale_score: 0,
@@ -2371,37 +2418,41 @@ export default defineComponent({
         }
     },
     methods: {
-        resendhttpdata(payload) {
+        async sendhttpdata(payload) {
             console.log("quiz send payload: ", payload)
+
             // eslint-disable-next-line
             var parent_this = this;
 
-            this.$http.post(globaldata.api.hostname + "research/savesurveydata",
-                JSON.stringify(payload), {
-                    validateStatus: null,
+            // Check if $http is available
+            if (!this.$http) {
+                console.error('$http is not available');
+                return;
+            }
+
+            // Check if URL is correct
+            const url = globaldata.api.hostname + "research/savesurveydata";
+            console.log('URL: ', url);
+
+            // Check if payload is not null or undefined
+            if (!payload) {
+                console.error('Payload is null or undefined');
+                return;
+            }
+
+            this.$http.post(url, JSON.stringify(payload), {
+                //validateStatus: null,
                 headers: {
                     'Content-Type': 'application/json',
                 }
-            }
-            ).then(response => {
+            }).then(response => {
                 console.log('Submit Success', response)
-
-                if (response.status != 200) {
-                    setTimeout(() => {
-                        parent_this.resendhttpdata(payload)
-                    }, 5000);
-                }
-
-                //if(localStorage.getItem("user_email")){
-                //    this.show_ratebox_boolean = true;
-                //}else{
-                //    this.message_modal_isOpen = "result_askforemail"
-                //}
+                parent_this.dataSendSuccess = true;
             }).catch(e => {
-                console.log('Submit Fail', e)
+                console.error("Произошла ошибка, поэтому данные не были сохранены на сервере. Повторная попытка сохранения произойдет через 2 секунды после вашего нажатия на кнопку 'ОК' в этом окне. Подробнее об ошибке: ", e);
                 setTimeout(() => {
-                    this.resendhttpdata(payload)
-                }, 5000);
+                    parent_this.sendhttpdata(payload)
+                }, 2000);
             });
         },
         /* eslint-disable-next-line no-unused-vars */
@@ -2436,68 +2487,13 @@ export default defineComponent({
             // eslint-disable-next-line
             var parent_this = this;
 
-            this.$http.post(globaldata.api.hostname + "research/savesurveydata",
-                JSON.stringify(data), {
-                validateStatus: null,
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }
-            ).then(response => {
-                console.log('Submit Success', response)
-
-                if (response.status != 200) {
-                    setTimeout(() => {
-                        parent_this.resendhttpdata(data)
-                    }, 5000);
-                }
-
+            this.sendhttpdata(data).then(function () {
                 setTimeout(() => {
                     self.loading = false
                 }, 1500)
-
-                //if(localStorage.getItem("user_email")){
-                //    this.show_ratebox_boolean = true;
-                //}else{
-                //    this.message_modal_isOpen = "result_askforemail"
-                //}
-            }).catch(e => {
-                console.log('Submit Fail', e)
-                setTimeout(() => {
-                    this.$http.post(globaldata.api.hostname + "research/savesurveydata",
-                        JSON.stringify(data), {
-                        headers: {
-                            'Content-Type': 'application/json',
-                        }
-                    }
-                    ).then(response => {
-                        console.log('Submit Success', response)
-                        if (response.status != 200) {
-                            setTimeout(() => {
-                                parent_this.resendhttpdata(data)
-                            }, 5000);
-                        }
+            })
 
 
-                        setTimeout(() => {
-                            self.loading = false
-                        }, 1500)
-
-                        //if(localStorage.getItem("user_email")){
-                        //    this.show_ratebox_boolean = true;
-                        //}else{
-                        //    this.message_modal_isOpen = "result_askforemail"
-                        //}
-                    }).catch(e => {
-                        console.log('Submit Fail', e)
-                        setTimeout(() => {
-                            parent_this.resendhttpdata(data)
-                        }, 5000);
-                        alert(e)
-                    });
-                }, 5000);
-                alert(e)
-            });
 
 
 
@@ -2675,4 +2671,3 @@ export default defineComponent({
     margin: 10vh 0 60px !important;
 }
 </style>
-  

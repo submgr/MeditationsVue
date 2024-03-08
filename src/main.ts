@@ -81,17 +81,21 @@ axios.interceptors.request.use((config) => {
   if (config.url.includes('user/getData')) {
     return config;
   }
+
+  if (config.url.includes('research/savesurveydata')) {
+    return config;
+  }
   
   // Assuming the params are in config.params for GET requests
   // and in config.data for POST requests
   if (config.method === 'get') {
     config.params = config.params || {};
-    config.params.auth_userid = getUserData.value.id;
-    config.params.auth_token = getUserData.value.token;
+    config.params.auth_userid = getUserData.value.id || "";
+    config.params.auth_token = getUserData.value.token || "";
   } else if (config.method === 'post') {
     config.data = config.data || {};
-    config.data.auth_userid = getUserData.value.id;
-    config.data.auth_token = getUserData.value.token;
+    config.data.auth_userid = getUserData.value.id || "";
+    config.data.auth_token = getUserData.value.token || "";
   }
   return config;
 }, (error) => {
