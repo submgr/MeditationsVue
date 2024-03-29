@@ -35,14 +35,14 @@ module.exports = {
           },
         },
       }),
-      process.env.NODE_ENV !== 'development' ? new WebpackObfuscator({
-        rotateStringArray: true,
-        deadCodeInjectionThreshold: 0,
-        //domainLock: [".xn--80aaafmfwb5a7d2bq4h.xn--p1ai", ".deqstudio.com", ".vercel.app", ".pages.dev", ".localhost"],
-        //domainLockRedirectUrl: "https://telegra.ph/Sorry-Izvinite-02-07",
-        log: true,
+      // process.env.NODE_ENV !== 'development' ? new WebpackObfuscator({
+      //   rotateStringArray: true,
+      //   deadCodeInjectionThreshold: 0,
+      //   //domainLock: [".xn--80aaafmfwb5a7d2bq4h.xn--p1ai", ".deqstudio.com", ".vercel.app", ".pages.dev", ".localhost"],
+      //   //domainLockRedirectUrl: "https://telegra.ph/Sorry-Izvinite-02-07",
+      //   log: true,
 
-      }, []) : false,
+      // }, []) : false,
     ]
   }
 }
