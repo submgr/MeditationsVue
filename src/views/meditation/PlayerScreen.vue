@@ -2,6 +2,8 @@
     <ion-page id="ionpage">
         <ion-content :fullscreen="true">
 
+            <LoadingActivity :show="false" source="Meditations/PlayerScreen"/>
+
             <div class="loader_at_corner" v-if="audiotrack_isLoading && (meditationState != 'prestart_info')">
                 <!-- Your loading spinner content (e.g., a GIF or CSS animation) goes here -->
                 <h1><ion-spinner name="lines-sharp"></ion-spinner></h1>
@@ -225,6 +227,8 @@ import {
 
 } from '@ionic/vue';
 
+import LoadingActivity from '@/components/system/LoadingActivity.vue';
+
 import {
     closeOutline,
     playOutline,
@@ -273,7 +277,8 @@ export default defineComponent({
         IonToolbar,
         IonSelect,
         IonSelectOption,
-        IonCheckbox
+        IonCheckbox,
+        LoadingActivity
     },
     watch: {
         '$route'() {
