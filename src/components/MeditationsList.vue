@@ -42,7 +42,7 @@
                             <li><img src="https://i.postimg.cc/2SvHwRFk/cast-13.jpg
         " alt="Antonio Herrera" title="Antonio Herrera"></li>
                         </ul>-->
-                    <ion-button @click="$emit('event-getmeditation', item.searchobject)" style="margin-top: 0.1vh;">Начать медитацию</ion-button>
+                    <ion-button @click="requestMeditation(item.searchobject)" style="margin-top: 0.1vh;">Начать медитацию</ion-button>
                 </div>
             </div>
         </div>
@@ -65,6 +65,8 @@ import {
     IonSpinner,
     IonButton
 } from '@ionic/vue';
+
+import { get as getMeditation} from '../modules/getMeditation';
 
 export default defineComponent({
     name: 'ExploreContainer',
@@ -93,6 +95,9 @@ export default defineComponent({
          //   hash: '#sampleHash' // required if updateHistory is true
          //   })
         //},
+        requestMeditation(searchobj){
+            getMeditation(searchobj, this)
+        },
         isCardCentered(index) {
       const cardWrapper = this.$refs.cardWrapper as HTMLElement;
       if (cardWrapper) {

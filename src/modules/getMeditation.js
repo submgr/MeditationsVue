@@ -10,7 +10,7 @@ import globaldata from '../modules/global';
  * @returns {Promise} - A promise that resolves with the retrieved meditation data.
 */
 
-export async function get(obj, vueobject) {
+export async function get(obj, vueobject) { 
 
     // eslint-disable-next-line
     var parent_this = vueobject;

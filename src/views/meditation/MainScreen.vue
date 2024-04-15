@@ -34,7 +34,7 @@
 
             
 
-            <MeditationsList @event-getmeditation="getMeditation" style="margin-top: -2.5vh;" />
+            <MeditationsList style="margin-top: -2.5vh;" />
 
             <div class="padding_from_bottom_line"></div>
 
@@ -161,6 +161,8 @@ import {
     IonIcon
 } from '@ionic/vue';
 
+import { get as getMeditation} from '../../modules/getMeditation';
+
 import {
     closeOutline,
     contractOutline,
@@ -222,7 +224,7 @@ export default defineComponent({
             switch (currentListenedMeditations) {
                 case 0:
                     console.log("No meditations listened");
-                    parent_this.getMeditation({ servicetype: 'static', searchtype: 'theme', searchtag: 'newbie1' })
+                    getMeditation({ servicetype: 'static', searchtype: 'theme', searchtag: 'newbie1' }, parent_this)
                     break;
                 // case 1:
                 //     console.log("Listened 1 meditation");
@@ -230,78 +232,79 @@ export default defineComponent({
                 //     break;
                 default:
                     console.log("Listened 1+ meditation (default route)");
-                    parent_this.getMeditation({ servicetype: 'dynamic', searchtype: 'random', searchtag: '' })
+                    getMeditation({ servicetype: 'dynamic', searchtype: 'random', searchtag: '' }, parent_this)
                     break;
             }
 
         },
-        getMeditation(obj) {
-            this.loading = true;
+        // getMeditation(obj) {
+        //     alert("ok")
+        //     this.loading = true;
 
-            // eslint-disable-next-line
-            var parent_this = this;
+        //     // eslint-disable-next-line
+        //     var parent_this = this;
 
-            console.warn("Getting meditation data...")
-            console.log("provided obj for search..", obj)
-            var additionalurl = ""
-            var preparedparams = {}
-            switch (obj.servicetype) {
-                case "dynamic":
-                    additionalurl = "getDynamicMeditation"
-                    var newbieprogress = 0;
-                    if (localStorage.getItem("newbie_progress") == null) {
-                        newbieprogress = 0
-                    } else {
-                        newbieprogress = parseInt(localStorage.getItem("newbie_progress"))
-                    }
-                    preparedparams = {
-                        newbie_progress: newbieprogress,
-                        language: globaldata.language.currentlang
-                    }
+        //     console.warn("Getting meditation data...")
+        //     console.log("provided obj for search..", obj)
+        //     var additionalurl = ""
+        //     var preparedparams = {}
+        //     switch (obj.servicetype) {
+        //         case "dynamic":
+        //             additionalurl = "getDynamicMeditation"
+        //             var newbieprogress = 0;
+        //             if (localStorage.getItem("newbie_progress") == null) {
+        //                 newbieprogress = 0
+        //             } else {
+        //                 newbieprogress = parseInt(localStorage.getItem("newbie_progress"))
+        //             }
+        //             preparedparams = {
+        //                 newbie_progress: newbieprogress,
+        //                 language: globaldata.language.currentlang
+        //             }
 
-                    break;
-                default:
-                    additionalurl = "getStaticMeditation"
-                    preparedparams = {
-                        searchtype: obj.searchtype,
-                        searchtag: obj.searchtag,
-                        language: globaldata.language.currentlang
-                    }
-                    break;
-            }
-            this.$http.get(globaldata.api.hostname + "access/meditations/" + additionalurl, {
-                params: preparedparams
-            }).then((response) => {
-                if (response.status == 200) {
-                    if (response.data.status == "okay") {
-                        localStorage.setItem("temp/alfa_meditationdata", JSON.stringify(response.data))
+        //             break;
+        //         default:
+        //             additionalurl = "getStaticMeditation"
+        //             preparedparams = {
+        //                 searchtype: obj.searchtype,
+        //                 searchtag: obj.searchtag,
+        //                 language: globaldata.language.currentlang
+        //             }
+        //             break;
+        //     }
+        //     this.$http.get(globaldata.api.hostname + "access/meditations/" + additionalurl, {
+        //         params: preparedparams
+        //     }).then((response) => {
+        //         if (response.status == 200) {
+        //             if (response.data.status == "okay") {
+        //                 localStorage.setItem("temp/alfa_meditationdata", JSON.stringify(response.data))
 
-                        if (localStorage && localStorage.getItem("useNonProgressiveAudioPlayer") == "true") {
-                            console.log("useNonProgressiveAudioPlayer? YES")
-                            this.$router.push({
-                                name: "meditation/playnonprogressive",
-                            });
-                        } else {
-                            console.log("useNonProgressiveAudioPlayer? NO")
-                            this.$router.push({
-                                name: "meditation/play",
-                            });
+        //                 if (localStorage && localStorage.getItem("useNonProgressiveAudioPlayer") == "true") {
+        //                     console.log("useNonProgressiveAudioPlayer? YES")
+        //                     this.$router.push({
+        //                         name: "meditation/playnonprogressive",
+        //                     });
+        //                 } else {
+        //                     console.log("useNonProgressiveAudioPlayer? NO")
+        //                     this.$router.push({
+        //                         name: "meditation/play",
+        //                     });
 
-                        }
-                    } else {
-                        // proccessed by the server, but without successfull result.
-                    }
-                } else {
-                    // can't proccess this request on server: some error happens.
-                }
+        //                 }
+        //             } else {
+        //                 // proccessed by the server, but without successfull result.
+        //             }
+        //         } else {
+        //             // can't proccess this request on server: some error happens.
+        //         }
 
-                parent_this.loading = false;
+        //         parent_this.loading = false;
 
-            }).catch(function (error) {
-                console.log("CATCHED AN ERROR.", error)
-                parent_this.loading = false;
-            });
-        },
+        //     }).catch(function (error) {
+        //         console.log("CATCHED AN ERROR.", error)
+        //         parent_this.loading = false;
+        //     });
+        // },
     },
     data: () => ({
         showStory: false,
