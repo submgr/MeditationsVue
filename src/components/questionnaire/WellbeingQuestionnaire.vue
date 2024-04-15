@@ -161,9 +161,9 @@ export default defineComponent({
             finalScore: 0,
             language: new LanguageModel(
                 {
-                    "pressEnter": "или :enterKey",
+                    "pressEnter": " ",
                     "continue": "дальше",
-                    "percentCompleted": "percent% пройдено",
+                    "percentCompleted": ":percent% пройдено",
                     "multipleChoiceHelpTextSingle": ""
                 }
             ),
@@ -336,7 +336,7 @@ export default defineComponent({
                 new QuestionModel({
                     id: 'q6',
                     tagline: 'Насколько верно это утверждение для последних нескольких дней?',
-                    title: 'Я чувствую себя рядом с другими людьми',
+                    title: 'Я чувствую себя как часть общества (я не одинок)',
                     subtitle: '',
                     type: QuestionType.MultipleChoice,
                     multiple: false,
