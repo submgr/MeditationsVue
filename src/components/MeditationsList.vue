@@ -10,7 +10,6 @@
             :centeredSlides="false"
             :slidesPerView="slidesPerView"
             :spaceBetween="spaceBetween"
-            :navigation="false"
             :loop="true"
             :modules="modules"
             
@@ -339,4 +338,6 @@ body {
     padding-left: 20px;
     font-size: 0.63em;
 }
+
+
 </style>
