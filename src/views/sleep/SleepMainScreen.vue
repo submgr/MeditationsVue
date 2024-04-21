@@ -124,7 +124,27 @@ ion-toolbar {
 }*/
 
 ion-content {
-  --background: #000000 url(../../assets/photo/zane-lee-7jus80HTnK0-unsplash_darken.jpg) no-repeat center center / cover !important;
+  position: relative;
+  background: black !important;
+  z-index: -2;
+}
+
+ion-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(../../assets/photo/zane-lee-7jus80HTnK0-unsplash_darken.jpg) no-repeat center center / cover !important;
+  opacity: 1;
+  animation: fadeIn 2s ease-in-out forwards;
+  z-index: -1;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 ion-modal ion-content {
