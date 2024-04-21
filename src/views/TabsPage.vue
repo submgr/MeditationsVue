@@ -3,8 +3,8 @@
     <ion-tabs translucent="true">
       <ion-router-outlet></ion-router-outlet>
       <ion-tab-bar slot="bottom" translucent="true" mode="ios">
-        
-        
+
+
         <!---<ion-tab-button tab="tab1" href="/tabs/tab1">
           <ion-icon :icon="musicalNote" />
           <ion-label>Tab 1</ion-label>
@@ -35,7 +35,7 @@
           <ion-icon :icon="musicalNotesOutline" />
           <ion-label>Музыка</ion-label>
         </ion-tab-button>--->
-        
+
         <ion-tab-button tab="relaxation" href="/tabs/relaxation/info">
           <ion-icon :icon="infiniteOutline" />
           <ion-label>Баланс</ion-label>
@@ -53,11 +53,22 @@
 import { defineComponent } from 'vue';
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
 import { musicalNote, gameController, videocam, infiniteOutline, homeOutline, happyOutline, bedOutline, musicalNotesOutline, sparklesOutline } from 'ionicons/icons';
+import { createAnimation } from '@ionic/core';
+import { onMounted } from 'vue';
 
 export default defineComponent({
   name: 'TabsPage',
   components: { IonLabel, IonTabs, IonTabBar, IonTabButton, IonIcon, IonPage, IonRouterOutlet },
   setup() {
+    onMounted(() => {
+      const routerOutlet = document.querySelector('ion-tabs ion-router-outlet') as any;
+      const sampleAnimation = createAnimation()
+        .duration(1000)
+        .fromTo('transform', 'translateX(100%)', 'translateX(0)')
+        .fromTo('opacity', '0', '1');
+
+      routerOutlet.animation = sampleAnimation;
+    });
     return {
       musicalNote,
       gameController,
@@ -70,7 +81,9 @@ export default defineComponent({
       sparklesOutline,
       footer: "show"
     }
-  }
+  },
+
+
 });
 
 export function hideTabs() {

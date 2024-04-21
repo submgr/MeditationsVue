@@ -45,10 +45,16 @@
                     </div>
                 </ion-content>
             </ion-modal>
-            <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="additionalModalOpenened == 'info'" trigger="open-modal" :initial-breakpoint="0.50" :breakpoints="[0.50, 0.75]" handle-behavior="cycle">
+            <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="additionalModalOpenened == 'info'" trigger="open-modal" :initial-breakpoint="0.50" :breakpoints="[0.50, 0.75, 1]" handle-behavior="cycle">
                 <ion-content class="ion-padding">
                     <div class="ion-margin-top">
                         <ion-label style="white-space: pre-wrap;"><br><b style="font-size: 28px;">Медитация</b><br/><br/>Вы хорошо проводите время!<span v-if="meditationAuthors != null" style="font-size: 13px;"><br><br>Медитация, которую вы сейчас слышите, появилась благодаря этим людям: {{meditationAuthors.name}}</span></ion-label>
+                        <div class="preloader" v-if="author_data_loaded != true">
+                            <h1>
+                                <ion-spinner name="lines-sharp"></ion-spinner>
+                            </h1>
+                        </div>
+                        <iframe allowTransparency="true" :src="volunteer_src_iframe" id="author-iframe-0" @load="adjustHeight" style="width: 100vw; height: 0.001vh;">Something went wrong: unable to reach remote host to be placed in this iframe. Looks like a problem on your end.</iframe>
                     </div>
                     <div style="margin-top: 5% !important; margin-left: -18px;">
                         <ion-button fill="clear" @click="Modal_onWillDismiss" style="font-weight: 700;">Скрыть <ion-icon slot="end" :icon="chevronDown"></ion-icon>
@@ -83,7 +89,7 @@
         </ion-content>
     </ion-page>
     </template>
-    
+
 <style scoped>
 .loader_at_corner {
     position: fixed;
@@ -195,7 +201,7 @@
     --text-align: center;
 }
 </style>
-    
+
 <script lang="ts">
 import {
     defineComponent
@@ -301,6 +307,7 @@ export default defineComponent({
     },
     async mounted() {
 
+
         // eslint-disable-next-line
         const parent_this = this;
 
@@ -341,6 +348,20 @@ export default defineComponent({
                 localStorage.setItem("user_meditationtime", updatedMeditationTime + "")
             }
         }, 5000)
+
+        window.addEventListener("message", (event) => {
+            if(event.data.type == "iframe_height_author"){
+                alert(JSON.stringify(event.data))
+                alert(event.data.height)
+                let iframe = document.querySelector('#author-iframe-0') as HTMLIFrameElement;
+                if (iframe) {
+                    iframe.height = event.data.height;
+                    iframe.style.height = event.data.height + 'px'; // or 'vh', 'em', etc. depending on the unit you want to use
+                }
+                parent_this.author_data_loaded = true;
+            }
+            
+        });
     },
     methods: {
         async wakeLockOn() {
@@ -822,7 +843,7 @@ export default defineComponent({
                                 parent_this.meditationState = "finished"
                                 await toast.present();
                                 // Function to add +1 to the number of listened meditations in local storage
-                                
+
                                 // Check if the 'listenedMeditations' key exists in local storage
                                 if (localStorage.getItem('listenedMeditations')) {
                                     // If it exists, retrieve the current value
@@ -882,6 +903,8 @@ export default defineComponent({
     },
     data() {
         return {
+            author_data_loaded: false,
+            volunteer_src_iframe: 'https://xn--80aaafmfwb5a7d2bq4h.xn--p1ai/systemvolunteerinfo/?id=1',
             globaldata: globaldata,
             availableBackgrounds: [
                 // available types:
@@ -977,4 +1000,3 @@ export default defineComponent({
     }
 });
 </script>
-    
