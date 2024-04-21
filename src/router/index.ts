@@ -64,124 +64,152 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'home',
-        component: () => import('@/views/HomeScreen.vue')
+        component: () => import('@/views/HomeScreen.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         path: 'diagnostics/emotionalstate',
-        component: () => import('@/views/diagnostics/EmotionalState.vue')
+        component: () => import('@/views/diagnostics/EmotionalState.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         path: 'meditation/prepare',
-        component: () => import('@/views/meditation/PrepareScreen.vue')
+        component: () => import('@/views/meditation/PrepareScreen.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         path: 'system/unavailable',
-        component: () => import('@/views/system/UnavailableScreen.vue')
+        component: () => import('@/views/system/UnavailableScreen.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         path: 'system/updaterequired',
-        component: () => import('@/views/system/UpdateRequired.vue')
+        component: () => import('@/views/system/UpdateRequired.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         name: 'meditation/play',
         path: 'meditation/play',
         component: () => import('@/views/meditation/PlayerScreen.vue'),
+        meta: { transition: 'slide-down' },
         props: {
           default: true,
         },
       },
       {
         path: 'meditation/main',
-        component: () => import('@/views/meditation/MainScreen.vue')
+        component: () => import('@/views/meditation/MainScreen.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         name: 'meditation/playnonprogressive',
         path: 'meditation/playnonprogressive',
         component: () => import('@/views/meditation/NonProgressivePlayerScreen.vue'),
+        meta: { transition: 'slide-down' },
         props: {
           default: true,
         },
       },
       {
         path: 'meditation/finished',
-        component: () => import('@/views/meditation/OnFinishScreen.vue')
+        component: () => import('@/views/meditation/OnFinishScreen.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         path: 'relaxation',
-        redirect: '/tabs/relaxation/info'
+        redirect: '/tabs/relaxation/info',
+        meta: { transition: 'slide-down' },
       },
       {
         path: 'relaxation/info',
-        component: () => import('@/views/relaxation/InfoScreen.vue')
+        component: () => import('@/views/relaxation/InfoScreen.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         path: 'relaxation/session',
-        component: () => import('@/views/relaxation/SessionScreen.vue')
+        component: () => import('@/views/relaxation/SessionScreen.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         path: 'relaxation/finished',
-        component: () => import('@/views/relaxation/OnFinishScreen.vue')
+        component: () => import('@/views/relaxation/OnFinishScreen.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         path: 'myself/overview',
-        component: () => import('@/views/myself/MyselfOverview.vue')
+        component: () => import('@/views/myself/MyselfOverview.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         path: 'myself/settings',
-        component: () => import('@/views/myself/SettingsScreen.vue')
+        component: () => import('@/views/myself/SettingsScreen.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         name: 'read/youshouldknow',
         path: 'read/youshouldknow',
-        component: () => import('@/views/read/YouShouldKnow.vue')
+        component: () => import('@/views/read/YouShouldKnow.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         path: 'read/viewpost',
-        component: () => import('@/views/read/RenderRemoteContent.vue')
+        component: () => import('@/views/read/RenderRemoteContent.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         path: '3rd-embed/deleteaccount',
-        component: () => import('@/views/3rd-embed/DeleteAccount.vue')
+        component: () => import('@/views/3rd-embed/DeleteAccount.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         path: 'support/main',
-        component: () => import('@/views/support/MainPage.vue')
+        component: () => import('@/views/support/MainPage.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         path: 'support/chat',
-        component: () => import('@/views/support/SupportProvider.vue')
+        component: () => import('@/views/support/SupportProvider.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         path: 'settings/main',
-        component: () => import('@/views/settings/MainPage.vue')
+        component: () => import('@/views/settings/MainPage.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         path: 'settings/deleteaccount',
-        component: () => import('@/views/settings/DeleteAccount.vue')
+        component: () => import('@/views/settings/DeleteAccount.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         path: 'music/main',
-        component: () => import('@/views/music/MusicMainScreen.vue')
+        component: () => import('@/views/music/MusicMainScreen.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         path: 'sleep/main',
-        component: () => import('@/views/sleep/SleepMainScreen.vue')
+        component: () => import('@/views/sleep/SleepMainScreen.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         path: 'emotions/smile',
-        component: () => import('@/views/emotions/MakeSmilePhoto.vue')
+        component: () => import('@/views/emotions/MakeSmilePhoto.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         path: 'research/takequiz',
-        component: () => import('@/views/research/QuizTake.vue')
+        component: () => import('@/views/research/QuizTake.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         path: 'payment/main',
-        component: () => import('@/views/payment/PaymentScreen.vue')
+        component: () => import('@/views/payment/PaymentScreen.vue'),
+        meta: { transition: 'slide-down' },
       },
       {
         path: 'payment/success',
-        component: () => import('@/views/payment/PaymentSuccess.vue')
+        component: () => import('@/views/payment/PaymentSuccess.vue'),
+        meta: { transition: 'slide-down' },
       },
     ]
   }

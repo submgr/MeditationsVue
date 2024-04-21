@@ -44,6 +44,8 @@ ion-tab-bar {
 } */
 
 
+
+
 @media (prefers-color-scheme: light) {
   ion-content {
     --background: #ffffff00 v-bind("`url(assets/svg/light-colorful-background.svg)`") no-repeat center center / cover !important;
@@ -65,6 +67,8 @@ ion-tab-bar {
 <script lang="ts">
 import { IonApp, IonRouterOutlet } from '@ionic/vue';
 import { defineComponent } from 'vue';
+
+import './assets/css/animations.css';
 
 
 export default defineComponent({

@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <ion-content :fullscreen="true">
+    <ion-content :fullscreen="true" class="mainpage_ioncontent">
       <NavbarController activatedfrom="Sleep/SleepMainScreen" @infomodalfunction="showOnboarding()" align="right" />
       <h1 style="margin-left: 1.1rem; margin-top: 2.4rem; font-weight: 700; font-size: 34px; "
         class="light_upper_gradient">Сон</h1>
@@ -123,13 +123,13 @@ ion-toolbar {
   --background: #000000 v-bind("`url(assets/svg/experimental-abstract-night-sky-background-dark-blue.svg)`") no-repeat center center / cover !important;
 }*/
 
-ion-content {
+.mainpage_ioncontent {
   position: relative;
   background: black !important;
   z-index: -2;
 }
 
-ion-content::before {
+.mainpage_ioncontent::before {
   content: "";
   position: absolute;
   top: 0;
@@ -140,6 +140,14 @@ ion-content::before {
   opacity: 1;
   animation: fadeIn 2s ease-in-out forwards;
   z-index: -1;
+}
+
+@media (prefers-color-scheme: dark) {
+  .mainpage_ioncontent {
+    color: #ffffff !important;
+    --background: url(../../assets/photo/zane-lee-7jus80HTnK0-unsplash_darken.jpg) no-repeat center center / cover !important;
+    animation: fadeIn 1.5s ease-in-out;
+  }
 }
 
 @keyframes fadeIn {

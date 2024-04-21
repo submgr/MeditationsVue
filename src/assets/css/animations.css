@@ -1,0 +1,9 @@
+
+.fade-enter-active {
+    animation: bounce-in 0.5s;
+}
+
+.fade-leave-active {
+    animation: bounce-in 0.5s reverse;
+
+}

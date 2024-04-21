@@ -6,7 +6,6 @@ import { Capacitor } from '@capacitor/core';
 
 import { App as CapacitorApp, URLOpenListenerEvent as CapacitorURLOpenListenerEvent } from "@capacitor/app";
 
-
 import store from "./store";
 
 import { IonicVue } from '@ionic/vue';
@@ -132,6 +131,8 @@ axios.interceptors.response.use(function (response) {
   }
   return Promise.reject(error);
 });
+
+
 
 CapacitorApp.addListener('appUrlOpen', function (event: CapacitorURLOpenListenerEvent) {
   // Example url: https://deqstudio.com/servicereserved/meditationsapp/tabs/tabs2
