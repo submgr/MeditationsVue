@@ -90,12 +90,15 @@ export default defineComponent({
         // eslint-disable-next-line
         const parent_this = this;
 
+        // Here we check platforms and decide if non-progessive audio player is needed
+        // I hope in future I will delete this part, but who knows - maybe we will need it
         if (localStorage) {
             localStorage.removeItem("useNonProgressiveAudioPlayer");
             if (this.$route.query.isYandexGames && this.$route.query.isYandexGames == "true") {
                 console.log("isYandexGames -> true.");
                 setTimeout(() => {
-                    localStorage.setItem("useNonProgressiveAudioPlayer", "true");
+                    // WE DO NOT USE NON-PROGRESSIVE AUDIO PLAYER ANYMORE.
+                    //localStorage.setItem("useNonProgressiveAudioPlayer", "true");
                 }, 100);
             } else if (this.$route.query.isVKMiniApps && this.$route.query.isVKMiniApps == "true") {
                 console.log("isVKMiniApps -> true.");
@@ -138,6 +141,10 @@ export default defineComponent({
 
         if (this.$route.query.isVKMiniApps && this.$route.query.isVKMiniApps == "true") {
             console.log("isVKMiniApps -> true.");
+
+            // Store the value in localStorage
+            localStorage.setItem('isVKMiniApps', 'true');
+            
             loadScript("https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js")
                 .then(() => {
                     console.log("loadScript>then:: Success->then;")

@@ -1,7 +1,8 @@
 <template>
     <transition name="show">
         <ion-page>
-            <ion-content :fullscreen="true" v-if="state == 'main' || state == 'main_processing' || state == 'finishing'">
+            <ion-content :fullscreen="true"
+                v-if="state == 'main' || state == 'main_processing' || state == 'finishing'">
 
                 <p style="padding: 0px 18px 0px; margin-top: 14rem; margin-bottom: 1rem;">
                     <Vue3Lottie :animationData="require('./../../assets/lottie/preloader.json')" :style="imgStyle"
@@ -46,8 +47,8 @@
         </ion-page>
     </transition>
 </template>
-    
-    
+
+
 <style scoped>
 ion-spinner {
     width: 60px !important;
@@ -163,7 +164,7 @@ ion-spinner {
     }
 }
 </style>
-    
+
 <script lang="ts">
 import {
     defineComponent,
@@ -189,6 +190,8 @@ import {
 
 import { Vue3Lottie } from 'vue3-lottie'
 import 'vue3-lottie/dist/style.css'
+
+declare const vkBridge;
 
 import globaldata from '../../modules/global';
 
@@ -313,6 +316,10 @@ export default defineComponent({
         }
     },
     mounted() {
+
+        // eslint-disable-next-line
+        const parent_this = this;
+
         if (this.$route.query.auth_token) {
             localStorage.setItem("auth_token", (this.$route.query.auth_token).toString());
         }
@@ -330,11 +337,35 @@ export default defineComponent({
             console.log(getUserData)
             if (getUserData.value.name == undefined || getUserData.value.name == null) {
                 this.user_firstname = ""
-            }else{
+            } else {
                 this.user_firstname = getUserData.value.name + ""
             }
             // this.$router.push('/') // Also, its better to invoke router's method from a component than in a store file, anyway reference of a component may not be defined in the store file till you explicity pass it
         });
+
+        let isVKMiniApps = false;
+
+        try {
+            // Try to get the value from localStorage
+            isVKMiniApps = localStorage.getItem('isVKMiniApps') === 'true';
+        } catch (e) {
+            // If an error occurs (e.g., localStorage is not available), keep isVKMiniApps as false
+            console.log('Failed to access localStorage. Defaulting isVKMiniApps to false.');
+        }
+
+        if (isVKMiniApps) {
+            vkBridge
+                .send('VKWebAppGetUserInfo')
+                .then((data) => {
+                    // data.result — массив объектов с информацией о пользователях
+                    console.log("data // =VKWebAppGetUserInfo=", data)
+                    parent_this.user_firstname = data.first_name;
+                }
+                )
+                .catch((error) => {
+                    console.log(error); // Ошибка
+                });
+        }
 
         const tabsEl = document.querySelector('ion-tab-bar');
         if (tabsEl) {
@@ -355,4 +386,3 @@ export default defineComponent({
     }
 });
 </script>
-    
