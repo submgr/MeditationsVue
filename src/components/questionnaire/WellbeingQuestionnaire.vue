@@ -6,7 +6,7 @@
                 :is-open="questionnaireModalIsOpen">
                 <ion-header>
                     <ion-toolbar style="border-radius: 10px !important">
-                        <ion-title>Wellbeing Questionnaire</ion-title>
+                        <ion-title>Узнаем вас лучше</ion-title>
                         <ion-buttons slot="end">
                             <ion-button @click="closemodal()">Закрыть</ion-button>
                         </ion-buttons>

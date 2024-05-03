@@ -49,7 +49,7 @@
         <ion-header>
           <ion-toolbar>
             <ion-buttons slot="end">
-              <ion-button @click="Modal_onWillDismiss()">Close</ion-button>
+              <ion-button @click="Modal_onWillDismiss()">Закрыть</ion-button>
             </ion-buttons>
           </ion-toolbar>
         </ion-header>
@@ -64,8 +64,10 @@
               <ion-icon style="margin-left: 10px; margin-right: 10px;" :icon="feature.icon" class="feature-icon"
                 color="tertiary"></ion-icon>
               <div style="width: 80vw; margin-left: 1vw;">
-                <h4 style="font-weight: 800 !important; opacity: 0.75; font-size: 1.25rem !important;">{{ feature.title }}</h4>
-                <p style="font-weight: 400 !important; opacity: 0.65;  margin-top: 1px; line-height: 1.45 !important;">{{ feature.description }}</p>
+                <h4 style="font-weight: 800 !important; opacity: 0.75; font-size: 1.25rem !important;">{{ feature.title
+                  }}</h4>
+                <p style="font-weight: 400 !important; opacity: 0.65;  margin-top: 1px; line-height: 1.45 !important;">
+                  {{ feature.description }}</p>
               </div>
             </div>
           </div>
@@ -151,8 +153,13 @@ ion-toolbar {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 ion-modal ion-content {
@@ -179,7 +186,7 @@ ion-modal ion-content {
   -webkit-text-fill-color: transparent;
 }
 </style>
-  
+
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { IonPage, IonContent, IonToolbar, IonButtons, IonHeader, pickerController, toastController, IonButton, IonIcon, IonModal } from '@ionic/vue';
@@ -189,6 +196,8 @@ import globaldata from '../../modules/global';
 import NavbarController from '@/components/NavbarController.vue';
 
 import { Camera, CameraResultType, CameraDirection } from '@capacitor/camera';
+
+declare const vkBridge;
 
 import { Howl, Howler } from 'howler';
 
@@ -220,7 +229,7 @@ export default defineComponent({
       currentModalOpened: "none",
       availableBgSounds: [
         {
-          text: "Природа",
+          text: "Лес летом",
           value: "birds-singing-calm-river-nature-ambient-sound"
         },
         {
@@ -230,10 +239,6 @@ export default defineComponent({
         {
           text: "Домашний камин",
           value: "fireplace-original-noise"
-        },
-        {
-          text: "Лес летом",
-          value: "wind-in-trees"
         },
         {
           text: "Любимая гроза",
@@ -260,6 +265,8 @@ export default defineComponent({
         audio_url: globaldata.assets.hostname + "/sleepsounds/" + this.availableBgSounds[0].value + ".mp3"
       };
     }
+
+    this.additionalVKBridgeSetups();
   },
   setup() {
     const features = [
@@ -291,6 +298,30 @@ export default defineComponent({
     };
   },
   methods: {
+    async additionalVKBridgeSetups() {
+      // eslint-disable-next-line
+      const parent_this = this;
+
+      let isVKMiniApps = false;
+
+      try {
+        // Try to get the value from localStorage
+        isVKMiniApps = localStorage.getItem('isVKMiniApps') === 'true';
+      } catch (e) {
+        // If an error occurs (e.g., localStorage is not available), keep isVKMiniApps as false
+        console.log('Failed to access localStorage. Defaulting isVKMiniApps to false.');
+      }
+
+      if (isVKMiniApps) {
+        vkBridge.subscribe((e) => {
+          if (e.detail.type === 'VKWebAppViewHide') {
+            // Действия при сворачивании или 
+            // переключении из игры или мини-приложения
+            parent_this.finish("automatic");
+          }
+        });
+      }
+    },
     async showOnboarding() {
       this.currentModalOpened = "sleep_intro"
     },
@@ -512,4 +543,3 @@ export default defineComponent({
 });
 
 </script>
-  

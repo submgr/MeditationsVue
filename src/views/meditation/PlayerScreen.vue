@@ -67,7 +67,7 @@
                     <ion-toolbar>
                       <ion-title>Выбрать фон</ion-title>
                       <ion-buttons slot="end">
-                        <ion-button @click="Modal_onWillDismiss()">Close</ion-button>
+                        <ion-button @click="Modal_onWillDismiss()">Закрыть</ion-button>
                       </ion-buttons>
                     </ion-toolbar>
                   </ion-header>
@@ -254,6 +254,8 @@ import NavbarController from '@/components/NavbarController.vue';
 
 import { gameController, playBackOutline, play, pause, playForwardOutline } from 'ionicons/icons';
 
+declare const vkBridge;
+
 import { Capacitor } from '@capacitor/core'
 
 import { ScreenBrightness } from '@capacitor-community/screen-brightness';
@@ -350,7 +352,7 @@ export default defineComponent({
         }, 5000)
 
         window.addEventListener("message", (event) => {
-            if(event.data.type == "iframe_height_author"){
+            if (event.data.type == "iframe_height_author") {
                 alert(JSON.stringify(event.data))
                 alert(event.data.height)
                 let iframe = document.querySelector('#author-iframe-0') as HTMLIFrameElement;
@@ -360,10 +362,36 @@ export default defineComponent({
                 }
                 parent_this.author_data_loaded = true;
             }
-            
+
         });
+
+        this.additionalVKBridgeSetups();
     },
     methods: {
+        async additionalVKBridgeSetups() {
+            // eslint-disable-next-line
+            const parent_this = this;
+
+            let isVKMiniApps = false;
+
+            try {
+                // Try to get the value from localStorage
+                isVKMiniApps = localStorage.getItem('isVKMiniApps') === 'true';
+            } catch (e) {
+                // If an error occurs (e.g., localStorage is not available), keep isVKMiniApps as false
+                console.log('Failed to access localStorage. Defaulting isVKMiniApps to false.');
+            }
+
+            if (isVKMiniApps) {
+                vkBridge.subscribe((e) => {
+                    if (e.detail.type === 'VKWebAppViewHide') {
+                        // Действия при сворачивании или 
+                        // переключении из игры или мини-приложения
+                        parent_this.changePlayerState(true)
+                    }
+                });
+            }
+        },
         async wakeLockOn() {
             console.log("(wakeLock) now is ON")
             this.noSleep.enable();
@@ -705,9 +733,13 @@ export default defineComponent({
 
             this.toastAction("time_rewind", direction, time)
         },
-        changePlayerState() {
+        changePlayerState(justPause = false) {
             if (this.meditationState == "ready") {
-                switch (this.playerState) {
+                // if i want to stop playing audio (for example, app is getting closed),
+                // then i pass justPause == true
+                // if justPause isn't passed, then just act as state toggler.
+                var stateToPass = justPause ? "playing" : this.playerState
+                switch (stateToPass) {
                     case "stopped":
                         this.playerState = "playing"
                         this.audiotrack_musicid = this.audiotrack[this.audiotrack_currentplaying_index].play();
