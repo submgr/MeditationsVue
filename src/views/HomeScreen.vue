@@ -7,8 +7,9 @@
             <SystemAnnoncementProvider origin="home" />
             <AdvancedLoader v-if="1 > 2" />
             <h1 style="margin-left: 1.1rem; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Главная</h1>
+            <div style="margin-top: 4vh;"></div>
             <Transition>
-                <div style="display: block; margin-top: 4vh;" v-if="suggestSmile">
+                <div style="display: block;" v-if="suggestSmile">
                     <NotificationsBanner notificationType="suggestToSmileToday" />
                 </div>
             </Transition>
