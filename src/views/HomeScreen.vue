@@ -7,9 +7,11 @@
             <SystemAnnoncementProvider origin="home" />
             <AdvancedLoader v-if="1 > 2" />
             <h1 style="margin-left: 1.1rem; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Главная</h1>
-            <div style="display: block; margin-top: 4vh;">
-                <NotificationsBanner notificationType="suggestToSmileToday" />
-            </div>
+            <Transition>
+                <div style="display: block; margin-top: 4vh;" v-if="suggestSmile">
+                    <NotificationsBanner notificationType="suggestToSmileToday" />
+                </div>
+            </Transition>
 
             <div style="padding-top: 0.0rem;">
 
@@ -148,8 +150,16 @@ ion-page {
     font-weight: 500;
 }
 
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
 
-
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
 </style>
 
 <script lang="ts">
@@ -170,7 +180,7 @@ import {
 } from 'ionicons/icons';
 
 import globaldata from '../modules/global';
-import { get as getMeditation} from '../modules/getMeditation';
+import { get as getMeditation } from '../modules/getMeditation';
 
 import MeditationsList from '@/components/MeditationsList.vue';
 import NotificationsBanner from '@/components/NotificationsBanner.vue';
@@ -212,13 +222,27 @@ export default defineComponent({
 
         console.log(this.$i18next)
 
+        let isVKMiniApps = false;
+
+        try {
+            // Try to get the value from localStorage
+            isVKMiniApps = localStorage.getItem('isVKMiniApps') === 'true';
+        } catch (e) {
+            // If an error occurs (e.g., localStorage is not available), keep isVKMiniApps as false
+            console.log('Failed to access localStorage. Defaulting isVKMiniApps to false.');
+        }
+
+        if(!isVKMiniApps){
+            this.suggestSmile = true;
+        }
+
     },
     methods: {
         toggleStory() {
             this.showStory = !this.showStory
         },
         loadMeditation() {
-            
+
             // eslint-disable-next-line
             var parent_this = this;
             // Function to check the number of listened meditations in local storage
@@ -258,6 +282,7 @@ export default defineComponent({
                 type: "video",
             },
         ],
+        suggestSmile: false,
         loading: false
     }),
     setup() {
