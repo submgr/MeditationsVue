@@ -23,16 +23,20 @@
     " />
 
                         <div style="margin-top: 5vh; margin-left: 1vw;">
-                            <p>Помогите приложению определить состояние вашего психологического благополучия в данный момент
-                                времени, пройдя небольшой тест. Вам предстоит ответить на несколько вопросов. Постарайтесь
+                            <p>Помогите приложению определить состояние вашего психологического благополучия в данный
+                                момент
+                                времени, пройдя небольшой тест. Вам предстоит ответить на несколько вопросов.
+                                Постарайтесь
                                 расслабиться и отвечать как можно честно, а самое главное — от души.</p>
                             <div style="margin-top: 2vh;"></div>
                             <ion-checkbox :checked="wellbeingquestionare_donotshowintroanymore == 'true'"
-                                @ionChange="donotShowAnymore()" label-placement="end">Больше не показывать</ion-checkbox>
+                                @ionChange="donotShowAnymore()" label-placement="end">Больше не
+                                показывать</ion-checkbox>
                         </div>
 
                         <div style="margin-top: 5vh;"></div>
-                        <ion-button @click="startQuestionnaire();" expand="block">Начать<p style="opacity: 0.8;">⠀(~5 минут)
+                        <ion-button @click="startQuestionnaire();" expand="block">Начать<p style="opacity: 0.8;">⠀(~5
+                                минут)
                             </p></ion-button>
 
                     </div>
@@ -51,7 +55,8 @@
                                             просмотреть свои ответы или нажать "Отправить", чтобы продолжить.
                                         </span>
                                     </p>
-                                    <p class="f-description">Заметка: не забудьте нажать на "Продолжить", чтобы сохранить
+                                    <p class="f-description">Заметка: не забудьте нажать на "Продолжить", чтобы
+                                        сохранить
                                         ответы в приложении и получить результат.</p>
                                 </div>
                             </template>
@@ -90,16 +95,23 @@
                                 </div>
                             </div>
 
-                            <p v-if="barProgress_progress > 75" style="margin-top: 2vh; margin-left: 0.5vw;">Ваш результат указывает на низкий
-                                уровень психического благополучия. Обратите внимание на свое самочувствие. Медитация может
+                            <p v-if="barProgress_progress > 75" style="margin-top: 2vh; margin-left: 0.5vw;">Ваш
+                                результат указывает на
+                                низкий
+                                уровень психического благополучия. Обратите внимание на свое самочувствие. Медитация
+                                может
                                 быть мощным инструментом для улучшения вашего психического благополучия. Она помогает
                                 обрести внутреннюю гармонию, уменьшить стресс и научиться распознавать свои эмоции.</p>
-                            <p v-else-if="barProgress_progress > 35" style="margin-top: 2vh; margin-left: 0.5vw;">Ваш результат указывает на средний
+                            <p v-else-if="barProgress_progress > 35" style="margin-top: 2vh; margin-left: 0.5vw;">Ваш
+                                результат указывает на
+                                средний
                                 уровень психического благополучия. Помните, что медитация может помочь вам расслабиться,
-                                снизить уровень стресса и получить ясность мышления. Это эффективный способ улучшить свое
+                                снизить уровень стресса и получить ясность мышления. Это эффективный способ улучшить
+                                свое
                                 психическое благополучие и увеличить уровень счастья и удовлетворенности жизнью.</p>
                             <p v-else style="margin-top: 2vh; margin-left: 0.5vw;">Поздравляем! Ваш результат указывает
-                                на высокий уровень психического благополучия. Ваше психическое здоровье и благополучие - наш
+                                на высокий уровень психического благополучия. Ваше психическое здоровье и благополучие -
+                                наш
                                 приоритет. Продолжайте практиковать медитацию, чтобы поддерживать и усиливать свое
                                 психическое благополучие. Медитация способствует осознанности, позволяет лучше управлять
                                 стрессом и сохраняет ваш психический баланс.</p>
@@ -114,7 +126,7 @@
         </ion-content>
     </div>
 </template>
-  
+
 <script lang="ts">
 import {
     IonButtons,
@@ -151,6 +163,7 @@ export default defineComponent({
         IonSpinner
     },
     data() {
+
         return {
             questionnaireModalIsOpen: false,
             wellbeingquestionare_donotshowintroanymore: "false",
@@ -163,6 +176,7 @@ export default defineComponent({
                 {
                     "pressEnter": " ",
                     "continue": "дальше",
+                    "submitText": "Отправить",
                     "percentCompleted": ":percent% пройдено",
                     "multipleChoiceHelpTextSingle": ""
                 }
@@ -469,7 +483,7 @@ export default defineComponent({
             var max_points_per_question = 0;
 
             for (const [key, value] of Object.entries(points_assign_table)) {
-                if(value > max_points_per_question){
+                if (value > max_points_per_question) {
                     max_points_per_question = value;
                 }
             }
@@ -575,9 +589,8 @@ export default defineComponent({
 
 });
 </script>
-  
-<style scoped>
 
+<style scoped>
 ion-toolbar {
     --background: none;
 }
@@ -588,8 +601,8 @@ ion-toolbar {
 
 ion-modal ion-content {
     --background: none !important;
-  }
-  
+}
+
 #container {
     text-align: center;
     position: absolute;
@@ -646,5 +659,5 @@ ion-modal ion-content {
 /* Import one of the Vue Flow Form CSS themes (optional) */
 /* @import '~@ditdot-dev/vue-flow-form/dist/vue-flow-form.theme-minimal.css'; */
 /* @import '~@ditdot-dev/vue-flow-form/dist/vue-flow-form.theme-green.css'; */
-@import '../../assets/css/quiz-flow.css';</style>
-  
+@import '../../assets/css/quiz-flow.css';
+</style>

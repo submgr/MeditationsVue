@@ -4,7 +4,7 @@
             <div v-if="(show || show_local)" class="loading-overlay">
                 <div class="loading-container">
                     <ion-spinner name="lines-sharp" style="color: black;"></ion-spinner><br/>
-                    <p class="loading-text" style="margin-left: 4vw; margin-right: 2vw;">Loading...</p>
+                    <p class="loading-text" style="margin-left: 4vw; margin-right: 2vw;">Один момент...</p>
                 </div>
             </div>
         </transition>
