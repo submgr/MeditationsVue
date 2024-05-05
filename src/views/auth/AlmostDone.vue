@@ -5,7 +5,7 @@
                 v-if="state == 'main' || state == 'main_processing' || state == 'finishing'">
 
                 <p style="padding: 0px 18px 0px; margin-top: 14rem; margin-bottom: 1rem;">
-                    <Vue3Lottie :animationData="require('./../../assets/lottie/preloader.json')" :style="imgStyle"
+                    <Vue3Lottie :animationData="animationLottieFile" :style="imgStyle"
                         id="dogImage" :height="172" :width="172" />
                 </p>
                 <p class="linear-wipe"
@@ -188,6 +188,8 @@ import {
     thunderstormOutline
 } from 'ionicons/icons';
 
+import animationLottieFile from "./../../assets/lottie/preloader.json"
+
 import { Vue3Lottie } from 'vue3-lottie'
 import 'vue3-lottie/dist/style.css'
 
@@ -226,6 +228,7 @@ export default defineComponent({
             state: "main",
             user_firstname: "",
             message_modal_text: "Something went wrong. Code: the text is not defined, but modal is called. Weird.",
+            animationLottieFile,
         }
     },
     directives: {

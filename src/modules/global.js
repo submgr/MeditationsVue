@@ -1,6 +1,5 @@
 var apiserver_hostname;
 
-//var assetsbase_hostname = "https://accessmeditation.pages.dev/";
 var assetsbase_hostname = "https://xn--80aaafmfwb5a7d2bq4h.xn--p1ai/assets/";
 
 function isLocalHost(url) {
@@ -9,7 +8,6 @@ function isLocalHost(url) {
 
 console.log("[GlobalProvider] process.env.NODE_ENV: " + process.env.NODE_ENV)
 
-// check if development
 function isWebpackHotUpdate(){
   if (process.env.NODE_ENV === 'development') {
     return true;
@@ -18,8 +16,6 @@ function isWebpackHotUpdate(){
   }
 }
 
-// if we served on development instance, let's send requests also locally.
-//if(isLocalHost(window.location.hostname)){
 if (isWebpackHotUpdate() == true) {
   apiserver_hostname = "http://" + window.location.hostname + ":3000/";
   console.log("[GlobalProvider] Serving trough LOCAL (DEV) backend all further requests...")
@@ -27,7 +23,6 @@ if (isWebpackHotUpdate() == true) {
   apiserver_hostname = "https://meditations-backend.deqstudio.com/";
   console.log("[GlobalProvider] Serving trough PRODUCTION backend all further requests...")
 }
-
 
 const data = {
   api: {
@@ -41,4 +36,4 @@ const data = {
   }
 }
 
-module.exports = data;
+export default data;

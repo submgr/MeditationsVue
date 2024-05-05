@@ -1,9 +1,8 @@
 <template>
   <ion-page>
-    <ion-content :fullscreen="true" style="z-index: 5 !important;">
+    <ion-content :style="{ '--bg-image': `url(${bgImage})` }" :fullscreen="true" style="z-index: 5 !important;">
       <div style="padding: 0px 18px 0px; margin-top: 0.42rem; margin-bottom: 0rem; margin-left: -40px">
-        <Vue3Lottie :animationData="require('./../../assets/lottie/125469-meditating-panda.json')" :height="150"
-          :width="150" style="height: 40vh; max-width: 240px;" />
+        <Vue3Lottie :animationData="animationData" :height="150" :width="150" style="height: 40vh; max-width: 240px;" />
       </div>
       <div style="padding: 1.4rem; padding-top: 0rem;">
         <h2 style="font-weight: 800; font-size: 25px;;">Баланс</h2>
@@ -26,20 +25,53 @@
 </template>
 
 <style scoped>
+:root {
+  --fade-color: white;
+}
 @keyframes fadeIn {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
+    background-color: red !important;
   }
 }
 
+
+
 @media (prefers-color-scheme: dark) {
+  :root{
+    --fade-color: dark;
+  }
+
+  ion-content::before {
+    --background: black;
+  }
+
   ion-content {
+    --fade-color: black;
     color: #ffffff !important;
     --background: #000000 url('../../assets/abstract/aurora-retina-background.png') no-repeat center center / cover !important;
-    animation: fadeIn 2s ease-in-out;
+    animation: fadeIn 1.5s ease-in-out;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root{
+    --fade-color: white;
+  }
+
+  ion-content::before {
+    --background: #ffffff;
+  }
+
+  ion-content {
+    --fade-color: white;
+    color: #fefefe !important;
+    --background: #ffffff url('../../assets/abstract/chris-nguyen-lbmrrNgq2lo-unsplash.jpg') no-repeat center center / cover !important;
+    animation: fadeIn 1.5s ease-in-out;
   }
 }
 
@@ -55,27 +87,15 @@
     background: rgb(233, 233, 233) !important;
     z-index: -2;
   }
-
-  ion-content::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #f7f7f6 url('../../assets/abstract/chris-nguyen-lbmrrNgq2lo-unsplash.jpg') no-repeat center center / cover !important;
-    opacity: 1;
-    animation: fadeIn 2s ease-in-out forwards;
-    z-index: -1;
-  }
 }
 </style>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { IonPage, IonContent, IonButton } from '@ionic/vue';
-
+import animationData from './../../assets/lottie/125469-meditating-panda.json'
 import { Vue3Lottie } from 'vue3-lottie'
+
 
 export default defineComponent({
   name: 'Tab1Page',
@@ -88,7 +108,12 @@ export default defineComponent({
         }
       });
     }
-  }
+  },
+  data() {
+    return {
+      animationData,
+    }
+  },
 
 });
 </script>

@@ -1,4 +1,4 @@
-<template lang="en">
+<template>
     <ion-page id="ionpage">
         <ion-content :fullscreen="true">
 
@@ -353,8 +353,8 @@ export default defineComponent({
 
         window.addEventListener("message", (event) => {
             if (event.data.type == "iframe_height_author") {
-                alert(JSON.stringify(event.data))
-                alert(event.data.height)
+                //alert(JSON.stringify(event.data))
+                //alert(event.data.height)
                 let iframe = document.querySelector('#author-iframe-0') as HTMLIFrameElement;
                 if (iframe) {
                     iframe.height = event.data.height;

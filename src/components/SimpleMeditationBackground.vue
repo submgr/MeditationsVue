@@ -69,7 +69,7 @@
     },
     data () {
       return {
-        publicPath: process.env.BASE_URL,
+        publicPath: "/",
         globaldata: globaldata,
         current_background: null,
         tempdata_wavy_shader_loadstate: "notloaded"

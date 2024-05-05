@@ -138,16 +138,24 @@ ion-toolbar {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url(../../assets/photo/zane-lee-7jus80HTnK0-unsplash_darken.jpg) no-repeat center center / cover !important;
+  background: url("../../assets/photo/zane-lee-7jus80HTnK0-unsplash_darken.jpg") no-repeat center center / cover !important;
   opacity: 1;
-  animation: fadeIn 2s ease-in-out forwards;
+  animation: fadeIn 1.5s ease-in-out forwards;
   z-index: -1;
+}
+
+@media (prefers-color-scheme: light) {
+  .mainpage_ioncontent {
+    color: #ffffff !important;
+    --background: url("../../assets/photo/zane-lee-7jus80HTnK0-unsplash_darken.jpg") no-repeat center center / cover !important;
+    animation: fadeIn 1.5s ease-in-out;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
   .mainpage_ioncontent {
     color: #ffffff !important;
-    --background: url(../../assets/photo/zane-lee-7jus80HTnK0-unsplash_darken.jpg) no-repeat center center / cover !important;
+    --background: url("../../assets/photo/zane-lee-7jus80HTnK0-unsplash_darken.jpg") no-repeat center center / cover !important;
     animation: fadeIn 1.5s ease-in-out;
   }
 }
@@ -370,9 +378,9 @@ export default defineComponent({
 
     },
     async infomodalfunction() {
-      alert("test")
+      //alert("test")
       const test = await Camera.checkPermissions();
-      alert(JSON.stringify(test))
+      //alert(JSON.stringify(test))
       const image = await Camera.getPhoto({
         quality: 90,
         allowEditing: true,

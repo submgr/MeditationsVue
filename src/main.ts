@@ -35,6 +35,9 @@ import '@ionic/vue/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+import { plugin as vueTransitionsPlugin } from '@morev/vue-transitions';
+import '@morev/vue-transitions/styles';
+
 // Above the createApp() line
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 defineCustomElements(window);
@@ -46,6 +49,9 @@ const app = createApp(App)
   .use(IonicVue)
   .use(router)
   .use(LoadScript)
+  .use(vueTransitionsPlugin({
+    // Plugin options (optional, described below)
+  }))
   .use(store)
   .use(PrimeVue, { ripple: true })
 

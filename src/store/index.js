@@ -32,7 +32,7 @@ export default createStore({
     })
   ],
   state: {
-    packageVersion: process.env.PACKAGE_VERSION || '0',
+    packageVersion: import.meta.env.VITE_PACKAGE_VERSION || '0',
     // the rest of your state here
     user_data: [],
   },

@@ -2,7 +2,8 @@
     <ion-page>
         <ion-content :fullscreen="true">
 
-            <WellbeingQuestionnaire ref="wellbeingQuestionnaireRef" @completion-event="WellbeingQuestionnaireCompleted" />
+            <WellbeingQuestionnaire ref="wellbeingQuestionnaireRef"
+                @completion-event="WellbeingQuestionnaireCompleted" />
 
             <img style="padding-top: 10vh; height: auto; width: 70%; max-width: 400px; margin-left: auto; margin-right: auto; display: block;"
                 :src="natureEllipse">
@@ -78,17 +79,77 @@ export default defineComponent({
     },
     data() {
         return {
-            user_firstname: "Человек"
+            user_firstname: "Человек",
+            natureText: "",
+            natureEllipse: "",
         }
     },
     methods: {
         WellbeingQuestionnaireCompleted() {
             this.$router.replace('/tabs/home')
+        },
+        async loaderGatherData() {
+            function get_random(list) {
+                return list[Math.floor((Math.random() * list.length))];
+            }
+
+            const d = new Date();
+
+            const dayMinutes = d.getHours() * 60 + d.getMinutes();
+
+            var natureEllipse_Image;
+
+            alert("hello")
+
+            async function imageLookup(dayPeriod = "morning") {
+                let image;
+                var image_local;
+                if (!["morning", "afternoon", "evening", "night"].includes(dayPeriod)) {
+                    const deadImage = await import(`./../assets/graphics/page-dead.png`);
+                    image = deadImage.default;
+                } else {
+                    const dayPeriod_list = {
+                        morning: ["morning-ellipse.png", "morning-mountains-ellipse.png", "morning-highview-ellipse.png", "morning-work-onbeach-ellipse.png", "swimming-morning-ellipse.png", "morning-forest-ellipse.png", "morning-bedsheet-ellipse.png", "morning-vibes-ellipse.png"],
+                        afternoon: ["afternoon-sky-ellipse.png", "day-city-ellipse.png", "man-onrocks-waterfall-ellipse.png", "forest-afternoon-ellipse.png", "creative-office-afternoon-ellipse.png", "afternoon-citybridge-ellipse.png", "afternoon-beach-ellipse.png", "daytime-beach-ellipse.png"],
+                        evening: ["evening-desert-mountains-ellipse.png", "evening-construction-ellipse.png", "evening-nature.png", "evening-newyork-ellipse.png", "evening-subway-ellipse.png", "evening-hotel-veranda-ellipse.png"],
+                        night: ["night-sky-1-ellipse.png", "night-view-ellipse.png", "night-houselife-ellipse.png", "mountains-at-night-ellipse.png", "night-city-ellipse.png", "man-understone-atnight-ellipse.png", "aurora-night-ellipse.png", "night-greennature-ellipse.png", "night-hotelroom-ellipse.png"]
+                    }
+                    const imageName = dayPeriod_list[dayPeriod][Math.floor(Math.random() * dayPeriod_list[dayPeriod].length)]
+                    image = `./src/assets/graphics/${imageName}`;
+                }
+                return await image;
+            }
+
+            var natureEllipse_Text = "?ERR-0"
+
+            switch (true) {
+                case (300 <= dayMinutes && dayMinutes < 660):
+                    natureEllipse_Image = await imageLookup("morning");
+                    
+                    natureEllipse_Text = get_random(["Доброе утро,", "Салют новому дню,", "Волшебного тебе утра,", "Продуктивного тебе утра,", "Счастливого дня,", "С новым днем,", "Подъем,", "Удачных удач,"])
+                    break;
+                case (660 <= dayMinutes && dayMinutes < 1080):
+                    natureEllipse_Image = await imageLookup("afternoon");
+                    natureEllipse_Text = get_random(["Это прекрасный день,", "У тебя все получится,", "Какой хороший день,", "Сегодня в моде улыбаться,"])
+                    break;
+                case (1080 <= dayMinutes && dayMinutes < 1260):
+                    natureEllipse_Image = await imageLookup("evening");
+                    natureEllipse_Text = get_random(["Хорошего вечера,", "Время отдохнуть,", "День только начинается,", "Хороших снов,", "Добрых снова,", "Споки-ноки,", "Завтра ты проснешься легко,", "Уютного сна,"])
+                    break;
+                case ((0 <= dayMinutes && dayMinutes < 300) || (1260 <= dayMinutes && dayMinutes < 9999)):
+                    natureEllipse_Image = await imageLookup("night");
+                    natureEllipse_Text = get_random(["Приятных снов,", "Спокойной ночи,"])
+                    break;
+            }
+            this.natureText = natureEllipse_Text;
+            this.natureEllipse = natureEllipse_Image;
         }
     },
     mounted() {
         // eslint-disable-next-line
         const parent_this = this;
+
+        this.loaderGatherData();
 
         // Here we check platforms and decide if non-progessive audio player is needed
         // I hope in future I will delete this part, but who knows - maybe we will need it
@@ -144,7 +205,7 @@ export default defineComponent({
 
             // Store the value in localStorage
             localStorage.setItem('isVKMiniApps', 'true');
-            
+
             loadScript("https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js")
                 .then(() => {
                     console.log("loadScript>then:: Success->then;")
@@ -214,56 +275,8 @@ export default defineComponent({
     },
     setup() {
 
-        function get_random(list) {
-            return list[Math.floor((Math.random() * list.length))];
-        }
-
-        const d = new Date();
-
-        const dayMinutes = d.getHours() * 60 + d.getMinutes();
-
-        var natureEllipse_Image;
-
-        function imageLookup(dayPeriod = "morning") {
-            var image_local;
-            if (!["morning", "afternoon", "evening", "night"].includes(dayPeriod)) {
-                image_local = "page-dead.png"
-            } else {
-                const dayPeriod_list = {
-                    morning: ["morning-ellipse.png", "morning-mountains-ellipse.png", "morning-highview-ellipse.png", "morning-work-onbeach-ellipse.png", "swimming-morning-ellipse.png", "morning-forest-ellipse.png", "morning-bedsheet-ellipse.png", "morning-vibes-ellipse.png"],
-                    afternoon: ["afternoon-sky-ellipse.png", "day-city-ellipse.png", "man-onrocks-waterfall-ellipse.png", "forest-afternoon-ellipse.png", "creative-office-afternoon-ellipse.png", "afternoon-citybridge-ellipse.png", "afternoon-beach-ellipse.png", "daytime-beach-ellipse.png"],
-                    evening: ["evening-desert-mountains-ellipse.png", "evening-construction-ellipse.png", "evening-nature.png", "evening-newyork-ellipse.png", "evening-subway-ellipse.png", "evening-hotel-veranda-ellipse.png"],
-                    night: ["night-sky-1-ellipse.png", "night-view-ellipse.png", "night-houselife-ellipse.png", "mountains-at-night-ellipse.png", "night-city-ellipse.png", "man-understone-atnight-ellipse.png", "aurora-night-ellipse.png", "night-greennature-ellipse.png", "night-hotelroom-ellipse.png"]
-                }
-                image_local = dayPeriod_list[dayPeriod][Math.floor(Math.random() * dayPeriod_list[dayPeriod].length)]
-            }
-            return require("./../assets/graphics/" + image_local);
-        }
-
-        var natureEllipse_Text = "?ERR-0"
-
-        switch (true) {
-            case (300 <= dayMinutes && dayMinutes < 660):
-                natureEllipse_Image = imageLookup("morning");
-                natureEllipse_Text = get_random(["Доброе утро,", "Салют новому дню,", "Волшебного тебе утра,", "Продуктивного тебе утра,", "Счастливого дня,", "С новым днем,", "Подъем,", "Удачных удач,"])
-                break;
-            case (660 <= dayMinutes && dayMinutes < 1080):
-                natureEllipse_Image = imageLookup("afternoon");
-                natureEllipse_Text = get_random(["Это прекрасный день,", "У тебя все получится,", "Какой хороший день,", "Сегодня в моде улыбаться,"])
-                break;
-            case (1080 <= dayMinutes && dayMinutes < 1260):
-                natureEllipse_Image = imageLookup("evening");
-                natureEllipse_Text = get_random(["Хорошего вечера,", "Время отдохнуть,", "День только начинается,", "Хороших снов,", "Добрых снова,", "Споки-ноки,", "Завтра ты проснешься легко,", "Уютного сна,"])
-                break;
-            case ((0 <= dayMinutes && dayMinutes < 300) || (1260 <= dayMinutes && dayMinutes < 9999)):
-                natureEllipse_Image = imageLookup("night");
-                natureEllipse_Text = get_random(["Приятных снов,", "Спокойной ночи,"])
-                break;
-        }
-
         return {
-            natureText: natureEllipse_Text,
-            natureEllipse: natureEllipse_Image,
+            
             pageStyle: {
                 "--ion-background-color": "#F9F9F9",
                 "--ion-font-family": "Roboto"
@@ -271,6 +284,6 @@ export default defineComponent({
             footer: "hide"
         }
         //
-    }
+    },
 });
 </script>
