@@ -105,8 +105,7 @@ export default defineComponent({
                 let image;
                 var image_local;
                 if (!["morning", "afternoon", "evening", "night"].includes(dayPeriod)) {
-                    const deadImage = await import(`./../assets/graphics/page-dead.png`);
-                    image = deadImage.default;
+                    image = `./src/assets/graphics/page-dead.png`;
                 } else {
                     const dayPeriod_list = {
                         morning: ["morning-ellipse.png", "morning-mountains-ellipse.png", "morning-highview-ellipse.png", "morning-work-onbeach-ellipse.png", "swimming-morning-ellipse.png", "morning-forest-ellipse.png", "morning-bedsheet-ellipse.png", "morning-vibes-ellipse.png"],
