@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import svgLoader from 'vite-svg-loader'
 import WindiCSS from 'vite-plugin-windicss'
+import { resolve } from 'path'
 
 import { dynamicImport } from 'vite-plugin-dynamic-import'
 
@@ -18,6 +19,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(pathSegments, './src'),
+      '@assets': path.resolve(pathSegments, './src/assets'),
+      '~': path.resolve(pathSegments, './node_modules'),
     },
     extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
   }

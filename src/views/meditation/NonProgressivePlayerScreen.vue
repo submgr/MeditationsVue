@@ -1,4 +1,4 @@
-<template lang="en">
+<template>
     <ion-page>
         <ion-content :fullscreen="true">
             <SimpleMeditationBackground/>

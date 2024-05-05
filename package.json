@@ -4,14 +4,12 @@
   "private": true,
   "homepage": "./",
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vite",
     "installandbuild": "npm install && npm run build",
-    "oldbuild": "vue-cli-service build && node minify_runner.js",
-    "build": "vue-cli-service build && node OptimizationTasks.js",
+    "build": "vite build && node OptimizationTasks.js",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
-    "lint": "vue-cli-service lint",
-    "testrun": "vite"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@awesome-cordova-plugins/core": "6.4.0",
