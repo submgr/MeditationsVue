@@ -1,6 +1,6 @@
 // store/index.js
 
-import * as adsEngine from "./modules/ads_engine"
+import * as adsEngine from "../modules/ads_engine"
 
 function check_if_begins_with(input, substring) {
   var processed_data = input.toString();

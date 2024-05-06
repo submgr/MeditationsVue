@@ -5,8 +5,12 @@
             <WellbeingQuestionnaire ref="wellbeingQuestionnaireRef"
                 @completion-event="WellbeingQuestionnaireCompleted" />
 
-            <img style="padding-top: 10vh; height: auto; width: 70%; max-width: 400px; margin-left: auto; margin-right: auto; display: block;"
-                :src="natureEllipse">
+            
+
+                <div style="padding-top: 10vh; height: auto; width: 70%; max-width: 400px; margin-left: auto; margin-right: auto; display: block;">
+                    <img v-if="natureEllipse" 
+                        :src="natureEllipse">
+                </div>
 
             <p
                 style="text-align: center;padding: 0px 18px 0px; margin-top: 7vh; margin-bottom: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 21px; font-weight: 400;">
@@ -83,7 +87,7 @@ export default defineComponent({
         return {
             user_firstname: "Человек",
             natureText: "",
-            natureEllipse: "",
+            natureEllipse: null,
         }
     },
     methods: {
@@ -136,7 +140,7 @@ export default defineComponent({
                     break;
                 case (1080 <= dayMinutes && dayMinutes < 1260):
                     natureEllipse_Image = await imageLookup("evening");
-                    natureEllipse_Text = get_random(["Хорошего вечера,", "Время отдохнуть,", "День только начинается,", "Хороших снов,", "Добрых снова,", "Споки-ноки,", "Завтра ты проснешься легко,", "Уютного сна,"])
+                    natureEllipse_Text = get_random(["Хорошего вечера,", "Время отдохнуть,", "День только начинается,", "Хороших снов,", "Добрых снов,", "Споки-ноки,", "Завтра ты проснешься легко,", "Уютного сна,"])
                     break;
                 case ((0 <= dayMinutes && dayMinutes < 300) || (1260 <= dayMinutes && dayMinutes < 9999)):
                     natureEllipse_Image = await imageLookup("night");

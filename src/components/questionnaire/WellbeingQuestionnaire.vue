@@ -590,7 +590,18 @@ export default defineComponent({
 });
 </script>
 
+<style>
+/* Import Vue Flow Form base CSS */
+@import '/node_modules/@ditdot-dev/vue-flow-form/dist/vue-flow-form.css';
+/* Import one of the Vue Flow Form CSS themes (optional) */
+/* @import '~@ditdot-dev/vue-flow-form/dist/vue-flow-form.theme-minimal.css'; */
+/* @import '~@ditdot-dev/vue-flow-form/dist/vue-flow-form.theme-green.css'; */
+@import '/src/assets/css/quiz-flow.css';
+</style>
+
 <style scoped>
+
+
 ion-toolbar {
     --background: none;
 }
@@ -654,10 +665,5 @@ ion-modal ion-content {
     display: flex;
 }
 
-/* Import Vue Flow Form base CSS */
-@import '~@ditdot-dev/vue-flow-form/dist/vue-flow-form.css';
-/* Import one of the Vue Flow Form CSS themes (optional) */
-/* @import '~@ditdot-dev/vue-flow-form/dist/vue-flow-form.theme-minimal.css'; */
-/* @import '~@ditdot-dev/vue-flow-form/dist/vue-flow-form.theme-green.css'; */
-@import '../../assets/css/quiz-flow.css';
+
 </style>
