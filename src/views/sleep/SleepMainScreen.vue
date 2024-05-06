@@ -23,22 +23,20 @@
       </div>
 
       <div>
-        <div style="bottom: 15vh !important; position:fixed !important; z-index: 5500 !important; width: 80vw; display: block;
-      margin-left: 10vw;
-      margin-right: 10vw; text-align: center;" @click="configureAudioBackground()">
-          <span class="light_bottom_gradient">{{ current_audiobackground.title }} </span>
-          <ion-icon style="color: white; opacity: 0.8; margin-left: 1vw; font-size: 2rem; margin-bottom: -0.6rem;"
-            :icon="albumsOutline"></ion-icon>
+        <div style="bottom: 15vh !important; position:fixed !important; z-index: 5500 !important; width: 100vw; display: block;
+ text-align: center;" @click="configureAudioBackground()">
+          <span style="text-align: center;" class="light_bottom_gradient">{{ current_audiobackground.title }} <ion-icon style="color: white; opacity: 0.8; margin-left: 1vw; font-size: 2rem; margin-bottom: -0.6rem;"
+            :icon="albumsOutline"></ion-icon></span>
+          
         </div>
 
         <Transition>
-          <div style="bottom: 11vh !important; position:fixed !important; z-index: 5500 !important; width: 50vw; display: block;
-      margin-left: 25vw;
-      margin-right: 25vw; text-align: center;" v-if="howler_player_instance == null" @click="configureTimer()">
-            <span class="light_bottom_gradient">Таймер: <span v-if="current_timer_timevalue_minutes != 9000">{{
-              current_timer_timevalue_minutes }} минут</span><span v-else>без таймера</span></span>
-            <ion-icon style="color: white; opacity: 0.8; margin-left: 1vw; font-size: 2rem; margin-bottom: -0.6rem;"
-              :icon="stopwatchOutline"></ion-icon>
+          <div style="bottom: 11vh !important; position:fixed !important; z-index: 5500 !important; width: 100vw; display: block;
+     text-align: center;" v-if="howler_player_instance == null" @click="configureTimer()">
+            <span  style="text-align: center;" class="light_bottom_gradient">Таймер: <span v-if="current_timer_timevalue_minutes != 9000">{{
+              current_timer_timevalue_minutes }} минут</span><span v-else>без таймера</span> <ion-icon style="color: white; opacity: 0.8; margin-left: 1vw; font-size: 2rem; margin-bottom: -0.6rem;"
+              :icon="stopwatchOutline"></ion-icon></span>
+           
           </div>
         </Transition>
 
