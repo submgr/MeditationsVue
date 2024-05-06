@@ -78,6 +78,7 @@ export async function showBanner() {
         showAdmobBanner();
     } else {
         // Non-Native
+        alert("non native")
         showNonNativeBanner();
     }
 

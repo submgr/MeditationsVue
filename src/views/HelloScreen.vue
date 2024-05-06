@@ -88,6 +88,7 @@ export default defineComponent({
     },
     methods: {
         WellbeingQuestionnaireCompleted() {
+            adsEngine.showBanner();
             this.$router.replace('/tabs/home')
         },
         async loaderGatherData() {
@@ -226,6 +227,7 @@ export default defineComponent({
             setTimeout(function (this) {
                 if (localStorage.getItem("stats_emotionalstate_atleast_once")) {
                     console.log("Called adsEngline to show banner...")
+                    //we show banner here or after redirect to home from Quiz Prompt
                     adsEngine.showBanner();
                     parent_this.$router.replace('/tabs/home')
                     const tabsEl = document.querySelector('ion-tab-bar');
