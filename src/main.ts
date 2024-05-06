@@ -177,6 +177,8 @@ if (urlParams.get('isVKMiniApps') == "true") {
   adsSpecificNetwork = "vkminiapps"
 }
 
+alert("urlParams.get('isVKMiniApps'): " + urlParams.get('isVKMiniApps'))
+
 adsEngine.prepareAdsService(adsSpecificNetwork);
 
 
