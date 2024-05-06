@@ -5,7 +5,7 @@
                 :is-open="openedModal == 'redeemedFreePremiumAccessModal'">
                 <ion-content class="ion-padding">
                     <div class="ion-margin-top">
-                        <Vue3Lottie :animationData="require('./../../assets/lottie/florid-girl-ties-a-bow-on-a-gift.json')"
+                        <Vue3Lottie :animationData="animationData"
                             :height="150" :width="150" style="max-width: 55vw; margin-left: -3vw; margin-top: 4vh;" />
                         <ion-label style="font-size: 14px;">Спасибо за то, что решили попробовать приложение <b><i>Ваша
                                     медитация</i></b><i>!</i></ion-label><br/><br/>
@@ -26,6 +26,8 @@
 import { defineComponent, computed } from 'vue';
 
 import globaldata from '../../modules/global';
+
+import animationData from './../../assets/lottie/florid-girl-ties-a-bow-on-a-gift.json'
 
 import { IonContent, IonLabel, IonModal, IonButton } from '@ionic/vue';
 
@@ -48,7 +50,8 @@ export default defineComponent({
             announcements: [],
             freePremiumServerMagicToken: "mi3si0fbl27kad4bxtfwcbzebbb6yjrl",
             freePremiumForPeriod: "1 год (1-year)",
-            openedModal: "none"
+            openedModal: "none",
+            animationData
         }
     },
     methods: {

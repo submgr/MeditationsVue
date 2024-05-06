@@ -5,7 +5,7 @@
 
             </div>
             <Vue3Lottie style="height: 30vh; margin-top: 4vh; margin-left: -20vh;"
-                :animationData="require('./../../assets/lottie/juicy-girl-typing-on-phone.json')" />
+                :animationData="animationData" />
             <ion-header collapse="condense" style="margin-top: 4vh; --background: none;">
                 <ion-toolbar style="--background: none;">
                     <ion-title size="large" style="--background: none;">Пора обновиться</ion-title>
@@ -32,6 +32,8 @@ import globaldata from '../../modules/global';
 
 import version from 'vite-plugin-package-version';
 
+import animationData from './../../assets/lottie/juicy-girl-typing-on-phone.json'
+
 import { Vue3Lottie } from 'vue3-lottie'
 
 export default defineComponent({
@@ -44,7 +46,9 @@ export default defineComponent({
         return {
             app_update_link: null,
             update_button_available: false,
-            unableToGetUpdateLink: false
+            unableToGetUpdateLink: false,
+
+            animationData
         }
     },
     mounted() {

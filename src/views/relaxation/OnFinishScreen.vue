@@ -6,7 +6,7 @@
         </ion-toolbar>
       </ion-header>
       <ion-content :fullscreen="true">
-        <Vue3Lottie :animationData="require('./../../assets/lottie/beam-meditation.json')" :height="150" :width="150" style="max-width: 80vw; margin-left: -3vw; margin-top: 4vh;" />
+        <Vue3Lottie :animationData="animationData" :height="150" :width="150" style="max-width: 80vw; margin-left: -3vw; margin-top: 4vh;" />
         
         <ion-header collapse="condense" style="margin-top: 0.5vh; --background: none;">
           <ion-toolbar style="--background: none;">
@@ -33,6 +33,8 @@
   import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel } from '@ionic/vue';
 
   import confetti from 'canvas-confetti';
+
+  import animationData from './../../assets/lottie/beam-meditation.json';
 
   import { Vue3Lottie } from 'vue3-lottie'
   
@@ -69,6 +71,11 @@
             tabsEl.hidden = false;
             tabsEl.style.height = "1";
         }
+    },
+    data(){
+      return {
+        animationData
+      }
     }
   });
   </script>

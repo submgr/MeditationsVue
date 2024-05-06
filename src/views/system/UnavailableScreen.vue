@@ -9,7 +9,7 @@
             </div>
             <ExploreContainer name="Tab 3 page" />
             <Vue3Lottie style="height: 40vh; margin-top: 10vh;"
-                :animationData="require('./../../assets/lottie/neo-sakura-page-under-construction.json')" />
+                :animationData="animationData" />
             <ion-header collapse="condense" style="margin-top: 6vh; --background: none;">
                 <ion-toolbar style="--background: none;">
                     <ion-title size="large" style="--background: none;">Ой!</ion-title>
@@ -41,6 +41,8 @@ import { Vue3Lottie } from 'vue3-lottie'
 
 import { Network } from '@capacitor/network';
 
+import animationData from './../../assets/lottie/neo-sakura-page-under-construction.json'
+
 export default defineComponent({
     name: 'Tab3Page',
     components: { IonContent, IonPage, Vue3Lottie, IonToast },
@@ -53,7 +55,9 @@ export default defineComponent({
             amount_of_completed_retries: 0,
             real_times_secs: 0,
             reconnection_toast_countdown_isopen: false,
-            reconnection_auto_retries_intiated: false
+            reconnection_auto_retries_intiated: false,
+
+            animationData
         }
     },
     async mounted() {

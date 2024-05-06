@@ -5,7 +5,7 @@
             <div v-if="stage == 'getting_ready'">
                 <div style="padding: 0rem; margin-top: 5vh; ">
                     <div style="margin-left: -10vw;">
-                        <Vue3Lottie :loop="1" :animationData="require('./../../assets/lottie/26792-progress-loader.json')"
+                        <Vue3Lottie :loop="1" :animationData="gettingReadyAnimationData"
                             style=" width: 120vw !important;" />
                     </div>
 
@@ -19,7 +19,7 @@
                 <div v-if="stage == 'awaiting'">
                     <div style="padding: 0rem; margin-top: 11%; ">
                         <div style="margin-left: -20%;">
-                            <Vue3Lottie :animationData="require('./../../assets/lottie/26792-progress-loader.json')"
+                            <Vue3Lottie :animationData="breathAwaitingAnimationData"
                                 style=" width: 120% !important;" />
                         </div>
 
@@ -32,7 +32,7 @@
             <Transition :duration="{ enter: 500, leave: 800 }">
                 <div v-if="stage == 'breath_staged'">
                     <div style="padding: 2rem; margin-top: 31%">
-                        <Vue3Lottie :loop="breath_animation_loops" :animationData="require('./../../assets/lottie/142805-huff-cough-breathing.json')" />
+                        <Vue3Lottie :loop="breath_animation_loops" :animationData="stagedBreathAnimationData" />
                         <p class="linear-wipe"
                             style="text-align: center; margin: 0; margin-top: 2rem; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 24px; font-weight: 700;">
                             {{ advanced_stage_info }}</p>
@@ -62,16 +62,23 @@
 import { defineComponent } from 'vue';
 import { IonPage, IonContent } from '@ionic/vue';
 
-
 import { Vue3Lottie } from 'vue3-lottie'
 
 import NavbarController from '@/components/NavbarController.vue';
+
+import gettingReadyAnimationData from './../../assets/lottie/26792-progress-loader.json'
+import breathAwaitingAnimationData from './../../assets/lottie/26792-progress-loader.json'
+import stagedBreathAnimationData from './../../assets/lottie/142805-huff-cough-breathing.json'
 
 export default defineComponent({
     name: 'Tab1Page',
     components: { IonContent, IonPage, Vue3Lottie, NavbarController },
     data() {
         return {
+            gettingReadyAnimationData,
+            breathAwaitingAnimationData,
+            stagedBreathAnimationData,
+
             stage: "getting_ready",
             timer_ready: 11,
             stage_timer: 0,

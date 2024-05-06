@@ -30,7 +30,7 @@
             <ion-modal @willDismiss="Modal_onWillDismiss" :canDismiss="isCanDismissDownloaderModal" :is-open="meditationState == 'downloading'" trigger="open-modal" :initial-breakpoint="0.6" :breakpoints="[0.6]" handle-behavior="cycle">
                 <ion-content class="ion-padding">
                     <div class="ion-margin-top">
-                        <Vue3Lottie :animationData="require('./../../assets/lottie/131216-loading.json')" :height="180" :width="200" />
+                        <Vue3Lottie :animationData="animationData" :height="180" :width="200" />
                         <div text-center>
                             <ion-label style="white-space: pre-wrap;"><span style="text-align: center;"><br><b style="font-size: 28px;">Медитация загружается</b><br><br>Мы создали медитацию специально для вас, осталось только загрузить ее. Это не займет много времени.</span></ion-label>
                         </div>
@@ -121,6 +121,8 @@
 
     import * as Tone from 'tone'
     import * as Pizzicato from 'pizzicato'
+
+    import animationData from './../../assets/lottie/131216-loading.json'
     
     import { gameController, playBackOutline, play, pause, playForwardOutline } from 'ionicons/icons';
     
@@ -382,7 +384,7 @@
             return {
                 test: this.$route.params.test,
                 playerState: "stopped",
-                
+                animationData,
                 videoplayer: null,
                 //meditationState: "prestart_info",
                 meditationState: "downloading",

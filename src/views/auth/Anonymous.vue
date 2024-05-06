@@ -4,7 +4,7 @@
             <ion-content :fullscreen="true" v-if="state == 'main' || state == 'main_processing' || state == 'finishing'">
         
                 <p style="padding: 0px 18px 0px; margin-top: 14rem; margin-bottom: 1rem;">
-                    <Vue3Lottie :animationData="require('./../../assets/lottie/preloader.json')" :height="200" :width="200" /></p>
+                    <Vue3Lottie :animationData="animationData" :height="200" :width="200" /></p>
                 <p class="linear-wipe" style="text-align: center; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 24px; font-weight: 700;">Выполняется вход</p>
                 <ion-modal
                     @willDismiss="Modal_onWillDismiss"
@@ -125,6 +125,8 @@ ion-spinner {
         defineComponent
     } from 'vue';
 
+    import animationData from './../../assets/lottie/preloader.json';
+
     import {
         IonPage,
         IonContent,
@@ -161,6 +163,7 @@ ion-spinner {
         },
         data() {
             return {
+                animationData,
                 message_modal_isOpen: false,
                 state: "main",
                 user_firstname: "",
