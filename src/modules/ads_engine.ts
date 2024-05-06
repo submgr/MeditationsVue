@@ -205,18 +205,23 @@ export async function showYandexAdsRewarded() {
 }
 
 export async function showNonNativeBanner() {
-    switch (localStorage.getItem("adsSpecificNetwork")) {
+    var adsSpecificNetwork = localStorage.getItem("adsSpecificNetwork");
+    console.log("Catched in f() -showNonNativeBanner-, value of adsSpecificNetwork:", adsSpecificNetwork)
+    switch (adsSpecificNetwork) {
         case "vkminiapps":
+            alert("VK Banner Ad PATH SELECTED")
             vkBridge.send('VKWebAppShowBannerAd', {
                 banner_location: 'bottom'
                 })
                .then((data) => { 
                   if (data.result) {
+                    alert("VK Banner Ad is Ready")
                     // Баннерная реклама отобразилась
                   }
                 })
                 .catch((error) => {
                   // Ошибка
+                  alert("VK Banner Ad ERROR" + error)
                   console.log(error);
                 });
             break;

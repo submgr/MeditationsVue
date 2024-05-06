@@ -226,6 +226,7 @@ export default defineComponent({
             setTimeout(function (this) {
                 if (localStorage.getItem("stats_emotionalstate_atleast_once")) {
                     setTimeout(() => {
+                        console.log("Called adsEngline to show banner...")
                         adsEngine.showBanner();
                     }, 3000);
                     parent_this.$router.replace('/tabs/home')
