@@ -78,7 +78,7 @@ export async function showBanner() {
         showAdmobBanner();
     } else {
         // Non-Native
-        alert("non native")
+        //alert("non native")
         showNonNativeBanner();
     }
 
@@ -210,19 +210,19 @@ export async function showNonNativeBanner() {
     console.log("Catched in f() -showNonNativeBanner-, value of adsSpecificNetwork:", adsSpecificNetwork)
     switch (adsSpecificNetwork) {
         case "vkminiapps":
-            alert("VK Banner Ad PATH SELECTED")
+            //alert("VK Banner Ad PATH SELECTED")
             vkBridge.send('VKWebAppShowBannerAd', {
                 banner_location: 'bottom'
                 })
                .then((data) => { 
                   if (data.result) {
-                    alert("VK Banner Ad is Ready")
+                    // alert("VK Banner Ad is Ready")
                     // Баннерная реклама отобразилась
                   }
                 })
                 .catch((error) => {
                   // Ошибка
-                  alert("VK Banner Ad ERROR" + error)
+                  // alert("VK Banner Ad ERROR" + error)
                   console.log(error);
                 });
             break;
