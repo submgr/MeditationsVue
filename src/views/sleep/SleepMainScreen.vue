@@ -538,7 +538,7 @@ export default defineComponent({
       });
       await picker.present();
       const toast = await toastController.create({
-        message: 'По завершении таймера, все звуки приглушатся и телефон перейдет в спящий режим.',
+        message: 'По окончании таймера все звуки будут отключены, а телефон перейдет в спящий режим.',
         duration: 5500,
         position: 'top',
       });
