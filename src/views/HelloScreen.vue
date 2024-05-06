@@ -225,10 +225,8 @@ export default defineComponent({
         if (localStorage.getItem("auth_token")) {
             setTimeout(function (this) {
                 if (localStorage.getItem("stats_emotionalstate_atleast_once")) {
-                    setTimeout(() => {
-                        console.log("Called adsEngline to show banner...")
-                        adsEngine.showBanner();
-                    }, 3000);
+                    console.log("Called adsEngline to show banner...")
+                    adsEngine.showBanner();
                     parent_this.$router.replace('/tabs/home')
                     const tabsEl = document.querySelector('ion-tab-bar');
                     if (tabsEl) {
