@@ -1,4 +1,6 @@
 import * as YandexAds from 'cordova-plugin-yandex-ads/www/yandexads';
+declare const vkBridge;
+
 import { Capacitor } from '@capacitor/core';
 import {
     AdMob, BannerAdPluginEvents, BannerAdOptions, AdMobBannerSize, InterstitialAdPluginEvents, AdOptions, AdLoadInfo, BannerAdSize, BannerAdPosition, AdMobError,
@@ -13,44 +15,57 @@ const admobConfig = {
     is_testing: true
 }
 
-
-export async function prepareAdsService() {
+export async function prepareAdsService(adsSpecificNetwork = null) {
     console.log("[ADS_ENGINE] Performing runAdsService() now...")
-    if (Capacitor.isNativePlatform()) {
-        await YandexAds.init({
-            rewardedBlockId: 'R-M-3585408-2',
-            interstitialBlockId: 'R-M-3585408-3',
-            bannerBlockId: 'R-M-3585408-1',
-            options: { // This is for banner ads
-                overlap: false, // Show under all elements (works only on android)
-                bannerAtTop: false, // Show banner on top of screen, otherwise on bottom
-                bannerSize: YandexAds.BANNER_728x90, // Your banner size
-            },
-        });
+    switch (adsSpecificNetwork) {
+        case "vkminiapps":
+            localStorage.setItem("adsSpecificNetwork", "vkminiapps")
+            break;
 
-        const { status } = await AdMob.trackingAuthorizationStatus();
+        default:
+            if (Capacitor.isNativePlatform()) {
+                await YandexAds.init({
+                    rewardedBlockId: 'R-M-3585408-2',
+                    interstitialBlockId: 'R-M-3585408-3',
+                    bannerBlockId: 'R-M-3585408-1',
+                    options: { // This is for banner ads
+                        overlap: false, // Show under all elements (works only on android)
+                        bannerAtTop: false, // Show banner on top of screen, otherwise on bottom
+                        bannerSize: YandexAds.BANNER_728x90, // Your banner size
+                    },
+                });
 
-        if (status === 'notDetermined') {
-            /**
-             * If you want to explain TrackingAuthorization before showing the iOS dialog,
-             * you can show the modal here.
-             * ex)
-             * const modal = await this.modalCtrl.create({
-             *   component: RequestTrackingPage,
-             * });
-             * await modal.present();
-             * await modal.onDidDismiss();  // Wait for close modal
-             **/
-        }
+                const { status } = await AdMob.trackingAuthorizationStatus();
 
-        AdMob.initialize({
-            testingDevices: admobConfig.testing_devices,
-            initializeForTesting: admobConfig.is_testing,
-        });
+                if (status === 'notDetermined') {
+                    /**
+                     * If you want to explain TrackingAuthorization before showing the iOS dialog,
+                     * you can show the modal here.
+                     * ex)
+                     * const modal = await this.modalCtrl.create({
+                     *   component: RequestTrackingPage,
+                     * });
+                     * await modal.present();
+                     * await modal.onDidDismiss();  // Wait for close modal
+                     **/
+                }
 
-        console.log("Now called for initialization Yandex.Ads and Google Admob for further access.")
+                AdMob.initialize({
+                    testingDevices: admobConfig.testing_devices,
+                    initializeForTesting: admobConfig.is_testing,
+                });
 
+                console.log("Now called for initialization Yandex.Ads and Google Admob for further access.")
+
+            } else {
+                // non-native platforms like YandexGames and VK Mini Apps go here!
+
+                // No Need To Initialize Yandex Games Ads
+                // No Need To Initialize VK Mini Apps Ads
+            }
+            break;
     }
+
 }
 
 
@@ -58,7 +73,14 @@ export async function prepareAdsService() {
 
 export async function showBanner() {
     console.log("[ADS_ENGINE] Performing showBanner() now...")
-    showAdmobBanner();
+    if (Capacitor.isNativePlatform()) {
+        // Native
+        showAdmobBanner();
+    } else {
+        // Non-Native
+        showNonNativeBanner();
+    }
+
 }
 
 export async function showAdmobBanner() {
@@ -180,4 +202,26 @@ export async function showYandexAdsRewarded() {
     window.addEventListener("rewardedVideoLoaded", function () {
         YandexAds.showRewardedVideo();
     });
+}
+
+export async function showNonNativeBanner() {
+    switch (localStorage.getItem("adsSpecificNetwork")) {
+        case "vkminiapps":
+            vkBridge.send('VKWebAppShowBannerAd', {
+                banner_location: 'bottom'
+                })
+               .then((data) => { 
+                  if (data.result) {
+                    // Баннерная реклама отобразилась
+                  }
+                })
+                .catch((error) => {
+                  // Ошибка
+                  console.log(error);
+                });
+            break;
+    
+        default:
+            break;
+    }
 }

@@ -64,6 +64,8 @@ declare const vkBridge;
 
 import WellbeingQuestionnaire from '@/components/questionnaire/WellbeingQuestionnaire.vue';
 
+import * as adsEngine from "../modules/ads_engine"
+
 import globaldata from '../modules/global';
 import {
     loadScript
@@ -223,6 +225,9 @@ export default defineComponent({
         if (localStorage.getItem("auth_token")) {
             setTimeout(function (this) {
                 if (localStorage.getItem("stats_emotionalstate_atleast_once")) {
+                    setTimeout(() => {
+                        adsEngine.showBanner();
+                    }, 3000);
                     parent_this.$router.replace('/tabs/home')
                     const tabsEl = document.querySelector('ion-tab-bar');
                     if (tabsEl) {

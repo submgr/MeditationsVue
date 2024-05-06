@@ -170,15 +170,14 @@ app.config.globalProperties.$achievements = achievementsSystem;
 
 
 import * as adsEngine from "./modules/ads_engine"
-adsEngine.prepareAdsService();
 
+var adsSpecificNetwork = null;
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('isVKMiniApps') == "true") {
+  adsSpecificNetwork = "vkminiapps"
+}
 
-
-
-
-setTimeout(() => {
-  adsEngine.showBanner();
-}, 3000);
+adsEngine.prepareAdsService(adsSpecificNetwork);
 
 
 router.isReady().then(() => {
