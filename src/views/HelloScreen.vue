@@ -99,13 +99,13 @@ export default defineComponent({
 
             var natureEllipse_Image;
 
-            alert("hello")
+            //alert("hello")
 
             async function imageLookup(dayPeriod = "morning") {
                 let image;
                 var image_local;
                 if (!["morning", "afternoon", "evening", "night"].includes(dayPeriod)) {
-                    image = `./src/assets/graphics/page-dead.png`;
+                    image = new URL(`../assets/graphics/page-dead.png`, import.meta.url).href
                 } else {
                     const dayPeriod_list = {
                         morning: ["morning-ellipse.png", "morning-mountains-ellipse.png", "morning-highview-ellipse.png", "morning-work-onbeach-ellipse.png", "swimming-morning-ellipse.png", "morning-forest-ellipse.png", "morning-bedsheet-ellipse.png", "morning-vibes-ellipse.png"],
@@ -114,7 +114,7 @@ export default defineComponent({
                         night: ["night-sky-1-ellipse.png", "night-view-ellipse.png", "night-houselife-ellipse.png", "mountains-at-night-ellipse.png", "night-city-ellipse.png", "man-understone-atnight-ellipse.png", "aurora-night-ellipse.png", "night-greennature-ellipse.png", "night-hotelroom-ellipse.png"]
                     }
                     const imageName = dayPeriod_list[dayPeriod][Math.floor(Math.random() * dayPeriod_list[dayPeriod].length)]
-                    image = `./src/assets/graphics/${imageName}`;
+                    image = new URL(`../assets/graphics/${imageName}`, import.meta.url).href;
                 }
                 return await image;
             }

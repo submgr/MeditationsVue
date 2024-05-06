@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "./",
   "scripts": {
-    "serve": "vite",
+    "serve": "vite --host",
     "installandbuild": "npm install && npm run build",
     "build": "vite build && node OptimizationTasks.js",
     "test:unit": "vue-cli-service test:unit",
