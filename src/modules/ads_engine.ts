@@ -73,14 +73,19 @@ export async function prepareAdsService(adsSpecificNetwork = null) {
 
 export async function showBanner() {
     console.log("[ADS_ENGINE] Performing showBanner() now...")
-    if (Capacitor.isNativePlatform()) {
-        // Native
-        showAdmobBanner();
-    } else {
-        // Non-Native
-        //alert("non native")
-        showNonNativeBanner();
+    if(localStorage.getItem("premiumuser") == "true"){
+        // nothing... we don't show ads to premium users :)
+    } else{
+        if (Capacitor.isNativePlatform()) {
+            // Native
+            showAdmobBanner();
+        } else {
+            // Non-Native
+            //alert("non native")
+            showNonNativeBanner();
+        }
     }
+    
 
 }
 
@@ -121,8 +126,15 @@ export async function showYandexAdsBanner() {
 
 export async function hideBanner() {
     console.log("[ADS_ENGINE] Performing hideBanner() now...")
-    AdMob.hideBanner();
-    YandexAds.hideBanner();
+    if (Capacitor.isNativePlatform()) {
+        // Native    
+        AdMob.hideBanner();
+        YandexAds.hideBanner();
+    } else {
+        // Non-Native
+        //alert("non native")
+        hideNonNativeBanner();
+    }
 }
 
 // interstitial ads goes here!
@@ -218,6 +230,33 @@ export async function showNonNativeBanner() {
                   if (data.result) {
                     // alert("VK Banner Ad is Ready")
                     // Баннерная реклама отобразилась
+                  }
+                })
+                .catch((error) => {
+                  // Ошибка
+                  // alert("VK Banner Ad ERROR" + error)
+                  console.log(error);
+                });
+            break;
+    
+        default:
+            break;
+    }
+}
+
+export async function hideNonNativeBanner() {
+    var adsSpecificNetwork = localStorage.getItem("adsSpecificNetwork");
+    console.log("Catched in f() -hideNonNativeBanner-, value of adsSpecificNetwork:", adsSpecificNetwork)
+    switch (adsSpecificNetwork) {
+        case "vkminiapps":
+            //alert("VK Banner Ad PATH SELECTED")
+            vkBridge.send('VKWebAppHideBannerAd', {
+                banner_location: 'bottom'
+                })
+               .then((data) => { 
+                  if (data.result) {
+                    // alert("VK Banner Ad is Ready")
+                    // Баннерная реклама скрылась
                   }
                 })
                 .catch((error) => {

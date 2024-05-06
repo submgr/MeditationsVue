@@ -1,5 +1,7 @@
 // store/index.js
 
+import * as adsEngine from "./modules/ads_engine"
+
 function check_if_begins_with(input, substring) {
   var processed_data = input.toString();
   if (input[0] == substring) {
@@ -55,6 +57,11 @@ export default createStore({
         });
 
         data.data.results.token = var_userauthtoken;
+
+        if(data.data.results.isPremiumActive == true){
+          localStorage.setItem("premiumuser", "true")
+          adsEngine.hideBanner();
+        }
 
         commit("SET_USERDATA", data.data.results);
       } catch (error) {
