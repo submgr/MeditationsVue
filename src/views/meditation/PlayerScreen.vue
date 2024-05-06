@@ -925,7 +925,8 @@ export default defineComponent({
                     //src: [data.content.audio.backgroundtrack.url],
                     src: [data.content.audio.backgroundtrack.url],
                     html5: true,
-                    volume: 1
+                    volume: 1,
+                    loop: true
                 });
                 this.backgroundtrack_musicid = this.backgroundtrack.play();
             } else {
