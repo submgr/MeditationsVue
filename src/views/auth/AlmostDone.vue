@@ -21,7 +21,7 @@
                     Укажи свое имя, чтобы мы знали друг друга как друзья!</p>
 
                 <ion-input @input="inputNameValueUpdated($event.target.value)" v-focus @focus="resizeImage"
-                    @blur="resetImage" class="input-style" type="text" placeholder="Имя, которым вас зовут друзья"
+                    @blur="resetImage" class="input-style" type="text" :maxlength="12" placeholder="Имя, которым вас зовут друзья"
                     v-model="user_firstname" pattern="text"></ion-input>
 
                 <ion-button @click="gonext" :disabled="state == 'ready_askname_processing'" color="danger"

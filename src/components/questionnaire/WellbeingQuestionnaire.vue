@@ -148,7 +148,7 @@ import { FlowForm, Question, QuestionModel, QuestionType, ChoiceOption, Language
 export default defineComponent({
     name: 'ExploreContainer',
     props: {
-        name: String
+        opensCounter: Number
     },
     components: {
         IonButtons,
@@ -502,6 +502,7 @@ export default defineComponent({
                         this.finalScore += points_assign_table["often"];
                         break;
                     case "someofthetime":
+                        console.log("someofthetime PROCC. " + points_assign_table["someofthetime"])
                         this.finalScore += points_assign_table["someofthetime"];
                         break;
                     case "rarely":
@@ -526,7 +527,17 @@ export default defineComponent({
                     data.answers.push(answer)
                 }
 
-                this.barProgress_progress = (100 / max_point_to_gather) * this.finalScore;
+                console.log("(questionnaire) max_point_to_gather: " + max_point_to_gather)
+                console.log("(questionnaire) this.finalScore: " + this.finalScore)
+
+                var calculateBarProgressAndVerify = (100 / max_point_to_gather) * this.finalScore
+                console.log("(questionnaire) calculateBarProgressAndVerify: " + calculateBarProgressAndVerify)
+                if(calculateBarProgressAndVerify >= 100){
+                    this.barProgress_progress = 100;
+                }else{
+                    this.barProgress_progress = calculateBarProgressAndVerify;
+                }
+                
 
                 console.log("DATA-LOAD", data, this.finalScore)
             })

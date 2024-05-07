@@ -1,6 +1,6 @@
 <template>
     <span v-if="notificationType == 'emotionalStateFeature'">
-        <WellbeingQuestionnaire ref="wellbeingQuestionnaireRef" @completion-event="WellbeingQuestionnaireCompleted" />
+        <WellbeingQuestionnaire :key="componentKey" ref="wellbeingQuestionnaireRef" @completion-event="WellbeingQuestionnaireCompleted" />
         <ion-card :class="{ 'stop-animations': stopAllAnimations }" @click="runWellbeingQuestionnaire()" color="light"
             style="--glow-opacity: 1; --glow-scale: 2.5; --glow-blur: 6; --glow-radius: 100; --glow-rotate-unit: 1deg;"
             class="ion-text-centerOFF gradient-border-card glowing-card cardg ion-activatable ripple-parent rounded-rectangle">
@@ -269,7 +269,8 @@ export default defineComponent({
             stopAllAnimations: true,
             MegaphoneIcon, XMarkIcon,
             arrowForwardOutline,
-            varHasUserSmiledToday: null
+            varHasUserSmiledToday: null,
+            componentKey: 0,
         }
     },
     setup() {
@@ -285,14 +286,23 @@ export default defineComponent({
     },
     methods: {
         runWellbeingQuestionnaire() {
+
             // Define the type for the child component reference
             const childComponent = this.$refs.wellbeingQuestionnaireRef as any;
 
             // Now TypeScript knows the type and you can access 'open' method
+            
             childComponent.open();
+            
         },
         WellbeingQuestionnaireCompleted() {
+            
             // Wellbeing Questionnaire Is Completed Now.
+
+            setTimeout(() => {
+                this.componentKey += 1; 
+            }, 500);
+            
         },
         hasUserSmiledToday() {
             // Get the stored smile data from localStorage
