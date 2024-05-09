@@ -175,7 +175,8 @@ export default defineComponent({
             language: new LanguageModel(
                 {
                     "pressEnter": " ",
-                    "continue": "Дальше",
+                    "ok": "Дальше",
+                    "continue": "Хорошо",
                     "submitText": "Отправить",
                     "percentCompleted": ":percent% пройдено",
                     "multipleChoiceHelpTextSingle": ""
