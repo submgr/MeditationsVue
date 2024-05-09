@@ -76,7 +76,7 @@
                     <ion-list :inset="true">
                         <ion-item v-for="item in availableBackgrounds" @click="changeBackground(item)">
                             <ion-thumbnail slot="start">
-                                <img alt="Silhouette of mountains" :src="globaldata.assets.hostname + '/images/thumbnails/mededitationbg/' + item.code + '.png'" />
+                                <img alt="thumbnail" width="90px" height="90" :src="globaldata.assets.hostname + '/images/thumbnails/mededitationbg/' + item.code + '.png'" />
                               </ion-thumbnail>
                             <ion-label class="ion-text-wrap" for="terms">{{item.friendly_title}}</ion-label>
                             <ion-checkbox :id="item.code" :checked="currentBackground.bgcode == item.code" @ionChange="checkboxEventChangeBackground" class="bgpicker_checkbox_element"></ion-checkbox>
