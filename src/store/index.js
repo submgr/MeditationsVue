@@ -28,13 +28,13 @@ import globaldata from '../modules/global';
 export default createStore({
   plugins: [
     createPersistedState({
-      getItem: key => localStorage.getItem(key),
+      getItem: key => localStorage.getItem(key), 
       setItem: (key, value) => localStorage.setItem(key, value),
       removeItem: key => localStorage.removeItem(key)
     })
   ],
   state: {
-    packageVersion: import.meta.env.VITE_PACKAGE_VERSION || '0',
+    packageVersion: import.meta.env.VITE_APP_VERSION || '0',
     // the rest of your state here
     user_data: [],
   },

@@ -2,93 +2,121 @@
     <ion-page id="ionpage">
         <ion-content :fullscreen="true">
 
-            <LoadingActivity :show="false" source="Meditations/PlayerScreen"/>
+            <LoadingActivity :show="false" source="Meditations/PlayerScreen" />
 
             <div class="loader_at_corner" v-if="audiotrack_isLoading && (meditationState != 'prestart_info')">
                 <!-- Your loading spinner content (e.g., a GIF or CSS animation) goes here -->
                 <h1><ion-spinner name="lines-sharp"></ion-spinner></h1>
             </div>
-            
-    
-            <NavbarController activatedfrom="Meditation/PlayerScreen" @backfunction="exitMeditation();" @additionalmodalfunction="meditationAdditional()" 
-                    @bgpickmodalfunction="backgroundPick()"/>
-            <SimpleMeditationBackground v-if="isAvailable_SimpleMeditationBackground" :type="currentBackground.type" 
-            :backgroundCode="currentBackground.bgcode" />
+
+
+            <NavbarController activatedfrom="Meditation/PlayerScreen" @backfunction="exitMeditation();"
+                @additionalmodalfunction="meditationAdditional()" @bgpickmodalfunction="backgroundPick()" />
+            <SimpleMeditationBackground v-if="isAvailable_SimpleMeditationBackground" :type="currentBackground.type"
+                :backgroundCode="currentBackground.bgcode" />
             <div class="controllers_wrapper">
                 <div class="controllers">
                     <ion-grid class="controllers_grid">
                         <ion-row>
                             <ion-col @click="playerRewind('past', 10)"><ion-icon :icon="playBackOutline" /></ion-col>
                             <ion-col></ion-col>
-                            <ion-col v-if="playerState == 'stopped' && !audiotrack_isLoading && meditationState != 'finished'" @click="changePlayerState"><ion-icon :icon="play" /></ion-col>
-                            <ion-col v-if="playerState == 'playing' && !audiotrack_isLoading && meditationState != 'finished'" @click="changePlayerState"><ion-icon :icon="pause" /></ion-col>
-                            <ion-col v-if="meditationState == 'finished'" style="opacity: 0.35;"><ion-icon :icon="play" /></ion-col>
-                            <ion-col v-if="audiotrack_isLoading && playerState != 'stopped' && meditationState != 'finished'" @click="changePlayerState"><ion-spinner style="top: -1vh;" name="lines-sharp"></ion-spinner></ion-col>
+                            <ion-col
+                                v-if="playerState == 'stopped' && !audiotrack_isLoading && meditationState != 'finished'"
+                                @click="changePlayerState"><ion-icon :icon="play" /></ion-col>
+                            <ion-col
+                                v-if="playerState == 'playing' && !audiotrack_isLoading && meditationState != 'finished'"
+                                @click="changePlayerState"><ion-icon :icon="pause" /></ion-col>
+                            <ion-col v-if="meditationState == 'finished'" style="opacity: 0.35;"><ion-icon
+                                    :icon="play" /></ion-col>
+                            <ion-col
+                                v-if="audiotrack_isLoading && playerState != 'stopped' && meditationState != 'finished'"
+                                @click="changePlayerState"><ion-spinner style="top: -1vh;"
+                                    name="lines-sharp"></ion-spinner></ion-col>
                             <ion-col></ion-col>
-                            <ion-col @click="playerRewind('future', 10)"><ion-icon :icon="playForwardOutline" /></ion-col>
+                            <ion-col @click="playerRewind('future', 10)"><ion-icon
+                                    :icon="playForwardOutline" /></ion-col>
                         </ion-row>
-                    </ion-grid> 
+                    </ion-grid>
                 </div>
             </div>
 
             <div class="shadow1"></div>
             <div class="shadow2"></div>
-            
-            <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="meditationState == 'prestart_info' && playerState == 'stopped'" trigger="open-modal" :initial-breakpoint="0.50" :breakpoints="[0.50, 0.75]" handle-behavior="cycle">
+
+            <ion-modal @willDismiss="Modal_onWillDismiss"
+                :is-open="meditationState == 'prestart_info' && playerState == 'stopped'" trigger="open-modal"
+                :initial-breakpoint="0.50" :breakpoints="[0.50, 0.75]" handle-behavior="cycle">
                 <ion-content class="ion-padding">
                     <div class="ion-margin-top">
-                        <ion-label style="white-space: pre-wrap;"><br><b style="font-size: 28px;">Вы готовы?</b><br><br>Ваша медитация готова. Перед началом мы обычно рекомендуем убедиться, что вам удобно и вы можете слышать звук. Если вокруг шумно, воспользуйтесь наушниками.</ion-label>
+                        <ion-label style="white-space: pre-wrap;"><br><b style="font-size: 28px;">Вы
+                                готовы?</b><br><br>Ваша медитация готова. Перед началом мы обычно рекомендуем убедиться,
+                            что вам удобно и вы можете слышать звук. Если вокруг шумно, воспользуйтесь
+                            наушниками.</ion-label>
                     </div>
                     <div style="margin-top: 5% !important; margin-left: -18px;">
-                        <ion-button fill="clear" @click="startMeditation" style="font-weight: 700;">Начать <ion-icon slot="end" :icon="arrowForward"></ion-icon>
+                        <ion-button fill="clear" @click="startMeditation" style="font-weight: 700;">Начать <ion-icon
+                                slot="end" :icon="arrowForward"></ion-icon>
                         </ion-button>
                     </div>
                 </ion-content>
             </ion-modal>
-            <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="additionalModalOpenened == 'info'" trigger="open-modal" :initial-breakpoint="0.50" :breakpoints="[0.50, 0.75, 1]" handle-behavior="cycle">
+            <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="additionalModalOpenened == 'info'"
+                trigger="open-modal" :initial-breakpoint="0.50" :breakpoints="[0.50, 0.75, 1]" handle-behavior="cycle">
                 <ion-content class="ion-padding">
                     <div class="ion-margin-top">
-                        <ion-label style="white-space: pre-wrap;"><br><b style="font-size: 28px;">Медитация</b><br/><br/>Вы хорошо проводите время!<span v-if="meditationAuthors != null" style="font-size: 13px;"><br><br>Медитация, которую вы сейчас слышите, появилась благодаря этим людям: {{meditationAuthors.name}}</span></ion-label>
+                        <ion-label style="white-space: pre-wrap;"><br><b
+                                style="font-size: 28px;">Медитация</b><br /><br />Вы хорошо проводите время!<span
+                                v-if="meditationAuthors != null" style="font-size: 13px;"><br><br>Медитация, которую вы
+                                сейчас слышите, появилась благодаря этим людям:
+                                {{ meditationAuthors.name }}</span></ion-label>
                         <div class="preloader" v-if="author_data_loaded != true">
                             <h1>
                                 <ion-spinner name="lines-sharp"></ion-spinner>
                             </h1>
                         </div>
-                        <iframe allowTransparency="true" :src="volunteer_src_iframe" id="author-iframe-0" @load="adjustHeight" style="width: 100vw; height: 0.001vh;">Something went wrong: unable to reach remote host to be placed in this iframe. Looks like a problem on your end.</iframe>
+                        <iframe allowTransparency="true" :src="volunteer_src_iframe" id="author-iframe-0"
+                            @load="adjustHeight" style="width: 100vw; height: 0.001vh;">Something went wrong: unable to
+                            reach remote host to be placed in this iframe. Looks like a problem on your end.</iframe>
                     </div>
                     <div style="margin-top: 5% !important; margin-left: -18px;">
-                        <ion-button fill="clear" @click="Modal_onWillDismiss" style="font-weight: 700;">Скрыть <ion-icon slot="end" :icon="chevronDown"></ion-icon>
+                        <ion-button fill="clear" @click="Modal_onWillDismiss" style="font-weight: 700;">Скрыть <ion-icon
+                                slot="end" :icon="chevronDown"></ion-icon>
                         </ion-button>
                     </div>
                 </ion-content>
             </ion-modal>
-            <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="additionalModalOpenened == 'bgpick'" trigger="open-modal">
+            <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="additionalModalOpenened == 'bgpick'"
+                trigger="open-modal">
                 <ion-header>
                     <ion-toolbar>
-                      <ion-title>Выбрать фон</ion-title>
-                      <ion-buttons slot="end">
-                        <ion-button @click="Modal_onWillDismiss()">Закрыть</ion-button>
-                      </ion-buttons>
+                        <ion-title>Выбрать фон</ion-title>
+                        <ion-buttons slot="end">
+                            <ion-button @click="Modal_onWillDismiss()">Закрыть</ion-button>
+                        </ion-buttons>
                     </ion-toolbar>
-                  </ion-header>
-                  <ion-content>
-                    <p class="ion-padding-horizontal" style="margin-top: 2vh;">Вы можете подобрать фоновое сопровождение, которое вам нравится.</p>
+                </ion-header>
+                <ion-content>
+                    <p class="ion-padding-horizontal" style="margin-top: 2vh;">Вы можете подобрать фоновое
+                        сопровождение, которое вам нравится.</p>
                     <ion-list :inset="true">
                         <ion-item v-for="item in availableBackgrounds" @click="changeBackground(item)">
                             <ion-thumbnail slot="start">
-                                <img alt="thumbnail" width="90px" height="90" :src="globaldata.assets.hostname + '/images/thumbnails/mededitationbg/' + item.code + '.png'" />
-                              </ion-thumbnail>
-                            <ion-label class="ion-text-wrap" for="terms">{{item.friendly_title}}</ion-label>
-                            <ion-checkbox :id="item.code" :checked="currentBackground.bgcode == item.code" @ionChange="checkboxEventChangeBackground" class="bgpicker_checkbox_element"></ion-checkbox>
-                          </ion-item>
-                      </ion-list>
-                    
-                    
-                  </ion-content>
+                                <img alt="thumbnail" width="90px" height="90"
+                                    :src="globaldata.assets.hostname + '/images/thumbnails/mededitationbg/' + item.code + '.png'" />
+                            </ion-thumbnail>
+                            <ion-label class="ion-text-wrap" for="terms">{{ item.friendly_title }}</ion-label>
+                            <ion-checkbox :id="item.code" :checked="currentBackground.bgcode == item.code"
+                                @ionChange="checkboxEventChangeBackground"
+                                class="bgpicker_checkbox_element"></ion-checkbox>
+                        </ion-item>
+                    </ion-list>
+
+
+                </ion-content>
             </ion-modal>
         </ion-content>
     </ion-page>
-    </template>
+</template>
 
 <style scoped>
 .loader_at_corner {
@@ -228,7 +256,12 @@ import {
     IonSelectOption,
     CheckboxCustomEvent,
     IonCheckbox,
-    actionSheetController
+    actionSheetController,
+    IonSpinner,
+    IonButtons,
+    IonThumbnail,
+    IonItem,
+    IonList,
 
 
 } from '@ionic/vue';
@@ -286,7 +319,13 @@ export default defineComponent({
         IonSelect,
         IonSelectOption,
         IonCheckbox,
-        LoadingActivity
+        LoadingActivity,
+        IonHeader,
+        IonSpinner,
+        IonButtons,
+        IonThumbnail,
+        IonItem,
+        IonList,
     },
     watch: {
         '$route'() {

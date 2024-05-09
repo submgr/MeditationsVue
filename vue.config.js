@@ -5,8 +5,8 @@ const webpack = require('webpack');
 var WebpackObfuscator = require('webpack-obfuscator');
 
 const fs = require('fs')
-const packageJson = fs.readFileSync('./package.json')
-const version = JSON.parse(packageJson).version || 0
+//const packageJson = fs.readFileSync('./package.json')
+const version = import.meta.env.VITE_APP_VERSION || 0
 
 // vue.config.js
 module.exports = {
