@@ -1,6 +1,7 @@
 var apiserver_hostname;
 
 var assetsbase_hostname = "https://xn--80aaafmfwb5a7d2bq4h.xn--p1ai/assets/";
+var markdown_assetsbase_hostname = "https://accessmeditation.pages.dev/"
 
 function isLocalHost(url) {
   return url.indexOf('localhost') !== -1 || url.indexOf('127.0.0.1') !== -1 || url.indexOf('192.') !== -1;
@@ -30,6 +31,9 @@ const data = {
   },
   assets: {
     hostname: assetsbase_hostname
+  },
+  markdown_assets: {
+    hostname: markdown_assetsbase_hostname
   },
   language: {
     currentlang: "ru"

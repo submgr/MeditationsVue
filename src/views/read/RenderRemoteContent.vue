@@ -1,6 +1,6 @@
 <template>
     <ion-page>
-        <ion-header>
+        <ion-header> 
             <ion-toolbar>
                 <ion-title>{{ page_title_friendly }}</ion-title>
             </ion-toolbar>

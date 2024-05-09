@@ -2,20 +2,25 @@
     <ion-page>
         <ion-content :fullscreen="true">
 
-            <NavbarController activatedfrom="Emotions/MakeSmilePhoto" @backfunction="$router.push({ path: '/tabs/myself/overview', replace: false });"
-        @infomodalfunction="infomodalfunction()" align="right" />
+            <NavbarController align="right" activatedfrom="Emotions/MakeSmilePhoto"
+                @backfunction="$router.push({ path: '/tabs/myself/overview', replace: false });" />
 
-            <h1 style="margin-left: 4vw; margin-right: 4vw; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">Профиль</h1>
+            <h1 style="margin-left: 4vw; margin-right: 4vw; margin-top: 2.4rem; font-weight: 700; font-size: 34px;">
+                Профиль</h1>
             <div style="padding-top: 1.0rem;"></div>
 
             <div style="padding-top: 0.1rem; ">
                 <div>
-                    <div class="p-ripple card-alfa custom-swiper suggestion-block bg-1 card-meditate " v-ripple @click="openAccountEditor()">
+                    <div class="p-ripple card-alfa custom-swiper suggestion-block bg-1 card-meditate " v-ripple
+                        @click="openAccountEditor()">
                         <div style="margin-left: 5vw;">
                             <ion-icon :icon="createOutline"
-                                style="margin-left: 0.3rem; margin-top: 1.8rem; color: white; font-size: 3rem;"
-                                ></ion-icon>
-                            <div class="text-a1 suggestion-text text-meditate"><p style="display:inline;">{{ name }}</p><img v-if="isPremiumActive" style="margin-left: 5vw; margin-top: -3.2vh; height: 10vh; display:inline;" src="../../assets/graphics/premium_glowing_pink_text_fromcanva.png"/></div>
+                                style="margin-left: 0.3rem; margin-top: 1.8rem; color: white; font-size: 3rem;"></ion-icon>
+                            <div class="text-a1 suggestion-text text-meditate">
+                                <p style="display:inline;">{{ name }}</p><img v-if="isPremiumActive"
+                                    style="margin-left: 5vw; margin-top: -3.2vh; height: 10vh; display:inline;"
+                                    src="../../assets/graphics/premium_glowing_pink_text_fromcanva.png" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -28,17 +33,17 @@
 
             <ion-list :inset="true" style="--background: red;">
                 <ion-item @click="userAgreements();">
-                  <ion-label>Пользовательские соглашения</ion-label>
+                    <ion-label>Пользовательские соглашения</ion-label>
                 </ion-item>
                 <ion-item @click="$router.push({ path: '/tabs/support/main', replace: false });">
                     <ion-label>Поддержка</ion-label>
-                  </ion-item>
-                <ion-item @click="signOut()">
-                  <ion-label>Выйти из учетной записи</ion-label>
                 </ion-item>
-              </ion-list>
+                <ion-item @click="signOut()">
+                    <ion-label>Выйти из учетной записи</ion-label>
+                </ion-item>
+            </ion-list>
 
-            
+
 
             <div style="height: calc(50px + 1.5vh);"></div>
 
@@ -47,7 +52,8 @@
                 :initial-breakpoint="0.75" :breakpoints="[0, 0.75]" handle-behavior="cycle">
                 <ion-content class="ion-padding">
                     <div class="ion-margin-top">
-                        <ion-label style="white-space: pre-wrap;">Вы можете изменить информацию о себе. Эти сведения видите
+                        <ion-label style="white-space: pre-wrap;">Вы можете изменить информацию о себе. Эти сведения
+                            видите
                             только вы.</ion-label>
                         <ion-item style="margin-top: 1.9vh; border-radius: 11px;">
                             <ion-input :autofocus="true" label="Ваше имя" label-placement="stacked" :placeholder="name"
@@ -59,6 +65,35 @@
                 </ion-content>
             </ion-modal>
 
+            <ion-modal :is-open="openedModal == 'privacypolicy'">
+                <ion-header>
+                    <ion-toolbar>
+                        <ion-title>Политика конфиденциальности</ion-title>
+                        <ion-buttons slot="end">
+                            <ion-button @click="closeOpenedModals()">Закрыть</ion-button>
+                        </ion-buttons>
+                    </ion-toolbar>
+                </ion-header>
+                <ion-content class="ion-padding">
+                    <RenderContent materialType="pages" codename="privacypolicy" />
+                </ion-content>
+            </ion-modal>
+
+            <ion-modal :is-open="openedModal == 'termsofuse'">
+                <ion-header>
+                    <ion-toolbar>
+                        <ion-title>Условия использования</ion-title>
+                        <ion-buttons slot="end">
+                            <ion-button @click="closeOpenedModals()">Закрыть</ion-button>
+                        </ion-buttons>
+                    </ion-toolbar>
+                </ion-header>
+                <ion-content class="ion-padding">
+                    <RenderContent materialType="pages" codename="termsofuse" />
+                </ion-content>
+            </ion-modal>
+
+
 
 
         </ion-content>
@@ -66,10 +101,10 @@
 </template>
 
 <style scoped>
-
-ion-item{
+ion-item {
     --background: var(--ion-card-background);
 }
+
 .standart_padding {
     margin: 0px 15px 30px 15px;
 }
@@ -216,6 +251,8 @@ import globaldata from '../../modules/global';
 
 //import NotificationsBanner from '@/components/NotificationsBanner.vue';
 
+import RenderContent from '@/components/markdown/RenderContent.vue';
+
 import store from "../../store";
 
 import auth_logout from "../../store";
@@ -235,8 +272,8 @@ export default defineComponent({
         IonInput,
         IonItem,
         IonButton,
-        NavbarController
-        
+        NavbarController,
+        RenderContent
     },
     mounted() {
         const tabsEl = document.querySelector('ion-tab-bar');
@@ -255,7 +292,7 @@ export default defineComponent({
 
         console.log(getUserData)
 
-        if(getUserData.value.isPremiumActive == true){
+        if (getUserData.value.isPremiumActive == true) {
             this.isPremiumActive = true
         } else {
             this.isPremiumActive = false
@@ -275,6 +312,11 @@ export default defineComponent({
         Modal_onWillDismiss() {
             //nothing yet
             this.myselfProfileEdit_isModalOpen = false
+        },
+
+        closeOpenedModals() {
+            // this one function closes documents view modals.
+            this.openedModal = "none"
         },
 
         saveProfileNewData() {
@@ -335,19 +377,20 @@ export default defineComponent({
             const { role } = await actionSheet.onWillDismiss();
 
             if (role === 'confirm') {
-                
+
                 //auth_logout();
                 this.$store.dispatch("accountLogout", parent_this).then(() => {
-                        //done! logged out!
-                    });
+                    //done! logged out!
+                });
             }
         },
         async userAgreements() {
             // eslint-disable-next-line
             var parent_this = this;
-            const actionSheet = await actionSheetController.create({
-                header: 'Текущие пользовательские соглашения',
-                buttons: [
+
+            var isVKMiniApps = false;
+
+            var userAgreementsButtons = [
                     {
                         text: 'Политика конфиденциальности',
                         role: 'privacypolicy',
@@ -355,23 +398,39 @@ export default defineComponent({
                     {
                         text: 'Условия использования',
                         role: 'termsofuse',
-                    },
-                    {
+                    }
+                ]
+
+            try {
+                // Try to get the value from localStorage
+                isVKMiniApps = localStorage.getItem('isVKMiniApps') === 'true';
+            } catch (e) {
+                // If an error occurs (e.g., localStorage is not available), keep isVKMiniApps as false
+                console.log('Failed to access localStorage. Defaulting isVKMiniApps to false.');
+            }
+
+            if (!isVKMiniApps) {
+                userAgreementsButtons.push({
                         text: 'Удаление учетной записи',
                         role: 'accountdeleteprocedure',
-                    },
-                ],
+                    })
+            }
+            const actionSheet = await actionSheetController.create({
+                header: 'Текущие пользовательские соглашения',
+                buttons: userAgreementsButtons,
             });
             actionSheet.present();
 
             const { role } = await actionSheet.onWillDismiss();
 
             if (role === 'privacypolicy') {
-                window.open("https://вашамедитация.рф/privacypolicy/", "_blank")
+                //window.open("https://вашамедитация.рф/privacypolicy/", "_blank")
+                this.openedModal = "privacypolicy"
             }
 
             if (role === 'termsofuse') {
-                window.open("https://вашамедитация.рф/termsofservice/", "_blank")
+                //window.open("https://вашамедитация.рф/termsofservice/", "_blank")
+                this.openedModal = "termsofuse"
             }
 
             if (role === 'accountdeleteprocedure') {
@@ -387,7 +446,8 @@ export default defineComponent({
         name: "",
         meditationtime: "",
         enoughExpForTimeReview: null,
-        isPremiumActive: null
+        isPremiumActive: null,
+        openedModal: "none"
     }),
     watch: {
         showStory: function (val) {
