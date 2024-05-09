@@ -55,7 +55,7 @@
                                             просмотреть свои ответы или нажать "Отправить", чтобы продолжить.
                                         </span>
                                     </p>
-                                    <p class="f-description">Заметка: не забудьте нажать на "Продолжить", чтобы
+                                    <p class="f-description">Заметка: не забудьте нажать на "Отправить", чтобы
                                         сохранить
                                         ответы в приложении и получить результат.</p>
                                 </div>
@@ -175,7 +175,7 @@ export default defineComponent({
             language: new LanguageModel(
                 {
                     "pressEnter": " ",
-                    "continue": "дальше",
+                    "continue": "Дальше",
                     "submitText": "Отправить",
                     "percentCompleted": ":percent% пройдено",
                     "multipleChoiceHelpTextSingle": ""
