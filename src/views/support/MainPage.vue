@@ -116,7 +116,7 @@
             (window as any).location = "mailto:support@deqstudio.com";
         },
         supportOption_vk(){
-          window.open('https://vk.me/urmeditation');
+          window.open('https://vk.me/urmeditation', '_blank');
         }
     },
     setup(){
