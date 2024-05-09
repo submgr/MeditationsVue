@@ -6,7 +6,7 @@
   "scripts": {
     "serve": "vite --host",
     "installandbuild": "npm install && npm run build",
-    "build": "vite build && node OptimizationTasks.js",
+    "build": "vite build vite build --base=/ && node OptimizationTasks.js",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint"
