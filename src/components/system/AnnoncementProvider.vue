@@ -5,8 +5,7 @@
                 :is-open="openedModal == 'redeemedFreePremiumAccessModal'">
                 <ion-content class="ion-padding">
                     <div class="ion-margin-top">
-                        <Vue3Lottie :animationData="animationData"
-                            :height="150" :width="150" style="max-height: 15vh; margin-left: -3vw; margin-top: 4vh;" />
+                        <Vue3Lottie :animationData="animationData" style="max-height: 15vh; margin-left: -3vw; margin-top: 4vh;" />
                         <ion-label style="font-size: 14px;">Спасибо за то, что решили попробовать приложение <b><i>Ваша
                                     медитация</i></b><i>!</i></ion-label><br/><br/>
                         <span style="font-size: 12px; display: block; line-height: 1.5; opacity: 0.7; font-weight: 500;">В знак
