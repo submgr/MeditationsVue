@@ -43,8 +43,8 @@
             <div class="shadow1"></div>
             <div class="shadow2"></div>
 
-            <ion-modal :is-open="meditationState == 'prestart_info' && playerState == 'stopped' && forceModalClose != true" trigger="open-modal"
-                :initial-breakpoint="0.50" :breakpoints="[0, 0.50, 0.75]" :backdrop-dismiss="false" :canDismiss="false"
+            <ion-modal :is-open="meditationState == 'prestart_info' && playerState == 'stopped' && forceModalClose == false" trigger="open-modal"
+                :initial-breakpoint="0.50" :breakpoints="[0.50, 0.75]" :backdrop-dismiss="false"
                 handle-behavior="cycle">
                 <ion-content class="ion-padding">
                     <div class="ion-margin-top">
@@ -351,6 +351,11 @@ export default defineComponent({
 
         // eslint-disable-next-line
         const parent_this = this;
+        
+        // Attach onpopstate event handler
+        window.onpopstate = function (event) {
+            parent_this.forceModalClose = true;
+        };
 
         if (Capacitor.isPluginAvailable('ScreenBrightness')) {
             //getting current brightness!!!
@@ -975,13 +980,7 @@ export default defineComponent({
         }
     },
     created() {
-        // eslint-disable-next-line
-        const parent_this = this;
-        
-        // Attach onpopstate event handler
-        window.onpopstate = function (event) {
-            parent_this.forceModalClose = true;
-        };
+        //
     },
     data() {
         return {

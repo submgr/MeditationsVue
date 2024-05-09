@@ -48,7 +48,7 @@ export default {
                 this.show_local = true;
             } else {
                 const elapsed = Date.now() - this.waitstart_timestamp;
-                const remaining = Math.max(0, 5000 - elapsed);
+                const remaining = Math.max(0, 2650 - elapsed);
                 let source = this.source;
                 setTimeout(() => {
                     if(source != "Meditations/PlayerScreen") {
