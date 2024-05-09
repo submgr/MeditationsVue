@@ -46,7 +46,7 @@
 
             <ion-modal
                 :is-open="meditationState == 'prestart_info' && playerState == 'stopped'" trigger="open-modal"
-                :initial-breakpoint="0.50" :breakpoints="[0.50, 0.75]" :backdrop-dismiss="false" handle-behavior="cycle">
+                :initial-breakpoint="0.50" :breakpoints="[0, 0.50, 0.75]" :backdrop-dismiss="false" :canDismiss="false" handle-behavior="cycle">
                 <ion-content class="ion-padding">
                     <div class="ion-margin-top">
                         <ion-label style="white-space: pre-wrap;"><br><b style="font-size: 28px;">Вы
