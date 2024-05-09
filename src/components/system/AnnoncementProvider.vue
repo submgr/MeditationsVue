@@ -5,9 +5,10 @@
                 :is-open="openedModal == 'redeemedFreePremiumAccessModal'">
                 <ion-content class="ion-padding">
                     <div class="ion-margin-top">
-                        <Vue3Lottie :animationData="animationData"
-                            :height="90" :width="90" style="max-height: 25vh; max-width: 45vw; margin-left: -3vw; margin-top: 4vh;" />
-                        <ion-label style="font-size: 14px;">Спасибо за то, что решили попробовать приложение <b><i>Ваша
+                        <div><Vue3Lottie :animationData="animationData"
+                            :height="100" :width="100" style="max-height: 150px; max-width: 150px; margin-left: -1.5vw; margin-top: 4vh;" /></div>
+                        <div>
+                            <ion-label style="font-size: 14px;">Спасибо за то, что решили попробовать приложение <b><i>Ваша
                                     медитация</i></b><i>!</i></ion-label><br/><br/>
                         <span style="font-size: 12px; display: block; line-height: 1.5; opacity: 0.7; font-weight: 500;">В знак
                             благодарности за то, что вы одними из первых попробовали наше приложение, мы рады предложить вам
@@ -15,6 +16,7 @@
                             вместе с нами, и мы очень хотим вдохновлять вас и дальше в этом совместном
                             путешествии!</span>
                         <ion-button style="margin-top: 4vh;" expand="block" @click="closemodal()">Спасибо!</ion-button>
+                        </div>
                     </div>
                 </ion-content>
             </ion-modal>
