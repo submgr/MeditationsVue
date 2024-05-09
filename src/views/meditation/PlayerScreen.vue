@@ -18,8 +18,8 @@
                 <div class="controllers">
                     <ion-grid class="controllers_grid">
                         <ion-row>
-                            <ion-col v-if="playerState == 'playing'"
-                            @click="playerRewind('past', 10)"><ion-icon :icon="playBackOutline" /></ion-col>
+                            <ion-col v-if="playerState == 'playing'" @click="playerRewind('past', 10)"><ion-icon
+                                    :icon="playBackOutline" /></ion-col>
                             <ion-col></ion-col>
                             <ion-col
                                 v-if="playerState == 'stopped' && !audiotrack_isLoading && meditationState != 'finished'"
@@ -30,11 +30,10 @@
                             <ion-col v-if="meditationState == 'finished'" style="opacity: 0.35;"><ion-icon
                                     :icon="play" /></ion-col>
                             <ion-col
-                                v-if="audiotrack_isLoading && playerState != 'stopped' && meditationState != 'finished'"
-                                ><ion-spinner style="top: -1vh;"
-                                    name="lines-sharp"></ion-spinner></ion-col>
+                                v-if="audiotrack_isLoading && playerState != 'stopped' && meditationState != 'finished'"><ion-spinner
+                                    style="top: -1vh;" name="lines-sharp"></ion-spinner></ion-col>
                             <ion-col></ion-col>
-                            <ion-col  v-if="playerState == 'playing'" @click="playerRewind('future', 10)"><ion-icon
+                            <ion-col v-if="playerState == 'playing'" @click="playerRewind('future', 10)"><ion-icon
                                     :icon="playForwardOutline" /></ion-col>
                         </ion-row>
                     </ion-grid>
@@ -44,9 +43,9 @@
             <div class="shadow1"></div>
             <div class="shadow2"></div>
 
-            <ion-modal
-                :is-open="meditationState == 'prestart_info' && playerState == 'stopped'" trigger="open-modal"
-                :initial-breakpoint="0.50" :breakpoints="[0, 0.50, 0.75]" :backdrop-dismiss="false" :canDismiss="false" handle-behavior="cycle">
+            <ion-modal :is-open="meditationState == 'prestart_info' && playerState == 'stopped' && forceModalClose != true" trigger="open-modal"
+                :initial-breakpoint="0.50" :breakpoints="[0, 0.50, 0.75]" :backdrop-dismiss="false" :canDismiss="false"
+                handle-behavior="cycle">
                 <ion-content class="ion-padding">
                     <div class="ion-margin-top">
                         <ion-label style="white-space: pre-wrap;"><br><b style="font-size: 28px;">Вы
@@ -775,7 +774,7 @@ export default defineComponent({
         },
         changePlayerState(justPause = false) {
             if (this.meditationState == "ready") {
-                
+
                 // if i want to stop playing audio (for example, app is getting closed),
                 // then i pass justPause == true
                 // if justPause isn't passed, then just act as state toggler.
@@ -975,8 +974,18 @@ export default defineComponent({
             }
         }
     },
+    created() {
+        // eslint-disable-next-line
+        const parent_this = this;
+        
+        // Attach onpopstate event handler
+        window.onpopstate = function (event) {
+            parent_this.forceModalClose = true;
+        };
+    },
     data() {
         return {
+            forceModalClose: false,
             author_data_loaded: false,
             volunteer_src_iframe: 'https://xn--80aaafmfwb5a7d2bq4h.xn--p1ai/systemvolunteerinfo/?id=1',
             globaldata: globaldata,
