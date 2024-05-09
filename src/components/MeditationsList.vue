@@ -126,7 +126,7 @@ export default defineComponent({
             this.windowHeight = window.innerHeight;
         },
         requestMeditation(searchobj) {
-            getMeditation(searchobj, this)
+            getMeditation(searchobj, this, false)
         },
         isCardCentered(index) {
             const cardWrapper = this.$refs.cardWrapper as HTMLElement;

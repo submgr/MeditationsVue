@@ -10,7 +10,7 @@ import globaldata from '../modules/global';
  * @returns {Promise} - A promise that resolves with the retrieved meditation data.
 */
 
-export async function get(obj, vueobject) { 
+export async function get(obj, vueobject, searchWithAI = true) { 
 
     // eslint-disable-next-line
     var parent_this = vueobject;
@@ -29,10 +29,15 @@ export async function get(obj, vueobject) {
         case "dynamic":
             additionalurl = "getDynamicMeditation"
             var newbieprogress = 0;
-            if (localStorage.getItem("newbie_progress") == null) {
-                newbieprogress = 0
-            } else {
-                newbieprogress = parseInt(localStorage.getItem("newbie_progress"))
+            if(searchWithAI){
+                if (localStorage.getItem("newbie_progress") == null) {
+                    newbieprogress = 0
+                } else {
+                    newbieprogress = parseInt(localStorage.getItem("newbie_progress"))
+                }
+            }else{
+                //игнорируем прогресс новичка, чтобы сервер не выдавал "подготовительные медитации"
+                newbieprogress = 999;
             }
             preparedparams = {
                 newbie_progress: newbieprogress,
