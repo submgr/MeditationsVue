@@ -4,9 +4,9 @@
             <NavbarController activatedfrom="Relaxation/SessionScreen" @backfunction="getBack()"/>
             <div v-if="stage == 'getting_ready'">
                 <div style="padding: 0rem; margin-top: 5vh; ">
-                    <div style="margin-left: -10vw;">
-                        <Vue3Lottie :loop="1" :animationData="gettingReadyAnimationData"
-                            style=" width: 50vh !important;" />
+                    <div>
+                        <Vue3Lottie :loop="1" class="center lottie" :animationData="gettingReadyAnimationData"
+                            style=" height: 80vh !important;  min-width: 100%;" />
                     </div>
 
                     <p class="linear-wipe"
@@ -17,24 +17,24 @@
 
             <Transition :duration="{ enter: 500, leave: 800 }">
                 <div v-if="stage == 'awaiting'">
-                    <div style="padding: 0rem; margin-top: 11%; ">
-                        <div style="margin-left: -20%;">
-                            <Vue3Lottie :animationData="breathAwaitingAnimationData"
-                                style=" height: 70vh !important;" />
+                    <div style="padding: 0rem; margin-top: 5vh; ">
+                        <div>
+                            <Vue3Lottie class="center lottie" :animationData="breathAwaitingAnimationData"
+                                style="height: 90vh !important; min-width: 100%;" />
                         </div>
 
                         <p class="linear-wipe"
-                            style="text-align: center; margin: 0; margin-top: 2rem; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 24px; font-weight: 700;">
+                            style="text-align: center; margin: 0; margin-top: -5vh; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 24px; font-weight: 700;">
                             Отдохните</p>
                     </div>
                 </div>
             </Transition>
             <Transition :duration="{ enter: 500, leave: 800 }">
                 <div v-if="stage == 'breath_staged'">
-                    <div style="padding: 2rem; margin-top: 31%">
-                        <Vue3Lottie :loop="breath_animation_loops" :animationData="stagedBreathAnimationData" />
+                    <div style="padding: 0rem; margin-top: 5vh;  min-width: 100%;">
+                        <Vue3Lottie :loop="breath_animation_loops" class="center lottie" style="height: 90vh" :animationData="stagedBreathAnimationData" />
                         <p class="linear-wipe"
-                            style="text-align: center; margin: 0; margin-top: 2rem; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 24px; font-weight: 700;">
+                            style="text-align: center; margin: 0; margin-top: -5vh; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 24px; font-weight: 700;">
                             {{ advanced_stage_info }}</p>
                     </div>
                 </div>
@@ -55,6 +55,21 @@
         color: #ffffff !important;
         --background: #00000000 url('../../assets/abstract/manuel-will-gd3t5Dtbwkw-unsplash.jpg') no-repeat center center / cover !important;
     }
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+@media (min-width:500px) {
+
+/* your conditional / responsive CSS inside this condition */
+
+.this-class { font-size: 20px; }
+
 }
 </style>
 

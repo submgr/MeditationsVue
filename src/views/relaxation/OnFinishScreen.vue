@@ -6,7 +6,7 @@
         </ion-toolbar>
       </ion-header>
       <ion-content :fullscreen="true">
-        <Vue3Lottie :animationData="animationData" :height="150" :width="150" style="max-width: 80vw; margin-left: -3vw; margin-top: 4vh;" />
+        <Vue3Lottie :animationData="animationData" :height="150" :width="150" class="lottie" style=" margin-left: -3vw; margin-top: 4vh;" />
         
         <ion-header collapse="condense" style="margin-top: 0.5vh; --background: none;">
           <ion-toolbar style="--background: none;">
@@ -26,7 +26,11 @@
     </ion-page>
   </template>
 
-  
+  <style scoped>
+  .lottie{
+    max-width: 380px;
+  }
+</style>
   
   <script lang="ts">
   import { defineComponent } from 'vue';
@@ -37,6 +41,7 @@
   import animationData from './../../assets/lottie/beam-meditation.json';
 
   import { Vue3Lottie } from 'vue3-lottie'
+  
   
   export default  defineComponent({
     name: 'Tab1Page',
