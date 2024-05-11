@@ -232,7 +232,8 @@ import {
     IonInput,
     IonItem,
     IonButton,
-    actionSheetController
+    actionSheetController,
+    toastController
 } from '@ionic/vue';
 
 import {
@@ -301,6 +302,16 @@ export default defineComponent({
 
     },
     methods: {
+        async inputNameValueUpdated(val) {
+            this.name = this.name.replace(/[^\p{L}]/gu, '');
+            const word = this.name;
+            if (word.length > 0) {
+                const firstLetter = word.charAt(0)
+                const firstLetterCap = firstLetter.toUpperCase()
+                const remainingLetters = word.slice(1)
+                this.name = firstLetterCap + remainingLetters
+            }
+        },
         toggleStory() {
             this.showStory = !this.showStory
         },
@@ -319,10 +330,20 @@ export default defineComponent({
             this.openedModal = "none"
         },
 
-        saveProfileNewData() {
-            localStorage.setItem("user_firstname", this.name)
-            this.$store.dispatch("setNewName", this.name)
-            this.myselfProfileEdit_isModalOpen = false;
+        async saveProfileNewData() {
+            if (this.name.length < 2) {
+                localStorage.setItem("user_firstname", this.name)
+                this.$store.dispatch("setNewName", this.name)
+                this.myselfProfileEdit_isModalOpen = false;
+            } else {
+                const toast = await toastController.create({
+                    message: 'Слишком короткое имя',
+                    duration: 1500,
+                    position: 'top',
+                });
+
+                await toast.present();
+            }
         },
 
         learnMore() {
