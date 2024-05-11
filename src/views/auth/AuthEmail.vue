@@ -58,7 +58,7 @@
                         style="text-align: left; padding: 0px 22px 0px; padding-top: 2%; margin: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 18px; font-weight: 200; line-height: 1.3;">
                         Сообщение с кодом отправлено на указанный электронный адрес. Введите полученный код ниже, чтобы
                         продолжить.</p>
-                    <ion-input @input="inputVerificationCodeValueUpdated($event.target.value)" class="input-style input-code" autofocus="true" type="number" minlenght="6" maxlenght="6"
+                    <ion-input @input="inputVerificationCodeValueUpdated($event.target.value)" class="input-style input-code" autofocus="true" type="text"
                         placeholder="Код подтверждения" v-model="code" pattern="number"></ion-input>
 
                     <ion-button @click="sendcode" :disabled="state == 'awaiting_code_processing'" color="danger"
@@ -238,7 +238,7 @@ export default defineComponent({
     },
     methods: {
         async inputVerificationCodeValueUpdated(val){
-            var processedVal = Math.abs(val);
+            var processedVal = val.replace(/\D/g,'').substring(0, 6);
             this.code = processedVal + "";
         },
         async signin() {

@@ -213,13 +213,13 @@ export default defineComponent({
     },
     mounted() {
 
+        console.log(this.$achievements)
+
         const tabsEl = document.querySelector('ion-tab-bar');
         if (tabsEl) {
             tabsEl.hidden = false;
-            tabsEl.style.height = "0";
+            tabsEl.style.height = "1";
         }
-
-        console.log(this.$achievements)
 
         console.log(this.$i18next)
 
@@ -293,11 +293,12 @@ export default defineComponent({
             // handler will be called every time the route changes.
             // reset your local component state and fetch the new data you need here.
             async handler(newRoute, oldRoute) {
+                console.log()
                 if (newRoute.fullPath == "/tabs/home") {
                     const tabsEl = document.querySelector('ion-tab-bar');
                     if (tabsEl) {
                         tabsEl.hidden = false;
-                        tabsEl.style.height = "0";
+                        tabsEl.style.height = "1";
                     }
                 }
             }
