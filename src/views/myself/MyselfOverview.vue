@@ -10,7 +10,11 @@
                 <div>
                     <div class="card-alfa custom-swiper suggestion-block bg-1 card-meditate">
                         <div style="margin-left: 5vw;">
-                            <div class="text-a1 suggestion-text text-meditate"><p style="display:inline;">{{ name }}</p><img v-if="isPremiumActive" style="margin-left: 5vw; margin-top: -3.2vh; height: 10vh; display:inline;" src="../../assets/graphics/premium_glowing_pink_text_fromcanva.png"/></div>
+                            <div class="text-a1 suggestion-text text-meditate">
+                                <p style="display:inline;">{{ name }}</p><img v-if="isPremiumActive"
+                                    style="margin-left: 5vw; margin-top: -3.2vh; height: 10vh; display:inline;"
+                                    src="../../assets/graphics/premium_glowing_pink_text_fromcanva.png" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -26,7 +30,7 @@
                     <ion-card-title>У вас все получится!</ion-card-title>
                     <ion-card-subtitle>Медитация — это хорошая привычка.</ion-card-subtitle>
                 </ion-card-header>
-                
+
                 <ion-card-content>
 
                     <span v-if="!enoughExpForTimeReview">Приложение будет становиться все более индивидуальным для вас с
@@ -35,8 +39,9 @@
                         За все время вы провели {{ meditationtime }} медитируя. Так
                         держать!</span>
 
-                    <br /><br />Согласно исследованиям, важно медитировать периодически, чтобы усилить эффект. &nbsp;<span
-                        style="color:rgb(94, 94, 219)" @click="learnMore()">Узнайте&nbsp;больше</span></ion-card-content>
+                    <br /><br />Согласно исследованиям, важно медитировать периодически, чтобы усилить эффект.
+                    &nbsp;<span style="color:rgb(94, 94, 219)"
+                        @click="learnMore()">Узнайте&nbsp;больше</span></ion-card-content>
             </ion-card>
 
             <NotificationsBanner notificationType="emotionalStateFeature" />
@@ -82,10 +87,12 @@
                 :initial-breakpoint="0.75" :breakpoints="[0, 0.75]" handle-behavior="cycle">
                 <ion-content class="ion-padding">
                     <div class="ion-margin-top">
-                        <ion-label style="white-space: pre-wrap;">Вы можете изменить информацию о себе. Эти сведения видите
+                        <ion-label style="white-space: pre-wrap;">Вы можете изменить информацию о себе. Эти сведения
+                            видите
                             только вы.</ion-label>
                         <ion-item style="margin-top: 1.9vh; border-radius: 11px;">
-                            <ion-input :autofocus="true" label="Ваше имя" label-placement="stacked" :placeholder="name"
+                            <ion-input @input="inputNameValueUpdated($event.target.value)" :autofocus="true"
+                                label="Ваше имя" label-placement="stacked" :placeholder="name"
                                 v-model="name"></ion-input>
                         </ion-item>
                         <ion-button @click="saveProfileNewData()" style="margin-top: 2.8vh;"
@@ -237,7 +244,8 @@ import {
     IonRippleEffect,
     IonGrid,
     IonCol,
-    IonRow
+    IonRow,
+    toastController
 } from '@ionic/vue';
 
 import {
@@ -281,7 +289,7 @@ export default defineComponent({
         IonRippleEffect,
         IonGrid,
         IonCol,
-        IonRow
+        IonRow,
     },
     mounted() {
         const tabsEl = document.querySelector('ion-tab-bar');
@@ -300,7 +308,7 @@ export default defineComponent({
 
         console.log(getUserData)
 
-        if(getUserData.value.isPremiumActive == true){
+        if (getUserData.value.isPremiumActive == true) {
             this.isPremiumActive = true
         } else {
             this.isPremiumActive = false
@@ -313,6 +321,17 @@ export default defineComponent({
             this.showStory = !this.showStory
         },
 
+        async inputNameValueUpdated(val) {
+            this.name = this.name.replace(/[^\p{L}]/gu, '');
+            const word = this.name;
+            if (word.length > 0) {
+                const firstLetter = word.charAt(0)
+                const firstLetterCap = firstLetter.toUpperCase()
+                const remainingLetters = word.slice(1)
+                this.name = firstLetterCap + remainingLetters
+            }
+        },
+
         openAccountEditor() {
             this.myselfProfileEdit_isModalOpen = true
         },
@@ -322,10 +341,20 @@ export default defineComponent({
             this.myselfProfileEdit_isModalOpen = false
         },
 
-        saveProfileNewData() {
-            localStorage.setItem("user_firstname", this.name)
-            this.$store.dispatch("setNewName", this.name)
-            this.myselfProfileEdit_isModalOpen = false;
+        async saveProfileNewData() {
+            if (this.name.length < 2) {
+                localStorage.setItem("user_firstname", this.name)
+                this.$store.dispatch("setNewName", this.name)
+                this.myselfProfileEdit_isModalOpen = false;
+            } else {
+                const toast = await toastController.create({
+                    message: 'Слишком короткое имя',
+                    duration: 1500,
+                    position: 'top',
+                });
+
+                await toast.present();
+            }
         },
 
         learnMore() {
