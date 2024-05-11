@@ -17,7 +17,7 @@
                             <ion-icon :icon="createOutline"
                                 style="margin-left: 0.3rem; margin-top: 1.8rem; color: white; font-size: 3rem;"></ion-icon>
                             <div class="text-a1 suggestion-text text-meditate">
-                                <p style="display:inline;">{{ name }}</p><img v-if="isPremiumActive"
+                                <p style="display:inline;">{{ firstname }}</p><img v-if="isPremiumActive"
                                     style="margin-left: 5vw; margin-top: -3.2vh; height: 10vh; display:inline;"
                                     src="../../assets/graphics/premium_glowing_pink_text_fromcanva.png" />
                             </div>
