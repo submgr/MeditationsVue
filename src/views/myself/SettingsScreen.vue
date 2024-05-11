@@ -56,7 +56,8 @@
                             видите
                             только вы.</ion-label>
                         <ion-item style="margin-top: 1.9vh; border-radius: 11px;">
-                            <ion-input @input="inputNameValueUpdated($event.target.value)" :autofocus="true" label="Ваше имя" label-placement="stacked" :placeholder="name"
+                            <ion-input @input="inputNameValueUpdated($event.target.value)" :autofocus="true" label="Ваше имя" 
+                            label-placement="stacked" :placeholder="name" :maxlength="12"
                                 v-model="name"></ion-input>
                         </ion-item>
                         <ion-button @click="saveProfileNewData()" style="margin-top: 2.8vh;"
@@ -331,7 +332,7 @@ export default defineComponent({
         },
 
         async saveProfileNewData() {
-            if (this.name.length < 2) {
+            if (this.name.length > 1) {
                 localStorage.setItem("user_firstname", this.name)
                 this.$store.dispatch("setNewName", this.name)
                 this.myselfProfileEdit_isModalOpen = false;
@@ -340,6 +341,7 @@ export default defineComponent({
                     message: 'Слишком короткое имя',
                     duration: 1500,
                     position: 'top',
+                    color: "danger"
                 });
 
                 await toast.present();
