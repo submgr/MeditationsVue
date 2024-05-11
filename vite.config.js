@@ -19,6 +19,7 @@ export default defineConfig({
     defaultImport: 'url',
   }), WindiCSS(),
 
+
   ViteImageOptimizer({
     /* pass your config */
     jpeg: {

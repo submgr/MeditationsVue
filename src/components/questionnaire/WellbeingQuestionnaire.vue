@@ -16,7 +16,7 @@
 
                     <div v-if="wellbeingQuestionnaireState == 'intro'">
 
-                        <img src="../../assets/graphics/juicy-girl-pointing-her-finger.png" style="
+                        <img src="../../assets/graphics/juicy-girl-pointing-her-finger.png?format=webp" style="
         margin-top: 7vh;
         margin-left: 3vw;
         height: 20vh;
