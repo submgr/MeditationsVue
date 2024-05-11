@@ -23,7 +23,7 @@
       </div>
 
       <div>
-        <div style="bottom: 15vh !important; position:fixed !important; z-index: 5500 !important; width: 100vw; display: block;
+        <div style="bottom: 16.2vh !important; position:fixed !important; z-index: 5500 !important; width: 100vw; display: block;
  text-align: center;" @click="configureAudioBackground()">
           <span style="text-align: center;" class="light_bottom_gradient">{{ current_audiobackground.title }} <ion-icon style="color: white; opacity: 0.8; margin-left: 1vw; font-size: 2rem; margin-bottom: -0.6rem;"
             :icon="albumsOutline"></ion-icon></span>
