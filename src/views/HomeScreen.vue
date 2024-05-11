@@ -286,12 +286,14 @@ export default defineComponent({
             immediate: true,
             // handler will be called every time the route changes.
             // reset your local component state and fetch the new data you need here.
-            async handler(route) {
-                alert("hi")
-                const tabsEl = document.querySelector('ion-tab-bar');
-                if (tabsEl) {
-                    tabsEl.hidden = false;
-                    tabsEl.style.height = "1";
+            async handler(newRoute, oldRoute) {
+                alert(JSON.stringify(oldRoute))
+                if(oldRoute.fullPath == undefined && newRoute.fullPath == "/tabs/home") {
+                    const tabsEl = document.querySelector('ion-tab-bar');
+                    if (tabsEl) {
+                        tabsEl.hidden = true;
+                        tabsEl.style.height = "0";
+                    }
                 }
             }
         }
