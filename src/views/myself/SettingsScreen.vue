@@ -56,7 +56,7 @@
                             видите
                             только вы.</ion-label>
                         <ion-item style="margin-top: 1.9vh; border-radius: 11px;">
-                            <ion-input :autofocus="true" label="Ваше имя" label-placement="stacked" :placeholder="name"
+                            <ion-input @input="inputNameValueUpdated($event.target.value)" :autofocus="true" label="Ваше имя" label-placement="stacked" :placeholder="name"
                                 v-model="name"></ion-input>
                         </ion-item>
                         <ion-button @click="saveProfileNewData()" style="margin-top: 2.8vh;"
