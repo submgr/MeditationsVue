@@ -37,8 +37,8 @@
                 <div style="margin-left: 0px; margin-top: 0px; font-size: 20px; font-weight: 400;">Как вы себя чувствуете сегодня?</div>
             <div style="display: flex; overflow-x: auto;  overflow-x: hidden; margin: auto;
             width: 90%; margin-top: -0.7vh;">
-                <div v-for="(item, index) in moodStates" :key="item.code" style="margin-right: -25px;" @click="rated(displayStage, item.code)">
-                  <ion-card class="ion-activatable ripple-parent rectangle" style="border-radius: 20px; width: 13.5vw;">
+                <div v-for="(item, index) in moodStates" :key="item.code" style="margin-right: -25px;">
+                  <ion-card class="ion-activatable ripple-parent rectangle" style="border-radius: 20px; width: 13.5vw; " @click="rated(displayStage, item.code)">
                     <span style="display: none;">Element Index is {{index}}</span>
                     <ion-ripple-effect></ion-ripple-effect>
                     <ion-card-header style="margin: -2.5vw;">
