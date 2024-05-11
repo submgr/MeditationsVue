@@ -6,8 +6,9 @@
             </ion-toolbar>
         </ion-header>
         <ion-content :fullscreen="true">
+            <NavbarController activatedfrom="Read/YouShouldKnow" @backfunction="$router.back()" align="right" />
             <ion-header collapse="condense">
-                <ion-toolbar>
+                <ion-toolbar style="--background: none !important; --opacity: 0;">
                     <ion-title size="large">{{ page_title_friendly }}</ion-title>
                 </ion-toolbar>
             </ion-header>
@@ -83,9 +84,11 @@
 import { defineComponent } from 'vue';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardSubtitle, IonCardContent } from '@ionic/vue';
 
+import NavbarController from '@/components/NavbarController.vue';
+
 export default defineComponent({
     name: 'Tab1Page',
-    components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonCard, IonCardHeader, IonCardSubtitle, IonCardContent },
+    components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, NavbarController },
     data() {
         return {
             page_title_friendly: "Узнайте больше",

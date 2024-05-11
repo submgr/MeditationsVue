@@ -45,7 +45,7 @@
 
             <ion-modal
                 :is-open="meditationState == 'prestart_info' && playerState == 'stopped' && forceModalClose == false"
-                trigger="open-modal" :initial-breakpoint="0.50" :breakpoints="[0.50, 0.75]" :backdrop-dismiss="false"
+                trigger="open-modal" :initial-breakpoint="0.55" :breakpoints="[0.55, 0.75]" :backdrop-dismiss="false"
                 handle-behavior="cycle">
                 <ion-content class="ion-padding">
                     <div class="ion-margin-top">
@@ -82,7 +82,7 @@
                             </ion-card-content>
                         </ion-card>
                     </div>
-                    <div style="margin-top: 5% !important; margin-left: -18px;">
+                    <div style="margin-top: 5% !important; margin-left: -18px; margin-bottom: 4vh;">
                         <ion-button fill="clear" @click="Modal_onWillDismiss" style="font-weight: 700;">Скрыть <ion-icon
                                 slot="end" :icon="chevronDown"></ion-icon>
                         </ion-button>

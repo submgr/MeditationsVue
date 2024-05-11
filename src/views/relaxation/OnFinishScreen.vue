@@ -9,7 +9,7 @@
         <Vue3Lottie :animationData="animationData" :height="150" :width="150" class="lottie" style=" margin-left: -3vw; margin-top: 4vh;" />
         
         <ion-header collapse="condense" style="margin-top: 0.5vh; --background: none;">
-          <ion-toolbar style="--background: none;">
+          <ion-toolbar style="--background: none !important; --opacity: 0;">
             <ion-title size="large" style="--background: none;">Это баланс!</ion-title>
           </ion-toolbar>
         </ion-header>
