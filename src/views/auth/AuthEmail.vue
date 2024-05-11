@@ -1,6 +1,7 @@
 <template>
 
     <ion-page>
+        <NavbarController activatedfrom="Auth/AuthEmail" @backfunction="$router.back()" align="right" />
 
         <ion-content class="animate__animated" :fullscreen="true" v-if="state == 'main' || state == 'main_processing'">
             <Transition name="bounce" class="animate__animated">
@@ -203,6 +204,8 @@ import { TransitionSlide } from '@morev/vue-transitions';
 
 import type { Animation } from '@ionic/vue';
 
+import NavbarController from '@/components/NavbarController.vue';
+
 import {
     arrowForwardOutline,
     mailOutline,
@@ -223,7 +226,8 @@ export default defineComponent({
         IonInput,
         IonButton,
         IonIcon,
-        TransitionSlide
+        TransitionSlide,
+        NavbarController
     },
     data() {
         return {
