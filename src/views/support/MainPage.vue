@@ -49,7 +49,7 @@
       </div>
 
       <div v-if="appSource == 'vk'" style="margin-left: 1.1rem; margin-right: 2vw;">
-        <div >
+        <div>
           <ion-label><br />Если у вас возникли вопросы, напишите нам в чате во ВКонтакте. Мы будем рады вам
             ответить.</ion-label>
         </div>
@@ -119,7 +119,10 @@ export default defineComponent({
       (window as any).location = "mailto:support@deqstudio.com";
     },
     supportOption_vk() {
-      window.open('https://vk.com/write-225830187', '_blank');
+      const a = document.createElement("a");
+      a.setAttribute("href", 'https://vk.com/write-225830187');
+      a.setAttribute("target", "_blank");
+      a.click();
     }
   },
   setup() {
