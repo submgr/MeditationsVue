@@ -319,7 +319,7 @@ export default defineComponent({
 
         openAccountEditor() {
             this.myselfProfileEdit_isModalOpen = true
-            this.name = this.lastname;
+            this.name = this.firstname;
         },
 
         Modal_onWillDismiss() {
