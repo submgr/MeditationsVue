@@ -284,7 +284,7 @@ export default defineComponent({
             tabsEl.style.height = "1";
         }
 
-        this.name = localStorage.getItem("user_firstname")
+        this.firstname = localStorage.getItem("user_firstname")
         if (localStorage.getItem("user_meditationtime") === null) {
             localStorage.setItem("user_meditationtime", "0")
             this.meditationtime = "0"
@@ -311,6 +311,7 @@ export default defineComponent({
                 const firstLetterCap = firstLetter.toUpperCase()
                 const remainingLetters = word.slice(1)
                 this.name = firstLetterCap + remainingLetters
+                this.firstname = this.name
             }
         },
         toggleStory() {
@@ -320,6 +321,7 @@ export default defineComponent({
         openAccountEditor() {
             this.myselfProfileEdit_isModalOpen = true
             this.name = this.firstname;
+            //alert(this.name + ";" + this.firstname)
         },
 
         Modal_onWillDismiss() {
@@ -334,8 +336,8 @@ export default defineComponent({
 
         async saveProfileNewData() {
             if (this.name.length > 1) {
-                localStorage.setItem("user_firstname", this.name)
-                this.$store.dispatch("setNewName", this.name)
+                localStorage.setItem("user_firstname", this.firstname)
+                this.$store.dispatch("setNewName", this.firstname)
                 this.myselfProfileEdit_isModalOpen = false;
             } else {
                 const toast = await toastController.create({
