@@ -14,7 +14,7 @@
                 </div>
             </Transition>
 
-            <div style="padding-top: 0.0rem;">
+            <div style="padding-top: 0.0rem; ">
 
                 <div @click="loadMeditation()">
 
@@ -61,7 +61,7 @@
 }
 
 .card-meditate {
-    height: 23.5vh !important;
+    height: 26.5vh !important;
 }
 
 .suggestion-block {

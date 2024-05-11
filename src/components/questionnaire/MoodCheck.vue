@@ -34,7 +34,7 @@
         <ul>
           <div style="margin: 2px;" class="innerdiv_notifcoloredradius bg-colored unique-element-glowing-ratebox1">
             <div style="margin-left: 16px; font-size: 18px; font-weight: 400; opacity: 0.6;"><div style="padding-top: 20px; "></div>Добрый день, {{name}}</div>
-                <div style="margin-left: 0px; margin-top: 0px; font-size: 20px; font-weight: 400;">Как вы себя чувствуете сегодня?</div>
+                <div style="margin-left: 0px; margin-top: 0px; font-size: 19px; font-weight: 400;">Как вы себя чувствуете сегодня?</div>
             <div style="display: flex; overflow-x: auto;  overflow-x: hidden; margin: auto;
             width: 90%; margin-top: -0.7vh;">
                 <div v-for="(item, index) in moodStates" :key="item.code" style="margin-right: -25px;">
