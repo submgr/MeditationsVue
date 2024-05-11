@@ -30,7 +30,7 @@
 
     <Transition name="bounce">
 
-      <div v-if="displayStage == 'moodRateBox'" class="myview" @click="displayStage = '1'">
+      <div v-if="displayStage == 'moodRateBox'" class="myview">
         <ul>
           <div style="margin: 2px;" class="innerdiv_notifcoloredradius bg-colored unique-element-glowing-ratebox1">
             <div style="margin-left: 16px; font-size: 18px; font-weight: 400; opacity: 0.6;"><div style="padding-top: 20px; "></div>Добрый день, {{name}}</div>
