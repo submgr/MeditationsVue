@@ -3,7 +3,7 @@
         <p style="display: none;">[Wellbeing Questionnaire Block]</p>
         <ion-content class="ion-padding">
             <ion-modal handle-behavior="cycle" style="--border-radius: 10px; padding-top: 4vh;"
-                :is-open="questionnaireModalIsOpen">
+                :is-open="questionnaireModalIsOpen" @willDismiss="dismiss">
                 <ion-header>
                     <ion-toolbar style="border-radius: 10px !important">
                         <ion-title>Узнаем вас лучше</ion-title>
