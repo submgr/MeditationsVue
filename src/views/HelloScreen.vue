@@ -7,7 +7,7 @@
 
             
 
-                <div style="padding-top: 10vh; height: auto; width: 70%; max-width: 400px; margin-left: auto; margin-right: auto; display: block;">
+                <div style="padding-top: 10vh; height: auto; width: 70%; max-width: 320px; margin-left: auto; margin-right: auto; display: block;">
                     <img v-if="natureEllipse" 
                         :src="natureEllipse">
                 </div>
