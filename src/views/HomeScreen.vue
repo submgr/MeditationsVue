@@ -154,12 +154,12 @@ ion-page {
 /* we will explain what these classes do next! */
 .v-enter-active,
 .v-leave-active {
-  transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease;
 }
 
 .v-enter-from,
 .v-leave-to {
-  opacity: 0;
+    opacity: 0;
 }
 </style>
 
@@ -215,12 +215,6 @@ export default defineComponent({
 
         console.log(this.$achievements)
 
-        const tabsEl = document.querySelector('ion-tab-bar');
-        if (tabsEl) {
-            tabsEl.hidden = false;
-            tabsEl.style.height = "1";
-        }
-
         console.log(this.$i18next)
 
         let isVKMiniApps = false;
@@ -233,7 +227,7 @@ export default defineComponent({
             console.log('Failed to access localStorage. Defaulting isVKMiniApps to false.');
         }
 
-        if(!isVKMiniApps){
+        if (!isVKMiniApps) {
             this.suggestSmile = true;
         }
 
@@ -286,12 +280,27 @@ export default defineComponent({
         suggestSmile: false,
         loading: false
     }),
+    watch: {
+        '$route': {
+            // with immediate handler gets called on first mount aswell
+            immediate: true,
+            // handler will be called every time the route changes.
+            // reset your local component state and fetch the new data you need here.
+            async handler(route) {
+                const tabsEl = document.querySelector('ion-tab-bar');
+                if (tabsEl) {
+                    tabsEl.hidden = false;
+                    tabsEl.style.height = "1";
+                }
+            }
+        }
+    },
     setup() {
 
-        return {
-            closeOutline,
-            playOutline
+            return {
+                closeOutline,
+                playOutline
+            }
         }
-    }
-});
+    });
 </script>
