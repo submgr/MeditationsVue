@@ -319,6 +319,7 @@ export default defineComponent({
 
         openAccountEditor() {
             this.myselfProfileEdit_isModalOpen = true
+            this.name = this.lastname;
         },
 
         Modal_onWillDismiss() {
@@ -466,6 +467,7 @@ export default defineComponent({
     data: () => ({
         showStory: false,
         myselfProfileEdit_isModalOpen: false,
+        firstname: "",
         name: "",
         meditationtime: "",
         enoughExpForTimeReview: null,
