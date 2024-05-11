@@ -1,10 +1,5 @@
 <template>
     <ion-page>
-        <ion-header>
-            <ion-toolbar>
-                <ion-title>{{ page_title_friendly }}</ion-title>
-            </ion-toolbar>
-        </ion-header>
         <ion-content :fullscreen="true">
             <NavbarController activatedfrom="Read/YouShouldKnow" @backfunction="$router.back()" align="right" />
             <ion-header collapse="condense">
