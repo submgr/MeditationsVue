@@ -43,8 +43,9 @@
             <div class="shadow1"></div>
             <div class="shadow2"></div>
 
-            <ion-modal :is-open="meditationState == 'prestart_info' && playerState == 'stopped' && forceModalClose == false" trigger="open-modal"
-                :initial-breakpoint="0.50" :breakpoints="[0.50, 0.75]" :backdrop-dismiss="false"
+            <ion-modal
+                :is-open="meditationState == 'prestart_info' && playerState == 'stopped' && forceModalClose == false"
+                trigger="open-modal" :initial-breakpoint="0.50" :breakpoints="[0.50, 0.75]" :backdrop-dismiss="false"
                 handle-behavior="cycle">
                 <ion-content class="ion-padding">
                     <div class="ion-margin-top">
@@ -61,22 +62,25 @@
                 </ion-content>
             </ion-modal>
             <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="additionalModalOpenened == 'info'"
-                trigger="open-modal" :initial-breakpoint="0.50" :breakpoints="[0.50, 0.75, 1]" handle-behavior="cycle">
+                trigger="open-modal" :initial-breakpoint="0.85" :breakpoints="[0.50, 0.85, 1]" handle-behavior="cycle">
                 <ion-content class="ion-padding">
                     <div class="ion-margin-top">
                         <ion-label style="white-space: pre-wrap;"><br><b
-                                style="font-size: 28px;">Медитация</b><br /><br />Вы хорошо проводите время!<span
-                                v-if="meditationAuthors != null" style="font-size: 13px;"><br><br>Медитация, которую вы
+                                style="font-size: 28px;">Медитация</b><br /><br />Вы хорошо проводите время!
+                            <span v-if="authors != null" style="font-size: 13px;"><br><br>Медитация, которую вы
                                 сейчас слышите, появилась благодаря этим людям:
-                                {{ meditationAuthors.name }}</span></ion-label>
-                        <div class="preloader" v-if="author_data_loaded != true">
-                            <h1>
-                                <ion-spinner name="lines-sharp"></ion-spinner>
-                            </h1>
-                        </div>
-                        <iframe allowTransparency="true" :src="volunteer_src_iframe" id="author-iframe-0"
-                            @load="adjustHeight" style="width: 100vw; height: 0.001vh;">Something went wrong: unable to
-                            reach remote host to be placed in this iframe. Looks like a problem on your end.</iframe>
+                            </span></ion-label>
+                        <ion-card v-if="authors != null" style="border-radius: 20px; margin-left: -0.5%;">
+                            <img alt="Silhouette of mountains" style="height: 150px !important; border-radius: 20px; margin-left: 3.5%; margin-top: 2vh;" :src="authors[0].photo_url"/>
+                            <ion-card-header>
+                                <ion-card-title>{{ authors[0].rus_name }}</ion-card-title>
+                                <ion-card-subtitle>Голос медитации</ion-card-subtitle>
+                            </ion-card-header>
+
+                            <ion-card-content>
+                                <i><b>«</b>{{ authors[0].rus_description }}<b>»</b></i>
+                            </ion-card-content>
+                        </ion-card>
                     </div>
                     <div style="margin-top: 5% !important; margin-left: -18px;">
                         <ion-button fill="clear" @click="Modal_onWillDismiss" style="font-weight: 700;">Скрыть <ion-icon
@@ -119,6 +123,7 @@
 </template>
 
 <style scoped>
+.circular--portrait { position: relative; width: 200px; height: 200px; overflow: hidden; border-radius: 50%; } .circular--portrait img { width: 100%; height: auto; }
 .loader_at_corner {
     position: fixed;
     /* Fixed position for the loader */
@@ -351,7 +356,7 @@ export default defineComponent({
 
         // eslint-disable-next-line
         const parent_this = this;
-        
+
         // Attach onpopstate event handler
         window.onpopstate = function (event) {
             parent_this.forceModalClose = true;
@@ -840,6 +845,10 @@ export default defineComponent({
             // eslint-disable-next-line
             const parent_this = this;
 
+            console.log("++data.content++", data)
+
+            this.authors = data.author;
+
             console.log(data.content.audio.audiotrack.length)
 
             var isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1 &&
@@ -988,6 +997,7 @@ export default defineComponent({
             author_data_loaded: false,
             volunteer_src_iframe: 'https://xn--80aaafmfwb5a7d2bq4h.xn--p1ai/systemvolunteerinfo/?id=1',
             globaldata: globaldata,
+            authors: null,
             availableBackgrounds: [
                 // available types:
                 // video
