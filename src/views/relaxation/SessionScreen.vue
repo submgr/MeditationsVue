@@ -6,7 +6,7 @@
                 <div style="padding: 0rem; margin-top: 5vh; ">
                     <div style="margin-left: -10vw;">
                         <Vue3Lottie :loop="1" :animationData="gettingReadyAnimationData"
-                            style=" width: 120vw !important;" />
+                            style=" width: 50vh !important;" />
                     </div>
 
                     <p class="linear-wipe"
@@ -20,7 +20,7 @@
                     <div style="padding: 0rem; margin-top: 11%; ">
                         <div style="margin-left: -20%;">
                             <Vue3Lottie :animationData="breathAwaitingAnimationData"
-                                style=" width: 120% !important;" />
+                                style=" height: 70vh !important;" />
                         </div>
 
                         <p class="linear-wipe"
