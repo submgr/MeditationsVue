@@ -119,7 +119,7 @@ export default defineComponent({
       (window as any).location = "mailto:support@deqstudio.com";
     },
     supportOption_vk() {
-      window.open('https://vk.me/urmeditation', '_blank');
+      window.open('https://vk.com/write-225830187', '_blank');
     }
   },
   setup() {
