@@ -25,7 +25,7 @@
       <div>
         <div style="bottom: 16.2vh !important; position:fixed !important; z-index: 5500 !important; width: 100vw; display: block;
  text-align: center;" @click="configureAudioBackground()">
-          <span style="text-align: center;" class="light_bottom_gradient">{{ current_audiobackground.title }} <ion-icon style="color: white; opacity: 0.8; margin-left: 1vw; font-size: 2rem; margin-bottom: -0.6rem;"
+          <span style="text-align: center;" class="light_bottom_gradient">{{ current_audiobackground.title }} <ion-icon style="color: white; opacity: 0.8; margin-left: 1vw; font-size: 1.9rem; margin-bottom: -0.6rem;"
             :icon="albumsOutline"></ion-icon></span>
           
         </div>
@@ -34,7 +34,7 @@
           <div style="bottom: 11vh !important; position:fixed !important; z-index: 5500 !important; width: 100vw; display: block;
      text-align: center;" v-if="howler_player_instance == null" @click="configureTimer()">
             <span  style="text-align: center;" class="light_bottom_gradient">Таймер: <span v-if="current_timer_timevalue_minutes != 9000">{{
-              current_timer_timevalue_minutes }} минут</span><span v-else>без таймера</span> <ion-icon style="color: white; opacity: 0.8; margin-left: 1vw; font-size: 2rem; margin-bottom: -0.6rem;"
+              current_timer_timevalue_minutes }} минут</span><span v-else>без таймера</span> <ion-icon style="color: white; opacity: 0.8; margin-left: 1vw; font-size: 1.9rem; margin-bottom: -0.6rem;"
               :icon="stopwatchOutline"></ion-icon></span>
            
           </div>
