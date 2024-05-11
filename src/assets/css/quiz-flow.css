@@ -50,6 +50,7 @@
   
   .vff {
     color: var(--vff-main-text-color);
+    margin-top: 11.654vh !important;
   }
   
   .vff.vff-not-standalone {
