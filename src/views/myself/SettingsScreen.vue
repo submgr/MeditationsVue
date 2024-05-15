@@ -76,7 +76,7 @@
                     </ion-toolbar>
                 </ion-header>
                 <ion-content class="ion-padding">
-                    <RenderContent materialType="pages" codename="privacypolicy" />
+                    <RenderContent materialType="pages" :metatagsExist="false" codename="privacypolicy" />
                 </ion-content>
             </ion-modal>
 
@@ -90,7 +90,7 @@
                     </ion-toolbar>
                 </ion-header>
                 <ion-content class="ion-padding">
-                    <RenderContent materialType="pages" codename="termsofuse" />
+                    <RenderContent materialType="pages" :metatagsExist="false" codename="termsofuse" />
                 </ion-content>
             </ion-modal>
 
