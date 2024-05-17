@@ -43,6 +43,11 @@
 
             <div class="padding_from_bottom_line"></div>
 
+            <ion-alert :is-open="adsNotifBannerVisable" trigger="present-alert" header="Спасибо за загрузку!"
+                sub-header="Мы стараемся для вас ✨"
+                message="Мы создали это приложение, чтобы сделать медитации доступными для всех. Вам не нужно приобретать подписки, весь функционал доступен бесплатно. Мы иногда показываем рекламу, чтобы поддержать наш проект и продолжать его разработку."
+                :buttons="adsNotifBannerButtons"></ion-alert>
+
         </ion-content>
     </ion-page>
 </template>
@@ -193,8 +198,7 @@ import LoadingActivity from '@/components/system/LoadingActivity.vue';
 
 import TasksController from '@/components/gamification/TasksController.vue';
 
-
-
+import { Capacitor } from '@capacitor/core';
 
 export default defineComponent({
     name: 'Tab1Page',
@@ -237,6 +241,19 @@ export default defineComponent({
             this.suggestSmile = true;
         }
 
+        // 
+        var currentPlatform = Capacitor.getPlatform();
+
+        if (localStorage.getItem("temp_showedadsNotifBanner") != "yes") {
+            if (currentPlatform == "android" || currentPlatform == "ios") {
+                this.adsNotifBannerVisable = true;
+            } else {
+                this.adsNotifBannerVisable = false;
+            }
+
+            localStorage.setItem("temp_showedadsNotifBanner", "yes");
+        }
+
     },
     methods: {
         toggleStory() {
@@ -275,6 +292,8 @@ export default defineComponent({
     },
     data: () => ({
         showStory: false,
+        adsNotifBannerVisable: false,
+        adsNotifBannerButtons: ['Хорошо!'],
         items: [
             "https://images.unsplash.com/photo-1531804159968-24716780d214?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=388&q=80",
             "https://images.unsplash.com/photo-1529974019031-b0cd38fd54fc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",

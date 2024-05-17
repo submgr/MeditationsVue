@@ -16,7 +16,8 @@
           Для этой функции необходим доступ к камере: так вы сможете увидеть себя и запечатлеть свою улыбку. Похоже, что
           вы отказали приложению в доступе к камере. <br /><br />
           <span v-if="user_browser == 'ios'" style="font-style: italic;">aA > Website Settings > Camera > Allow</span>
-          <span v-else-if="user_browser == 'android'" style="font-style: italic;">··· > Settings > Site Settings > Camera
+          <span v-else-if="user_browser == 'android'" style="font-style: italic;">··· > Settings > Site Settings >
+            Camera
             > On</span>
           <span v-else-if="user_browser == 'windows'" style="font-style: italic;">🔒 > 🔑 Permission for this site >
             Camera > Allow</span>
@@ -53,10 +54,15 @@
 
           <ion-card-content>
 
-            <img style="transform: rotate(5deg); margin-top: 2vh; max-height: 40vh; margin-bottom: 4vh; display: block;
+            <img v-if="nativePlatformImageUri == null" style="transform: rotate(5deg); margin-top: 2vh; max-height: 40vh; margin-bottom: 4vh; display: block;
               margin-left: auto;
               margin-right: auto;
               width: 50%;" :src="'data:image/png;base64, ' + last_shoot_base64String">
+
+            <img v-if="nativePlatformImageUri != null" style="transform: rotate(5deg); margin-top: 2vh; max-height: 40vh; margin-bottom: 4vh; display: block;
+              margin-left: auto;
+              margin-right: auto;
+              width: 50%;" :src="nativePlatformImageUri.webPath">
 
             <ion-button expand="block" @click="sharePhoto()"
               style="margin-left: 2vw; margin-right: 2vw; margin-top: 0vh;">Поделиться!</ion-button>
@@ -69,7 +75,7 @@
     </ion-content>
   </ion-page>
 </template>
-    
+
 <script lang="ts">
 import { defineComponent } from 'vue';
 
@@ -81,7 +87,7 @@ import { Device } from '@capacitor/device';
 
 import NavbarController from '@/components/NavbarController.vue';
 
-import { Camera, CameraResultType, CameraDirection } from '@capacitor/camera';
+import { Camera, CameraResultType, CameraDirection, CameraSource } from '@capacitor/camera';
 
 import {
   IonPage,
@@ -95,6 +101,10 @@ import {
 } from '@ionic/vue';
 
 import confetti from 'canvas-confetti';
+
+import { Capacitor } from '@capacitor/core';
+
+import { Share } from '@capacitor/share';
 
 export default defineComponent({
   name: 'Tab3Page',
@@ -120,7 +130,8 @@ export default defineComponent({
       currentstep: "awaiting",
       last_shoot_imgblob: null,
       last_shoot_base64String: null,
-      arrowBackCircleOutline
+      arrowBackCircleOutline,
+      nativePlatformImageUri: null
     }
   },
   methods: {
@@ -132,7 +143,8 @@ export default defineComponent({
       };
 
       // Save the smile data to localStorage as a JSON string
-      localStorage.setItem('appData__temp__dailySmile', JSON.stringify(smileData));
+      // TEMPORARY TO MAKE DEBUG SIMPLER
+      // localStorage.setItem('appData__temp__dailySmile', JSON.stringify(smileData));
     },
     randomInRange(min, max) {
       return Math.random() * (max - min) + min;
@@ -148,82 +160,93 @@ export default defineComponent({
       const deviceInfo = await Device.getInfo();
       console.log(deviceInfo)
 
+      var currentPlatform = Capacitor.getPlatform();
+
       if (cameraPermissionsData.camera == "granted" || cameraPermissionsData.camera == "prompt") {
-        var image = null;
-        try {
-          image = await Camera.getPhoto({
-            quality: 90,
-            allowEditing: true,
-            resultType: CameraResultType.Base64,
-            direction: CameraDirection.Front
+        if (currentPlatform == "android" || currentPlatform == "ios") {
+          this.nativePlatformImageUri = await Camera.getPhoto({
+            source: CameraSource.Camera,
+            direction: CameraDirection.Front,
+            resultType: CameraResultType.Uri
           });
+          parent_this.currentstep = "photo_view"
+        } else {
+          var image = null;
+          try {
+            image = await Camera.getPhoto({
+              quality: 90,
+              allowEditing: true,
+              resultType: CameraResultType.Base64,
+              direction: CameraDirection.Front
+            });
 
-          console.warn("aaai1")
+            console.warn("aaai1")
 
-          // image.webPath will contain a path that can be set as an image src.
-          // You can access the original file using image.path, which can be
-          // passed to the Filesystem API to read the raw data of the image,
-          // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
-          var base64String = image.base64String;
-          parent_this.last_shoot_base64String = base64String;
+            // image.webPath will contain a path that can be set as an image src.
+            // You can access the original file using image.path, which can be
+            // passed to the Filesystem API to read the raw data of the image,
+            // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
+            var base64String = image.base64String;
+            parent_this.last_shoot_base64String = base64String;
 
-          console.warn("aaai2")
+            console.warn("aaai2")
 
-          const b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
-            const byteCharacters = atob(b64Data);
-            const byteArrays = [];
+            const b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
+              const byteCharacters = atob(b64Data);
+              const byteArrays = [];
 
-            for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-              const slice = byteCharacters.slice(offset, offset + sliceSize);
+              for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                const slice = byteCharacters.slice(offset, offset + sliceSize);
 
-              const byteNumbers = new Array(slice.length);
-              for (let i = 0; i < slice.length; i++) {
-                byteNumbers[i] = slice.charCodeAt(i);
+                const byteNumbers = new Array(slice.length);
+                for (let i = 0; i < slice.length; i++) {
+                  byteNumbers[i] = slice.charCodeAt(i);
+                }
+
+                const byteArray = new Uint8Array(byteNumbers);
+                byteArrays.push(byteArray);
               }
 
-              const byteArray = new Uint8Array(byteNumbers);
-              byteArrays.push(byteArray);
+              const blob = new Blob(byteArrays, { type: contentType });
+              return blob;
             }
 
-            const blob = new Blob(byteArrays, { type: contentType });
-            return blob;
+            console.warn("aaai3")
+
+            this.updateUserSmile();
+
+            // Assume `blob` is a PNG image file.
+            parent_this.last_shoot_imgblob = b64toBlob(base64String, "image/jpeg");
+
+            parent_this.currentstep = "photo_view"
+
+            var duration = 4 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 20, spread: 260, ticks: 90, zIndex: 0 };
+
+
+            var interval = setInterval(function () {
+              var timeLeft = animationEnd - Date.now();
+
+              if (timeLeft <= 0) {
+                return clearInterval(interval);
+              }
+
+              var particleCount = 100 * (timeLeft / duration);
+              // since particles fall down, start a bit higher than random
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: parent_this.randomInRange(0.1, 0.3), y: Math.random() - 0.1 } }));
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: parent_this.randomInRange(0.7, 0.9), y: Math.random() - 0.1 } }));
+            }, 250);
+
+
+          } catch (error) {
+            console.error(error);
+
+            // Expected output: ReferenceError: nonExistentFunction is not defined
+            // (Note: the exact output may be browser-dependent)
           }
 
-          console.warn("aaai3")
-
-          this.updateUserSmile();
-
-          // Assume `blob` is a PNG image file.
-          parent_this.last_shoot_imgblob = b64toBlob(base64String, "image/jpeg");
-
-          parent_this.currentstep = "photo_view"
-
-          var duration = 4 * 1000;
-          var animationEnd = Date.now() + duration;
-          var defaults = { startVelocity: 20, spread: 260, ticks: 90, zIndex: 0 };
-
-
-          var interval = setInterval(function () {
-            var timeLeft = animationEnd - Date.now();
-
-            if (timeLeft <= 0) {
-              return clearInterval(interval);
-            }
-
-            var particleCount = 100 * (timeLeft / duration);
-            // since particles fall down, start a bit higher than random
-            confetti(Object.assign({}, defaults, { particleCount, origin: { x: parent_this.randomInRange(0.1, 0.3), y: Math.random() - 0.1 } }));
-            confetti(Object.assign({}, defaults, { particleCount, origin: { x: parent_this.randomInRange(0.7, 0.9), y: Math.random() - 0.1 } }));
-          }, 250);
-
-        } catch (error) {
-          console.error(error);
-
-          // Expected output: ReferenceError: nonExistentFunction is not defined
-          // (Note: the exact output may be browser-dependent)
         }
-
-
 
 
       } else if (cameraPermissionsData.camera == "denied") {
@@ -240,24 +263,43 @@ export default defineComponent({
 
     },
     async sharePhoto() {
-      const data = {
-        files: [
-          new File([this.last_shoot_imgblob], 'YourMeditation_Smile.png', {
-            type: this.last_shoot_imgblob.type,
-          }),
-        ],
-        title: 'Поделитесь своей улыбкой с миром',
-        text: 'Какое у меня веселое селфи вышло! ❤️‍🔥 Заряд весельем на весь день получен! 😎 #круто #вашамедитация',
-      };
-      console.warn("aaai4")
-      if (navigator.canShare(data)) {
-        console.warn("aaai5")
-        await navigator.share(data);
+
+      const shareTitle = 'Поделитесь своей улыбкой с миром';
+      const shareText = 'Какое у меня веселое селфи вышло! ❤️‍🔥 Заряд весельем на весь день получен! 😎 #круто #вашамедитация';
+
+
+
+      var currentPlatform = Capacitor.getPlatform();
+      if (currentPlatform == "android" || currentPlatform == "ios") {
+        //
+        // alert(this.nativePlatformImageUri.path)
+        console.log(this.nativePlatformImageUri)
+        console.log(JSON.stringify(this.nativePlatformImageUri))
+        console.log("logcat-349839099", this.nativePlatformImageUri.path)
+        await Share.share({
+          title: shareTitle,
+          text: shareText,
+          url: this.nativePlatformImageUri.path,
+        });
+      } else {
+        const data = {
+          files: [
+            new File([this.last_shoot_imgblob], 'YourMeditation_Smile.png', {
+              type: this.last_shoot_imgblob.type,
+            }),
+          ],
+          title: shareTitle,
+          text: shareText,
+        };
+        console.warn("aaai4")
+        if (navigator.canShare(data)) {
+          console.warn("aaai5")
+          await navigator.share(data);
+        }
+        console.warn("aaai6")
       }
-      console.warn("aaai6")
     }
   }
 });
 
 </script>
-    

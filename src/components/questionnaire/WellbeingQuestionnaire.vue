@@ -442,6 +442,10 @@ export default defineComponent({
     },
     mounted() {
         this.wellbeingquestionare_donotshowintroanymore = localStorage.getItem("wellbeingquestionare_donotshowintroanymore");
+        if(localStorage.getItem("wellbeingquestionare_donotshowintroanymore") == "true"){
+            //skip this time
+            this.$emit('completion-event', 'Completed');
+        }
     },
     methods: {
         finished() {
