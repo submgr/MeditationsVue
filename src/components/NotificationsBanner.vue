@@ -1,6 +1,7 @@
 <template>
     <span v-if="notificationType == 'emotionalStateFeature'">
-        <WellbeingQuestionnaire :key="componentKey" ref="wellbeingQuestionnaireRef" @completion-event="WellbeingQuestionnaireCompleted" />
+        <WellbeingQuestionnaire :key="componentKey" ref="wellbeingQuestionnaireRef"
+            @completion-event="WellbeingQuestionnaireCompleted" />
         <ion-card :class="{ 'stop-animations': stopAllAnimations }" @click="runWellbeingQuestionnaire()" color="light"
             style="--glow-opacity: 1; --glow-scale: 2.5; --glow-blur: 6; --glow-radius: 100; --glow-rotate-unit: 1deg;"
             class="ion-text-centerOFF gradient-border-card glowing-card cardg ion-activatable ripple-parent rounded-rectangle">
@@ -24,8 +25,9 @@
             </div>
         </ion-card>
     </span>
-    <div v-if="notificationType == 'suggestToSmileToday__type1'" class="myview">
-        <Transition name="bounce">
+    <Transition>
+        <div v-if="notificationType == 'suggestToSmileToday__type1'" class="myview">
+
 
             <div>
                 <ul>
@@ -35,19 +37,21 @@
                             <ion-card-title>Улыбнитесь!</ion-card-title>
                         </ion-card-header>
 
-                        <ion-card-content style="">Исследования показывают, что улыбка может вызвать выброс эндорфинов, а
+                        <ion-card-content style="">Исследования показывают, что улыбка может вызвать выброс эндорфинов,
+                            а
                             также возбуждение и эмоции, которые вызывают чувство счастья.</ion-card-content>
 
 
                     </div>
                 </ul>
             </div>
-        </Transition>
-    </div>
+
+        </div>
+    </Transition>
     <span v-if="notificationType == 'suggestToSmileToday' && varHasUserSmiledToday != true">
         <WellbeingQuestionnaire ref="wellbeingQuestionnaireRef" @completion-event="WellbeingQuestionnaireCompleted" />
-        <ion-card :class="{ 'stop-animations': stopAllAnimations }" @click="$router.push({ path: '/tabs/emotions/smile' })"
-            color="light"
+        <ion-card :class="{ 'stop-animations': stopAllAnimations }"
+            @click="$router.push({ path: '/tabs/emotions/smile' })" color="light"
             style="--glow-opacity: 1; --glow-scale: 2.5; --glow-blur: 6; --glow-radius: 100; --glow-rotate-unit: 1deg;"
             class="ion-text-centerOFF gradient-border-card glowing-card cardg ion-activatable ripple-parent rounded-rectangle">
             <span class="glow"></span>
@@ -64,7 +68,8 @@
                 </ion-card-header>
 
                 <ion-card-content style="">Улыбнитесь в приложении сейчас, чтобы заложить отличное начало для этого
-                    великолепного дня! Исследования показывают, что улыбка вызывает выброс эндорфинов, а также возбуждение и
+                    великолепного дня! Исследования показывают, что улыбка вызывает выброс эндорфинов, а также
+                    возбуждение и
                     эмоции, которые вызывают чувство счастья. Улыбнитесь себе!
 
                     <br /><br /><ion-button>Улыбнуться<ion-icon slot="end"
@@ -113,7 +118,7 @@
 /* we will explain what these classes do next! */
 .v-enter-active,
 .v-leave-active {
-    transition: opacity 0.5s ease;
+    transition: opacity 1.5s ease;
 }
 
 .v-enter-from,
@@ -238,7 +243,7 @@
     }
 }
 </style>
-  
+
 <script lang="ts">
 import { defineComponent } from 'vue';
 
@@ -291,18 +296,18 @@ export default defineComponent({
             const childComponent = this.$refs.wellbeingQuestionnaireRef as any;
 
             // Now TypeScript knows the type and you can access 'open' method
-            
+
             childComponent.open();
-            
+
         },
         WellbeingQuestionnaireCompleted() {
-            
+
             // Wellbeing Questionnaire Is Completed Now.
 
             setTimeout(() => {
-                this.componentKey += 1; 
+                this.componentKey += 1;
             }, 500);
-            
+
         },
         hasUserSmiledToday() {
             // Get the stored smile data from localStorage
@@ -354,6 +359,3 @@ export default defineComponent({
     }
 });
 </script>
-  
-
-  

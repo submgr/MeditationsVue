@@ -16,18 +16,20 @@
 
             <div style="padding-top: 0.0rem; ">
 
-                <div @click="loadMeditation()">
+                <Transition>
+                    <div @click="loadMeditation()">
 
-                    <div class="card-alfa custom-swiper suggestion-block bg-1 card-meditate ion-activatable">
-                        <ion-ripple-effect></ion-ripple-effect>
-                        <div>
-                            <ion-icon :icon="playOutline"
-                                style="margin-left: 0.7rem; margin-top: 1.8rem; color: white; font-size: 3rem;"
-                                @click="toggleStory"></ion-icon>
-                            <div class="text-a1 suggestion-text text-meditate">Медитация</div>
+                        <div class="card-alfa custom-swiper suggestion-block bg-1 card-meditate ion-activatable">
+                            <ion-ripple-effect></ion-ripple-effect>
+                            <div>
+                                <ion-icon :icon="playOutline"
+                                    style="margin-left: 0.7rem; margin-top: 1.8rem; color: white; font-size: 3rem;"
+                                    @click="toggleStory"></ion-icon>
+                                <div class="text-a1 suggestion-text text-meditate">Медитация</div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </Transition>
                 <!---<div class="card-alfa custom-swiper suggestion-block bg-2">
                     <div>
                         <div class="text-a1 suggestion-text">Пора улыбнуться, давайте поднимем вам настроение?</div>
@@ -54,6 +56,17 @@
 
 <style scoped>
 @import '../assets/css/adaptative_ui.css';
+
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 2s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
 
 .standart_padding {
     margin: 0px 15px 30px 15px;

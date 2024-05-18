@@ -5,39 +5,39 @@
                 <ion-spinner name="lines-sharp"></ion-spinner>
             </h1>
         </div>
-        <div class="wrapper scroll" v-else ref="cardWrapper" @scroll="handleScroll" style="margin-top: 7vh;">
-            <swiper ref="{swiperRef}"
-            :centeredSlides="false"
-            :slidesPerView="slidesPerView"
-            :spaceBetween="spaceBetween"
-            :loop="true"
-            :modules="modules"
+        <Transition>
+        <div class="wrapper scroll" v-if="premadeMeditations.length > 0 && meditationsListReceivedResponseWithData" ref="cardWrapper" @scroll="handleScroll" style="margin-top: 7vh;">
             
-
-            class="mySwiper"
-                :slidesOffsetBefore="slidesOffsetBefore" style="margin-bottom: 10vh; margin-left: 0vw;">
-                <swiper-slide v-for="(item, index) in premadeMeditations" v-bind:key="item.id">
-                    <div class="new_card"
-                        :style="`background: url('${item.imgposterurl}') no-repeat center center / cover;`">
-                        <span style="display: none">Meditation local ID is {{ index }}</span>
-                        <div class="new_content">
-                            <h1 class="new_title">{{ item.title }}</h1>
-                            <div class="tags">
-                                <span v-for="(tag) in item.tags" v-bind:key="tag.code" class="tag">{{ tag.friendlycode
+                <swiper ref="{swiperRef}" :centeredSlides="false" :slidesPerView="slidesPerView"
+                    :spaceBetween="spaceBetween" :loop="true" :modules="modules" class="mySwiper"
+                    :slidesOffsetBefore="slidesOffsetBefore" style="margin-bottom: 10vh; margin-left: 0vw;">
+                    <swiper-slide v-for="(item, index) in premadeMeditations" v-bind:key="item.id">
+                        <div class="new_card"
+                            :style="`background: url('${item.imgposterurl}') no-repeat center center / cover;`">
+                            <span style="display: none">Meditation local ID is {{ index }}</span>
+                            <div class="new_content">
+                                <h1 class="new_title">{{ item.title }}</h1>
+                                <div class="tags">
+                                    <span v-for="(tag) in item.tags" v-bind:key="tag.code" class="tag">{{
+                                        tag.friendlycode
                                     }}</span>
-                            </div>
-                            <p class="new_description">{{ item.description }} <br/><ion-button
-                                    @click="requestMeditation(item.searchobject)" style="margin-top: 3vh;">Начать
-                                    медитацию</ion-button></p>
+                                </div>
+                                <p class="new_description">{{ item.description }} <br /><ion-button
+                                        @click="requestMeditation(item.searchobject)" style="margin-top: 3vh;">Начать
+                                        медитацию</ion-button></p>
 
+                            </div>
                         </div>
-                    </div>
-                </swiper-slide>
-            </swiper>
+                    </swiper-slide>
+                </swiper>
+            
         </div>
+    </Transition>
+
     </div>
 
 </template>
+
 
 <script lang="ts">
 // Import Swiper Vue.js components
@@ -86,9 +86,9 @@ export default defineComponent({
         spaceBetween() {
             return this.windowWidth * 70 / 100; // -15% of viewport width
         },
-        slidesOffsetBefore() {
-            return this.windowWidth * 10 / 100; // -3% of viewport width
-        }
+        // slidesOffsetBefore() {
+        //     return this.windowWidth * 10 / 100; // -3% of viewport width
+        // }
     },
     props: {
         name: String
@@ -103,7 +103,7 @@ export default defineComponent({
         }
     },
     created() {
-        window.addEventListener('resize', this.onResize);
+        this.slidesOffsetBefore();
     },
     unmounted() {
         window.removeEventListener('resize', this.onResize);
@@ -121,6 +121,9 @@ export default defineComponent({
         //   hash: '#sampleHash' // required if updateHistory is true
         //   })
         //},
+        slidesOffsetBefore() {
+            return this.windowWidth * 10 / 100; // -3% of viewport width
+        },
         onResize() {
             this.windowWidth = window.innerWidth;
             this.windowHeight = window.innerHeight;
@@ -187,6 +190,8 @@ export default defineComponent({
                 parent_this.meditationsListReceivedResponseWithData = true;
 
                 console.info(parent_this.premadeMeditations)
+                
+                parent_this.slidesOffsetBefore();
 
             } else {
                 console.log("[Server Message] This service isn't available at this time.")
@@ -201,6 +206,17 @@ export default defineComponent({
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 1.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
 
 #container {
     background-color: rgb(rgba(255, 0, 0, 0), rgba(0, 128, 0, 0), rgba(0, 0, 255, 0));
@@ -338,6 +354,4 @@ body {
     padding-left: 20px;
     font-size: 0.63em;
 }
-
-
 </style>
