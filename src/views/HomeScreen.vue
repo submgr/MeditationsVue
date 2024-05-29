@@ -37,7 +37,11 @@
 
             <MoodCheck />
 
-            <MeditationsList @event-getmeditation="getMeditation" style="margin-top: -2.5vh;" />
+            <MeditationsList @event-getmeditation="getMeditation" style="margin-top: -2.8vh;" />
+
+            <div style="margin-top: -2vh;" >
+
+            </div>
 
             <TasksController />
 
