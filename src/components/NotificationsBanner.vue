@@ -52,11 +52,10 @@
         <WellbeingQuestionnaire ref="wellbeingQuestionnaireRef" @completion-event="WellbeingQuestionnaireCompleted" />
         <ion-card :class="{ 'stop-animations': stopAllAnimations }"
             @click="$router.push({ path: '/tabs/emotions/smile' })" color="light"
-            style=" --glow-opacity: 1; --glow-scale: 2.5; --glow-blur: 6; --glow-radius: 100; --glow-rotate-unit: 1deg;"
-            class="ion-text-centerOFF gradient-border-card glowing-card cardg ion-activatable ripple-parent rounded-rectangle">
-            <span class="glow"></span>
+            style="border-radius: 20px;"
+            class="ion-text-centerOFF">
             <ion-ripple-effect></ion-ripple-effect>
-            <div style="margin: 2px;" class="innerdiv_notifcoloredradius bg-colored">
+            <div style="margin: 2px;">
                 <div style="height: 3vh;"></div>
                 <img src="../assets/graphics/active-young-woman-showing-heart-sign-with-her-hands.png" style="margin: 0;
                         display: block;

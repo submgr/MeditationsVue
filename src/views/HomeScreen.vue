@@ -33,17 +33,20 @@
                 </div>--->
             </div>
 
-            <TasksController />
+            
 
             <MoodCheck />
 
             <MeditationsList @event-getmeditation="getMeditation" style="margin-top: -2.5vh;" />
 
-            <Transition>
-                <div style="display: block; margin-top: -1vh;" v-if="suggestSmile">
+            <TasksController />
+
+            <Transition >
+                <div style="display: block; margin-top: -3vh;" v-if="suggestSmile">
                     <NotificationsBanner notificationType="suggestToSmileToday" />
                 </div>
             </Transition>
+            
 
             <div class="padding_from_bottom_line"></div>
 

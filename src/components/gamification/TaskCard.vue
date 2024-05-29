@@ -1,11 +1,10 @@
 <template>
   <ion-card :class="{ 'stop-animations': stopAllAnimations }" @click="$router.push({ path: '/tabs/emotions/smile' })"
     color="light"
-    style="--glow-opacity: 1; --glow-scale: 2.5; --glow-blur: 6; --glow-radius: 100; --glow-rotate-unit: 1deg; margin-top: -0vh;"
-    class="ion-text-centerOFF gradient-border-card glowing-card cardg ion-activatable ripple-parent rounded-rectangle">
-    <span class="glow"></span>
+    style="border-radius: 20px; margin-top: -0vh;"
+    class="ion-text-centerOFF">
     <ion-ripple-effect></ion-ripple-effect>
-    <div style="margin: 2px;" class="innerdiv_notifcoloredradius bg-colored">
+    <div style="margin: 2px;" >
 
       <ion-card-content>
 
