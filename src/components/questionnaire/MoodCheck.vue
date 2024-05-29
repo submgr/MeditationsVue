@@ -28,28 +28,40 @@
             </div>
         </Transition> -->
 
-    <Transition name="bounce">
+    <Transition>
 
       <div v-if="displayStage == 'moodRateBox'" class="myview">
-        <ul>
+
+        <ion-card :class="{ 'stop-animations': stopAllAnimations }"
+          @click="$router.push({ path: '/tabs/emotions/smile' })" color="light" style="margin-top: -1vh;
+            --glow-opacity: 1; --glow-scale: 2.5; --glow-blur: 6; --glow-radius: 100; --glow-rotate-unit: 1deg;"
+          class="ion-text-centerOFF gradient-border-card glowing-card cardg ion-activatable ripple-parent rounded-rectangle">
+          <span class="glow"></span>
+          <ion-ripple-effect></ion-ripple-effect>
           <div style="margin: 2px;" class="innerdiv_notifcoloredradius bg-colored unique-element-glowing-ratebox1">
-            <div style="margin-left: 16px; font-size: 18px; font-weight: 400; opacity: 0.6;"><div style="padding-top: 20px; "></div>Добрый день, {{name}}</div>
-                <div style="margin-left: 0px; margin-top: 0px; font-size: 19px; font-weight: 400;">Как вы себя чувствуете сегодня?</div>
+            <div style="margin-left: 16px; font-size: 18px; font-weight: 400; opacity: 0.6;">
+              <div style="padding-top: 20px; "></div>Добрый день, {{ name }}
+            </div>
+            <div style="margin-left: 0px; margin-top: 0px; font-size: 4.3vw; font-weight: 400;">Как вы себя чувствуете
+              сегодня?</div>
             <div style="display: flex; overflow-x: auto;  overflow-x: hidden; margin: auto;
-            width: 90%; margin-top: -0.7vh;">
-                <div v-for="(item, index) in moodStates" :key="item.code" style="margin-right: -25px;">
-                  <ion-card class="ion-activatable ripple-parent rectangle" style="border-radius: 20px; width: 13.5vw; " @click="rated(displayStage, item.code)">
-                    <span style="display: none;">Element Index is {{index}}</span>
-                    <ion-ripple-effect></ion-ripple-effect>
-                    <ion-card-header style="margin: -2.5vw;">
-                      <ion-card-title>
-                        <img v-bind:src="item.image.toString()"/></ion-card-title>
-                    </ion-card-header>
-                  </ion-card>
+            width: 90%; margin-top: 1.7vh; padding-bottom: 3vh; max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;">
+              <div v-for="(item, index) in moodStates" :key="item.code" style="margin-left: 2px; margin-right: 2px;">
+                <div class="ion-activatable ripple-parent rectangle" style="border-radius: 20px; width: 13.5vw; background-color: var(--ion-item-background);"
+                  @click="rated(displayStage, item.code)">
+                  <img v-bind:src="item.image.toString()" 
+                  style="display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 4px;
+  width: 100%;"/>
                 </div>
               </div>
-        </div>
-        </ul>
+            </div>
+          </div>
+        </ion-card>
       </div>
     </Transition>
 
@@ -57,7 +69,7 @@
 
   </div>
 </template>
-  
+
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
 
@@ -66,6 +78,7 @@ import { IonCard, IonCardHeader, IonCardTitle, IonRippleEffect } from '@ionic/vu
 import { TransitionRoot } from '@headlessui/vue'
 
 import globaldata from '../../modules/global';
+
 
 import store from "../../store";
 
@@ -118,34 +131,9 @@ export default defineComponent({
   }
 });
 </script>
-  
+
 <style scoped>
-.bounce-enter-active {
-  animation: bounce-in 0.5s;
-}
-
-.bounce-leave-active {
-  animation: bounce-in 0.5s reverse;
-
-}
-
-@keyframes bounce-in {
-  0% {
-    transform: translate3d(0, 0, 0);
-    transform: scale(0);
-
-  }
-
-  50% {
-    transform: translate3d(0, 0, 0);
-    transform: scale(1.08);
-  }
-
-  100% {
-    transform: translate3d(0, 0, 0);
-    transform: scale(1);
-  }
-}
+@import '../../assets/css/miscellaneous/gloving_card.css';
 
 /* we will explain what these classes do next! */
 .v-enter-active,
@@ -158,67 +146,14 @@ export default defineComponent({
   opacity: 0;
 }
 
-.elementHidden {
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0.3s linear, opacity 1s linear;
-}
-
-.elementVisible {
-  opacity: 1;
-  transition: visibility 0.3s linear, opacity 1s linear;
-}
-
-.iframe_smooth {
-  animation: fadeIn 10s forwards;
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-
-    to {
-      opacity: 1;
-    }
-  }
-
-
-}
-
-
 .myview {
   border-radius: 20px;
   position: relative;
-  margin: 0.5vh auto 3.5vh;
-  width: 91vw;
   height: auto;
-  
+
   text-align: center;
 }
 
-.myview ul {
-  font-family: 'Kalam', cursive;
-  font-size: 80px;
-  list-style: none;
-  position: relative;
-}
-
-.myview ul li:nth-child(1) {
-  color: #0000ff;
-  filter: blur(10px);
-  animation: child1 2s alternate infinite;
-}
-
-.myview ul li:nth-child(2) {
-  color: #00ffff;
-  filter: blur(5px);
-  animation: child2 2s alternate infinite;
-}
-
-.myview ul li:nth-child(3) {
-  color: #000;
-  filter: blur(0px);
-}
 
 @keyframes child1 {
 
@@ -244,20 +179,6 @@ export default defineComponent({
   }
 }
 
-.myview:before,
-.myview:after {
-  content: '';
-  border-radius: 21.5px;
-  position: absolute;
-  left: -2px;
-  top: -2px;
-  width: calc(100% + 4px);
-  height: calc(100% + 4px);
-  background-image: linear-gradient(45deg, #ff5da9, #3c67e3 43%, #4e00c2);
-  background-size: 400%;
-  z-index: -1;
-  animation: move 3s alternate infinite;
-}
 
 .myview:after {
   filter: blur(0px);
@@ -275,4 +196,3 @@ export default defineComponent({
   }
 }
 </style>
-  

@@ -26,7 +26,7 @@
         </ion-card>
     </span>
     <Transition>
-        <div v-if="notificationType == 'suggestToSmileToday__type1'" class="myview">
+        <div v-if="notificationType == 'suggestToSmileToday__type1'" class="myview" style="margin-top: -5vh;">
 
 
             <div>
@@ -48,11 +48,11 @@
 
         </div>
     </Transition>
-    <span v-if="notificationType == 'suggestToSmileToday' && varHasUserSmiledToday != true">
+    <span v-if="notificationType == 'suggestToSmileToday' && varHasUserSmiledToday != true"  style="padding-top: -15vh !important;">
         <WellbeingQuestionnaire ref="wellbeingQuestionnaireRef" @completion-event="WellbeingQuestionnaireCompleted" />
         <ion-card :class="{ 'stop-animations': stopAllAnimations }"
             @click="$router.push({ path: '/tabs/emotions/smile' })" color="light"
-            style="--glow-opacity: 1; --glow-scale: 2.5; --glow-blur: 6; --glow-radius: 100; --glow-rotate-unit: 1deg;"
+            style=" --glow-opacity: 1; --glow-scale: 2.5; --glow-blur: 6; --glow-radius: 100; --glow-rotate-unit: 1deg;"
             class="ion-text-centerOFF gradient-border-card glowing-card cardg ion-activatable ripple-parent rounded-rectangle">
             <span class="glow"></span>
             <ion-ripple-effect></ion-ripple-effect>

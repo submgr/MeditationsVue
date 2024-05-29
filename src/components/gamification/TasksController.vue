@@ -1,5 +1,5 @@
 <template>
-    <div v-if="elementsLen > 0" class="task-container">
+    <div v-if="elementsLen > 0" class="task-container" style="margin-top: -1vh;">
         <div v-for="(item, index) in tasks" :key="index" class="task-card" :style="`max-width: ${computedWidth}%`">
             <TaskCard :title="item.title" :content="item.description" :data="item" ref="taskCards" :elementsLen="elementsLen"/>
         </div>

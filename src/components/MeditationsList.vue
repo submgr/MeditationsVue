@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="preloader" v-if="premadeMeditations.length == 0 && !meditationsListReceivedResponseWithData">
-            <h1>
+            <h1 style="margin-bottom: 7vh;">
                 <ion-spinner name="lines-sharp"></ion-spinner>
             </h1>
         </div>

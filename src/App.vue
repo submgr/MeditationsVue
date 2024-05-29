@@ -29,7 +29,7 @@ ion-tab-bar {
 }
 
 .padding_from_bottom_line {
-  margin-top: 7.5vh;
+  margin-top: 10vh;
 }
 
 /* ion-content {

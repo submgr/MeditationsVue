@@ -53,18 +53,18 @@
         </ion-header>
         <ion-content class="ion-padding ion-text-center" style="text-align: center;">
           <div class="ion-margin-top ion-text-center">
-            <img src="../../assets/graphics/sleeping_emoji.png" style="width: 20vw; margin: auto; margin-top: -5vh;"
+            <img src="../../assets/graphics/sleeping_emoji.png" style="width: 20vw; margin: auto; margin-top: 1vh;"
               class="centered-image" />
-            <h1 style="margin-top: 3vh; font-size: 1.3rem !important; font-weight: 800 !important; opacity: 0.85; margin-bottom: 25px;"><b>Засыпайте быстрее,<br />спите лучше</b></h1>
+            <h1 style="margin-top: 1vh; font-size: 1.5rem !important; font-weight: 800 !important; opacity: 0.85; margin-bottom: 25px;"><b>Засыпайте быстрее,<br />спите лучше</b></h1>
             <!-- List out the new features -->
             <div v-for="(feature, index) in features" :key="index" class="feature-item"
               style="text-align: left; margin-top: -2vh;">
               <ion-icon style="margin-left: 10px; margin-right: 10px;" :icon="feature.icon" class="feature-icon"
                 color="tertiary"></ion-icon>
               <div style="width: 85vw; margin-left: 1vw;">
-                <h4 style="font-weight: 800 !important; opacity: 0.75; font-size: 0.9rem !important; line-height: 1.0 !important;">{{ feature.title
+                <h4 style="font-weight: 900 !important; opacity: 0.75; font-size: 1.25rem !important; line-height: 1.0 !important;">{{ feature.title
                   }}</h4>
-                <p style="font-weight: 400 !important; opacity: 0.65; font-size: 0.6rem; margin-top: -0.5vh; line-height: 1.45 !important;">
+                <p style="font-weight: 600 !important; opacity: 0.60; font-size: 0.90rem; margin-top: -0.5vh; line-height: 1.45 !important;">
                   {{ feature.description }}</p>
               </div>
             </div>
