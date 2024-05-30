@@ -131,8 +131,8 @@
 
 
 .bg-1 {
-    background-position: 100%;
     background-size: cover !important;
+    background-size: 100% 100%; 
 }
 
 @media (prefers-color-scheme: dark) {
@@ -143,7 +143,7 @@
 
 @media (prefers-color-scheme: light) {
     .bg-1 {
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(52, 45, 150, 0.74)), url('../../assets/photo/photo1465080357990.webp') !important;
+        background-image: linear-gradient(-10deg, #f0bcf68f 0%, #f0dec06b 100%) !important;
     }
 }
 

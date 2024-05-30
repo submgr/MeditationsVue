@@ -51,7 +51,7 @@
     <span v-if="notificationType == 'suggestToSmileToday' && varHasUserSmiledToday != true"  style="padding-top: -15vh !important;">
         <WellbeingQuestionnaire ref="wellbeingQuestionnaireRef" @completion-event="WellbeingQuestionnaireCompleted" />
         <ion-card :class="{ 'stop-animations': stopAllAnimations }"
-            @click="$router.push({ path: '/tabs/emotions/smile' })" color="light"
+            @click="$router.push({ path: '/tabs/emotions/smile' })"
             style="border-radius: 20px;"
             class="ion-text-centerOFF">
             <ion-ripple-effect></ion-ripple-effect>

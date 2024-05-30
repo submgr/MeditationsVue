@@ -39,7 +39,7 @@
 
             <MeditationsList @event-getmeditation="getMeditation" style="margin-top: -2.8vh;" />
 
-            <div style="margin-top: -2vh;" >
+            <div style="margin-top: 5.5vh;" >
 
             </div>
 

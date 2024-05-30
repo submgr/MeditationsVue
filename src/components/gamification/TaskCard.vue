@@ -1,6 +1,6 @@
 <template>
   <ion-card :class="{ 'stop-animations': stopAllAnimations }" @click="$router.push({ path: '/tabs/emotions/smile' })"
-    color="light"
+    
     style="border-radius: 20px; margin-top: -0vh;"
     class="ion-text-centerOFF">
     <ion-ripple-effect></ion-ripple-effect>

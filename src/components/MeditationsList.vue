@@ -10,7 +10,7 @@
             
                 <swiper ref="{swiperRef}" :centeredSlides="false" :slidesPerView="slidesPerView"
                     :spaceBetween="spaceBetween" :loop="true" :modules="modules" class="mySwiper"
-                    :slidesOffsetBefore="slidesOffsetBefore" style="margin-bottom: 10vh; margin-left: 0vw;">
+                    :slidesOffsetBefore="slidesOffsetBefore" style="margin-bottom: 3vh; margin-left: 0vw;">
                     <swiper-slide v-for="(item, index) in premadeMeditations" v-bind:key="item.id">
                         <div class="new_card"
                             :style="`background: url('${item.imgposterurl}') no-repeat center center / cover;`">
