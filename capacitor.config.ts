@@ -12,6 +12,9 @@ const config: CapacitorConfig = {
       androidClientId: '70119537016-fopt4mu69mtdvf4seb12i3drcfa7i41s.apps.googleusercontent.com',
       forceCodeForRefreshToken: true,
     },
+    CapacitorUpdater: {
+      updateUrl: "https://meditations-backend.deqstudio.com/service/updates/availableupdates",
+    }
   },
 };
 

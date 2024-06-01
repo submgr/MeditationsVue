@@ -1,6 +1,6 @@
 var apiserver_hostname;
 
-var assetsbase_hostname = "https://xn--80aaafmfwb5a7d2bq4h.xn--p1ai/assets/";
+var assetsbase_hostname = "https://master-preview.xn--80aaafmfwb5a7d2bq4h.xn--p1ai/assets/";
 var markdown_assetsbase_hostname = "https://access.yourmeditation.deqstudio.com/"
 
 function isLocalHost(url) {

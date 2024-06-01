@@ -28,6 +28,7 @@
     "@capacitor/network": "^6.0.0",
     "@capacitor/share": "^6.0.0",
     "@capacitor/status-bar": "^6.0.0",
+    "@capgo/capacitor-updater": "^6.0.18",
     "@codetrix-studio/capacitor-google-auth": "^3.4.0-rc.4",
     "@ditdot-dev/vue-flow-form": "^2.3.1",
     "@headlessui/vue": "^1.7.17",

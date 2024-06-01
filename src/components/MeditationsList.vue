@@ -205,8 +205,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
-
 /* we will explain what these classes do next! */
 .v-enter-active,
 .v-leave-active {

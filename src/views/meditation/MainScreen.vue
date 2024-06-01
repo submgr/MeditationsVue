@@ -43,7 +43,6 @@
 </template>
 
 <style scoped>
-@import '../../assets/css/adaptative_ui.css';
 
 .standart_padding {
     margin: 0px 15px 30px 15px;

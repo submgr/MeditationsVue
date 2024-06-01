@@ -123,7 +123,7 @@ export class ElectronCapacitorApp {
         preload: preloadPath,
       },
     });
-    
+
     this.mainWindowState.manage(this.MainWindow);
 
     if (this.CapacitorFileConfig.backgroundColor) {
@@ -227,8 +227,8 @@ export function setupContentSecurityPolicy(customScheme: string): void {
         ...details.responseHeaders,
         'Content-Security-Policy': [
           electronIsDev
-            ? `default-src ${customScheme}://* 'unsafe-inline' devtools://* 'unsafe-eval' data:; connect-src ${customScheme}://* https: devtools://*`
-            : `default-src ${customScheme}://* 'unsafe-inline' data:; connect-src ${customScheme}://* https:`,
+            ? `default-src ${customScheme}://* 'unsafe-inline' devtools://* 'unsafe-eval' data:; connect-src ${customScheme}://* https: devtools://*; img-src * data:`
+            : `default-src ${customScheme}://* 'unsafe-inline' data:; connect-src ${customScheme}://* https:; img-src * data:`,
         ],
       },
     });
