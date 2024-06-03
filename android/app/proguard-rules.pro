@@ -45,3 +45,5 @@
 -dontwarn org.bouncycastle.crypto.engines.AESEngine
 -dontwarn org.bouncycastle.crypto.prng.SP800SecureRandom
 -dontwarn org.bouncycastle.crypto.prng.SP800SecureRandomBuilder
+
+-keep class ee.forgr.capacitor_updater.** { *; }
