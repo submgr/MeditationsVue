@@ -60,7 +60,9 @@ import Ripple from 'primevue/ripple';
 
 app.directive('ripple', Ripple);
 
+import { CapacitorUpdater } from '@capgo/capacitor-updater'
 
+CapacitorUpdater.notifyAppReady()
 
 import axios from 'axios'
 import VueAxios from 'vue-axios'
@@ -77,9 +79,11 @@ const getUserData = computed(() => {
   return store.getters.getUserData;
 });
 
-axiosRetry(axios, { retries: 3, retryDelay: (retryCount) => {
-  return 1000;
-} });
+axiosRetry(axios, {
+  retries: 3, retryDelay: (retryCount) => {
+    return 1000;
+  }
+});
 
 // Add request interceptor
 axios.interceptors.request.use((config) => {
@@ -90,7 +94,7 @@ axios.interceptors.request.use((config) => {
   if (config.url.includes('research/savesurveydata')) {
     return config;
   }
-  
+
   // Assuming the params are in config.params for GET requests
   // and in config.data for POST requests
   if (config.method === 'get') {
@@ -138,6 +142,59 @@ axios.interceptors.response.use(function (response) {
   return Promise.reject(error);
 });
 
+import {
+  ActionPerformed,
+  PushNotificationSchema,
+  PushNotifications,
+  Token,
+} from '@capacitor/push-notifications';
+
+function runPushNotificationsService() {
+  console.log('Initializing HomePage');
+
+  // Request permission to use push notifications
+  // iOS will prompt user and return if they granted permission or not
+  // Android will just grant without prompting
+  PushNotifications.requestPermissions().then(result => {
+    if (result.receive === 'granted') {
+      // Register with Apple / Google to receive push via APNS/FCM
+      PushNotifications.register();
+    } else {
+      // Show some error
+    }
+  });
+
+  // On success, we should be able to receive notifications
+  PushNotifications.addListener('registration',
+    (token: Token) => {
+      console.log('(PushNotifications) Push registration success, token: ' + token.value);
+    }
+  );
+
+  // Some issue with our setup and push will not work
+  PushNotifications.addListener('registrationError',
+    (error: any) => {
+      console.log('(PushNotifications) Error on registration: ' + JSON.stringify(error));
+    }
+  );
+
+  // Show us the notification payload if the app is open on our device
+  PushNotifications.addListener('pushNotificationReceived',
+    (notification: PushNotificationSchema) => {
+      console.log('(PushNotifications) Push received: ' + JSON.stringify(notification));
+    }
+  );
+
+  // Method called when tapping on a notification
+  PushNotifications.addListener('pushNotificationActionPerformed',
+    (notification: ActionPerformed) => {
+      console.log('(PushNotifications) Push action performed: ' + JSON.stringify(notification));
+    }
+  );
+}
+
+runPushNotificationsService();
+
 
 
 CapacitorApp.addListener('appUrlOpen', function (event: CapacitorURLOpenListenerEvent) {
@@ -145,12 +202,12 @@ CapacitorApp.addListener('appUrlOpen', function (event: CapacitorURLOpenListener
   // slug = /tabs/tabs2
   const appurlopen_url = event.url;
   let slug = null;
-  if(appurlopen_url.startsWith("yourmeditation:")){
+  if (appurlopen_url.startsWith("yourmeditation:")) {
     slug = "/tabs/" + appurlopen_url.split("yourmeditation:").pop();
-  }else{
+  } else {
     slug = appurlopen_url.split("deqstudio.com/servicereserved/meditationsapp").pop();
   }
-  
+
 
   // We only push to the route if there is a slug present
   if (slug) {

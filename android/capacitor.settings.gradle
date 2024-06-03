@@ -26,6 +26,9 @@ project(':capacitor-keyboard').projectDir = new File('../node_modules/@capacitor
 include ':capacitor-network'
 project(':capacitor-network').projectDir = new File('../node_modules/@capacitor/network/android')
 
+include ':capacitor-push-notifications'
+project(':capacitor-push-notifications').projectDir = new File('../node_modules/@capacitor/push-notifications/android')
+
 include ':capacitor-share'
 project(':capacitor-share').projectDir = new File('../node_modules/@capacitor/share/android')
 
@@ -40,3 +43,6 @@ project(':codetrix-studio-capacitor-google-auth').projectDir = new File('../node
 
 include ':hmscore-hms-js-account'
 project(':hmscore-hms-js-account').projectDir = new File('../node_modules/@hmscore/hms-js-account/android')
+
+include ':capacitor-rate-app'
+project(':capacitor-rate-app').projectDir = new File('../node_modules/capacitor-rate-app/android')

@@ -20,6 +20,7 @@ export default defineConfig({
   }), WindiCSS(),
 
 
+
   ViteImageOptimizer({
     /* pass your config */
     jpeg: {
@@ -50,6 +51,9 @@ export default defineConfig({
     logStats: true
   }),
   ],
+  build: {
+    minify: "terser"
+  },
   resolve: {
     alias: {
       '@': path.resolve(pathSegments, './src'),

@@ -5,12 +5,12 @@
             <WellbeingQuestionnaire ref="wellbeingQuestionnaireRef"
                 @completion-event="WellbeingQuestionnaireCompleted" />
 
-            
 
-                <div style="padding-top: 10vh; height: auto; width: 70%; max-width: 320px; margin-left: auto; margin-right: auto; display: block;">
-                    <img v-if="natureEllipse" 
-                        :src="natureEllipse">
-                </div>
+
+            <div
+                style="padding-top: 10vh; height: auto; width: 70%; max-width: 320px; margin-left: auto; margin-right: auto; display: block;">
+                <img v-if="natureEllipse" :src="natureEllipse">
+            </div>
 
             <p
                 style="text-align: center;padding: 0px 18px 0px; margin-top: 7vh; margin-bottom: 0; transform-origin: left center; align-items: flex-end; min-width: 100%; font-size: 21px; font-weight: 400;">
@@ -63,10 +63,14 @@ import {
 
 } from '@ionic/vue';
 
+import { App } from '@capacitor/app';
+
 declare const YaGames;
 declare const vkBridge;
 
 import WellbeingQuestionnaire from '@/components/questionnaire/WellbeingQuestionnaire.vue';
+
+import { Device } from '@capacitor/device';
 
 import * as adsEngine from "../modules/ads_engine"
 
@@ -131,7 +135,7 @@ export default defineComponent({
             switch (true) {
                 case (300 <= dayMinutes && dayMinutes < 660):
                     natureEllipse_Image = await imageLookup("morning");
-                    
+
                     natureEllipse_Text = get_random(["Доброе утро,", "Салют новому дню,", "Волшебного тебе утра,", "Продуктивного тебе утра,", "Счастливого дня,", "С новым днем,", "Подъем,", "Удачных удач,"])
                     break;
                 case (660 <= dayMinutes && dayMinutes < 1080):
@@ -151,7 +155,7 @@ export default defineComponent({
             this.natureEllipse = natureEllipse_Image;
         }
     },
-    mounted() {
+    async mounted() {
         // eslint-disable-next-line
         const parent_this = this;
 
@@ -281,11 +285,90 @@ export default defineComponent({
             tabsEl.style.height = "1";
         }
 
+
+
+        // IMPORTANT!! HERE WE CHECK INTEGRITY OF OUR APP
+        // IN CASE IF THERE IS A MAJOR SIGN OF FRAUD, 
+        // WE WILL CRASH OUR APP OR SMTH LIKE THAT.
+
+        // CURRENTLY WE CHECK ONLY FOR DOMAIN NAME.
+
+        // oWoWoW! DON'T FORGET ADD iOS VERIFICATION LATER
+        // WHEN YOU WILL PUBLISH IT ON APP STORE, OKAY?
+
+        const deviceInfo = await Device.getInfo();
+
+        // Here we go: conspiracy!
+        // This variable shows if fraud detected,
+        // as long as SUPER_HORNY equals to "fabric",
+        // everything is fine... 
+        // if fraud is detected - we change it a bit,
+        // for example, strip last character:)
+        var SUPER_HORNY = "fabric";
+
+        switch (deviceInfo.platform) {
+            case "ios":
+                // oWoWoW! DON'T FORGET ADD iOS VERIFICATION LATER
+                // WHEN YOU WILL PUBLISH IT ON APP STORE, OKAY?
+                break;
+            case 'android':
+                // ANDROID OFFICIAL BUNDLE ID
+                // Here we split in into multiple variables
+                // to make it harder to reverse-engineer :)
+                const android_zone = "com";
+                const android_author = "aramvirabyan";
+                const android_package = "yourmeditation";
+
+                const android_mono = `${android_zone}.${android_author}.${android_package}`;
+
+                const appInstanceInfo = await App.getInfo();
+                if (appInstanceInfo.id == android_mono) {
+                    // Things are fine! Everything is okay here.
+                } else {
+                    // Oopsie! Fraud.
+                    SUPER_HORNY = SUPER_HORNY.substring(0, SUPER_HORNY.length - 1)
+                }
+                break;
+            case 'web':
+                const currentDomain = window.location.hostname;
+                const allowedVariations = ["вашамедитация.рф", "xn--80aaafmfwb5a7d2bq4h.xn--p1ai", "deqstudio.com", "urmeditation.com"];
+                const domainIsAllowed = allowedVariations.some(variation => currentDomain.includes(variation));
+
+                if (domainIsAllowed) {
+                    // Things are fine! Everything is okay here.
+                } else {
+                    // Oopsie! Fraud.
+                    if (process.env.NODE_ENV === 'development') {
+                        // okay, if it's a development instance, we DONT care
+                        // and do nothing here.
+                    }else{
+                        SUPER_HORNY = SUPER_HORNY.substring(0, SUPER_HORNY.length - 1)
+                    }
+                    
+                }
+
+                break;
+            default:
+                break;
+        }
+
+        if(SUPER_HORNY == "fabric"){
+            // Everything is just fine, have a good day!
+        }else{
+            // Our user is such a bad boy..
+            setTimeout(() => {
+                document.location.replace("about:blank#blocked")
+            }, 123);
+            document.getElementsByTagName('html')[0].innerHTML = `
+                <p>you are such a.. bad boy. stop it!</p>
+            `; 
+        }
+
     },
     setup() {
 
         return {
-            
+
             pageStyle: {
                 "--ion-background-color": "#F9F9F9",
                 "--ion-font-family": "Roboto"

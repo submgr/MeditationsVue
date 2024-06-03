@@ -948,6 +948,7 @@ export default defineComponent({
                                     //parent_this.audiotrack[this.audiotrack_currentplaying_index].fade(parent_this.audiotrack[this.audiotrack_currentplaying_index].volume(parent_this.audiotrack_musicid), 0, 2000, parent_this.audiotrack_musicid);
                                     parent_this.backgroundtrack.fade(parent_this.backgroundtrack.volume(parent_this.backgroundtrack_musicid), 0, 2000, parent_this.backgroundtrack_musicid);
                                     localStorage.setItem("temp_metricsVal_0x11320214", "00111_compaign1")
+                                    parent_this.wakeLockOff();
                                     parent_this.$router.push({ path: '/tabs/meditation/finished', replace: true });
                                 }, 10500);
                             } else {

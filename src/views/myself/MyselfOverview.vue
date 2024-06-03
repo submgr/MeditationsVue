@@ -119,7 +119,7 @@
 }
 
 .card-meditate {
-    height: 18.5vh !important;
+    height: 34vh !important;
 }
 
 .suggestion-block {

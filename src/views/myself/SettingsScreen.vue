@@ -117,7 +117,7 @@ ion-item {
 }
 
 .card-meditate {
-    height: 33.5vh !important;
+    height: 34vh !important;
 }
 
 .suggestion-block {

@@ -9,17 +9,14 @@
 
       <div v-if="appSource == 'general'" style="margin-left: 1.1rem; margin-right: 2vw;">
         <div>
-          <ion-label><br />Если у вас возникли вопросы, вы можете задать их нам удобным для вас способом, например, в
-            онлайн-чате или по электронной почте.<br /><br />
-            Иногда никого из нашей команды нет в сети, поэтому, если вы не получили ответа в чате, напишите нам на
-            электронную почту, и мы ответим, как только сможем.</ion-label>
+          <ion-label><br />Если у вас возникли вопросы или есть идеи, смело пишите нам, мы будем рады вам помочь и ответить!</ion-label>
         </div>
 
         <ion-grid>
 
 
           <ion-row>
-            <ion-col style="margin-right: -3vw; margin-left: -2vw;" @click="supportOption_chat">
+            <ion-col style="margin-right: -3vw; margin-left: -2vw; display: none;" @click="supportOption_chat">
               <ion-card class="ion-activatable ripple-parent rectangle">
                 <ion-ripple-effect></ion-ripple-effect>
                 <ion-card-header>

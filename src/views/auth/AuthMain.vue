@@ -58,7 +58,12 @@
                         <ion-icon class="send-button" slot="end" :icon="logoGoogle"></ion-icon>
                         Войти с Google
                     </ion-button>
+                    <br/><br/>
+                    <p
+                    style="text-align: start !important; margin-right: 5%; margin-left: 5%; ">Продолжая, вы соглашаетесь с <span @click="userAgreements" style="color: var(--ion-color-primary-shade)">условиями использования</span> и <span @click="userAgreements" style="color: var(--ion-color-primary-shade)">политикой конфиденциальности</span>.</p>
+                   
                 </div>
+                
             </div>
 
             <ion-modal @willDismiss="Modal_onWillDismiss" :is-open="message_modal_isOpen" trigger="open-modal"
@@ -76,6 +81,34 @@
                         <ion-spinner name="lines-sharp"></ion-spinner>
                     </h1>
                     <p style="text-align: center;">Ожидание ответа<br />от Google...</p>
+                </ion-content>
+            </ion-modal>
+
+            <ion-modal :is-open="openedModal == 'privacypolicy'">
+                <ion-header>
+                    <ion-toolbar>
+                        <ion-title>Политика конфиденциальности</ion-title>
+                        <ion-buttons slot="end">
+                            <ion-button @click="closeOpenedModals()">Закрыть</ion-button>
+                        </ion-buttons>
+                    </ion-toolbar>
+                </ion-header>
+                <ion-content class="ion-padding">
+                    <RenderContent materialType="pages" :metatagsExist="false" codename="privacypolicy" />
+                </ion-content>
+            </ion-modal>
+
+            <ion-modal :is-open="openedModal == 'termsofuse'">
+                <ion-header>
+                    <ion-toolbar>
+                        <ion-title>Условия использования</ion-title>
+                        <ion-buttons slot="end">
+                            <ion-button @click="closeOpenedModals()">Закрыть</ion-button>
+                        </ion-buttons>
+                    </ion-toolbar>
+                </ion-header>
+                <ion-content class="ion-padding">
+                    <RenderContent materialType="pages" :metatagsExist="false" codename="termsofuse" />
                 </ion-content>
             </ion-modal>
 
@@ -146,7 +179,9 @@ import {
     IonButton,
     IonIcon,
     IonModal,
-    IonLabel
+    IonLabel,
+    actionSheetController,
+    toastController
 } from '@ionic/vue';
 
 import {
@@ -168,6 +203,8 @@ import axios from 'axios'
 
 import globaldata from '../../modules/global';
 
+import RenderContent from '@/components/markdown/RenderContent.vue';
+
 export default defineComponent({
     name: 'Tab1Page',
     components: {
@@ -179,13 +216,15 @@ export default defineComponent({
         IonIcon,
         IonModal,
         IonLabel,
+        RenderContent
     },
     data() {
         return {
             message_modal_isOpen: false,
             message_modal_text: "ModalText",
             clientId: '70119537016-fopt4mu69mtdvf4seb12i3drcfa7i41s.apps.googleusercontent.com',
-            googleauth_awaiting: false
+            googleauth_awaiting: false,
+            openedModal: null
         }
     },
     mounted() {
@@ -275,7 +314,57 @@ export default defineComponent({
                 parent_this.message_modal_isOpen = true;
             });
             // add the code for the functionality your need
-        }
+        },
+        closeOpenedModals() {
+            // this one function closes documents view modals.
+            this.openedModal = "none"
+        },
+        async userAgreements() {
+            // eslint-disable-next-line
+            var parent_this = this;
+
+            var isVKMiniApps = false;
+
+            var userAgreementsButtons = [
+                    {
+                        text: 'Политика конфиденциальности',
+                        role: 'privacypolicy',
+                    },
+                    {
+                        text: 'Условия использования',
+                        role: 'termsofuse',
+                    }
+                ]
+
+            try {
+                // Try to get the value from localStorage
+                isVKMiniApps = localStorage.getItem('isVKMiniApps') === 'true';
+            } catch (e) {
+                // If an error occurs (e.g., localStorage is not available), keep isVKMiniApps as false
+                console.log('Failed to access localStorage. Defaulting isVKMiniApps to false.');
+            }
+            const actionSheet = await actionSheetController.create({
+                header: 'Текущие пользовательские соглашения',
+                buttons: userAgreementsButtons,
+            });
+            actionSheet.present();
+
+            const { role } = await actionSheet.onWillDismiss();
+
+            if (role === 'privacypolicy') {
+                //window.open("https://вашамедитация.рф/privacypolicy/", "_blank")
+                this.openedModal = "privacypolicy"
+            }
+
+            if (role === 'termsofuse') {
+                //window.open("https://вашамедитация.рф/termsofservice/", "_blank")
+                this.openedModal = "termsofuse"
+            }
+
+            if (role === 'accountdeleteprocedure') {
+                window.open("https://вашамедитация.рф/accountdeletion/", "_blank")
+            }
+        },
 
     }
 })

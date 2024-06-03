@@ -70,6 +70,7 @@
         }
 
         gamificationEngine.recordUserEvent(this.$achievements, "meditationsplayed", 1)
+        localStorage.setItem('rateConditions_meditated', '1');
     }
   });
   </script>

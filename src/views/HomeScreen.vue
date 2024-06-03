@@ -276,6 +276,11 @@ export default defineComponent({
             localStorage.setItem("temp_showedadsNotifBanner", "yes");
         }
 
+        if (localStorage.getItem('rateConditions_meditated') === '1') {
+            // Ваш код здесь, выполняющий что-то при условии, что переменная равна '1'
+            console.log('rateConditions_meditated равен 1');
+        }
+
     },
     methods: {
         toggleStory() {
