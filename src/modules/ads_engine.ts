@@ -142,159 +142,188 @@ function setupAdSizeListener() {
             app.style.marginBottom = `calc(${safeAreaBottom} + ${appMargin}px)`;
         }
     });
+}
 
-    export async function showYandexAdsBanner() {
-        console.log("[ADS_ENGINE] Performing showYandexAdsBanner() now...")
-        YandexAds.loadBanner();
+export async function showYandexAdsBanner() {
+    console.log("[ADS_ENGINE] Performing showYandexAdsBanner() now...")
+    YandexAds.loadBanner();
 
-        window.addEventListener("bannerDidLoad", function () {
-            YandexAds.showBanner();
-        });
+    window.addEventListener("bannerDidLoad", function () {
+        YandexBannerOffsetBottom(90);
+        YandexAds.showBanner();
+    });
+}
+
+function YandexBannerOffsetBottom(banner_height = 0) {
+    const appMargin = banner_height;
+    const app: HTMLIonRouterOutletElement | null = document.querySelector('ion-router-outlet');
+
+    if (!app) {
+        console.error('Ion router outlet not found');
+        return;
     }
 
-    export async function hideBanner() {
-        console.log("[ADS_ENGINE] Performing hideBanner() now...")
-        if (Capacitor.isNativePlatform()) {
-            // Native    
-            AdMob.hideBanner();
-            YandexAds.hideBanner();
-        } else {
-            // Non-Native
-            //alert("non native")
-            hideNonNativeBanner();
+    if (appMargin === 0) {
+        app.style.marginBottom = '0px';
+        return;
+    }
+
+    if (appMargin > 0) {
+        const body = document.querySelector('#ad-container');
+        if (!body) {
+            console.error('Ad container not found');
+            return;
         }
+        const bodyStyles = window.getComputedStyle(body);
+        const safeAreaBottom = bodyStyles.getPropertyValue('--ion-safe-area-bottom');
+        app.style.marginBottom = `calc(${safeAreaBottom} + ${appMargin}px)`;
     }
+}
 
-    // interstitial ads goes here!
-
-    export async function showInterstitial() {
-        console.log("[ADS_ENGINE] Performing showInterstitial() now...")
-        showAdmobInterstitial();
+export async function hideBanner() {
+    console.log("[ADS_ENGINE] Performing hideBanner() now...")
+    if (Capacitor.isNativePlatform()) {
+        // Native    
+        AdMob.hideBanner();
+        YandexAds.hideBanner();
+        YandexBannerOffsetBottom(0);
+    } else {
+        // Non-Native
+        // alert("non native")
+        hideNonNativeBanner();
     }
+}
 
-    export async function showAdmobInterstitial() {
-        console.log("[ADS_ENGINE] Performing showAdmobInterstitial() now...")
-        AdMob.addListener(InterstitialAdPluginEvents.Loaded, (info: AdLoadInfo) => {
-            // Subscribe prepared interstitial
-        });
-        AdMob.addListener(InterstitialAdPluginEvents.FailedToLoad, (error: AdMobError) => {
-            // Subscribe prepared interstitial
-            showYandexAdsInterstitial();
-        });
+// interstitial ads goes here!
 
-        const options: AdOptions = {
-            adId: admobConfig.interstitial_block_id,
-            isTesting: admobConfig.is_testing
-            // npa: true
-        };
-        await AdMob.prepareInterstitial(options);
-        await AdMob.showInterstitial();
-    }
+export async function showInterstitial() {
+    console.log("[ADS_ENGINE] Performing showInterstitial() now...")
+    showAdmobInterstitial();
+}
 
-    export async function showYandexAdsInterstitial() {
-        console.log("[ADS_ENGINE] Performing showYandexAdsInterstitial() now...")
-        YandexAds.loadInterstitial();
+export async function showAdmobInterstitial() {
+    console.log("[ADS_ENGINE] Performing showAdmobInterstitial() now...")
+    AdMob.addListener(InterstitialAdPluginEvents.Loaded, (info: AdLoadInfo) => {
+        // Subscribe prepared interstitial
+    });
+    AdMob.addListener(InterstitialAdPluginEvents.FailedToLoad, (error: AdMobError) => {
+        // Subscribe prepared interstitial
+        showYandexAdsInterstitial();
+    });
 
-        window.addEventListener("interstitialLoaded", function () {
-            YandexAds.showInterstitial();
-        });
-    }
+    const options: AdOptions = {
+        adId: admobConfig.interstitial_block_id,
+        isTesting: admobConfig.is_testing
+        // npa: true
+    };
+    await AdMob.prepareInterstitial(options);
+    await AdMob.showInterstitial();
+}
 
-    // rewarded interstitial ads goes here!
+export async function showYandexAdsInterstitial() {
+    console.log("[ADS_ENGINE] Performing showYandexAdsInterstitial() now...")
+    YandexAds.loadInterstitial();
 
-    export async function showRewarded() {
-        console.log("[ADS_ENGINE] Performing showRewarded() now...")
-        showAdmobRewarded();
-    }
+    window.addEventListener("interstitialLoaded", function () {
+        YandexAds.showInterstitial();
+    });
+}
 
-    export async function showAdmobRewarded() {
-        console.log("[ADS_ENGINE] Performing showAdmobRewarded() now...")
-        AdMob.addListener(RewardAdPluginEvents.Loaded, (info: AdLoadInfo) => {
-            // Subscribe prepared rewardVideo
-        });
+// rewarded interstitial ads goes here!
 
-        AdMob.addListener(RewardAdPluginEvents.Rewarded, (rewardItem: AdMobRewardItem) => {
-            // Subscribe user rewarded
-            console.log(rewardItem);
-        });
+export async function showRewarded() {
+    console.log("[ADS_ENGINE] Performing showRewarded() now...")
+    showAdmobRewarded();
+}
 
-        AdMob.addListener(RewardAdPluginEvents.FailedToLoad, (error: AdMobError) => {
-            // Subscribe user rewarded
-            showYandexAdsRewarded();
-        });
+export async function showAdmobRewarded() {
+    console.log("[ADS_ENGINE] Performing showAdmobRewarded() now...")
+    AdMob.addListener(RewardAdPluginEvents.Loaded, (info: AdLoadInfo) => {
+        // Subscribe prepared rewardVideo
+    });
 
-        const options: RewardAdOptions = {
-            adId: admobConfig.rewardedinterstitial_block_id,
-            isTesting: admobConfig.is_testing
-            // npa: true
-            // ssv: {
-            //   userId: "A user ID to send to your SSV"
-            //   customData: JSON.stringify({ ...MyCustomData })
-            //}
-        };
-        await AdMob.prepareRewardVideoAd(options);
-        const rewardItem = await AdMob.showRewardVideoAd();
-    }
+    AdMob.addListener(RewardAdPluginEvents.Rewarded, (rewardItem: AdMobRewardItem) => {
+        // Subscribe user rewarded
+        console.log(rewardItem);
+    });
 
-    export async function showYandexAdsRewarded() {
-        console.log("[ADS_ENGINE] Performing showYandexAdsRewarded() now...")
+    AdMob.addListener(RewardAdPluginEvents.FailedToLoad, (error: AdMobError) => {
+        // Subscribe user rewarded
+        showYandexAdsRewarded();
+    });
+
+    const options: RewardAdOptions = {
+        adId: admobConfig.rewardedinterstitial_block_id,
+        isTesting: admobConfig.is_testing
+        // npa: true
+        // ssv: {
+        //   userId: "A user ID to send to your SSV"
+        //   customData: JSON.stringify({ ...MyCustomData })
+        //}
+    };
+    await AdMob.prepareRewardVideoAd(options);
+    const rewardItem = await AdMob.showRewardVideoAd();
+}
+
+export async function showYandexAdsRewarded() {
+    console.log("[ADS_ENGINE] Performing showYandexAdsRewarded() now...")
+    YandexAds.showRewardedVideo();
+
+    window.addEventListener("rewardedVideoLoaded", function () {
         YandexAds.showRewardedVideo();
+    });
+}
 
-        window.addEventListener("rewardedVideoLoaded", function () {
-            YandexAds.showRewardedVideo();
-        });
-    }
-
-    export async function showNonNativeBanner() {
-        var adsSpecificNetwork = localStorage.getItem("adsSpecificNetwork");
-        console.log("Catched in f() -showNonNativeBanner-, value of adsSpecificNetwork:", adsSpecificNetwork)
-        switch (adsSpecificNetwork) {
-            case "vkminiapps":
-                //alert("VK Banner Ad PATH SELECTED")
-                vkBridge.send('VKWebAppShowBannerAd', {
-                    banner_location: 'bottom'
+export async function showNonNativeBanner() {
+    var adsSpecificNetwork = localStorage.getItem("adsSpecificNetwork");
+    console.log("Catched in f() -showNonNativeBanner-, value of adsSpecificNetwork:", adsSpecificNetwork)
+    switch (adsSpecificNetwork) {
+        case "vkminiapps":
+            //alert("VK Banner Ad PATH SELECTED")
+            vkBridge.send('VKWebAppShowBannerAd', {
+                banner_location: 'bottom'
+            })
+                .then((data) => {
+                    if (data.result) {
+                        // alert("VK Banner Ad is Ready")
+                        // Баннерная реклама отобразилась
+                    }
                 })
-                    .then((data) => {
-                        if (data.result) {
-                            // alert("VK Banner Ad is Ready")
-                            // Баннерная реклама отобразилась
-                        }
-                    })
-                    .catch((error) => {
-                        // Ошибка
-                        // alert("VK Banner Ad ERROR" + error)
-                        console.log(error);
-                    });
-                break;
+                .catch((error) => {
+                    // Ошибка
+                    // alert("VK Banner Ad ERROR" + error)
+                    console.log(error);
+                });
+            break;
 
-            default:
-                break;
-        }
+        default:
+            break;
     }
+}
 
-    export async function hideNonNativeBanner() {
-        var adsSpecificNetwork = localStorage.getItem("adsSpecificNetwork");
-        console.log("Catched in f() -hideNonNativeBanner-, value of adsSpecificNetwork:", adsSpecificNetwork)
-        switch (adsSpecificNetwork) {
-            case "vkminiapps":
-                //alert("VK Banner Ad PATH SELECTED")
-                vkBridge.send('VKWebAppHideBannerAd', {
-                    banner_location: 'bottom'
+export async function hideNonNativeBanner() {
+    var adsSpecificNetwork = localStorage.getItem("adsSpecificNetwork");
+    console.log("Catched in f() -hideNonNativeBanner-, value of adsSpecificNetwork:", adsSpecificNetwork)
+    switch (adsSpecificNetwork) {
+        case "vkminiapps":
+            //alert("VK Banner Ad PATH SELECTED")
+            vkBridge.send('VKWebAppHideBannerAd', {
+                banner_location: 'bottom'
+            })
+                .then((data) => {
+                    if (data.result) {
+                        // alert("VK Banner Ad is Ready")
+                        // Баннерная реклама скрылась
+                    }
                 })
-                    .then((data) => {
-                        if (data.result) {
-                            // alert("VK Banner Ad is Ready")
-                            // Баннерная реклама скрылась
-                        }
-                    })
-                    .catch((error) => {
-                        // Ошибка
-                        // alert("VK Banner Ad ERROR" + error)
-                        console.log(error);
-                    });
-                break;
+                .catch((error) => {
+                    // Ошибка
+                    // alert("VK Banner Ad ERROR" + error)
+                    console.log(error);
+                });
+            break;
 
-            default:
-                break;
-        }
+        default:
+            break;
     }
+}
