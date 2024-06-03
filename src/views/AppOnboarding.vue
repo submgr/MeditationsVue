@@ -128,9 +128,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
-import { EffectCoverflow } from "swiper";
+
 import { IonPage, IonContent, IonButton } from '@ionic/vue';
+
+import { Navigation, Pagination, Scrollbar, A11y, EffectCoverflow } from 'swiper/modules';
 
 import { arrowForward } from 'ionicons/icons';
 import 'swiper/css/bundle';

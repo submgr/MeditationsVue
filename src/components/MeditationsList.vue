@@ -9,9 +9,12 @@
             <div class="wrapper scroll" v-if="premadeMeditations.length > 0 && meditationsListReceivedResponseWithData"
                 ref="cardWrapper" @scroll="handleScroll" style="margin-top: 7vh;">
 
-                <swiper ref="{swiperRef}" :centeredSlides="false" slidesPerView="auto" :spaceBetween="-30" :loop="true"
-                    :modules="modules" class="mySwiper" :slidesOffsetBefore="slidesOffsetBefore" :centerSlides="true"
-                    :loopAdditionalSlides="1" style="margin-bottom: 3vh; ">
+                <swiper ref="{swiperRef}" :centeredSlides="true" :spaceBetween="0" :loop="true"
+                    :centerInsufficientSlides="true" :slidesOffsetAfter="0" :grabCursor="true"
+                    :loopFillGroupBlank="false" :modules="modules" class="mySwiper"
+                    :slidesOffsetBefore="slidesOffsetBefore" :centerSlides="true" :loopAdditionalSlides="1"
+                    :loopFillGroupWithBlank="true"
+                    style="margin-bottom: 3vh; ">
                     <swiper-slide v-for="(item, index) in premadeMeditations" v-bind:key="item.id">
                         <div class="new_card"
                             :style="`background: url('${item.imgposterurl}') no-repeat center center / cover;`">
@@ -21,7 +24,7 @@
                                 <div class="tags">
                                     <span v-for="(tag) in item.tags" v-bind:key="tag.code" class="tag">{{
                                         tag.friendlycode
-                                    }}</span>
+                                        }}</span>
                                 </div>
                                 <p class="new_description">{{ item.description }} <br /><ion-button
                                         @click="requestMeditation(item.searchobject)" style="margin-top: 3vh;">Начать
@@ -53,8 +56,6 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-// import required modules
-import { Pagination, Navigation } from 'swiper';
 
 import {
     defineComponent
@@ -107,7 +108,7 @@ export default defineComponent({
     },
     setup() {
         return {
-            modules: [Pagination, Navigation],
+            modules: [ ],
         }
         //setup
     },
@@ -135,50 +136,55 @@ export default defineComponent({
         requestMeditation(searchobj) {
             getMeditation(searchobj, this, false)
         },
+         clearEmptyElements() {
+            const elements = document.querySelectorAll('.swiper-slide-blank');
+            elements.forEach(el => el.remove());
+            swiperInstance.update();
+        }
     },
     mounted() {
 
         setInterval(() => {
-            this.fslidesPerView();
-            this.fspaceBetween();
-        }, 1000);
+    this.fslidesPerView();
+    this.fspaceBetween();
+}, 1000);
 
-        // eslint-disable-next-line
-        const parent_this = this;
+// eslint-disable-next-line
+const parent_this = this;
 
-        this.$http.get(globaldata.api.hostname + "access/meditations/featured", {
-            params: {
-                method: "email"
-            }
-        }).then((response) => {
-            console.log(response)
-            if (response.data.status == "okay") {
-                this.fslidesPerView();
-                this.fspaceBetween();
-                console.log({
-                    slidesOffsetBefore: this.slidesOffsetBefore,
-                    slidesPerView: this.slidesPerView,
-                    spaceBetween: this.spaceBetween
-                })
-                console.log("[Server Message] Received featured meditations... length: " + response.data.content.length)
+this.$http.get(globaldata.api.hostname + "access/meditations/featured", {
+    params: {
+        method: "email"
+    }
+}).then((response) => {
+    console.log(response)
+    if (response.data.status == "okay") {
+        this.fslidesPerView();
+        this.fspaceBetween();
+        console.log({
+            slidesOffsetBefore: this.slidesOffsetBefore,
+            slidesPerView: this.slidesPerView,
+            spaceBetween: this.spaceBetween
+        })
+        console.log("[Server Message] Received featured meditations... length: " + response.data.content.length)
 
-                var meditations = response.data.content;
-                meditations.forEach(element => {
-                    parent_this.premadeMeditations.push(element)
-                    element = element['servicetype'] = "static"
-                });
-
-                parent_this.meditationsListReceivedResponseWithData = true;
-
-                console.info(parent_this.premadeMeditations)
-
-            } else {
-                console.log("[Server Message] This service isn't available at this time.")
-            }
-
-        }).catch(function (error) {
-            console.log("CATCHED AN ERROR.", error)
+        var meditations = response.data.content;
+        meditations.forEach(element => {
+            parent_this.premadeMeditations.push(element)
+            element = element['servicetype'] = "static"
         });
+
+        parent_this.meditationsListReceivedResponseWithData = true;
+
+        console.info(parent_this.premadeMeditations)
+
+    } else {
+        console.log("[Server Message] This service isn't available at this time.")
+    }
+
+}).catch(function (error) {
+    console.log("CATCHED AN ERROR.", error)
+});
     }
 });
 </script>
@@ -204,27 +210,19 @@ export default defineComponent({
     text-align: center;
 }
 
+.swiper-slide {
+    opacity: 0.6 !important;
+}
+
+.swiper-slide-active {
+    opacity: 1 !important;
+}
+
 .scroll-to {
     background-color: yellow;
     /* Modify this to your desired effect */
     transition: background-color 0.3s;
 }
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Inter, sans-serif;
-}
-
-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background: #f5f5f5;
-}
-
 
 
 .tags {
@@ -280,7 +278,6 @@ body {
     width: 100%;
     height: 100%;
     border-radius: 20px;
-    margin: 0 auto;
     background-size: cover;
     position: relative;
     height: 65vh;
@@ -343,18 +340,19 @@ body {
 }
 
 .swiper-slide.swiper-slide-prev {
-    transform: translateX(5%);
+    transform: translateX(15%);
 }
 
 .swiper-slide.swiper-slide-next {
-    transform: translateX(-5%);
+    transform: translateX(-15%);
 }
 
 .swiper-slide-duplicate {
     display: none;
 }
+
 .swiper-slide.swiper-slide-active,
-.swiper-slide.swiper-slide-duplicate-active{
-      transform: scale(1) !important;
+.swiper-slide.swiper-slide-duplicate-active {
+    transform: scale(1) !important;
 }
 </style>

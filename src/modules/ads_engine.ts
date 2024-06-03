@@ -73,9 +73,9 @@ export async function prepareAdsService(adsSpecificNetwork = null) {
 
 export async function showBanner() {
     console.log("[ADS_ENGINE] Performing showBanner() now...")
-    if(localStorage.getItem("premiumuser") == "true"){
+    if (localStorage.getItem("premiumuser") == "true") {
         // nothing... we don't show ads to premium users :)
-    } else{
+    } else {
         if (Capacitor.isNativePlatform()) {
             // Native
             showAdmobBanner();
@@ -85,7 +85,7 @@ export async function showBanner() {
             showNonNativeBanner();
         }
     }
-    
+
 
 }
 
@@ -113,160 +113,188 @@ export async function showAdmobBanner() {
         // npa: true
     };
     AdMob.showBanner(options);
+    setupAdSizeListener();
 }
 
-export async function showYandexAdsBanner() {
-    console.log("[ADS_ENGINE] Performing showYandexAdsBanner() now...")
-    YandexAds.loadBanner();
+function setupAdSizeListener() {
+    var eventOnAdSize = AdMob.addListener(BannerAdPluginEvents.SizeChanged, (info: AdMobBannerSize) => {
+        const appMargin = info.height;
+        const app: HTMLIonRouterOutletElement | null = document.querySelector('ion-router-outlet');
 
-    window.addEventListener("bannerDidLoad", function () {
-        YandexAds.showBanner();
+        if (!app) {
+            console.error('Ion router outlet not found');
+            return;
+        }
+
+        if (appMargin === 0) {
+            app.style.marginBottom = '0px';
+            return;
+        }
+
+        if (appMargin > 0) {
+            const body = document.querySelector('#ad-container');
+            if (!body) {
+                console.error('Ad container not found');
+                return;
+            }
+            const bodyStyles = window.getComputedStyle(body);
+            const safeAreaBottom = bodyStyles.getPropertyValue('--ion-safe-area-bottom');
+            app.style.marginBottom = `calc(${safeAreaBottom} + ${appMargin}px)`;
+        }
     });
-}
 
-export async function hideBanner() {
-    console.log("[ADS_ENGINE] Performing hideBanner() now...")
-    if (Capacitor.isNativePlatform()) {
-        // Native    
-        AdMob.hideBanner();
-        YandexAds.hideBanner();
-    } else {
-        // Non-Native
-        //alert("non native")
-        hideNonNativeBanner();
+    export async function showYandexAdsBanner() {
+        console.log("[ADS_ENGINE] Performing showYandexAdsBanner() now...")
+        YandexAds.loadBanner();
+
+        window.addEventListener("bannerDidLoad", function () {
+            YandexAds.showBanner();
+        });
     }
-}
 
-// interstitial ads goes here!
+    export async function hideBanner() {
+        console.log("[ADS_ENGINE] Performing hideBanner() now...")
+        if (Capacitor.isNativePlatform()) {
+            // Native    
+            AdMob.hideBanner();
+            YandexAds.hideBanner();
+        } else {
+            // Non-Native
+            //alert("non native")
+            hideNonNativeBanner();
+        }
+    }
 
-export async function showInterstitial() {
-    console.log("[ADS_ENGINE] Performing showInterstitial() now...")
-    showAdmobInterstitial();
-}
+    // interstitial ads goes here!
 
-export async function showAdmobInterstitial() {
-    console.log("[ADS_ENGINE] Performing showAdmobInterstitial() now...")
-    AdMob.addListener(InterstitialAdPluginEvents.Loaded, (info: AdLoadInfo) => {
-        // Subscribe prepared interstitial
-    });
-    AdMob.addListener(InterstitialAdPluginEvents.FailedToLoad, (error: AdMobError) => {
-        // Subscribe prepared interstitial
-        showYandexAdsInterstitial();
-    });
+    export async function showInterstitial() {
+        console.log("[ADS_ENGINE] Performing showInterstitial() now...")
+        showAdmobInterstitial();
+    }
 
-    const options: AdOptions = {
-        adId: admobConfig.interstitial_block_id,
-        isTesting: admobConfig.is_testing
-        // npa: true
-    };
-    await AdMob.prepareInterstitial(options);
-    await AdMob.showInterstitial();
-}
+    export async function showAdmobInterstitial() {
+        console.log("[ADS_ENGINE] Performing showAdmobInterstitial() now...")
+        AdMob.addListener(InterstitialAdPluginEvents.Loaded, (info: AdLoadInfo) => {
+            // Subscribe prepared interstitial
+        });
+        AdMob.addListener(InterstitialAdPluginEvents.FailedToLoad, (error: AdMobError) => {
+            // Subscribe prepared interstitial
+            showYandexAdsInterstitial();
+        });
 
-export async function showYandexAdsInterstitial() {
-    console.log("[ADS_ENGINE] Performing showYandexAdsInterstitial() now...")
-    YandexAds.loadInterstitial();
+        const options: AdOptions = {
+            adId: admobConfig.interstitial_block_id,
+            isTesting: admobConfig.is_testing
+            // npa: true
+        };
+        await AdMob.prepareInterstitial(options);
+        await AdMob.showInterstitial();
+    }
 
-    window.addEventListener("interstitialLoaded", function () {
-        YandexAds.showInterstitial();
-    });
-}
+    export async function showYandexAdsInterstitial() {
+        console.log("[ADS_ENGINE] Performing showYandexAdsInterstitial() now...")
+        YandexAds.loadInterstitial();
 
-// rewarded interstitial ads goes here!
+        window.addEventListener("interstitialLoaded", function () {
+            YandexAds.showInterstitial();
+        });
+    }
 
-export async function showRewarded() {
-    console.log("[ADS_ENGINE] Performing showRewarded() now...")
-    showAdmobRewarded();
-}
+    // rewarded interstitial ads goes here!
 
-export async function showAdmobRewarded() {
-    console.log("[ADS_ENGINE] Performing showAdmobRewarded() now...")
-    AdMob.addListener(RewardAdPluginEvents.Loaded, (info: AdLoadInfo) => {
-        // Subscribe prepared rewardVideo
-    });
+    export async function showRewarded() {
+        console.log("[ADS_ENGINE] Performing showRewarded() now...")
+        showAdmobRewarded();
+    }
 
-    AdMob.addListener(RewardAdPluginEvents.Rewarded, (rewardItem: AdMobRewardItem) => {
-        // Subscribe user rewarded
-        console.log(rewardItem);
-    });
+    export async function showAdmobRewarded() {
+        console.log("[ADS_ENGINE] Performing showAdmobRewarded() now...")
+        AdMob.addListener(RewardAdPluginEvents.Loaded, (info: AdLoadInfo) => {
+            // Subscribe prepared rewardVideo
+        });
 
-    AdMob.addListener(RewardAdPluginEvents.FailedToLoad, (error: AdMobError) => {
-        // Subscribe user rewarded
-        showYandexAdsRewarded();
-    });
+        AdMob.addListener(RewardAdPluginEvents.Rewarded, (rewardItem: AdMobRewardItem) => {
+            // Subscribe user rewarded
+            console.log(rewardItem);
+        });
 
-    const options: RewardAdOptions = {
-        adId: admobConfig.rewardedinterstitial_block_id,
-        isTesting: admobConfig.is_testing
-        // npa: true
-        // ssv: {
-        //   userId: "A user ID to send to your SSV"
-        //   customData: JSON.stringify({ ...MyCustomData })
-        //}
-    };
-    await AdMob.prepareRewardVideoAd(options);
-    const rewardItem = await AdMob.showRewardVideoAd();
-}
+        AdMob.addListener(RewardAdPluginEvents.FailedToLoad, (error: AdMobError) => {
+            // Subscribe user rewarded
+            showYandexAdsRewarded();
+        });
 
-export async function showYandexAdsRewarded() {
-    console.log("[ADS_ENGINE] Performing showYandexAdsRewarded() now...")
-    YandexAds.showRewardedVideo();
+        const options: RewardAdOptions = {
+            adId: admobConfig.rewardedinterstitial_block_id,
+            isTesting: admobConfig.is_testing
+            // npa: true
+            // ssv: {
+            //   userId: "A user ID to send to your SSV"
+            //   customData: JSON.stringify({ ...MyCustomData })
+            //}
+        };
+        await AdMob.prepareRewardVideoAd(options);
+        const rewardItem = await AdMob.showRewardVideoAd();
+    }
 
-    window.addEventListener("rewardedVideoLoaded", function () {
+    export async function showYandexAdsRewarded() {
+        console.log("[ADS_ENGINE] Performing showYandexAdsRewarded() now...")
         YandexAds.showRewardedVideo();
-    });
-}
 
-export async function showNonNativeBanner() {
-    var adsSpecificNetwork = localStorage.getItem("adsSpecificNetwork");
-    console.log("Catched in f() -showNonNativeBanner-, value of adsSpecificNetwork:", adsSpecificNetwork)
-    switch (adsSpecificNetwork) {
-        case "vkminiapps":
-            //alert("VK Banner Ad PATH SELECTED")
-            vkBridge.send('VKWebAppShowBannerAd', {
-                banner_location: 'bottom'
-                })
-               .then((data) => { 
-                  if (data.result) {
-                    // alert("VK Banner Ad is Ready")
-                    // Баннерная реклама отобразилась
-                  }
-                })
-                .catch((error) => {
-                  // Ошибка
-                  // alert("VK Banner Ad ERROR" + error)
-                  console.log(error);
-                });
-            break;
-    
-        default:
-            break;
+        window.addEventListener("rewardedVideoLoaded", function () {
+            YandexAds.showRewardedVideo();
+        });
     }
-}
 
-export async function hideNonNativeBanner() {
-    var adsSpecificNetwork = localStorage.getItem("adsSpecificNetwork");
-    console.log("Catched in f() -hideNonNativeBanner-, value of adsSpecificNetwork:", adsSpecificNetwork)
-    switch (adsSpecificNetwork) {
-        case "vkminiapps":
-            //alert("VK Banner Ad PATH SELECTED")
-            vkBridge.send('VKWebAppHideBannerAd', {
-                banner_location: 'bottom'
+    export async function showNonNativeBanner() {
+        var adsSpecificNetwork = localStorage.getItem("adsSpecificNetwork");
+        console.log("Catched in f() -showNonNativeBanner-, value of adsSpecificNetwork:", adsSpecificNetwork)
+        switch (adsSpecificNetwork) {
+            case "vkminiapps":
+                //alert("VK Banner Ad PATH SELECTED")
+                vkBridge.send('VKWebAppShowBannerAd', {
+                    banner_location: 'bottom'
                 })
-               .then((data) => { 
-                  if (data.result) {
-                    // alert("VK Banner Ad is Ready")
-                    // Баннерная реклама скрылась
-                  }
-                })
-                .catch((error) => {
-                  // Ошибка
-                  // alert("VK Banner Ad ERROR" + error)
-                  console.log(error);
-                });
-            break;
-    
-        default:
-            break;
+                    .then((data) => {
+                        if (data.result) {
+                            // alert("VK Banner Ad is Ready")
+                            // Баннерная реклама отобразилась
+                        }
+                    })
+                    .catch((error) => {
+                        // Ошибка
+                        // alert("VK Banner Ad ERROR" + error)
+                        console.log(error);
+                    });
+                break;
+
+            default:
+                break;
+        }
     }
-}
+
+    export async function hideNonNativeBanner() {
+        var adsSpecificNetwork = localStorage.getItem("adsSpecificNetwork");
+        console.log("Catched in f() -hideNonNativeBanner-, value of adsSpecificNetwork:", adsSpecificNetwork)
+        switch (adsSpecificNetwork) {
+            case "vkminiapps":
+                //alert("VK Banner Ad PATH SELECTED")
+                vkBridge.send('VKWebAppHideBannerAd', {
+                    banner_location: 'bottom'
+                })
+                    .then((data) => {
+                        if (data.result) {
+                            // alert("VK Banner Ad is Ready")
+                            // Баннерная реклама скрылась
+                        }
+                    })
+                    .catch((error) => {
+                        // Ошибка
+                        // alert("VK Banner Ad ERROR" + error)
+                        console.log(error);
+                    });
+                break;
+
+            default:
+                break;
+        }
+    }
