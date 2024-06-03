@@ -237,14 +237,12 @@ export default defineComponent({
 
         if (Capacitor.isNativePlatform()) {
             GoogleAuth.initialize({
-                clientId: '70119537016-q8lv3166vpeodq1jj1mav4dc83mpkmq4.apps.googleusercontent.com',
                 scopes: ['profile', 'email'],
                 grantOfflineAccess: true,
             });
         } else {
             //web
             GoogleAuth.initialize({
-                clientId: '70119537016-fopt4mu69mtdvf4seb12i3drcfa7i41s.apps.googleusercontent.com',
                 scopes: ['profile', 'email'],
                 grantOfflineAccess: true,
             });

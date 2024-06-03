@@ -5,11 +5,11 @@ const config: CapacitorConfig = {
   appName: 'meditations-ionic-vue',
   webDir: 'dist',
   bundledWebRuntime: false,
+  loggingBehavior: process.env.VITE_FREERASP_ENABLED === 'true' ? "none" : "production",
   plugins: {
     GoogleAuth: {
       scopes: ['profile', 'email'],
-      clientId: '70119537016-fopt4mu69mtdvf4seb12i3drcfa7i41s.apps.googleusercontent.com',
-      androidClientId: '70119537016-fopt4mu69mtdvf4seb12i3drcfa7i41s.apps.googleusercontent.com',
+      serverClientId: '70119537016-51a7o9e68o4e3dhs2vqmg0f006dri9h7.apps.googleusercontent.com',
       forceCodeForRefreshToken: true,
     },
     CapacitorUpdater: {

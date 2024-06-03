@@ -52,7 +52,11 @@ export default defineConfig({
   }),
   ],
   build: {
-    minify: "terser"
+    minify: "terser",
+    terserOptions: {
+      ecma: 6,
+      compress: { drop_console: false },
+    }
   },
   resolve: {
     alias: {

@@ -141,7 +141,7 @@ ion-item {
 
 @media (prefers-color-scheme: light) {
     .bg-1 {
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 10%, rgba(52, 45, 150, 0.74)), url('../../assets/photo/photo1465080357990.webp') !important;
+        background-image: linear-gradient(-190deg, #fa8ce8 0%, #060c4a 100%) !important;
     }
 }
 

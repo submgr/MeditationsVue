@@ -132,7 +132,7 @@
 
 .bg-1 {
     background-size: cover !important;
-    background-size: 100% 100%; 
+    background-size: 100% 100%;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -143,7 +143,7 @@
 
 @media (prefers-color-scheme: light) {
     .bg-1 {
-        background-image: linear-gradient(-10deg, #f0bcf68f 0%, #f0dec06b 100%) !important;
+        background-image: linear-gradient(-190deg, #fa8ce8 0%, #060c4a 100%) !important;
     }
 }
 
@@ -298,27 +298,36 @@ export default defineComponent({
             tabsEl.style.height = "1";
         }
 
-        this.name = localStorage.getItem("user_firstname")
-        if (localStorage.getItem("user_meditationtime") === null) {
-            localStorage.setItem("user_meditationtime", "0")
-            this.meditationtime = "0"
-        } else {
-            this.meditationtime = this.meditationtimePrepare(localStorage.getItem("user_meditationtime"))
+        this.loadData();
+
+
+    },
+    watch: {
+        '$route' () {
+            this.loadData();
         }
-
-        console.log(getUserData)
-
-        if (getUserData.value.isPremiumActive == true) {
-            this.isPremiumActive = true
-        } else {
-            this.isPremiumActive = false
-        }
-
-
     },
     methods: {
         toggleStory() {
             this.showStory = !this.showStory
+        },
+
+        loadData() {
+            this.name = localStorage.getItem("user_firstname")
+            if (localStorage.getItem("user_meditationtime") === null) {
+                localStorage.setItem("user_meditationtime", "0")
+                this.meditationtime = "0"
+            } else {
+                this.meditationtime = this.meditationtimePrepare(localStorage.getItem("user_meditationtime"))
+            }
+
+            console.log(getUserData)
+
+            if (getUserData.value.isPremiumActive == true) {
+                this.isPremiumActive = true
+            } else {
+                this.isPremiumActive = false
+            }
         },
 
         async inputNameValueUpdated(val) {

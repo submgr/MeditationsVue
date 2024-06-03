@@ -55,7 +55,6 @@ const app = createApp(App)
   .use(store)
   .use(PrimeVue, { ripple: true })
 
-
 import Ripple from 'primevue/ripple';
 
 app.directive('ripple', Ripple);
@@ -84,6 +83,7 @@ axiosRetry(axios, {
     return 1000;
   }
 });
+
 
 // Add request interceptor
 axios.interceptors.request.use((config) => {

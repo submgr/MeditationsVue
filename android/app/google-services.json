@@ -1,33 +1,49 @@
 {
   "project_info": {
-    "project_number": "440811960767",
-    "project_id": "yourmeditation-a6076",
-    "storage_bucket": "yourmeditation-a6076.appspot.com"
+    "project_number": "70119537016",
+    "project_id": "yourmeditation",
+    "storage_bucket": "yourmeditation.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:440811960767:android:df0f116691ec5c8556890a",
+        "mobilesdk_app_id": "1:70119537016:android:5c312662dab3fdaf67b08d",
         "android_client_info": {
           "package_name": "com.aramvirabyan.yourmeditation"
         }
       },
       "oauth_client": [
         {
-          "client_id": "440811960767-1pqe9lcplog40cidi3hp0csl82if0qrr.apps.googleusercontent.com",
+          "client_id": "70119537016-0u1f9hq79vns8mgif7fn133lvs5jnmlu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aramvirabyan.yourmeditation",
+            "certificate_hash": "c758186a613c270133681a9a02809605e1528276"
+          }
+        },
+        {
+          "client_id": "70119537016-mtd9jtmf2cjd3a4bjfqfb4qmo60pmm5i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aramvirabyan.yourmeditation",
+            "certificate_hash": "923f3fb1a1b16d396db2c0f7e63daa8c9d2397be"
+          }
+        },
+        {
+          "client_id": "70119537016-51a7o9e68o4e3dhs2vqmg0f006dri9h7.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAW56SmXPBGzoCsMKpxTEZefZoAT5GCU1c"
+          "current_key": "AIzaSyAONSaeun7uU5hUXopvdiF36n5UA3v6d-I"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "440811960767-1pqe9lcplog40cidi3hp0csl82if0qrr.apps.googleusercontent.com",
+              "client_id": "70119537016-51a7o9e68o4e3dhs2vqmg0f006dri9h7.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

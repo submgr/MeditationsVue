@@ -70,7 +70,7 @@
   ion-content {
     --fade-color: white;
     color: #fefefe !important;
-    --background: #ffffff url('../../assets/abstract/chris-nguyen-lbmrrNgq2lo-unsplash.jpg') no-repeat center center / cover !important;
+    --background: #ffffff url('../../assets/abstract/chris-nguyen-lbmrrNgq2lo-unsplash.webp') no-repeat center center / cover !important;
     animation: fadeIn 1.5s ease-in-out;
   }
 }

@@ -72,6 +72,8 @@ import WellbeingQuestionnaire from '@/components/questionnaire/WellbeingQuestion
 
 import { Device } from '@capacitor/device';
 
+import { startFreeRASP } from 'capacitor-freerasp';
+
 import * as adsEngine from "../modules/ads_engine"
 
 import globaldata from '../modules/global';
@@ -341,10 +343,10 @@ export default defineComponent({
                     if (process.env.NODE_ENV === 'development') {
                         // okay, if it's a development instance, we DONT care
                         // and do nothing here.
-                    }else{
+                    } else {
                         SUPER_HORNY = SUPER_HORNY.substring(0, SUPER_HORNY.length - 1)
                     }
-                    
+
                 }
 
                 break;
@@ -352,17 +354,96 @@ export default defineComponent({
                 break;
         }
 
-        if(SUPER_HORNY == "fabric"){
+
+        // NOW, INTEGRITY CHECK WITH freeRASP!
+
+        const config = {
+            androidConfig: {
+                packageName: 'com.aramvirabyan.yourmeditation',
+                certificateHashes: ['hIoOrVrvaI4VFrIfq8zNClW/QMzbEpUV3Kwp49LxuN4=', '13EqMfYIxmIAiStXIKmm9ue8jvnfcFg+iig0Tf/zI7Q='],
+                supportedAlternativeStores: ['com.sec.android.app.samsungapps', 'ru.vk.store'],
+            },
+            iosConfig: {
+                appBundleId: 'com.aramvirabyan.yourmeditation',
+                appTeamId: 'yourTeamID',
+            },
+            watcherMail: 'support@deqstudio.com',
+            isProd: import.meta.env.VITE_FREERASP_ENABLED === 'true' ? true : false,
+        };
+        // reactions for detected threats
+        const actions = {
+            // Android & iOS
+            privilegedAccess: () => {
+                
+            },
+            // Android & iOS
+            debug: () => {
+                alert("debug")
+                App.exitApp();
+            },
+            // Android & iOS
+            simulator: () => {
+                //
+            },
+            // Android & iOS
+            appIntegrity: () => {
+                alert("appIntegrity")
+                App.exitApp();
+            },
+            // Android & iOS
+            unofficialStore: () => {
+                //
+            },
+            // Android & iOS
+            hooks: () => {
+                alert("hooks")
+                App.exitApp();
+            },
+            // Android & iOS
+            deviceBinding: () => {
+                //
+            },
+            // Android & iOS
+            secureHardwareNotAvailable: () => {
+                //
+            },
+            // Android & iOS
+            systemVPN: () => {
+                //
+            },
+            // Android & iOS
+            passcode: () => {
+                //
+            },
+            // iOS only
+            deviceID: () => {
+                //
+            },
+            // Android only
+            obfuscationIssues: () => {
+                //
+                // alert("obfuscationIssues")
+                // App.exitApp();
+            },
+            // Android only
+            devMode: () => {
+                //
+            },
+        };
+
+        if (SUPER_HORNY == "fabric") {
             // Everything is just fine, have a good day!
-        }else{
+        } else {
             // Our user is such a bad boy..
             setTimeout(() => {
                 document.location.replace("about:blank#blocked")
             }, 123);
             document.getElementsByTagName('html')[0].innerHTML = `
                 <p>you are such a.. bad boy. stop it!</p>
-            `; 
+            `;
         }
+
+        const started = await startFreeRASP(config, actions);
 
     },
     setup() {

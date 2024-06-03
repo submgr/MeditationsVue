@@ -46,8 +46,21 @@
         </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>
+    
   </ion-page>
 </template>
+
+<style scoped>
+.bottom-banner {
+  bottom: 0;
+  width: 100%;
+  background-color: var(--ion-color-primary);
+  text-align: center;
+  padding: 10px 0;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+  color: var(--ion-color-primary-contrast)
+}
+</style>
 
 <script lang="ts">
 import { defineComponent } from 'vue';

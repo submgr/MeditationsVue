@@ -46,14 +46,14 @@
 <style scoped>
 @media (prefers-color-scheme: light) {
     ion-content {
-        --background: #f7920d00 url('../../assets/abstract/chris-nguyen-lbmrrNgq2lo-unsplash.jpg') no-repeat center center / cover !important;
+        --background: #f7920d00 url('../../assets/abstract/chris-nguyen-lbmrrNgq2lo-unsplash.webp') no-repeat center center / cover !important;
     }
 }
 
 @media (prefers-color-scheme: dark) {
     ion-content {
         color: #ffffff !important;
-        --background: #00000000 url('../../assets/abstract/manuel-will-gd3t5Dtbwkw-unsplash.jpg') no-repeat center center / cover !important;
+        --background: #00000000 url('../../assets/abstract/manuel-will-gd3t5Dtbwkw-unsplash.webp') no-repeat center center / cover !important;
     }
 }
 
