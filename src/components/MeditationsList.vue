@@ -9,12 +9,10 @@
             <div class="wrapper scroll" v-if="premadeMeditations.length > 0 && meditationsListReceivedResponseWithData"
                 ref="cardWrapper" @scroll="handleScroll" style="margin-top: 7vh;">
 
-                <swiper ref="{swiperRef}" :centeredSlides="true" :spaceBetween="0" :loop="true"
-                    :centerInsufficientSlides="true" :slidesOffsetAfter="0" :grabCursor="true"
-                    :loopFillGroupBlank="false" :modules="modules" class="mySwiper"
-                    :slidesOffsetBefore="slidesOffsetBefore" :centerSlides="true" :loopAdditionalSlides="1"
-                    :loopFillGroupWithBlank="true"
-                    style="margin-bottom: 3vh; ">
+                <swiper @swiper="swiperRegister" ref="swiperRef" :spaceBetween="-49" :centeredSlides="false" :centerSlides="false" :edgeSwipeDetection="true"
+                    :speed="500" :touchStartPreventDefault="false" :touchMoveStopPropagation="false" :loop="true" :followFinger="true"
+                    :watchSlidesVisibility="true" :watchSlidesProgress="true" style="margin-bottom: 3vh;"
+                    @slideChange="handleSlideChange">
                     <swiper-slide v-for="(item, index) in premadeMeditations" v-bind:key="item.id">
                         <div class="new_card"
                             :style="`background: url('${item.imgposterurl}') no-repeat center center / cover;`">
@@ -24,7 +22,7 @@
                                 <div class="tags">
                                     <span v-for="(tag) in item.tags" v-bind:key="tag.code" class="tag">{{
                                         tag.friendlycode
-                                        }}</span>
+                                    }}</span>
                                 </div>
                                 <p class="new_description">{{ item.description }} <br /><ion-button
                                         @click="requestMeditation(item.searchobject)" style="margin-top: 3vh;">Начать
@@ -100,7 +98,8 @@ export default defineComponent({
             meditationsListReceivedResponseWithData: false,
             slidesPerView: null,
             spaceBetween: null,
-            slidesOffsetBefore: null
+            slidesOffsetBefore: null,
+            swiper: null
         }
     },
     unmounted() {
@@ -108,7 +107,7 @@ export default defineComponent({
     },
     setup() {
         return {
-            modules: [ ],
+            modules: [],
         }
         //setup
     },
@@ -136,55 +135,62 @@ export default defineComponent({
         requestMeditation(searchobj) {
             getMeditation(searchobj, this, false)
         },
-         clearEmptyElements() {
+        clearEmptyElements() {
             const elements = document.querySelectorAll('.swiper-slide-blank');
             elements.forEach(el => el.remove());
             swiperInstance.update();
-        }
+        },
+        swiperRegister(swiper) {
+            this.swiper = swiper;
+        },
     },
     mounted() {
 
         setInterval(() => {
-    this.fslidesPerView();
-    this.fspaceBetween();
-}, 1000);
+            this.fslidesPerView();
+            this.fspaceBetween();
+        }, 1000);
 
-// eslint-disable-next-line
-const parent_this = this;
+        // eslint-disable-next-line
+        const parent_this = this;
 
-this.$http.get(globaldata.api.hostname + "access/meditations/featured", {
-    params: {
-        method: "email"
-    }
-}).then((response) => {
-    console.log(response)
-    if (response.data.status == "okay") {
-        this.fslidesPerView();
-        this.fspaceBetween();
-        console.log({
-            slidesOffsetBefore: this.slidesOffsetBefore,
-            slidesPerView: this.slidesPerView,
-            spaceBetween: this.spaceBetween
-        })
-        console.log("[Server Message] Received featured meditations... length: " + response.data.content.length)
+        this.$http.get(globaldata.api.hostname + "access/meditations/featured", {
+            params: {
+                method: "email"
+            }
+        }).then((response) => {
+            console.log(response)
+            if (response.data.status == "okay") {
+                this.fslidesPerView();
+                this.fspaceBetween();
+                console.log({
+                    slidesOffsetBefore: this.slidesOffsetBefore,
+                    slidesPerView: this.slidesPerView,
+                    spaceBetween: this.spaceBetween
+                })
+                console.log("[Server Message] Received featured meditations... length: " + response.data.content.length)
 
-        var meditations = response.data.content;
-        meditations.forEach(element => {
-            parent_this.premadeMeditations.push(element)
-            element = element['servicetype'] = "static"
+                var meditations = response.data.content;
+                meditations.forEach(element => {
+                    parent_this.premadeMeditations.push(element)
+                    element = element['servicetype'] = "static"
+                });
+
+                parent_this.meditationsListReceivedResponseWithData = true;
+
+                console.info(parent_this.premadeMeditations)
+
+                setTimeout(() => {
+                    this.swiper.slideTo(1, 2000)
+                }, 600);
+
+            } else {
+                console.log("[Server Message] This service isn't available at this time.")
+            }
+
+        }).catch(function (error) {
+            console.log("CATCHED AN ERROR.", error)
         });
-
-        parent_this.meditationsListReceivedResponseWithData = true;
-
-        console.info(parent_this.premadeMeditations)
-
-    } else {
-        console.log("[Server Message] This service isn't available at this time.")
-    }
-
-}).catch(function (error) {
-    console.log("CATCHED AN ERROR.", error)
-});
     }
 });
 </script>
@@ -221,7 +227,7 @@ this.$http.get(globaldata.api.hostname + "access/meditations/featured", {
 .scroll-to {
     background-color: yellow;
     /* Modify this to your desired effect */
-    transition: background-color 0.3s;
+    transition: background-color 0.8s;
 }
 
 
@@ -336,15 +342,17 @@ this.$http.get(globaldata.api.hostname + "access/meditations/featured", {
 .swiper-slide {
     display: flex;
     justify-content: center;
-    transition: all .4s ease;
+    transition: all 0.9s ease;
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
 }
 
 .swiper-slide.swiper-slide-prev {
-    transform: translateX(15%);
+    transform: translateX(5%);
 }
 
 .swiper-slide.swiper-slide-next {
-    transform: translateX(-15%);
+    transform: translateX(-5%);
 }
 
 .swiper-slide-duplicate {
