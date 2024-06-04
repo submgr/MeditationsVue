@@ -119,27 +119,22 @@ export async function showAdmobBanner() {
 function setupAdSizeListener() {
     var eventOnAdSize = AdMob.addListener(BannerAdPluginEvents.SizeChanged, (info: AdMobBannerSize) => {
         const appMargin = info.height;
-        const app: HTMLIonRouterOutletElement | null = document.querySelector('ion-router-outlet');
+        const ion_router_outlet = document.querySelector('ion-router-outlet');
 
-        if (!app) {
+        if (!ion_router_outlet) {
             console.error('Ion router outlet not found');
             return;
         }
 
         if (appMargin === 0) {
-            app.style.marginBottom = '0px';
+            document.querySelector('ion-router-outlet').style.marginBottom = `0px`;
             return;
         }
 
         if (appMargin > 0) {
-            const body = document.querySelector('#ad-container');
-            if (!body) {
-                console.error('Ad container not found');
-                return;
-            }
-            const bodyStyles = window.getComputedStyle(body);
-            const safeAreaBottom = bodyStyles.getPropertyValue('--ion-safe-area-bottom');
-            app.style.marginBottom = `calc(${safeAreaBottom} + ${appMargin}px)`;
+            const safeAreaBottom = 5; //in px
+            const calculatedNeededMargin = safeAreaBottom + appMargin; //in px
+            document.querySelector('ion-router-outlet').style.marginBottom = `${calculatedNeededMargin}px`;
         }
     });
 }
@@ -156,27 +151,22 @@ export async function showYandexAdsBanner() {
 
 function YandexBannerOffsetBottom(banner_height = 0) {
     const appMargin = banner_height;
-    const app: HTMLIonRouterOutletElement | null = document.querySelector('ion-router-outlet');
+    const ion_router_outlet = document.querySelector('ion-router-outlet');
 
-    if (!app) {
+    if (!ion_router_outlet) {
         console.error('Ion router outlet not found');
         return;
     }
 
     if (appMargin === 0) {
-        app.style.marginBottom = '0px';
+        document.querySelector('ion-router-outlet').style.marginBottom = `0px`;
         return;
     }
 
     if (appMargin > 0) {
-        const body = document.querySelector('#ad-container');
-        if (!body) {
-            console.error('Ad container not found');
-            return;
-        }
-        const bodyStyles = window.getComputedStyle(body);
-        const safeAreaBottom = bodyStyles.getPropertyValue('--ion-safe-area-bottom');
-        app.style.marginBottom = `calc(${safeAreaBottom} + ${appMargin}px)`;
+        const safeAreaBottom = 5; //in px
+        const calculatedNeededMargin = safeAreaBottom + appMargin; //in px
+        document.querySelector('ion-router-outlet').style.marginBottom = `${calculatedNeededMargin}px`;
     }
 }
 

@@ -244,7 +244,7 @@ const getUserData = computed(() => {
 
 import { Vue3Lottie } from 'vue3-lottie'
 
-import { RateApp } from 'capacitor-rate-app';
+import { InAppReview } from '@capacitor-community/in-app-review';
 
 export default defineComponent({
     name: 'ExploreContainer',
@@ -268,7 +268,7 @@ export default defineComponent({
         },
         ratingSend() {
             if (this.userRating == 5) {
-                RateApp.requestReview();
+                InAppReview.requestReview();
             }
 
             localStorage.setItem('rateConditions_meditated', '1');

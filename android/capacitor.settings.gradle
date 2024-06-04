@@ -8,6 +8,9 @@ project(':capacitor-community-admob').projectDir = new File('../node_modules/@ca
 include ':capacitor-community-firebase-analytics'
 project(':capacitor-community-firebase-analytics').projectDir = new File('../node_modules/@capacitor-community/firebase-analytics/android')
 
+include ':capacitor-community-in-app-review'
+project(':capacitor-community-in-app-review').projectDir = new File('../node_modules/@capacitor-community/in-app-review/android')
+
 include ':capacitor-community-screen-brightness'
 project(':capacitor-community-screen-brightness').projectDir = new File('../node_modules/@capacitor-community/screen-brightness/android')
 
@@ -46,6 +49,3 @@ project(':codetrix-studio-capacitor-google-auth').projectDir = new File('../node
 
 include ':capacitor-freerasp'
 project(':capacitor-freerasp').projectDir = new File('../node_modules/capacitor-freerasp/android')
-
-include ':capacitor-rate-app'
-project(':capacitor-rate-app').projectDir = new File('../node_modules/capacitor-rate-app/android')

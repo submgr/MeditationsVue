@@ -11,6 +11,7 @@ apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
     implementation project(':capacitor-community-admob')
     implementation project(':capacitor-community-firebase-analytics')
+    implementation project(':capacitor-community-in-app-review')
     implementation project(':capacitor-community-screen-brightness')
     implementation project(':capacitor-app')
     implementation project(':capacitor-camera')
@@ -24,7 +25,6 @@ dependencies {
     implementation project(':capgo-capacitor-updater')
     implementation project(':codetrix-studio-capacitor-google-auth')
     implementation project(':capacitor-freerasp')
-    implementation project(':capacitor-rate-app')
     implementation "com.android.support:support-v4:+"
     implementation "com.android.support:recyclerview-v7:27.1.1"
 }

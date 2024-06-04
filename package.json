@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "homepage": "./",
+  "author": {
+    "name": "Aram Virabyan",
+    "url": "https://t.me/aramtop"
+  },
   "scripts": {
     "serve": "vite --host",
     "preview": "vite preview --host",
@@ -17,6 +21,7 @@
     "@capacitor-community/admob": "^5.0.0",
     "@capacitor-community/electron": "^5.0.1",
     "@capacitor-community/firebase-analytics": "^6.0.0",
+    "@capacitor-community/in-app-review": "^6.0.0",
     "@capacitor-community/screen-brightness": "^6.0.0",
     "@capacitor/android": "6.0.0",
     "@capacitor/app": "^6.0.0",
@@ -40,7 +45,7 @@
     "@ionic/vue": "^7.0.0",
     "@ionic/vue-router": "^7.0.0",
     "@morev/vue-transitions": "^3.0.2",
-    "@skjnldsv/vue-plyr": "^7.3.0",
+    "@skjnldsv/vue-plyr": "^7.5.0",
     "@tawk.to/tawk-messenger-vue-3": "^1.0.1",
     "@videojs-player/vue": "^1.0.0",
     "@vitejs/plugin-vue": "^5.0.4",
@@ -48,7 +53,6 @@
     "axios-retry": "^4.0.0",
     "canvas-confetti": "^1.6.0",
     "capacitor-freerasp": "^1.4.0",
-    "capacitor-rate-app": "^4.0.3",
     "cordova-plugin-nativeaudio": "^3.0.9",
     "cordova-plugin-yandex-ads": "^2.3.0",
     "css-loader": "^6.7.1",
