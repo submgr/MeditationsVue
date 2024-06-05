@@ -300,7 +300,7 @@ declare const Ya;
 
 export async function showNonNativeBanner() {
     var adsSpecificNetwork = localStorage.getItem("adsSpecificNetwork");
-    console.log("Catched in f() -showNonNativeBanner-, value of adsSpecificNetwork:", adsSpecificNetwork)
+    console.log("[ADS_ENGINE] Catched in f() -showNonNativeBanner-, value of adsSpecificNetwork:", adsSpecificNetwork)
     switch (adsSpecificNetwork) {
         case "vkminiapps":
             //alert("VK Banner Ad PATH SELECTED")
