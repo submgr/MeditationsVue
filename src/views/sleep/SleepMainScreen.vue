@@ -486,6 +486,14 @@ export default defineComponent({
                 value: '9000',
               },
               {
+                text: '5 ' + text__minutes,
+                value: '5',
+              },
+              {
+                text: '10 ' + text__minutes,
+                value: '10',
+              },
+              {
                 text: '15 ' + text__minutes,
                 value: '15',
               },

@@ -315,6 +315,7 @@ export async function showNonNativeBanner() {
                 });
             break;
         case "YandexWebAds":
+            console.log("YandexWebAds Banner Ad PATH SELECTED, doing yaContextCb.push...")
             var script = document.createElement('script');
             script.innerHTML = `
             window.yaContextCb.push(()=>{

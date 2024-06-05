@@ -234,12 +234,14 @@ export default defineComponent({
                 });
         }
 
+        // eslint-disable-next-line
+        window.yaContextCb=window.yaContextCb||[];
+        
         if(this.$route.query.isVKMiniApps != "true" && this.$route.query.isYandexGames != "true"){
             loadScript("https://yandex.ru/ads/system/context.js")
                 .then(() => {
                     console.log("loadScript>then:: Success->then;")
-                    // eslint-disable-next-line
-                    window.yaContextCb=window.yaContextCb||[];
+                    
                 })
                 .catch(() => {
                     console.log("loadScript>then:: Failed to fetch script;")
