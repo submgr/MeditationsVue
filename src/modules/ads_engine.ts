@@ -293,6 +293,8 @@ export async function showYandexAdsRewarded() {
     });
 }
 
+declare const Ya;
+
 export async function showNonNativeBanner() {
     var adsSpecificNetwork = localStorage.getItem("adsSpecificNetwork");
     console.log("Catched in f() -showNonNativeBanner-, value of adsSpecificNetwork:", adsSpecificNetwork)
@@ -316,17 +318,15 @@ export async function showNonNativeBanner() {
             break;
         case "YandexWebAds":
             console.log("YandexWebAds Banner Ad PATH SELECTED, doing yaContextCb.push...")
-            var script = document.createElement('script');
-            script.innerHTML = `
-            window.yaContextCb.push(()=>{
-                Ya.Context.AdvManager.render({
-                    "blockId": "R-A-9154386-1",
-                    "type": "floorAd",
-                    "platform": "touch"
+            setTimeout(() => {
+                (<any>window).yaContextCb.push(()=>{
+                    Ya.Context.AdvManager.render({
+                        "blockId": "R-A-9154386-2",
+                        "type": "fullscreen",
+                        "platform": "touch"
+                    })
                 })
-            })
-            `;
-            document.body.appendChild(script);
+            }, 5000);
             break;
         default:
             break;
