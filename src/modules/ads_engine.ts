@@ -78,14 +78,17 @@ export async function prepareAdsService(adsSpecificNetwork = null) {
 export async function showBanner() {
     console.log("[ADS_ENGINE] Performing showBanner() now...")
     if (localStorage.getItem("premiumuser") == "true") {
+        console.log("[ADS_ENGINE] Premium user, aren't goint to show ad...")
         // nothing... we don't show ads to premium users :)
     } else {
         if (Capacitor.isNativePlatform()) {
             // Native
+            console.log("[ADS_ENGINE] Native Platform Detected...")
             showAdmobBanner();
         } else {
             // Non-Native
             //alert("non native")
+            console.log("[ADS_ENGINE] Non-Native Platform Detected...")
             showNonNativeBanner();
         }
     }
