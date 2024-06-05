@@ -67,6 +67,7 @@ import { App } from '@capacitor/app';
 
 declare const YaGames;
 declare const vkBridge;
+declare const yaContextCb;
 
 import WellbeingQuestionnaire from '@/components/questionnaire/WellbeingQuestionnaire.vue';
 
@@ -227,6 +228,18 @@ export default defineComponent({
                         .then(() => {
                             (window as any).vkBridge = vkBridge;
                         })
+                })
+                .catch(() => {
+                    console.log("loadScript>then:: Failed to fetch script;")
+                });
+        }
+
+        if(this.$route.query.isVKMiniApps != "true" && this.$route.query.isYandexGames != "true"){
+            loadScript("https://yandex.ru/ads/system/context.js")
+                .then(() => {
+                    console.log("loadScript>then:: Success->then;")
+                    // eslint-disable-next-line
+                    window.yaContextCb=window.yaContextCb||[];
                 })
                 .catch(() => {
                     console.log("loadScript>then:: Failed to fetch script;")

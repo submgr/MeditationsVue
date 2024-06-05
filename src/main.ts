@@ -236,6 +236,9 @@ if (urlParams.get('isVKMiniApps') == "true") {
 
 // alert("urlParams.get('isVKMiniApps'): " + urlParams.get('isVKMiniApps'))
 
+if(urlParams.get('isVKMiniApps') != "true" && urlParams.get('isYandexGames') != "true" && !Capacitor.isNativePlatform()){
+  adsSpecificNetwork = "YandexWebAds"
+}
 adsEngine.prepareAdsService(adsSpecificNetwork);
 
 

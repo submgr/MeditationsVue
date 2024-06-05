@@ -17,17 +17,21 @@ const admobConfig = {
 
 export async function prepareAdsService(adsSpecificNetwork = null) {
     console.log("[ADS_ENGINE] Performing runAdsService() now...")
+
     switch (adsSpecificNetwork) {
         case "vkminiapps":
             localStorage.setItem("adsSpecificNetwork", "vkminiapps")
             break;
+        case "YandexWebAds":
+            localStorage.setItem("adsSpecificNetwork", "YandexWebAds")
 
+            break;
         default:
             if (Capacitor.isNativePlatform()) {
                 await YandexAds.init({
-                    rewardedBlockId: 'R-M-3585408-2',
-                    interstitialBlockId: 'R-M-3585408-3',
-                    bannerBlockId: 'R-M-3585408-1',
+                    rewardedBlockId: 'R-M-9152925-3',
+                    interstitialBlockId: 'R-M-9152925-2',
+                    bannerBlockId: 'R-M-9152925-1',
                     options: { // This is for banner ads
                         overlap: false, // Show under all elements (works only on android)
                         bannerAtTop: false, // Show banner on top of screen, otherwise on bottom
@@ -128,6 +132,11 @@ function setupAdSizeListener() {
 
         if (appMargin === 0) {
             document.querySelector('ion-router-outlet').style.marginBottom = `0px`;
+            let style = document.createElement('style');
+            style.innerHTML = `ion-modal, ion-action-sheet {
+            margin-bottom: 0px;
+        }`
+            document.head.appendChild(style);
             return;
         }
 
@@ -135,6 +144,12 @@ function setupAdSizeListener() {
             const safeAreaBottom = 5; //in px
             const calculatedNeededMargin = safeAreaBottom + appMargin; //in px
             document.querySelector('ion-router-outlet').style.marginBottom = `${calculatedNeededMargin}px`;
+
+            let style = document.createElement('style');
+            style.innerHTML = `ion-modal, ion-action-sheet, ion-action-sheet {
+            margin-bottom: ${calculatedNeededMargin}px;
+        }`
+            document.head.appendChild(style);
         }
     });
 }
@@ -160,13 +175,27 @@ function YandexBannerOffsetBottom(banner_height = 0) {
 
     if (appMargin === 0) {
         document.querySelector('ion-router-outlet').style.marginBottom = `0px`;
+
+        let style = document.createElement('style');
+        style.innerHTML = `ion-modal, ion-action-sheet {
+            margin-bottom: 0px;
+        }`
+        document.head.appendChild(style);
+
+
         return;
     }
 
     if (appMargin > 0) {
-        const safeAreaBottom = 5; //in px
+        const safeAreaBottom = 8; //in px
         const calculatedNeededMargin = safeAreaBottom + appMargin; //in px
         document.querySelector('ion-router-outlet').style.marginBottom = `${calculatedNeededMargin}px`;
+
+        let style = document.createElement('style');
+        style.innerHTML = `ion-modal, ion-action-sheet {
+            margin-bottom: ${calculatedNeededMargin}px;
+        }`
+        document.head.appendChild(style);
     }
 }
 
@@ -285,7 +314,19 @@ export async function showNonNativeBanner() {
                     console.log(error);
                 });
             break;
-
+        case "YandexWebAds":
+            var script = document.createElement('script');
+            script.innerHTML = `
+            window.yaContextCb.push(()=>{
+                Ya.Context.AdvManager.render({
+                    "blockId": "R-A-9154386-1",
+                    "type": "floorAd",
+                    "platform": "touch"
+                })
+            })
+            `;
+            document.body.appendChild(script);
+            break;
         default:
             break;
     }

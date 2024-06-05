@@ -302,6 +302,8 @@ import NoSleep from 'nosleep.js';
 
 import { Device } from '@capacitor/device';
 
+import { useBackButton } from '@ionic/vue';
+
 export default defineComponent({
     name: 'Tab1Page',
     props: {
@@ -382,6 +384,12 @@ export default defineComponent({
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         //sthis.videoplayer = this.$refs.videoplayer.player;
+
+        useBackButton(10, (processNextHandler) => {
+            parent_this.wakeLockOff();
+
+            processNextHandler();
+        });
 
 
 
