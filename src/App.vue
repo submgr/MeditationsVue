@@ -60,7 +60,7 @@ ion-tab-bar {
 
 @media (prefers-color-scheme: dark) {
   ion-content {
-    --background: #000000 url("/assets/svg/dark-colorful-background.svg") no-repeat center top / cover !important;
+    --background: #000000z!important;
   }
 }
 </style>
