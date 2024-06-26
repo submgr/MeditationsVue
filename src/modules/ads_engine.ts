@@ -29,9 +29,9 @@ export async function prepareAdsService(adsSpecificNetwork = null) {
         default:
             if (Capacitor.isNativePlatform()) {
                 await YandexAds.init({
-                    rewardedBlockId: 'R-M-9152925-3',
-                    interstitialBlockId: 'R-M-9152925-2',
-                    bannerBlockId: 'R-M-9152925-1',
+                    rewardedBlockId: 'R-M-9498553-3',
+                    interstitialBlockId: 'R-M-9498553-2',
+                    bannerBlockId: 'R-M-9498553-1',
                     options: { // This is for banner ads
                         overlap: false, // Show under all elements (works only on android)
                         bannerAtTop: false, // Show banner on top of screen, otherwise on bottom
