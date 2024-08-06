@@ -211,6 +211,16 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/payment/PaymentSuccess.vue'),
         meta: { transition: 'slide-down' },
       },
+      {
+        path: 'admin/home',
+        component: () => import('@/views/admin/HomeScreen.vue'),
+        meta: { transition: 'slide-down' },
+      },
+      {
+        path: 'diary/main',
+        component: () => import('@/views/diary/MainScreen.vue'),
+        meta: { transition: 'slide-down' },
+      },
     ]
   }
 ]

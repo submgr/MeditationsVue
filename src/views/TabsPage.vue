@@ -1,8 +1,20 @@
 <template>
-  <ion-page>
-    <ion-tabs translucent="true">
+  <ion-menu content-id="main-content" v-if="area == 'admin'">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Меню</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <p><a href="/tabs/admin/home">Главная</a></p>
+      <br/>
+      <p><a href="/tabs/admin/home">Мои медитации</a></p>
+    </ion-content>
+  </ion-menu>
+  <ion-page id="main-content">
+    <ion-tabs translucent="true" >
       <ion-router-outlet></ion-router-outlet>
-      <ion-tab-bar slot="bottom" translucent="true" mode="ios">
+      <ion-tab-bar slot="bottom" translucent="true" mode="ios" v-if="area == 'user'">
 
 
         <!---<ion-tab-button tab="tab1" href="/tabs/tab1">
@@ -46,8 +58,9 @@
         </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>
-    
+
   </ion-page>
+  
 </template>
 
 <style scoped>
@@ -57,28 +70,45 @@
   background-color: var(--ion-color-primary);
   text-align: center;
   padding: 10px 0;
-  box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
   color: var(--ion-color-primary-contrast)
 }
 </style>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
+import { IonTabBar, IonContent, IonButton, IonTabButton, IonTitle, IonMenu, IonHeader, IonToolbar, IonMenuToggle, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
 import { musicalNote, gameController, videocam, infiniteOutline, homeOutline, happyOutline, bedOutline, musicalNotesOutline, sparklesOutline } from 'ionicons/icons';
 import { createAnimation } from '@ionic/core';
 import { onMounted } from 'vue';
 
 export default defineComponent({
   name: 'TabsPage',
-  components: { IonLabel, IonTabs, IonTabBar, IonTabButton, IonIcon, IonPage, IonRouterOutlet },
+  components: { IonLabel, IonContent, IonButton, IonTabs, IonHeader, IonTitle, IonToolbar, IonMenu, IonMenuToggle, IonTabBar, IonTabButton, IonIcon, IonPage, IonRouterOutlet },
   setup() {
+
+    var area_determined = "user";
+    // Step 1: Get the current URL
+    const currentUrl = window.location.href;
+
+    // Step 2: Check if the URL contains "admin"
+    const isAdminPage = currentUrl.includes("admin");
+
+    if (isAdminPage) {
+      area_determined = "admin"
+    }
+
+    // Step 3: Log the result
+    console.log(`Are admin tabs enabled: ${isAdminPage} ${area_determined}`);
+
     onMounted(() => {
       const routerOutlet = document.querySelector('ion-tabs ion-router-outlet') as any;
       const sampleAnimation = createAnimation()
         .duration(1000)
         .fromTo('transform', 'translateX(100%)', 'translateX(0)')
         .fromTo('opacity', '0', '1');
+
+
 
       routerOutlet.animation = sampleAnimation;
     });
@@ -92,8 +122,12 @@ export default defineComponent({
       bedOutline,
       musicalNotesOutline,
       sparklesOutline,
-      footer: "show"
+      footer: "show",
+      area: area_determined
     }
+  },
+  mounted() {
+    //
   },
 
 
