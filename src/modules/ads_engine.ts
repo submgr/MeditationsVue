@@ -7,6 +7,9 @@ import {
     RewardAdPluginEvents, AdMobRewardItem, RewardAdOptions
 } from '@capacitor-community/admob';
 
+localStorage.setItem("temp__adssystem_admobBannerPresent", "false");
+localStorage.setItem("temp__adssystem_yaadsBannerPresent", "false");
+
 const admobConfig = {
     banner_block_id: "ca-app-pub-1091706109493372/7990659366",
     interstitial_block_id: "ca-app-pub-1091706109493372/3070285425",
@@ -100,6 +103,7 @@ export async function showAdmobBanner() {
     console.log("[ADS_ENGINE] Performing showAdmobBanner() now...")
     AdMob.addListener(BannerAdPluginEvents.Loaded, () => {
         // Subscribe Banner Event Listener
+        localStorage.setItem("temp__adssystem_admobBannerPresent", "true")
     });
     AdMob.addListener(BannerAdPluginEvents.SizeChanged, (size: AdMobBannerSize) => {
         // Subscribe Change Banner Size
@@ -163,6 +167,7 @@ export async function showYandexAdsBanner() {
 
     window.addEventListener("bannerDidLoad", function () {
         YandexBannerOffsetBottom(90);
+        localStorage.setItem("temp__adssystem_yaadsBannerPresent", "false")
         YandexAds.showBanner();
     });
 }
@@ -206,9 +211,15 @@ export async function hideBanner() {
     console.log("[ADS_ENGINE] Performing hideBanner() now...")
     if (Capacitor.isNativePlatform()) {
         // Native    
-        AdMob.hideBanner();
-        YandexAds.hideBanner();
-        YandexBannerOffsetBottom(0);
+        if(localStorage.getItem("temp__adssystem_yaadsBannerPresent") == "true"){
+            YandexAds.hideBanner();
+            YandexBannerOffsetBottom(0);
+        }
+        if(localStorage.getItem("temp__adssystem_admobBannerPresent") == "true"){
+            AdMob.hideBanner();
+        }
+        
+        
     } else {
         // Non-Native
         // alert("non native")

@@ -393,8 +393,8 @@ export default defineComponent({
             },
             // Android & iOS
             debug: () => {
-                alert("debug")
-                App.exitApp();
+                //alert("debug")
+                //App.exitApp();
             },
             // Android & iOS
             simulator: () => {
@@ -402,8 +402,8 @@ export default defineComponent({
             },
             // Android & iOS
             appIntegrity: () => {
-                alert("appIntegrity")
-                App.exitApp();
+                //alert("appIntegrity")
+                //App.exitApp();
             },
             // Android & iOS
             unofficialStore: () => {
