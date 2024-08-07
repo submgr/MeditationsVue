@@ -10,6 +10,7 @@
   "scripts": {
     "serve": "vite --host",
     "preview": "vite preview --host",
+    "pack": "npm run build && capacitor sync",
     "installandbuild": "npm install && npm run build",
     "build": "vite build --base=/ && node OptimizationTasks.js",
     "test:unit": "vue-cli-service test:unit",
